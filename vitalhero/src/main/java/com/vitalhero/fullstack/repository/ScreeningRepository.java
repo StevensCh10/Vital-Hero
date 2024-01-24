@@ -1,5 +1,8 @@
 package com.vitalhero.fullstack.repository;
 
-public interface ScreeningRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.vitalhero.fullstack.model.Screening;
+
+public interface ScreeningRepository extends JpaRepository<Screening, Long>{
     
 }

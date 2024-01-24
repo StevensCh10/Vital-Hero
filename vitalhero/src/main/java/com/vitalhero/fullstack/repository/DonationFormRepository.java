@@ -1,5 +1,8 @@
 package com.vitalhero.fullstack.repository;
 
-public interface DonationFormRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.vitalhero.fullstack.model.DonationForm;
+
+public interface DonationFormRepository extends JpaRepository<DonationForm, Long>{
     
 }

@@ -1,5 +1,8 @@
 package com.vitalhero.fullstack.repository;
 
-public interface ReviewRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.vitalhero.fullstack.model.Review;
+
+public interface ReviewRepository extends JpaRepository<Review, Long>{
     
 }
