@@ -1,7 +1,6 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donations;
@@ -19,23 +18,23 @@ import com.vitalhero.fullstack.repository.ScreeningRepository;
 @Service
 public class DonorService {
     
-    @Autowired
-    private DonorRepository donorRepo;
+    private final DonorRepository donorRepo;
+    private final SchedulingRepository schedulingRepo;
+    private final ScreeningRepository screeningRepo;
+    private final DonationsRepository donationsRepo;
+    private final ReviewRepository reviewRepo;
+    private final DonationFormRepository donationFormRepo;
 
-    @Autowired
-    private SchedulingRepository schedulingRepo;
-
-    @Autowired
-    private ScreeningRepository screeningRepo;
-
-    @Autowired
-    private DonationsRepository donationsRepo;
-
-    @Autowired
-    private ReviewRepository reviewRepo;
-
-    @Autowired
-    private DonationFormRepository donationFormRepo;
+    public DonorService(DonorRepository donorRepo, SchedulingRepository schedulingRepo, ScreeningRepository screeningRepo,
+        DonationsRepository donationsRepo, ReviewRepository reviewRepo, DonationFormRepository donationFormRepo){
+        
+            this.donorRepo = donorRepo;
+            this.schedulingRepo = schedulingRepo;
+            this.screeningRepo = screeningRepo;
+            this.donationsRepo = donationsRepo;
+            this.reviewRepo = reviewRepo;
+            this.donationFormRepo = donationFormRepo;
+    }
 
     public Donor find(Long donorID){
         return null;

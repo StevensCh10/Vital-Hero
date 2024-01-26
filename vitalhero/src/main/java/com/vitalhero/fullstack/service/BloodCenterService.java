@@ -1,7 +1,6 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
@@ -13,14 +12,17 @@ import com.vitalhero.fullstack.repository.SchedulingRepository;
 @Service
 public class BloodCenterService {
     
-    @Autowired
-    private BloodCenterRepository bcRepository;
+    private final BloodCenterRepository bcRepository;
+    private final SchedulingRepository schedulingRepo;
+    private final BloodStockRepository bsRepo;
 
-    @Autowired
-    private SchedulingRepository schedulingRepo;
+    public BloodCenterService(BloodCenterRepository bcRepository, SchedulingRepository schedulingRepo,
+        BloodStockRepository bsRepo){
 
-    @Autowired
-    private BloodStockRepository bsRepo;
+            this.bcRepository = bcRepository;
+            this.schedulingRepo = schedulingRepo;
+            this.bsRepo = bsRepo;
+    }
 
     public BloodCenter find(Long bcID){
         return null;
