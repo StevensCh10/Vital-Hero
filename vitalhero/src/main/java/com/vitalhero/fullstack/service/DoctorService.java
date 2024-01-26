@@ -2,7 +2,6 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DoctorRepository;

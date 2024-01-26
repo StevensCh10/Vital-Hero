@@ -1,10 +1,8 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.model.Scheduling;
