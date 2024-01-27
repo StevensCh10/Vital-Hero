@@ -17,7 +17,7 @@ public class DoctorService {
         this.screeningRepo = screeningRepo;
     }
 
-    public Doctor find(Long doctorID){
+    public Doctor doctor(Long doctorID){
         return null;
     }
 

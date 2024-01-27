@@ -24,7 +24,7 @@ public class BloodCenterService {
             this.bsRepo = bsRepo;
     }
 
-    public BloodCenter find(Long bcID){
+    public BloodCenter bloodCenter(Long bcID){
         return null;
     }
 
