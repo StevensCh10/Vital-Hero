@@ -1,6 +1,9 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.ArrayList;
+
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donations;
@@ -40,7 +43,7 @@ public class DonorService {
 
     //NECESSÁRIO PERSONALIZAR TODAS AS EXCEÇÕES LANÇADAS
 
-    public Donor find(Long donorID){
+    public Donor findDonor(Long donorID){
         return donorRepository.findById(donorID).orElseThrow(() -> new RuntimeException("Doador não encontrado"));
     }
 
@@ -73,6 +76,7 @@ public class DonorService {
 	}
 
     public Scheduling scheduled(Long donorID){
+        findDonor(donorID);
         Scheduling sched = schedulingRepository.getReferenceById(donorID);
         
         /*if(sched == null){
@@ -83,27 +87,31 @@ public class DonorService {
     }
 
     public ArrayList<Screening> allScreenings(Long donorID){
-        find(donorID);
+        findDonor(donorID);
         return screeningRepository.allScreenings(donorID);
     }
 
     public Screening specifcScreening(Long screeningID){
-        findScreening(screeningID);
-        return screeningRepository.getReferenceById(screeningID);
+        Screening screening = screeningRepository.getReferenceById(screeningID);
+        
+        if(screening == null){
+            throw new RuntimeException();
+        }
+        return screening;
     }
 
     public ArrayList<Donations> donations(Long donorID){
-        find(donorID);
+        findDonor(donorID);
         return donationsRepository.allDonations(donorID);
     }
 
     public Review review(Long donorID){
-        find(donorID);
+        findDonor(donorID);
         return reviewRepository.getByDonor_id(donorID); //Posso lançar uma exceção para caso não exista um Review
     }
 
     public DonationForm donationForm(Long donorID){
-        find(donorID);
+        findDonor(donorID);
         return donationFormRepository.getByDonor_id(donorID); //Posso lançar uma exceção para caso não exista um donationForm
     }
 
