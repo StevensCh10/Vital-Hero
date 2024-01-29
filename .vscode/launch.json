@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<vitalhero>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.vitalhero.fullstack.Application",
+            "projectName": "vitalhero",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -1,14 +1,14 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,14 +31,14 @@ public class Screening implements Serializable{
     @JoinColumn(name = "fk_donor")
     @ManyToOne
     @Valid
-    private Long donor_id;
+    private Donor donor;
 
     @JoinColumn(name = "fk_doctor")
     @OneToOne
     @Valid
-    private Long doctor_id;
+    private Doctor doctor;
 
     @NotBlank
     @Column(updatable = true)
-    private String q1, q2, q3, q4, q5, q6, q7, q8; /* Definir as perguntas no front e no back serão salvas as respostas*/
+    private String q1, q2, q3, q4, q5, q6, q7, q8; /*Definir as perguntas no front e no back serão salvas as respostas*/
 }

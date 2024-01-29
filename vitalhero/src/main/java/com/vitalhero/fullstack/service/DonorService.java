@@ -1,9 +1,7 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.ArrayList;
-
 import javax.management.RuntimeErrorException;
-
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donations;
@@ -107,12 +105,12 @@ public class DonorService {
 
     public Review review(Long donorID){
         findDonor(donorID);
-        return reviewRepository.getByDonor_id(donorID); //Posso lançar uma exceção para caso não exista um Review
+        return reviewRepository.getByDonor(donorID); //Posso lançar uma exceção para caso não exista um Review
     }
 
     public DonationForm donationForm(Long donorID){
         findDonor(donorID);
-        return donationFormRepository.getByDonor_id(donorID); //Posso lançar uma exceção para caso não exista um donationForm
+        return donationFormRepository.getByDonor(donorID); //Posso lançar uma exceção para caso não exista um donationForm
     }
 
 }

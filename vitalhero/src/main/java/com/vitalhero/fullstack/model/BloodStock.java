@@ -1,16 +1,16 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,7 @@ public class BloodStock implements Serializable{
     @JoinColumn(name = "fk_bloodcenter")
     @OneToOne
     @Valid
-    private Long bloodcenter_id;
+    private BloodCenter bloodcenter;
 
     @NotBlank
     @Column(updatable = true)

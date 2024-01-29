@@ -1,13 +1,13 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Email;
@@ -32,7 +32,7 @@ public class Donor implements Serializable{
     @JoinColumn(name = "fk_scheduling")
     @ManyToOne
     @Valid
-    private Long scheduling_id;
+    private Scheduling scheduling;
 
     @NotBlank
     @Column(updatable = false, unique = true)

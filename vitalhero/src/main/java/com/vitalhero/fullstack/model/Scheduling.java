@@ -2,13 +2,13 @@ package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
 import java.sql.Date;
-import javax.persistence.Id;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +31,7 @@ public class Scheduling implements Serializable{
     @JoinColumn(name = "fk_bloodcenter")
     @ManyToOne
     @Valid
-    private Long bloodcenter_id;
+    private BloodCenter bloodcenter;
 
     @NotBlank
     private Date date, hour;
