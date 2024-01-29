@@ -25,7 +25,6 @@ public class Donor implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(updatable = false)
     private Long id;
     
@@ -43,7 +42,7 @@ public class Donor implements Serializable{
     @Column(updatable = true, unique = true)
     private String email;
 
-    @NotBlank
+    @NotNull
     @DecimalMin("16")
     @Column(updatable = true)
     private int age;

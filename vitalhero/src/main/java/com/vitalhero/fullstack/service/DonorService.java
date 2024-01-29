@@ -1,7 +1,6 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.ArrayList;
-import javax.management.RuntimeErrorException;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donations;
@@ -55,8 +54,10 @@ public class DonorService {
 		if(donor == null) {
 			if(donorRepository.findByEmail(email) == null) {
 				//throw new EntityNotFoundInTheAppeal(String.format("donor '%s' not unregistered.", email));
+                throw new RuntimeException("Doador não cadastrado");
 			}
 			//throw new EntityNotFoundInTheAppeal("Incorret password.");
+            throw new RuntimeException("Senha incorreta");
 		}
 		return donor;
 	}
@@ -66,11 +67,12 @@ public class DonorService {
 		if(donorRepository.findByName(donor.getName()) == null) {
 			if(donorRepository.findByEmail(donor.getEmail()) != null) {
 				//throw new EntityAlreadyExists(String.format("Email '%s' is already registered.", donor.getEmail()));
+                throw new RuntimeException("Email já cadastrado");
 			}
 			return donorRepository.save(donor);			
 		}
 		//throw new EntityAlreadyExists(String.format("Name '%s' unavailable.", user.getName()));
-        throw new RuntimeException();
+        throw new RuntimeException("Nome indisponivel");
 	}
 
     public Scheduling scheduled(Long donorID){
