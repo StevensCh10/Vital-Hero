@@ -36,7 +36,7 @@ public class DonorController {
         return donorService.register(donor);
     }
 
-    @GetMapping("/{donorID}")
+    @GetMapping("/review/{donorID}")
     public Review getReview(@PathVariable Long donorID){
         return donorService.review(donorID);
     }

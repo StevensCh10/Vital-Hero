@@ -75,6 +75,10 @@ public class DonorService {
         throw new RuntimeException("Nome indisponivel");
 	}
 
+    public Donor makeAnScheduling(Long schedulingID, Long donorID){
+        return donorRepository.updateFkScheduling(schedulingID, schedulingID);
+    }
+
     public Scheduling scheduled(Long donorID){
         findDonor(donorID);
         Scheduling sched = schedulingRepository.getReferenceById(donorID);
@@ -95,7 +99,7 @@ public class DonorService {
         Screening screening = screeningRepository.getReferenceById(screeningID);
         
         if(screening == null){
-            throw new RuntimeException();
+            throw new RuntimeException("Você ainda não realizou essa triagem");
         }
         return screening;
     }
@@ -107,7 +111,13 @@ public class DonorService {
 
     public Review review(Long donorID){
         findDonor(donorID);
-        return reviewRepository.getByDonor(donorID); //Posso lançar uma exceção para caso não exista um Review
+        Review review = reviewRepository.getByDonor(donorID); //Posso lançar uma exceção para caso não exista um Review
+        
+        if(review == null){
+            throw new RuntimeException("Você ainda não realizou o seu review !");
+        }
+
+        return review;
     }
 
     public DonationForm donationForm(Long donorID){

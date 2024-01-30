@@ -13,15 +13,15 @@ import com.vitalhero.fullstack.repository.SchedulingRepository;
 public class BloodCenterService {
     
     private final BloodCenterRepository bcRepository;
-    private final SchedulingRepository schedulingRepo;
-    private final BloodStockRepository bsRepo;
+    private final SchedulingRepository schedulingRepository;
+    private final BloodStockRepository bsRepository;
 
-    public BloodCenterService(BloodCenterRepository bcRepository, SchedulingRepository schedulingRepo,
-        BloodStockRepository bsRepo){
+    public BloodCenterService(BloodCenterRepository bcRepository, SchedulingRepository schedulingRepository,
+        BloodStockRepository bsRepository){
 
             this.bcRepository = bcRepository;
-            this.schedulingRepo = schedulingRepo;
-            this.bsRepo = bsRepo;
+            this.schedulingRepository = schedulingRepository;
+            this.bsRepository = bsRepository;
     }
 
     public BloodCenter bloodCenter(Long bcID){
@@ -34,6 +34,17 @@ public class BloodCenterService {
 
     public Scheduling specifScheduling(Long schedulingID){
         return null;
+    }
+
+    public Scheduling addScheduling(Scheduling newScheduling){
+        var sched = schedulingRepository.findByBloodCenterAndDateAndHour(newScheduling.getBloodcenter().getId(), 
+            newScheduling.getDate(), newScheduling.getHour());
+
+        if(sched != null){
+            throw new RuntimeException("Esse agendamento já está cadastrado");
+        }
+
+        return schedulingRepository.save(newScheduling);
     }
 
     public BloodStock bloodStock(Long bcID){
