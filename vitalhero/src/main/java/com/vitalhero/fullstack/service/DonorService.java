@@ -1,6 +1,6 @@
 package com.vitalhero.fullstack.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donations;
@@ -45,7 +45,7 @@ public class DonorService {
     }
 
     public Screening findScreening(Long screeningID){
-        return screeningRepository.findById(screeningID).orElseThrow(() -> new RuntimeException("Doador não encontrado"));
+        return screeningRepository.findById(screeningID).orElseThrow(() -> new RuntimeException("Triagem não encontrada"));
     }
 
     public Donor checkLogin(String email, String password) {
@@ -80,31 +80,18 @@ public class DonorService {
     }
 
     public Scheduling scheduled(Long donorID){
+        Donor donor = findDonor(donorID);
+        return schedulingRepository.findById(donor.getScheduling().getId()).orElseThrow(
+            () -> new RuntimeException()
+        );
+    }
+
+    public List<Screening> allScreenings(Long donorID){
         findDonor(donorID);
-        Scheduling sched = schedulingRepository.getReferenceById(donorID);
-        
-        /*if(sched == null){
-            throw new RuntimeException("Não está agendado");
-        }*/
-
-        return sched;
+        return screeningRepository.allScreening(donorID);
     }
 
-    public ArrayList<Screening> allScreenings(Long donorID){
-        findDonor(donorID);
-        return screeningRepository.allScreenings(donorID);
-    }
-
-    public Screening specifcScreening(Long screeningID){
-        Screening screening = screeningRepository.getReferenceById(screeningID);
-        
-        if(screening == null){
-            throw new RuntimeException("Você ainda não realizou essa triagem");
-        }
-        return screening;
-    }
-
-    public ArrayList<Donations> donations(Long donorID){
+    public List<Donations> donations(Long donorID){
         findDonor(donorID);
         return donationsRepository.allDonations(donorID);
     }
@@ -122,7 +109,13 @@ public class DonorService {
 
     public DonationForm donationForm(Long donorID){
         findDonor(donorID);
-        return donationFormRepository.getByDonor(donorID); //Posso lançar uma exceção para caso não exista um donationForm
+        DonationForm donationF = donationFormRepository.getByDonor(donorID);
+
+        if(donationF == null){
+            throw new RuntimeException("Você ainda não realizou o seu fomulários de doação !");
+        }
+
+        return donationF;
     }
 
 }

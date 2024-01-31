@@ -40,4 +40,9 @@ public class DonorController {
     public Review getReview(@PathVariable Long donorID){
         return donorService.review(donorID);
     }
+
+    @GetMapping("/{donorID}")
+    public Donor find(@PathVariable Long donorID){
+        return donorService.findDonor(donorID);
+    }
 }

@@ -1,6 +1,6 @@
 package com.vitalhero.fullstack.repository;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,5 +12,5 @@ public interface ScreeningRepository extends JpaRepository<Screening, Long>{
         value = "SELECT * FROM screening WHERE fk_donor = :donorID",
         nativeQuery = true
     )
-    ArrayList<Screening> allScreenings(@Param("donorID") Long donorID);
+    List<Screening> allScreening(@Param("donorID") Long donorID);
 }

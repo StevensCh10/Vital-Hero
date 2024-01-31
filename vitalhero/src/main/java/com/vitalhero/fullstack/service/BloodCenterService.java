@@ -1,6 +1,6 @@
 package com.vitalhero.fullstack.service;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
@@ -24,16 +24,20 @@ public class BloodCenterService {
             this.bsRepository = bsRepository;
     }
 
-    public BloodCenter bloodCenter(Long bcID){
-        return null;
+    public BloodCenter findBC(Long bcID){
+        return bcRepository.findById(bcID).orElseThrow(() -> new RuntimeException("Hemocentro não encontrado!"));
+    }
+    
+    public Scheduling findScheduling(Long schedulingID){
+        return schedulingRepository.findById(schedulingID).orElseThrow(() -> new RuntimeException("Agendamento não encontrado!"));
     }
 
-    public ArrayList<Scheduling> schedulings(Long bcID){
-        return null;
+    public List<Scheduling> schedulings(Long bcID){
+        return schedulingRepository.allScheduling(bcID);
     }
-
-    public Scheduling specifScheduling(Long schedulingID){
-        return null;
+    
+    public BloodStock findBloodStock(Long bcID){
+        return bsRepository.findById(bcID).orElseThrow(() -> new RuntimeException("Estoque sanguíneo não encontrado!"));
     }
 
     public Scheduling addScheduling(Scheduling newScheduling){
@@ -47,8 +51,10 @@ public class BloodCenterService {
         return schedulingRepository.save(newScheduling);
     }
 
-    public BloodStock bloodStock(Long bcID){
-        return null;
-    }
+    //public Scheduling updateScheduling(Scheduling sched){}
 
+    public void deleteScheduling(Long schedulingID){
+        findScheduling(schedulingID);
+        schedulingRepository.deleteById(schedulingID);
+    }
 }
