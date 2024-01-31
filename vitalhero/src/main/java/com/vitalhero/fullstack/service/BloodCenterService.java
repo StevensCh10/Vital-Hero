@@ -57,4 +57,6 @@ public class BloodCenterService {
         findScheduling(schedulingID);
         schedulingRepository.deleteById(schedulingID);
     }
+
+    
 }

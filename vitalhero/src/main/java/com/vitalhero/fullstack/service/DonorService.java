@@ -12,27 +12,24 @@ import com.vitalhero.fullstack.repository.DonationFormRepository;
 import com.vitalhero.fullstack.repository.DonationsRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import com.vitalhero.fullstack.repository.ReviewRepository;
-import com.vitalhero.fullstack.repository.SchedulingRepository;
-import com.vitalhero.fullstack.repository.ScreeningRepository;
-
 import jakarta.transaction.Transactional;
 
 @Service
 public class DonorService {
-    
+
     private final DonorRepository donorRepository;
-    private final SchedulingRepository schedulingRepository;
-    private final ScreeningRepository screeningRepository;
+    private final SchedulingService schedulingService;
+    private final ScreeningService screeningService;
     private final DonationsRepository donationsRepository;
     private final ReviewRepository reviewRepository;
     private final DonationFormRepository donationFormRepository;
 
-    public DonorService(DonorRepository donorRepository, SchedulingRepository schedulingRepository, ScreeningRepository screeningRepository,
+    public DonorService(DonorRepository donorRepository, SchedulingService schedulingService, ScreeningService screeningService,
         DonationsRepository donationsRepository, ReviewRepository reviewRepository, DonationFormRepository donationFormRepository){
         
             this.donorRepository = donorRepository;
-            this.schedulingRepository = schedulingRepository;
-            this.screeningRepository = screeningRepository;
+            this.schedulingService = schedulingService;
+            this.screeningService = screeningService;
             this.donationsRepository = donationsRepository;
             this.reviewRepository = reviewRepository;
             this.donationFormRepository = donationFormRepository;
@@ -42,10 +39,6 @@ public class DonorService {
 
     public Donor findDonor(Long donorID){
         return donorRepository.findById(donorID).orElseThrow(() -> new RuntimeException("Doador não encontrado"));
-    }
-
-    public Screening findScreening(Long screeningID){
-        return screeningRepository.findById(screeningID).orElseThrow(() -> new RuntimeException("Triagem não encontrada"));
     }
 
     public Donor checkLogin(String email, String password) {
@@ -81,14 +74,12 @@ public class DonorService {
 
     public Scheduling scheduled(Long donorID){
         Donor donor = findDonor(donorID);
-        return schedulingRepository.findById(donor.getScheduling().getId()).orElseThrow(
-            () -> new RuntimeException()
-        );
+        return schedulingService.find(donor.getScheduling().getId());
     }
 
     public List<Screening> allScreenings(Long donorID){
         findDonor(donorID);
-        return screeningRepository.allScreening(donorID);
+        return screeningService.allScreeningsByDonor(donorID);
     }
 
     public List<Donations> donations(Long donorID){
