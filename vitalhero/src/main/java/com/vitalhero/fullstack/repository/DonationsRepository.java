@@ -12,5 +12,7 @@ public interface DonationsRepository extends JpaRepository<Donations, Long>{
         value = "SELECT * FROM donations WHERE fk_donor = :donorID",
         nativeQuery = true
     )
-    List<Donations> allDonations(@Param("donorID") Long donorID);
+    List<Donations> allDonationsByDonor(@Param("donorID") Long donorID);
+
+    Donations findByDonorAndScheduling(Long donorID, long schedulingID);
 }

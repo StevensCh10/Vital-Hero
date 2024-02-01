@@ -9,9 +9,7 @@ import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonationFormRepository;
-import com.vitalhero.fullstack.repository.DonationsRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
-import com.vitalhero.fullstack.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -20,18 +18,18 @@ public class DonorService {
     private final DonorRepository donorRepository;
     private final SchedulingService schedulingService;
     private final ScreeningService screeningService;
-    private final DonationsRepository donationsRepository;
-    private final ReviewRepository reviewRepository;
+    private final DonationsService donationsService;
+    private final ReviewService reviewService;
     private final DonationFormRepository donationFormRepository;
 
     public DonorService(DonorRepository donorRepository, SchedulingService schedulingService, ScreeningService screeningService,
-        DonationsRepository donationsRepository, ReviewRepository reviewRepository, DonationFormRepository donationFormRepository){
+        DonationsService donationsService, ReviewService reviewService, DonationFormRepository donationFormRepository){
         
             this.donorRepository = donorRepository;
             this.schedulingService = schedulingService;
             this.screeningService = screeningService;
-            this.donationsRepository = donationsRepository;
-            this.reviewRepository = reviewRepository;
+            this.donationsService = donationsService;
+            this.reviewService = reviewService;
             this.donationFormRepository = donationFormRepository;
     }
 
@@ -84,28 +82,21 @@ public class DonorService {
 
     public List<Donations> donations(Long donorID){
         findDonor(donorID);
-        return donationsRepository.allDonations(donorID);
+        return donationsService.allDonationsByDonor(donorID);
     }
 
-    public Review review(Long donorID){
+    public Review getReview(Long donorID){
         findDonor(donorID);
-        Review review = reviewRepository.getByDonor(donorID); //Posso lançar uma exceção para caso não exista um Review
-        
-        if(review == null){
-            throw new RuntimeException("Você ainda não realizou o seu review !");
-        }
-
-        return review;
+        return reviewService.reviewByDonor(donorID);
     }
 
-    public DonationForm donationForm(Long donorID){
+    public DonationForm getDonationForm(Long donorID){
         findDonor(donorID);
-        DonationForm donationF = donationFormRepository.getByDonor(donorID);
+        DonationForm donationF = donationFormRepository.findByDonor(donorID);
 
         if(donationF == null){
             throw new RuntimeException("Você ainda não realizou o seu fomulários de doação !");
         }
-
         return donationF;
     }
 

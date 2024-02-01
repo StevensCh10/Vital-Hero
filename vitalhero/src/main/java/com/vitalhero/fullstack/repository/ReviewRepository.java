@@ -11,5 +11,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
         value = "SELECT * FROM review WHERE fk_donor = :donorID",
         nativeQuery = true
     )
-    Review getByDonor(@Param("donorID") Long donorID);
+    Review findByDonor(@Param("donorID") Long donorID);
 }
