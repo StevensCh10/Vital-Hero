@@ -36,13 +36,13 @@ public class DonorController {
         return donorService.register(donor);
     }
 
-    @GetMapping("/review/{donorID}")
+    /*@GetMapping("/review/{donorID}")
     public Review getReview(@PathVariable Long donorID){
         return donorService.getReview(donorID);
-    }
+    }*/
 
     @GetMapping("/{donorID}")
     public Donor find(@PathVariable Long donorID){
-        return donorService.findDonor(donorID);
+        return donorService.find(donorID);
     }
 }

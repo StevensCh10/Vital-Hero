@@ -14,20 +14,15 @@ public class ReviewService {
         this.repository = repository;
     }
 
+    public Review findByDonor(Long donorID){
+        return repository.findByDonor(donorID).orElseThrow(() -> new RuntimeException("Você ainda não realizou seu review!"));
+    }
+
     public Review addReview(Review newReview){
-        Review review = repository.findByDonor(newReview.getDonor().getId());
+        Review review = findByDonor(newReview.getDonor().getId());
 
         if(review != null){
             throw new RuntimeException("Você já fez um review :) ");
-        }
-        return review;
-    }
-
-    public Review reviewByDonor(Long donorID){
-        Review review = repository.findByDonor(donorID);
-        
-        if(review == null){
-            throw new RuntimeException("Você ainda não realizou o seu review !");
         }
         return review;
     }

@@ -1,5 +1,6 @@
 package com.vitalhero.fullstack.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.repository.SchedulingRepository;
@@ -16,7 +17,7 @@ public class SchedulingService {
 
     public Scheduling find(Long id){
         return repository.findById(id).orElseThrow(
-            () -> new RuntimeException()
+            () -> new RuntimeException("Agendamento não encontrado!")
         );
     }
 
@@ -35,5 +36,9 @@ public class SchedulingService {
     public void deleteScheduling(Long id){
         find(id);
         repository.deleteById(id);
+    }
+
+    public List<Scheduling> schedulingsByBloodCenter(Long bcID){
+        return repository.allScheduling(bcID);
     }
 }

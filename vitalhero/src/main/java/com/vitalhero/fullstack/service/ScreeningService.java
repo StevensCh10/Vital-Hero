@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.ScreeningRepository;
-
 import jakarta.transaction.Transactional;
 
 @Service

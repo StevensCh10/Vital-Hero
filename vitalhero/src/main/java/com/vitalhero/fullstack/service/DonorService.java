@@ -1,14 +1,7 @@
 package com.vitalhero.fullstack.service;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
-import com.vitalhero.fullstack.model.DonationForm;
-import com.vitalhero.fullstack.model.Donations;
 import com.vitalhero.fullstack.model.Donor;
-import com.vitalhero.fullstack.model.Review;
-import com.vitalhero.fullstack.model.Scheduling;
-import com.vitalhero.fullstack.model.Screening;
-import com.vitalhero.fullstack.repository.DonationFormRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import jakarta.transaction.Transactional;
 
@@ -16,27 +9,15 @@ import jakarta.transaction.Transactional;
 public class DonorService {
 
     private final DonorRepository donorRepository;
-    private final SchedulingService schedulingService;
-    private final ScreeningService screeningService;
-    private final DonationsService donationsService;
-    private final ReviewService reviewService;
-    private final DonationFormRepository donationFormRepository;
 
-    public DonorService(DonorRepository donorRepository, SchedulingService schedulingService, ScreeningService screeningService,
-        DonationsService donationsService, ReviewService reviewService, DonationFormRepository donationFormRepository){
-        
+    public DonorService(DonorRepository donorRepository){
             this.donorRepository = donorRepository;
-            this.schedulingService = schedulingService;
-            this.screeningService = screeningService;
-            this.donationsService = donationsService;
-            this.reviewService = reviewService;
-            this.donationFormRepository = donationFormRepository;
     }
 
     //NECESSÁRIO PERSONALIZAR TODAS AS EXCEÇÕES LANÇADAS
 
-    public Donor findDonor(Long donorID){
-        return donorRepository.findById(donorID).orElseThrow(() -> new RuntimeException("Doador não encontrado"));
+    public Donor find(Long id){
+        return donorRepository.findById(id).orElseThrow(() -> new RuntimeException("Doador não encontrado"));
     }
 
     public Donor checkLogin(String email, String password) {
@@ -66,38 +47,48 @@ public class DonorService {
         throw new RuntimeException("Nome indisponivel");
 	}
 
-    public Donor makeAnScheduling(Long schedulingID, Long donorID){
-        return donorRepository.updateFkScheduling(schedulingID, schedulingID);
+    public Donor makeAnScheduling(Long schedulingID, Long id){
+        find(id);
+        //Verificar no controller se o id do scheduling é válido
+        return donorRepository.updateFkScheduling(schedulingID, id);
     }
 
-    public Scheduling scheduled(Long donorID){
-        Donor donor = findDonor(donorID);
+    public Donor scheduleMadeOrUnscheduled(Long id){
+        find(id);
+        return donorRepository.FkSchedulingToNull(id);
+    } 
+
+    /* --ESSES MÉTODOS PODEM SER RETIRADOS DAQUI E A LÓGICA SER COLOCADA NO CONTROLLER--
+
+    public Scheduling scheduled(Long donorID){    
+        Donor donor = find(donorID);
         return schedulingService.find(donor.getScheduling().getId());
     }
 
     public List<Screening> allScreenings(Long donorID){
-        findDonor(donorID);
+        find(donorID);
         return screeningService.allScreeningsByDonor(donorID);
     }
 
     public List<Donations> donations(Long donorID){
-        findDonor(donorID);
+        find(donorID);
         return donationsService.allDonationsByDonor(donorID);
     }
 
     public Review getReview(Long donorID){
-        findDonor(donorID);
+        find(donorID);
         return reviewService.reviewByDonor(donorID);
     }
-
+    
     public DonationForm getDonationForm(Long donorID){
-        findDonor(donorID);
+        find(donorID);
         DonationForm donationF = donationFormRepository.findByDonor(donorID);
-
+        
         if(donationF == null){
             throw new RuntimeException("Você ainda não realizou o seu fomulários de doação !");
         }
         return donationF;
     }
+    */
 
 }

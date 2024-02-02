@@ -23,10 +23,13 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
     )
     Donor updateFkScheduling(@Param("schedulingID")Long schedulingID, @Param("donorID") Long donorID);
     
+    @Transactional
+    @Modifying
     @Query(
-        value = ""
+        value = "UPDATE donor SET fk_scheduling = NULL WHERE id = :id",
+        nativeQuery = true
     )
-    Donor scheduled(@Param("donorID") Long donorID);
+    Donor FkSchedulingToNull(@Param("id") Long id);
 
     Donor findByEmail(String email);
     Donor findByName(String name);
