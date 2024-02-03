@@ -33,4 +33,5 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
 
     Donor findByEmail(String email);
     Donor findByName(String name);
+    Donor findByCpf(String cpf);
 }

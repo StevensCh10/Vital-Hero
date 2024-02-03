@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.vitalhero.fullstack.model.Donations;
+import com.vitalhero.fullstack.model.Donor;
+import com.vitalhero.fullstack.model.Scheduling;
 
 public interface DonationsRepository extends JpaRepository<Donations, Long>{
     
@@ -14,5 +16,5 @@ public interface DonationsRepository extends JpaRepository<Donations, Long>{
     )
     List<Donations> allDonationsByDonor(@Param("donorID") Long donorID);
 
-    Donations findByDonorAndScheduling(Long donorID, long schedulingID);
+    Donations findByDonorAndScheduling(Donor donor, Scheduling scheduling);
 }

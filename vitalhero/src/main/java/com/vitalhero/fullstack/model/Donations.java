@@ -31,5 +31,5 @@ public class Donations implements Serializable{
     private Donor donor;
 
     @NotBlank
-    private Scheduling schedulling;
+    private Scheduling scheduling;
 }

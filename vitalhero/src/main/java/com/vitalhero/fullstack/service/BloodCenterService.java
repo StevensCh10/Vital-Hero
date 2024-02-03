@@ -1,32 +1,38 @@
 package com.vitalhero.fullstack.service;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.BloodCenter;
-import com.vitalhero.fullstack.model.BloodStock;
-import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
-import com.vitalhero.fullstack.repository.BloodStockRepository;
 
 @Service
 public class BloodCenterService {
     
-    private final BloodCenterRepository bcRepository;
-    private final BloodStockRepository bsRepository;
+    private final BloodCenterRepository repository;
 
-    public BloodCenterService(BloodCenterRepository bcRepository, SchedulingService schedulingService,
-        BloodStockRepository bsRepository){
-
-            this.bcRepository = bcRepository;
-            this.bsRepository = bsRepository;
+    public BloodCenterService(BloodCenterRepository repository){
+            this.repository = repository;
     }
 
     public BloodCenter find(Long id){
-        return bcRepository.findById(id).orElseThrow(() -> new RuntimeException("Hemocentro não encontrado!"));
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Hemocentro não encontrado!"));
     }
     
-    public BloodStock findBloodStock(Long bcID){
-        return bsRepository.findById(bcID).orElseThrow(() -> new RuntimeException("Estoque sanguíneo não encontrado!"));
+    public BloodCenter addBloodCenter(BloodCenter newBloodCenter){
+        if(repository.findByName(newBloodCenter.getName()) == null){
+            if(repository.findByInstitutionalEmail(newBloodCenter.getInstitutionalEmail()) == null){
+                if(repository.findByAddress(newBloodCenter.getAddress()) == null){
+                    return repository.save(newBloodCenter);
+                }
+                throw new RuntimeException("Endereço cadastrado/indisponível!");
+            }
+            throw new RuntimeException("Email institucional cadastrado/indisponível!");
+        }
+        throw new RuntimeException("Nome cadastrado/indisponível!");
+    }
+
+    public void deleteBloodCenter(Long id){
+        find(id);
+        repository.deleteById(id);
     }
 
     //public Scheduling updateScheduling(Scheduling sched){}    

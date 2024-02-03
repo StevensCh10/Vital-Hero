@@ -23,8 +23,8 @@ public class BloodCenter implements Serializable{
     private Long id;
 
     @NotBlank
-    @Column(updatable = false)
-    private String name, institutional_email, address, reference_point, photo;
+    @Column(updatable = false, unique = true)
+    private String name, institutionalEmail, address, referencePoint, photo;
 
     @NotBlank
     private String phone;

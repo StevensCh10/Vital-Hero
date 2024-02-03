@@ -17,7 +17,7 @@ public class DonationsService {
     public Donations find(Long id){
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Doação não encontrada!"));
     }
-
+    /*
     public Donations addDonation(Donations newDonation){
         var donorID = newDonation.getDonor().getId();
         var schedulingID = newDonation.getSchedulling().getId();
@@ -28,7 +28,7 @@ public class DonationsService {
         }
         return newDonation;
     }
-
+    */
     public List<Donations> allDonationsByDonor(Long donorID){
         return repository.allDonationsByDonor(donorID);
     }
