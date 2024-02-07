@@ -31,5 +31,9 @@ public class ScreeningService {
     public List<Screening> allScreeningsByDonor(Long donorID){
         return repository.allScreening(donorID);
     }
+
+    public Screening validatedScreening(Long doctorID){
+        return null;
+    }
     
 }

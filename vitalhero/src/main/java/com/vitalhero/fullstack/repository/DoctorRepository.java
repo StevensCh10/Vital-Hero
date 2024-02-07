@@ -5,4 +5,8 @@ import com.vitalhero.fullstack.model.Doctor;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
     
+    Doctor findByName(String name);
+    Doctor findByCpf(String cpf);
+    Doctor findByEmail(String email);
+    Doctor findByCrm(String crm);
 }

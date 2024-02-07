@@ -2,6 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.repository.SchedulingRepository;
 import jakarta.transaction.Transactional;
@@ -19,6 +21,13 @@ public class SchedulingService {
         return repository.findById(id).orElseThrow(
             () -> new RuntimeException("Agendamento não encontrado!")
         );
+    }
+
+    public Scheduling findByDonor(Donor donor){
+        if(donor.getScheduling() == null){
+            return null;
+        }
+        return find(donor.getScheduling().getId());
     }
 
     @Transactional

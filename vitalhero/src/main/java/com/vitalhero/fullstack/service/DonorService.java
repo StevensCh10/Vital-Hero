@@ -1,5 +1,6 @@
 package com.vitalhero.fullstack.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DonorRepository;
@@ -15,6 +16,7 @@ public class DonorService {
     }
 
     //NECESSÁRIO PERSONALIZAR TODAS AS EXCEÇÕES LANÇADAS
+    //Provavelmente tenho que validar como será a exclusão de outras entidades que tem um Donor como FK
 
     public Donor find(Long id){
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Doador não encontrado"));
@@ -47,6 +49,26 @@ public class DonorService {
         throw new RuntimeException("Cpf já cadastrado");
 	}
 
+    @Transactional
+	public Donor update(Donor donorAtt, Long id) {
+		Donor currentDonor = find(id);
+		Donor findedByName = repository.findByName(donorAtt.getName());
+        Donor findedByCpf = repository.findByCpf(donorAtt.getCpf());
+        Donor findedByEmail = repository.findByEmail(donorAtt.getEmail());
+		
+		if(findedByName != null && findedByName.getId() != id) {
+			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", donorAtt.getName()));
+            throw new RuntimeException("Nome indiponível!");
+		}else if(findedByCpf != null && findedByCpf.getId() != id){
+            throw new RuntimeException("Cpf indiponível!");
+        }else if(findedByEmail != null && findedByEmail.getId() != id){
+            throw new RuntimeException("Email indiponível!");
+        }
+
+		BeanUtils.copyProperties(donorAtt, currentDonor, "id");
+		return repository.saveAndFlush(currentDonor);
+	}
+
     public Donor makeAnScheduling(Long schedulingID, Long id){
         find(id);
         //Verificar no controller se o id do scheduling é válido
@@ -56,7 +78,12 @@ public class DonorService {
     public Donor scheduleMadeOrUnscheduled(Long id){
         find(id);
         return repository.FkSchedulingToNull(id);
-    } 
+    }
+    
+    public void deleteDonor(Long id){
+        find(id);
+        repository.deleteById(id);
+    }
 
     /* --ESSES MÉTODOS PODEM SER RETIRADOS DAQUI E A LÓGICA SER COLOCADA NO CONTROLLER--
 
