@@ -69,7 +69,7 @@ public class DonorService {
 		return repository.saveAndFlush(currentDonor);
 	}
 
-    public Donor makeAnScheduling(Long schedulingID, Long id){
+    public Donor toSchedule(Long schedulingID, Long id){
         find(id);
         //Verificar no controller se o id do scheduling é válido
         return repository.updateFkScheduling(schedulingID, id);

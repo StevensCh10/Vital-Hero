@@ -1,12 +1,12 @@
 package com.vitalhero.fullstack.controller;
 
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,7 +21,6 @@ import com.vitalhero.fullstack.service.DonorService;
 import com.vitalhero.fullstack.service.ReviewService;
 import com.vitalhero.fullstack.service.SchedulingService;
 import com.vitalhero.fullstack.service.ScreeningService;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -48,8 +47,9 @@ public class DonorController {
         this.reviewService = reviewService;
     }
 
+    //DONOR
     @GetMapping("/{email}/{password}")
-    public Donor getUser(@PathVariable String email, @PathVariable String password){
+    public Donor login(@PathVariable String email, @PathVariable String password){
         return donorService.checkLogin(email, password);
     }
 
@@ -59,15 +59,28 @@ public class DonorController {
         return donorService.register(donor);
     }
 
-    @GetMapping("/review/{donorID}")
+    @GetMapping("/{donorID}")
+    public Donor getDonor(@PathVariable Long donorID){
+        return donorService.find(donorID);
+    }
+
+    //REVIEW
+    @PostMapping("/addReview/{donorID}")
+    public Review addReview(@PathVariable Long donorID, @RequestBody @Valid Review newReview){
+        return reviewService.addReview(newReview);
+    }
+
+    @GetMapping("/getReview/{donorID}")
     public Review getReview(@PathVariable Long donorID){
         donorService.find(donorID);
         return reviewService.findByDonor(donorID);
     }
 
-    @GetMapping("/{donorID}")
-    public Donor getDonor(@PathVariable Long donorID){
-        return donorService.find(donorID);
+    //SCHEDULING
+    @PutMapping("/toSchedule/{donorID}/{schedulingID}")
+    public Donor toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
+        schedulingService.find(schedulingID);
+        return donorService.toSchedule(donorID, schedulingID);
     }
 
     @GetMapping("/scheduled/{donorID}")
@@ -76,6 +89,12 @@ public class DonorController {
         return schedulingService.findByDonor(donor);
     }
 
+    @PutMapping("/unschedule/{donorID}")
+    public Donor unschdule(@PathVariable Long donorID){
+        return donorService.scheduleMadeOrUnscheduled(donorID);
+    }
+
+    //SCREENING
     @GetMapping("/screenings/{donorID}")
     public List<Screening> allScreenings(@PathVariable Long donorID){
         donorService.find(donorID);

@@ -1,7 +1,6 @@
 package com.vitalhero.fullstack.service;
 
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.repository.ReviewRepository;
 
@@ -14,21 +13,25 @@ public class ReviewService {
         this.repository = repository;
     }
 
+    public Review find(Long id){
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Review não encontrado"));
+    }
+
     public Review findByDonor(Long donorID){
-        return repository.findByDonor(donorID).orElseThrow(() -> new RuntimeException("Você ainda não realizou seu review!"));
+        return repository.findByDonor(donorID).orElseThrow(() -> new RuntimeException("Review ainda não foi realizado"));
     }
 
     public Review addReview(Review newReview){
-        Review review = findByDonor(newReview.getDonor().getId());
+        Review review = repository.getByDonor(newReview.getDonor().getId());
 
         if(review != null){
             throw new RuntimeException("Você já fez um review :) ");
         }
-        return review;
+        return repository.save(review);
     }
 
     public void deleteReview(Long id){
-        repository.findById(id).orElseThrow(() -> new RuntimeException("Review não encontrado"));
+        find(id);
         repository.deleteById(id);
     }
 }
