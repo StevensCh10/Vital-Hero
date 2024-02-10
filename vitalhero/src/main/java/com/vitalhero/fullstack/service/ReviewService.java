@@ -1,5 +1,6 @@
 package com.vitalhero.fullstack.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.repository.ReviewRepository;
@@ -28,6 +29,12 @@ public class ReviewService {
             throw new RuntimeException("Você já fez um review :) ");
         }
         return repository.save(review);
+    }
+
+    public Review update(Review reviewAtt){
+        Review currentReview = find(reviewAtt.getId());
+        BeanUtils.copyProperties(reviewAtt, currentReview, "id");
+		return repository.saveAndFlush(currentReview);
     }
 
     public void deleteReview(Long id){

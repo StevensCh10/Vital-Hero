@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.model.Scheduling;
@@ -70,6 +72,11 @@ public class DonorController {
         return reviewService.addReview(newReview);
     }
 
+    @PutMapping("/updateReview")
+    public Review updateReview(@RequestBody @Valid Review review){
+        return reviewService.update(review);
+    }
+
     @GetMapping("/getReview/{donorID}")
     public Review getReview(@PathVariable Long donorID){
         donorService.find(donorID);
@@ -101,5 +108,10 @@ public class DonorController {
         return screeningService.allScreeningsByDonor(donorID);
     }
 
-    
+    //DONATIONFORM
+    @GetMapping("/getDonationForm/donorID")
+    public DonationForm getDonationForm(@PathVariable Long donorID){
+        return donationFormService.findByDonor(donorID);
+    }
+    //DONATIONS
 }
