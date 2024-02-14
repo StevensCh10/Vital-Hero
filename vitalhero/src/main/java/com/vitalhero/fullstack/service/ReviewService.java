@@ -28,7 +28,7 @@ public class ReviewService {
         if(review != null){
             throw new RuntimeException("Você já fez um review :) ");
         }
-        return repository.save(review);
+        return repository.save(newReview);
     }
 
     public Review update(Review reviewAtt){

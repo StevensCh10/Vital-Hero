@@ -76,8 +76,12 @@ public class DonorService {
     }
 
     public Donor scheduleMadeOrUnscheduled(Long id){
-        find(id);
-        return repository.FkSchedulingToNull(id);
+        Donor donor = find(id);
+        if(donor.getScheduling() == null){
+            
+        }
+        repository.FkSchedulingToNull(id);
+        return find(id);
     }
     
     public void deleteDonor(Long id){

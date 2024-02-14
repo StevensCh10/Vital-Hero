@@ -1,6 +1,10 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -25,9 +29,11 @@ public class BloodStock implements Serializable{
     @Column(updatable = false)
     private Long id;
 
+    @JsonIgnoreProperties(value = {"name", "institutionalEmail", "address", "referencePoint", "photo", "phone"}, allowGetters = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "fk_bloodcenter")
     @OneToOne
-    @Valid
+    //@Valid
     private BloodCenter bloodcenter;
 
     @NotBlank

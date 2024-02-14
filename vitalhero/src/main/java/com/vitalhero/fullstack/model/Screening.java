@@ -1,6 +1,10 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,14 +30,18 @@ public class Screening implements Serializable{
     @Column(updatable = false)
     private Long id;
 
+    @JsonIgnoreProperties(value = {"scheduling", "name", "cpf", "email", "age", "gender", "maritalStatus", "address", "photo", "phone", "password"}, allowGetters = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "fk_donor")
     @ManyToOne
-    @Valid
+    //@Valid
     private Donor donor;
 
+    @JsonIgnoreProperties(value = {"name", "cpf", "crm", "email", "age", "gender", "maritalStatus", "address", "photo", "phone", "password"}, allowGetters = true)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "fk_doctor")
     @OneToOne
-    @Valid
+    //@Valid
     private Doctor doctor;
 
     @NotBlank

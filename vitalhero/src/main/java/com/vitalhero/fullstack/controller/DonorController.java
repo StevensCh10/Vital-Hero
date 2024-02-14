@@ -67,8 +67,9 @@ public class DonorController {
     }
 
     //REVIEW
-    @PostMapping("/addReview/{donorID}")
-    public Review addReview(@PathVariable Long donorID, @RequestBody @Valid Review newReview){
+    @PostMapping("/addReview")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Review addReview(@RequestBody @Valid Review newReview){
         return reviewService.addReview(newReview);
     }
 
@@ -109,7 +110,7 @@ public class DonorController {
     }
 
     //DONATIONFORM
-    @GetMapping("/getDonationForm/donorID")
+    @GetMapping("/getDonationForm/{donorID}")
     public DonationForm getDonationForm(@PathVariable Long donorID){
         return donationFormService.findByDonor(donorID);
     }

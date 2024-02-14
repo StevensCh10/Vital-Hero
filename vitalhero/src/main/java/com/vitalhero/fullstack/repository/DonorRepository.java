@@ -29,7 +29,7 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
         value = "UPDATE donor SET fk_scheduling = NULL WHERE id = :id",
         nativeQuery = true
     )
-    Donor FkSchedulingToNull(@Param("id") Long id);
+    void FkSchedulingToNull(@Param("id") Long id);
 
     Donor findByEmail(String email);
     Donor findByName(String name);
