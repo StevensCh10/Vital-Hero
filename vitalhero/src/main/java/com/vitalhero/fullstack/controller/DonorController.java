@@ -67,25 +67,25 @@ public class DonorController {
     }
 
     //REVIEW
-    @PostMapping("/addReview")
+    @PostMapping("/review")
     @ResponseStatus(HttpStatus.CREATED)
     public Review addReview(@RequestBody @Valid Review newReview){
         return reviewService.addReview(newReview);
     }
 
-    @PutMapping("/updateReview")
+    @PutMapping("/review")
     public Review updateReview(@RequestBody @Valid Review review){
         return reviewService.update(review);
     }
 
-    @GetMapping("/getReview/{donorID}")
+    @GetMapping("/review/findbydonor/{donorID}")
     public Review getReview(@PathVariable Long donorID){
         donorService.find(donorID);
         return reviewService.findByDonor(donorID);
     }
 
     //SCHEDULING
-    @PutMapping("/toSchedule/{donorID}/{schedulingID}")
+    @PutMapping("/toschedule/{donorID}/{schedulingID}")
     public Donor toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
         schedulingService.find(schedulingID);
         return donorService.toSchedule(donorID, schedulingID);
@@ -103,14 +103,19 @@ public class DonorController {
     }
 
     //SCREENING
-    @GetMapping("/screenings/{donorID}")
+    @PostMapping("/screening")
+    public Screening doScreening(@RequestBody Screening newScreening){
+        return screeningService.addScreening(newScreening);
+    }
+
+    @GetMapping("/screening/all/{donorID}")
     public List<Screening> allScreenings(@PathVariable Long donorID){
         donorService.find(donorID);
         return screeningService.allScreeningsByDonor(donorID);
     }
 
     //DONATIONFORM
-    @GetMapping("/getDonationForm/{donorID}")
+    @GetMapping("/donationform/findbydonor/{donorID}")
     public DonationForm getDonationForm(@PathVariable Long donorID){
         return donationFormService.findByDonor(donorID);
     }
