@@ -17,8 +17,8 @@ public class BloodStockService {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Estoque sanguíneo não encontrado!"));
     }
 
-    public BloodStock findByBloodCenter(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Estoque sanguíneo não encontrado!"));
+    public BloodStock findByBloodCenter(Long bcID){
+        return repository.findByBloodCenter(bcID).orElseThrow(() -> new RuntimeException("Estoque sanguíneo não encontrado!"));
     }
 
     public BloodStock addBloodStock(BloodStock newBloodStock){
