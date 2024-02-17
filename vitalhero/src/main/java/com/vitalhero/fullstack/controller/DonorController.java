@@ -3,6 +3,7 @@ package com.vitalhero.fullstack.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.vitalhero.fullstack.model.DonationForm;
+import com.vitalhero.fullstack.model.Donations;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.model.Scheduling;
@@ -115,9 +116,24 @@ public class DonorController {
     }
 
     //DONATIONFORM
+    @PostMapping("/donationform")
+    public DonationForm fillOutDonationForm(@RequestBody DonationForm newDonation){
+        return donationFormService.addDonationForm(newDonation);
+    }
+
     @GetMapping("/donationform/findbydonor/{donorID}")
     public DonationForm getDonationForm(@PathVariable Long donorID){
         return donationFormService.findByDonor(donorID);
     }
+
+    @DeleteMapping("/doantionform")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDonationForm(@PathVariable Long donationFormID){
+        donationFormService.deleteDonationForm(donationFormID);
+    }
+
     //DONATIONS
+    public List<Donations> allDonationsByDonor(@PathVariable Long donorID){
+        return donationsService.allDonationsByDonor(donorID);
+    }
 }

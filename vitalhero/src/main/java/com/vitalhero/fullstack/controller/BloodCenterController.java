@@ -47,6 +47,7 @@ public class BloodCenterController {
     }
 
     @DeleteMapping("/{bcID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBloodCenter(@PathVariable Long bcID){
         bloodCenterService.deleteBloodCenter(bcID);
     }
@@ -68,6 +69,7 @@ public class BloodCenterController {
     }
 
     @DeleteMapping("/bloodstock/{bsID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBloodStock(@PathVariable Long bsID){
         bloodStockService.deleteBloodStock(bsID);
     }
@@ -89,6 +91,7 @@ public class BloodCenterController {
     }
 
     @DeleteMapping("/scheduling/{bsID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteScheduling(@PathVariable Long bsID){
         schedulingService.deleteScheduling(bsID);
     }

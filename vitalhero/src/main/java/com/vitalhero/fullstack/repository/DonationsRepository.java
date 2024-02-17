@@ -16,5 +16,9 @@ public interface DonationsRepository extends JpaRepository<Donations, Long>{
     )
     List<Donations> allDonationsByDonor(@Param("donorID") Long donorID);
 
-    Donations findByDonorAndScheduling(Donor donor, Scheduling scheduling);
+    @Query(
+        value = "SELECT * FROM donations WHERE fk_donor = :donorID AND scheduling = schedID",
+        nativeQuery = true
+    )
+    Donations findByDonorAndScheduling(@Param("donorID") Long donorID, @Param("schedID") Long schedID);
 }
