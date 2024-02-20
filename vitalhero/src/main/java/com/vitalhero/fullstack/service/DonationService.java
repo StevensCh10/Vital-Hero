@@ -2,26 +2,26 @@ package com.vitalhero.fullstack.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-import com.vitalhero.fullstack.model.Donations;
-import com.vitalhero.fullstack.repository.DonationsRepository;
+import com.vitalhero.fullstack.model.Donation;
+import com.vitalhero.fullstack.repository.DonationRepository;
 
 @Service
-public class DonationsService {
+public class DonationService {
     
-    private DonationsRepository repository;
+    private DonationRepository repository;
 
-    public DonationsService(DonationsRepository repository){
+    public DonationService(DonationRepository repository){
         this.repository = repository;
     }
 
-    public Donations find(Long id){
+    public Donation find(Long id){
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Doação não encontrada!"));
     }
     
-    public Donations addDonation(Donations newDonation){
+    public Donation addDonation(Donation newDonation){
         Long donorID = newDonation.getDonor().getId();
         Long schedulingID = newDonation.getScheduling().getId();
-        Donations donation = repository.findByDonorAndScheduling(donorID, schedulingID); //testar
+        Donation donation = repository.findByDonorAndScheduling(donorID, schedulingID);
 
         if(donation != null){
             throw new RuntimeException("Doação já foi adicionada!");
@@ -29,7 +29,7 @@ public class DonationsService {
         return newDonation;
     }
     
-    public List<Donations> allDonationsByDonor(Long donorID){
+    public List<Donation> allDonationsByDonor(Long donorID){
         return repository.allDonationsByDonor(donorID);
     }
 

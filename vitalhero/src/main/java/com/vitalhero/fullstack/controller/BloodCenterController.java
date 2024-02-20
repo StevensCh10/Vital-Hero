@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
+import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.service.SchedulingService;
 import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
+import com.vitalhero.fullstack.service.DonationService;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -26,12 +28,14 @@ public class BloodCenterController {
     private final BloodCenterService bloodCenterService;
     private final BloodStockService bloodStockService;
     private final SchedulingService schedulingService;
+    private final DonationService donationService;
 
     public BloodCenterController(BloodCenterService bloodCenterService, BloodStockService bloodStockService,
-            SchedulingService schedulingService){
+            SchedulingService schedulingService, DonationService donationService){
         this.bloodCenterService = bloodCenterService;
         this.bloodStockService = bloodStockService;
         this.schedulingService =schedulingService;
+        this.donationService = donationService;
     }
     
     //BLOODCENTER
@@ -94,5 +98,10 @@ public class BloodCenterController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteScheduling(@PathVariable Long bsID){
         schedulingService.deleteScheduling(bsID);
+    }
+
+    //DONATION
+    public Donation donationMade(@RequestBody Donation newDonation){
+        return donationService.addDonation(newDonation);
     }
 }

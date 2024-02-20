@@ -18,8 +18,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Donations implements Serializable{
+public class Donation implements Serializable{
     
+    //REVER ESSA CLASSE
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
@@ -30,6 +31,8 @@ public class Donations implements Serializable{
     @Valid
     private Donor donor;
 
-    @NotBlank
+    @JoinColumn(name = "fk_scheduling")
+    @OneToOne
+    @Valid
     private Scheduling scheduling;
 }

@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.vitalhero.fullstack.model.DonationForm;
-import com.vitalhero.fullstack.model.Donations;
+import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.service.DonationFormService;
-import com.vitalhero.fullstack.service.DonationsService;
+import com.vitalhero.fullstack.service.DonationService;
 import com.vitalhero.fullstack.service.DonorService;
 import com.vitalhero.fullstack.service.ReviewService;
 import com.vitalhero.fullstack.service.SchedulingService;
@@ -35,12 +35,12 @@ public class DonorController {
     private final SchedulingService schedulingService;
     private final ScreeningService screeningService;
     private final DonationFormService donationFormService;
-    private final DonationsService donationsService;
+    private final DonationService donationsService;
     private final ReviewService reviewService;
 
     public DonorController(DonorService donorService, SchedulingService schedulingService,
             ScreeningService screeningService, DonationFormService donationFormService,
-            DonationsService donationsService, ReviewService reviewService){
+            DonationService donationsService, ReviewService reviewService){
         
         this.donorService = donorService;
         this.schedulingService = schedulingService;
@@ -132,8 +132,8 @@ public class DonorController {
         donationFormService.deleteDonationForm(donationFormID);
     }
 
-    //DONATIONS
-    public List<Donations> allDonationsByDonor(@PathVariable Long donorID){
+    //DONATION
+    public List<Donation> allDonationsByDonor(@PathVariable Long donorID){
         return donationsService.allDonationsByDonor(donorID);
     }
 }
