@@ -12,5 +12,5 @@ public interface BloodStockRepository extends JpaRepository<BloodStock, Long>{
         value = "SELECT * FROM blood_stock WHERE fk_bloodcenter = :bloodCenterID",
         nativeQuery = true
     )
-    Optional<BloodStock> findByBloodCenter(@Param("bloodCenterID") Long bloodCenterID);
+    BloodStock findByBloodCenter(@Param("bloodCenterID") Long bloodCenterID);
 }

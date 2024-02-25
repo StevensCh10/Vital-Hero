@@ -21,7 +21,7 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
         value = "UPDATE donor SET fk_scheduling = :schedulingID WHERE id = :donorID",
         nativeQuery = true
     )
-    Donor updateFkScheduling(@Param("schedulingID")Long schedulingID, @Param("donorID") Long donorID);
+    void updateFkScheduling(@Param("schedulingID")Long schedulingID, @Param("donorID") Long donorID);
     
     @Transactional
     @Modifying

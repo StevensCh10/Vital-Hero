@@ -31,7 +31,7 @@ public class SchedulingService {
     public Scheduling addScheduling(Scheduling newSched){
         Long bloodCenterID = newSched.getBloodcenter().getId();
         Scheduling exists = repository.findByBloodCenterAndDateAndHour(
-            bloodCenterID, newSched.getDate(), newSched.getHour());
+            bloodCenterID, newSched.getDateTime());
         
         if(exists != null){
             throw new RuntimeException("Agenda já existe");

@@ -87,9 +87,10 @@ public class DonorController {
 
     //SCHEDULING
     @PutMapping("/toschedule/{donorID}/{schedulingID}")
-    public Donor toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
+    @ResponseStatus(HttpStatus.OK)
+    public void toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
         schedulingService.find(schedulingID);
-        return donorService.toSchedule(donorID, schedulingID);
+        donorService.toSchedule(donorID, schedulingID);
     }
 
     @GetMapping("/scheduled/{donorID}")
@@ -99,8 +100,9 @@ public class DonorController {
     }
 
     @PutMapping("/unschedule/{donorID}")
-    public Donor unschdule(@PathVariable Long donorID){
-        return donorService.scheduleMadeOrUnscheduled(donorID);
+    @ResponseStatus(HttpStatus.OK)
+    public void unschdule(@PathVariable Long donorID){
+        donorService.scheduleMadeOrUnscheduled(donorID);
     }
 
     //SCREENING

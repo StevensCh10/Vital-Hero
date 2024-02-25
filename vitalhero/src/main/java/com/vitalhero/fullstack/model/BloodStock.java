@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class BloodStock implements Serializable{
     //@Valid
     private BloodCenter bloodcenter;
 
-    @NotBlank
+    @NotNull
     @Column(updatable = true)
     private float O_positive, O_negative, A_positive, A_negative, B_positive, B_negative, AB_positive, AB_negative;
 }

@@ -52,36 +52,30 @@ public class DonorService {
     @Transactional
 	public Donor update(Donor donorAtt, Long id) {
 		Donor currentDonor = find(id);
-		Donor findedByName = repository.findByName(donorAtt.getName());
         Donor findedByCpf = repository.findByCpf(donorAtt.getCpf());
         Donor findedByEmail = repository.findByEmail(donorAtt.getEmail());
 		
-		if(findedByName != null && findedByName.getId() != id) {
-			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", donorAtt.getName()));
-            throw new RuntimeException("Nome indiponível!");
-		}else if(findedByCpf != null && findedByCpf.getId() != id){
-            throw new RuntimeException("Cpf indiponível!");
+		if(findedByCpf != null && findedByCpf.getId() != id){
+            throw new RuntimeException("Cpf indisponível!");
         }else if(findedByEmail != null && findedByEmail.getId() != id){
-            throw new RuntimeException("Email indiponível!");
+            throw new RuntimeException("Email indisponível!");
         }
 
 		BeanUtils.copyProperties(donorAtt, currentDonor, "id");
 		return repository.saveAndFlush(currentDonor);
 	}
 
-    public Donor toSchedule(Long schedulingID, Long id){
+    public void toSchedule(Long schedulingID, Long id){
         find(id);
-        //Verificar no controller se o id do scheduling é válido
-        return repository.updateFkScheduling(schedulingID, id);
+        repository.updateFkScheduling(schedulingID, id);
     }
 
-    public Donor scheduleMadeOrUnscheduled(Long id){
+    public void scheduleMadeOrUnscheduled(Long id){
         Donor donor = find(id);
         if(donor.getScheduling() == null){
-            
+            throw new RuntimeException("Doador não está agendado.");
         }
         repository.FkSchedulingToNull(id);
-        return find(id);
     }
     
     public void deleteDonor(Long id){
