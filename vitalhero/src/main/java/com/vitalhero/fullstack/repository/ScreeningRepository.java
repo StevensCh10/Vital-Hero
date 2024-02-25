@@ -13,4 +13,10 @@ public interface ScreeningRepository extends JpaRepository<Screening, Long>{
         nativeQuery = true
     )
     List<Screening> allScreening(@Param("donorID") Long donorID);
+
+    @Query(
+        value = "UPDATE screening SET fk_donor = :donorID WHERE id = :id",
+        nativeQuery = true
+    )
+    void validate(@Param("id") Long id, @Param("donorID") Long donorID);
 }

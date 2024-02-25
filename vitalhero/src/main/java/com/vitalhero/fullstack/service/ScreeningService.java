@@ -15,7 +15,7 @@ public class ScreeningService {
         this.repository = repository;
     }
 
-    public Screening findScreening(Long id){
+    public Screening find(Long id){
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Triagem não encontrada"));
     }
 
@@ -32,8 +32,9 @@ public class ScreeningService {
         return repository.allScreening(donorID);
     }
 
-    public Screening validatedScreening(Long doctorID){
-        return null;
+    public void validatedScreening(Long id, Long doctorID){
+        find(doctorID);
+        repository.validate(id, doctorID);
     }
     
 }
