@@ -39,5 +39,5 @@ public class BloodStock implements Serializable{
 
     @NotNull
     @Column(updatable = true)
-    private float O_positive, O_negative, A_positive, A_negative, B_positive, B_negative, AB_positive, AB_negative;
+    private float o_positive, o_negative, a_positive, a_negative, b_positive, b_negative, ab_positive, ab_negative;
 }
