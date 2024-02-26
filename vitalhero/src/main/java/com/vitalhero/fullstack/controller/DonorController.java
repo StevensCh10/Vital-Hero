@@ -140,6 +140,7 @@ public class DonorController {
     }
 
     //DONATION
+    @GetMapping("/donationform/all/{donorID}")
     public List<Donation> allDonationsByDonor(@PathVariable Long donorID){
         return donationsService.allDonationsByDonor(donorID);
     }

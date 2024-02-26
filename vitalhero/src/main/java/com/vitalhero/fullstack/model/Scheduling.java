@@ -1,12 +1,9 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

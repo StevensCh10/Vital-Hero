@@ -1,6 +1,7 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
@@ -38,6 +39,19 @@ public class SchedulingService {
         }
         return repository.save(newSched);
     }
+
+    @Transactional
+	public Scheduling update(Scheduling schedulingAtt) {
+		Scheduling currentScheduling = find(schedulingAtt.getId());
+		
+		if(schedulingAtt.getBloodcenter().getId() != currentScheduling.getBloodcenter().getId()) {
+			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", schedulingAtt.getName()));
+            throw new RuntimeException("Não é possível alterar o hemocentro do agendamento!");
+		}
+
+		BeanUtils.copyProperties(schedulingAtt, currentScheduling, "id");
+		return repository.saveAndFlush(currentScheduling);
+	}
 
     public void deleteScheduling(Long id){
         find(id);

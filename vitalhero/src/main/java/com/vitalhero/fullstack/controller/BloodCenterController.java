@@ -48,7 +48,7 @@ public class BloodCenterController {
     }
 
     @PutMapping()
-    public BloodCenter updateeBloodCenter(@RequestBody BloodCenter bloodCenterAtt){
+    public BloodCenter updateBloodCenter(@RequestBody BloodCenter bloodCenterAtt){
         return bloodCenterService.update(bloodCenterAtt);
     }
 
@@ -69,7 +69,7 @@ public class BloodCenterController {
         return bloodStockService.addBloodStock(newBloodStock);
     }
 
-    @PutMapping()
+    @PutMapping("/bloodstock")
     public BloodStock updateBloodStock(@RequestBody BloodStock bloodStockAtt){
         return bloodStockService.update(bloodStockAtt);
     }
@@ -96,6 +96,11 @@ public class BloodCenterController {
         return schedulingService.addScheduling(newSched);
     }
 
+    @PutMapping("/scheduling")
+    public Scheduling updateScheduling(@RequestBody @Valid Scheduling schedulingAtt){
+        return schedulingService.update(schedulingAtt);
+    }
+
     @GetMapping("scheduling/{schedID}")
     public Scheduling find(@PathVariable Long schedID){
         return schedulingService.find(schedID);
@@ -113,6 +118,7 @@ public class BloodCenterController {
     }
 
     //DONATION
+    @PostMapping("/donation")
     public Donation donationMade(@RequestBody Donation newDonation){
         return donationService.addDonation(newDonation);
     }

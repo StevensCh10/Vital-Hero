@@ -26,7 +26,7 @@ public class DonationService {
         if(donation != null){
             throw new RuntimeException("Doação já foi adicionada!");
         }
-        return newDonation;
+        return repository.save(newDonation);
     }
     
     public List<Donation> allDonationsByDonor(Long donorID){
