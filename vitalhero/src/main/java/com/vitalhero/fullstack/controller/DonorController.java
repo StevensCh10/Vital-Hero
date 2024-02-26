@@ -62,6 +62,11 @@ public class DonorController {
         return donorService.register(donor);
     }
 
+    @PutMapping()
+    public Donor updateDonor(@RequestBody @Valid Donor donorAtt){
+        return donorService.update(donorAtt);
+    }
+
     @GetMapping("/{donorID}")
     public Donor getDonor(@PathVariable Long donorID){
         return donorService.find(donorID);
@@ -107,7 +112,7 @@ public class DonorController {
 
     //SCREENING
     @PostMapping("/screening")
-    public Screening doScreening(@RequestBody Screening newScreening){
+    public Screening doScreening(@RequestBody @Valid Screening newScreening){
         return screeningService.addScreening(newScreening);
     }
 
@@ -119,7 +124,7 @@ public class DonorController {
 
     //DONATIONFORM
     @PostMapping("/donationform")
-    public DonationForm fillOutDonationForm(@RequestBody DonationForm newDonation){
+    public DonationForm fillOutDonationForm(@RequestBody @Valid DonationForm newDonation){
         return donationFormService.addDonationForm(newDonation);
     }
 

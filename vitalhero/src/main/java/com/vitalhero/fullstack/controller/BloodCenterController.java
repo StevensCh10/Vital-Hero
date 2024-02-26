@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +17,7 @@ import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.service.SchedulingService;
+import jakarta.validation.Valid;
 import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
 import com.vitalhero.fullstack.service.DonationService;
@@ -41,8 +43,13 @@ public class BloodCenterController {
     //BLOODCENTER
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public BloodCenter addBloodCenter(@RequestBody BloodCenter newBloodCenter){
+    public BloodCenter addBloodCenter(@RequestBody @Valid BloodCenter newBloodCenter){
         return bloodCenterService.addBloodCenter(newBloodCenter);
+    }
+
+    @PutMapping()
+    public BloodCenter updateeBloodCenter(@RequestBody BloodCenter bloodCenterAtt){
+        return bloodCenterService.update(bloodCenterAtt);
     }
 
     @GetMapping("/{bcID}")
@@ -58,8 +65,13 @@ public class BloodCenterController {
 
     //BLOODSTOCK
     @PostMapping("/bloodstock")
-    public BloodStock addBloodStock(@RequestBody BloodStock newBloodStock){
+    public BloodStock addBloodStock(@RequestBody @Valid BloodStock newBloodStock){
         return bloodStockService.addBloodStock(newBloodStock);
+    }
+
+    @PutMapping()
+    public BloodStock updateBloodStock(@RequestBody BloodStock bloodStockAtt){
+        return bloodStockService.update(bloodStockAtt);
     }
 
     @GetMapping("bloodstock/{bsID}")
@@ -80,7 +92,7 @@ public class BloodCenterController {
 
     //SCHEDULING
     @PostMapping("/scheduling")
-    public Scheduling addScheduling(@RequestBody Scheduling newSched){
+    public Scheduling addScheduling(@RequestBody @Valid Scheduling newSched){
         return schedulingService.addScheduling(newSched);
     }
 

@@ -2,6 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import jakarta.transaction.Transactional;
@@ -50,15 +52,18 @@ public class DonorService {
 	}
 
     @Transactional
-	public Donor update(Donor donorAtt, Long id) {
-		Donor currentDonor = find(id);
+	public Donor update(Donor donorAtt) {
+		Donor currentDonor = find(donorAtt.getId());
         Donor findedByCpf = repository.findByCpf(donorAtt.getCpf());
         Donor findedByEmail = repository.findByEmail(donorAtt.getEmail());
-		
-		if(findedByCpf != null && findedByCpf.getId() != id){
+		Donor findedByPhone = repository.findByPhone(donorAtt.getPhone());
+
+		if(findedByCpf != null && findedByCpf.getId() != donorAtt.getId()){
             throw new RuntimeException("Cpf indisponível!");
-        }else if(findedByEmail != null && findedByEmail.getId() != id){
+        }else if(findedByEmail != null && findedByEmail.getId() != donorAtt.getId()){
             throw new RuntimeException("Email indisponível!");
+        }else if(findedByPhone != null && findedByPhone.getId() != donorAtt.getId()){
+            throw new RuntimeException("Phone indiponível!");
         }
 
 		BeanUtils.copyProperties(donorAtt, currentDonor, "id");

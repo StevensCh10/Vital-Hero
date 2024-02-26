@@ -1,8 +1,10 @@
 package com.vitalhero.fullstack.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.repository.BloodStockRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class BloodStockService {
@@ -27,6 +29,19 @@ public class BloodStockService {
         }
         throw new RuntimeException("Não é possível adicionar esse estoque, pois o Hemocentro já possui um estoque sanguíneo");
     }
+
+    @Transactional
+	public BloodStock update(BloodStock bloodStockAtt) {
+		BloodStock currentBloodStock = find(bloodStockAtt.getId());
+		
+		if(bloodStockAtt.getBloodcenter().getId() != currentBloodStock.getBloodcenter().getId()) {
+			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", bloodStockAtt.getName()));
+            throw new RuntimeException("Hemocentro não pode ser atualizado!");
+		}
+
+		BeanUtils.copyProperties(bloodStockAtt, currentBloodStock, "id");
+		return repository.saveAndFlush(currentBloodStock);
+	}
 
     public void deleteBloodStock(Long id){
         find(id);

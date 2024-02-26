@@ -4,7 +4,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -37,22 +36,25 @@ public class DoctorService {
 	}
 
     @Transactional
-	public Doctor update(Doctor doctorAtt, Long id) {
-		Doctor currentDoctor = find(id);
+	public Doctor update(Doctor doctorAtt) {
+		Doctor currentDoctor = find(doctorAtt.getId());
 		Doctor findedByName = repository.findByName(doctorAtt.getName());
         Doctor findedByCpf = repository.findByCpf(doctorAtt.getCpf());
         Doctor findedByCrm = repository.findByCrm(doctorAtt.getEmail());
         Doctor findedByEmail = repository.findByEmail(doctorAtt.getEmail());
+        Doctor findedByPhone = repository.findByPhone(doctorAtt.getPhone());
 		
-		if(findedByName != null && findedByName.getId() != id) {
+		if(findedByName != null && findedByName.getId() != doctorAtt.getId()) {
 			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", doctorAtt.getName()));
             throw new RuntimeException("Nome indiponível!");
-		}else if(findedByCpf != null && findedByCpf.getId() != id){
+		}else if(findedByCpf != null && findedByCpf.getId() != doctorAtt.getId()){
             throw new RuntimeException("Cpf indiponível!");
-        }else if(findedByEmail != null && findedByEmail.getId() != id){
+        }else if(findedByEmail != null && findedByEmail.getId() != doctorAtt.getId()){
             throw new RuntimeException("Email indiponível!");
-        }else if(findedByCrm != null && findedByCrm.getId() != id){
+        }else if(findedByCrm != null && findedByCrm.getId() != doctorAtt.getId()){
             throw new RuntimeException("Crm indiponível!");
+        }else if(findedByPhone != null && findedByPhone.getId() != doctorAtt.getId()){
+            throw new RuntimeException("Phone indiponível!");
         }
 
 		BeanUtils.copyProperties(doctorAtt, currentDoctor, "id");

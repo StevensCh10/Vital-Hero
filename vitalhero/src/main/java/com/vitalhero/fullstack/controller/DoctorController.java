@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.vitalhero.fullstack.model.Doctor;
-import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.service.DoctorService;
 import com.vitalhero.fullstack.service.ScreeningService;
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -30,8 +30,13 @@ public class DoctorController {
     }
     
     @PostMapping()
-    public Doctor addDoctor(@RequestBody Doctor newDoctor){
+    public Doctor addDoctor(@RequestBody @Valid Doctor newDoctor){
         return doctorService.register(newDoctor);
+    }
+
+    @PutMapping()
+    public Doctor updateDoctor(@RequestBody Doctor doctorAtt){
+        return doctorService.update(doctorAtt);
     }
 
     @GetMapping("/{docID}")
@@ -44,6 +49,7 @@ public class DoctorController {
         doctorService.deleteDoctor(docID);
     }
 
+    //SCREENING
     @PutMapping("/validatescreening/{screeningID}/{docID}")
     @ResponseStatus(HttpStatus.OK)
     public void validateScreening(@PathVariable Long screeningID, @PathVariable Long docID){
