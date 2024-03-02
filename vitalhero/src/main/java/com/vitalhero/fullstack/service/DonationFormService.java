@@ -1,6 +1,8 @@
 package com.vitalhero.fullstack.service;
 
 import org.springframework.stereotype.Service;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.repository.DonationFormRepository;
 
@@ -14,7 +16,7 @@ public class DonationFormService {
     }
 
     public DonationForm findByDonor(Long donorID){
-        return repository.findByDonor(donorID).orElseThrow(() -> new RuntimeException("Você ainda não preencheu seu formulário de doação!"));
+        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFound(String.format("Formuçário com id '%d' não está registrado", donorID)));
     }
 
     public DonationForm addDonationForm(DonationForm newDonationForm){
@@ -22,7 +24,7 @@ public class DonationFormService {
             return repository.save(newDonationForm);
         }
 
-        throw new RuntimeException("Você já preencheu seu formulário de doação");
+        throw new EntityAlreadyExists("O doador só precisa preencher um formulário de doação uma vez.");
     }
 
     public void deleteDonationForm(Long id){

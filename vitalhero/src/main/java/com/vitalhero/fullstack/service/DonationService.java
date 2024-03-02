@@ -2,6 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.repository.DonationRepository;
 
@@ -15,7 +17,7 @@ public class DonationService {
     }
 
     public Donation find(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Doação não encontrada!"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Doação com id '%d' não está registrada.", id)));
     }
     
     public Donation addDonation(Donation newDonation){
@@ -24,7 +26,7 @@ public class DonationService {
         Donation donation = repository.findByDonorAndScheduling(donorID, schedulingID);
 
         if(donation != null){
-            throw new RuntimeException("Doação já foi adicionada!");
+            throw new EntityAlreadyExists("Esta doação já foi registrada.");
         }
         return repository.save(newDonation);
     }

@@ -2,6 +2,9 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import com.vitalhero.fullstack.exception.CannotBeUpdated;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.repository.BloodStockRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +19,7 @@ public class BloodStockService {
     }
 
     public BloodStock find(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Estoque sanguíneo não encontrado!"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Estoque sanguíneo com id '%d' não está registrado.", id)));
     }
 
     public BloodStock findByBloodCenter(Long bcID){
@@ -27,7 +30,7 @@ public class BloodStockService {
         if(findByBloodCenter(newBloodStock.getBloodcenter().getId()) == null){
             return repository.save(newBloodStock);
         }
-        throw new RuntimeException("Não é possível adicionar esse estoque, pois o Hemocentro já possui um estoque sanguíneo");
+        throw new EntityAlreadyExists(String.format("Não é possível adicionar esse estoque sanguíneo, pois o Hemocentro '%s' já possui um estoque sanguíneo.", newBloodStock.getBloodcenter().getName()));
     }
 
     @Transactional
@@ -36,7 +39,7 @@ public class BloodStockService {
 		
 		if(bloodStockAtt.getBloodcenter().getId() != currentBloodStock.getBloodcenter().getId()) {
 			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", bloodStockAtt.getName()));
-            throw new RuntimeException("Hemocentro não pode ser atualizado!");
+            throw new CannotBeUpdated("O id do Hemocentro não pode ser atualizado");
 		}
 
 		BeanUtils.copyProperties(bloodStockAtt, currentBloodStock, "id");

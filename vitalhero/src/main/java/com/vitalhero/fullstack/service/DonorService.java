@@ -2,8 +2,9 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import com.vitalhero.fullstack.model.Doctor;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFound;
+import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import jakarta.transaction.Transactional;
@@ -21,7 +22,7 @@ public class DonorService {
     //Provavelmente tenho que validar como será a exclusão de outras entidades que tem um Donor como FK
 
     public Donor find(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Doador não encontrado"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Doador com id '%d' não está registrado.", id)));
     }
 
     public Donor checkLogin(String email, String password) {
@@ -29,11 +30,9 @@ public class DonorService {
 		
 		if(donor == null) {
 			if(repository.findByEmail(email) == null) {
-				//throw new EntityNotFoundInTheAppeal(String.format("donor '%s' not unregistered.", email));
-                throw new RuntimeException("Doador não cadastrado");
+                throw new EntityNotFoundInTheAppeal(String.format("Email '%s' não está cadastrado.", email));
 			}
-			//throw new EntityNotFoundInTheAppeal("Incorret password.");
-            throw new RuntimeException("Senha incorreta");
+            throw new EntityNotFoundInTheAppeal("Senha incorreta");
 		}
 		return donor;
 	}
@@ -42,13 +41,11 @@ public class DonorService {
 	public Donor register(Donor donor) {
 		if(repository.findByCpf(donor.getCpf()) == null) {
 			if(repository.findByEmail(donor.getEmail()) != null) {
-				//throw new EntityAlreadyExists(String.format("Email '%s' is already registered.", donor.getEmail()));
-                throw new RuntimeException("Email já cadastrado");
+                throw new EntityAlreadyExists(String.format("Email '%s' já está cadastrado.", donor.getEmail()));
 			}
 			return repository.save(donor);			
 		}
-		//throw new EntityAlreadyExists(String.format("Name '%s' unavailable.", user.getName()));
-        throw new RuntimeException("Cpf já cadastrado");
+        throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", donor.getCpf()));
 	}
 
     @Transactional
@@ -59,11 +56,11 @@ public class DonorService {
 		Donor findedByPhone = repository.findByPhone(donorAtt.getPhone());
 
 		if(findedByCpf != null && findedByCpf.getId() != donorAtt.getId()){
-            throw new RuntimeException("Cpf indisponível!");
+            throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", donorAtt.getCpf()));
         }else if(findedByEmail != null && findedByEmail.getId() != donorAtt.getId()){
-            throw new RuntimeException("Email indisponível!");
+            throw new EntityAlreadyExists(String.format("Email '%s' indisponível.", donorAtt.getEmail()));
         }else if(findedByPhone != null && findedByPhone.getId() != donorAtt.getId()){
-            throw new RuntimeException("Phone indiponível!");
+            throw new EntityAlreadyExists(String.format("Telefone '%s' indisponível.", donorAtt.getPhone()));
         }
 
 		BeanUtils.copyProperties(donorAtt, currentDonor, "id");
@@ -78,47 +75,14 @@ public class DonorService {
     public void scheduleMadeOrUnscheduled(Long id){
         Donor donor = find(id);
         if(donor.getScheduling() == null){
-            throw new RuntimeException("Doador não está agendado.");
+            throw new EntityNotFound(String.format("Doador '%s' não está agendado em nenhuma doação.", donor.getName()));
         }
         repository.FkSchedulingToNull(id);
     }
     
+    //Verificar se o doador que vai ser deletado não está ligado a outras entidades (fazer isso nas outras classes também)
     public void deleteDonor(Long id){
         find(id);
         repository.deleteById(id);
     }
-
-    /* --ESSES MÉTODOS PODEM SER RETIRADOS DAQUI E A LÓGICA SER COLOCADA NO CONTROLLER--
-
-    public Scheduling scheduled(Long donorID){    
-        Donor donor = find(donorID);
-        return schedulingService.find(donor.getScheduling().getId());
-    }
-
-    public List<Screening> allScreenings(Long donorID){
-        find(donorID);
-        return screeningService.allScreeningsByDonor(donorID);
-    }
-
-    public List<Donations> donations(Long donorID){
-        find(donorID);
-        return donationsService.allDonationsByDonor(donorID);
-    }
-
-    public Review getReview(Long donorID){
-        find(donorID);
-        return reviewService.reviewByDonor(donorID);
-    }
-    
-    public DonationForm getDonationForm(Long donorID){
-        find(donorID);
-        DonationForm donationF = donationFormRepository.findByDonor(donorID);
-        
-        if(donationF == null){
-            throw new RuntimeException("Você ainda não realizou o seu fomulários de doação !");
-        }
-        return donationF;
-    }
-    */
-
 }

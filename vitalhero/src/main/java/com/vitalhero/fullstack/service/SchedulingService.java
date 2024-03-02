@@ -3,6 +3,9 @@ package com.vitalhero.fullstack.service;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import com.vitalhero.fullstack.exception.CannotBeUpdated;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.repository.SchedulingRepository;
@@ -18,7 +21,7 @@ public class SchedulingService {
     }
 
     public Scheduling find(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Agendamento não encontrado!"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Agendamento com id '%d' não encontrado.", id)));
     }
 
     public Scheduling findByDonor(Donor donor){
@@ -35,7 +38,7 @@ public class SchedulingService {
             bloodCenterID, newSched.getDateTime());
         
         if(exists != null){
-            throw new RuntimeException("Agenda já existe");
+            throw new EntityAlreadyExists("Agenda já está cadastrada");
         }
         return repository.save(newSched);
     }
@@ -46,7 +49,7 @@ public class SchedulingService {
 		
 		if(schedulingAtt.getBloodcenter().getId() != currentScheduling.getBloodcenter().getId()) {
 			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", schedulingAtt.getName()));
-            throw new RuntimeException("Não é possível alterar o hemocentro do agendamento!");
+            throw new CannotBeUpdated(String.format("Não é possível alterar o id do hemocentro do agendamento!"));
 		}
 
 		BeanUtils.copyProperties(schedulingAtt, currentScheduling, "id");

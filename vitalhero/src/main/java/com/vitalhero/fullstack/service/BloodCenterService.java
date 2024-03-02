@@ -2,6 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +18,7 @@ public class BloodCenterService {
     }
 
     public BloodCenter find(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Hemocentro não encontrado!"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Hemocentro com id %d não está registrado.", id)));
     }
     
     public BloodCenter addBloodCenter(BloodCenter newBloodCenter){
@@ -25,11 +27,11 @@ public class BloodCenterService {
                 if(repository.findByAddress(newBloodCenter.getAddress()) == null){
                     return repository.save(newBloodCenter);
                 }
-                throw new RuntimeException("Endereço cadastrado/indisponível!");
+                throw new EntityAlreadyExists(String.format("Endereço '%s' já está cadastrado no nosso sistema.", newBloodCenter.getAddress()));
             }
-            throw new RuntimeException("Email institucional cadastrado/indisponível!");
+            throw new EntityAlreadyExists(String.format("Email institucional '%s' já está cadastrado no nosso sistema.", newBloodCenter.getInstitutionalEmail()));
         }
-        throw new RuntimeException("Nome cadastrado/indisponível!");
+        throw new EntityAlreadyExists(String.format("Nome '%s' indisponível", newBloodCenter.getName()));
     }
 
     @Transactional
@@ -41,14 +43,13 @@ public class BloodCenterService {
         BloodCenter findedByPhone = repository.findByPhone(bloodCenterAtt.getPhone());
 		
 		if(findedByName != null && findedByName.getId() != bloodCenterAtt.getId()) {
-			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", bloodCenterAtt.getName()));
-            throw new RuntimeException("Nome indiponível!");
+            throw new EntityAlreadyExists(String.format("Nome '%s' indisponível", bloodCenterAtt.getName()));
 		}else if(findedByInstitutionalEmail != null && findedByInstitutionalEmail.getId() != bloodCenterAtt.getId()){
-            throw new RuntimeException("Email indiponível!");
+            throw new EntityAlreadyExists(String.format("Email '%s' indisponível.", bloodCenterAtt.getInstitutionalEmail()));
         }else if(findedByPhone != null && findedByPhone.getId() != bloodCenterAtt.getId()){
-            throw new RuntimeException("Telefone indiponível!");
+            throw new EntityAlreadyExists(String.format("Telefone '%s' indisponível.", bloodCenterAtt.getPhone()));
         }else if(findedByAddress != null && findedByAddress.getId() != bloodCenterAtt.getId()){
-            throw new RuntimeException("Endereço indiponível!");
+            throw new EntityAlreadyExists(String.format("Endereço '%s' indisponível.", bloodCenterAtt.getAddress()));
         }
 
 		BeanUtils.copyProperties(bloodCenterAtt, currentBloodCenter, "id");

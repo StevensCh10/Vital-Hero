@@ -2,6 +2,7 @@ package com.vitalhero.fullstack.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.ScreeningRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +17,7 @@ public class ScreeningService {
     }
 
     public Screening find(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Triagem não encontrada"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Triagem com id '%d' não encontrada", id)));
     }
 
     @Transactional

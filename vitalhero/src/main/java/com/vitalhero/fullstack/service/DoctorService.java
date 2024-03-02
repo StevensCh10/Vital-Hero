@@ -2,6 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import jakarta.transaction.Transactional;
@@ -16,7 +18,7 @@ public class DoctorService {
     }
 
     public Doctor find(Long id){
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Médico não encontrado"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Médico com id '%d' não está registrado", id)));
     }
 
     @Transactional
@@ -26,13 +28,13 @@ public class DoctorService {
                 if(repository.findByCrm(doctor.getCrm()) == null){
                     return repository.save(doctor);			
                 }
-                throw new RuntimeException("Crm já cadastrado");    
+                throw new EntityAlreadyExists(String.format("Crm '%s' indisponível", doctor.getCrm()));    
 			}
             //throw new EntityAlreadyExists(String.format("Email '%s' is already registered.", doctor.getEmail()));
-            throw new RuntimeException("Email já cadastrado");
+            throw new EntityAlreadyExists(String.format("Email '%s' já está cadastrado", doctor.getEmail()));
 		}
 		//throw new EntityAlreadyExists(String.format("Name '%s' unavailable.", user.getName()));
-        throw new RuntimeException("Cpf já cadastrado");
+        throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível", doctor.getCpf()));
 	}
 
     @Transactional
@@ -45,16 +47,15 @@ public class DoctorService {
         Doctor findedByPhone = repository.findByPhone(doctorAtt.getPhone());
 		
 		if(findedByName != null && findedByName.getId() != doctorAtt.getId()) {
-			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", doctorAtt.getName()));
-            throw new RuntimeException("Nome indiponível!");
+            throw new EntityAlreadyExists(String.format("Nome '%s' indisponível", doctorAtt.getName()));
 		}else if(findedByCpf != null && findedByCpf.getId() != doctorAtt.getId()){
-            throw new RuntimeException("Cpf indiponível!");
+            throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", doctorAtt.getCpf()));
         }else if(findedByEmail != null && findedByEmail.getId() != doctorAtt.getId()){
-            throw new RuntimeException("Email indiponível!");
+            throw new EntityAlreadyExists(String.format("Email '%s' indisponível.", doctorAtt.getEmail()));
         }else if(findedByCrm != null && findedByCrm.getId() != doctorAtt.getId()){
-            throw new RuntimeException("Crm indiponível!");
+            throw new EntityAlreadyExists(String.format("Crm '%s' indisponível.", doctorAtt.getCrm()));
         }else if(findedByPhone != null && findedByPhone.getId() != doctorAtt.getId()){
-            throw new RuntimeException("Phone indiponível!");
+            throw new EntityAlreadyExists(String.format("Telefone '%s' indisponível.", doctorAtt.getPhone()));
         }
 
 		BeanUtils.copyProperties(doctorAtt, currentDoctor, "id");
