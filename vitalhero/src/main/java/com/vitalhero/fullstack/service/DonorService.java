@@ -80,7 +80,6 @@ public class DonorService {
         repository.FkSchedulingToNull(id);
     }
     
-    //Verificar se o doador que vai ser deletado não está ligado a outras entidades (fazer isso nas outras classes também)
     public void deleteDonor(Long id){
         find(id);
         repository.deleteById(id);

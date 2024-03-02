@@ -30,7 +30,7 @@ public class BloodStockService {
         if(findByBloodCenter(newBloodStock.getBloodcenter().getId()) == null){
             return repository.save(newBloodStock);
         }
-        throw new EntityAlreadyExists(String.format("Não é possível adicionar esse estoque sanguíneo, pois o Hemocentro '%s' já possui um estoque sanguíneo.", newBloodStock.getBloodcenter().getName()));
+        throw new EntityAlreadyExists("Não é possível adicionar outro estoque sanguíneo para o mesmo Hemocentro.");
     }
 
     @Transactional

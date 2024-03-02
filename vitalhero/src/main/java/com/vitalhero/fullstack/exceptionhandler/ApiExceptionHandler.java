@@ -55,9 +55,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
 	}
 	
-	@ExceptionHandler(EntityInUse.class)
-	public ResponseEntity<?> handleEntityInUse(EntityInUse e, WebRequest request){
-		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.ENTITY_IN_USE, e.getMessage());
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<?> handleDataIntegrityViolantionException(DataIntegrityViolationException e, WebRequest request){
+		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.ENTITY_IN_USE, "Essa entidade está relacionada com outras entidades e não pode ser removida");
 		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
 	}
 	

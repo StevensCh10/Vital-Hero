@@ -60,6 +60,4 @@ public class BloodCenterService {
         find(id);
         repository.deleteById(id);
     }
-
-    //public Scheduling updateScheduling(Scheduling sched){}    
 }

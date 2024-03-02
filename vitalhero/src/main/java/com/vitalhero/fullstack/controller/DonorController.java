@@ -72,6 +72,12 @@ public class DonorController {
         return donorService.find(donorID);
     }
 
+    @DeleteMapping("/{donorID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDonor(@PathVariable Long donorID){
+        donorService.deleteDonor(donorID);
+    }
+
     //REVIEW
     @PostMapping("/review")
     @ResponseStatus(HttpStatus.CREATED)
@@ -88,6 +94,12 @@ public class DonorController {
     public Review getReview(@PathVariable Long donorID){
         donorService.find(donorID);
         return reviewService.findByDonor(donorID);
+    }
+
+    @DeleteMapping("review/{reviewID}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteReview(@PathVariable Long reviewID){
+        reviewService.deleteReview(reviewID);
     }
 
     //SCHEDULING
