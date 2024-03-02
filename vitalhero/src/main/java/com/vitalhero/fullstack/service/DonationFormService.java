@@ -16,7 +16,7 @@ public class DonationFormService {
     }
 
     public DonationForm findByDonor(Long donorID){
-        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFound(String.format("Formuçário com id '%d' não está registrado", donorID)));
+        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFound(String.format("Formulário com id '%d' não está registrado", donorID)));
     }
 
     public DonationForm addDonationForm(DonationForm newDonationForm){

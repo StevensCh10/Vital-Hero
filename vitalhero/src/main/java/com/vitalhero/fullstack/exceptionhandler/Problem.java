@@ -14,7 +14,7 @@ public class Problem {
 	
 	private LocalDateTime timestamp;
 	private Integer status;
-	private String type, title, detail, userMessage;
+	private String type, title, detail;
 	private List<Field> fields;
 	
 	@Data
