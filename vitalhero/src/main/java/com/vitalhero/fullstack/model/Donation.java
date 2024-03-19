@@ -1,8 +1,13 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +34,8 @@ public class Donation implements Serializable{
 
     @NotNull
     @JsonIgnoreProperties(value = {"scheduling", "name", "cpf", "email", "age", "gender", "maritalStatus", "address", "photo", "phone", "password"}, allowGetters = true)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "fk_donor")
     @ManyToOne
     @Valid
@@ -37,7 +43,6 @@ public class Donation implements Serializable{
 
     @NotNull
     @JsonIgnoreProperties(value = {"bloodcenter", "dateTime"}, allowGetters = true)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "fk_scheduling")
     @ManyToOne
     @Valid

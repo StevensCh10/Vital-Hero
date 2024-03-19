@@ -48,7 +48,6 @@ public class SchedulingService {
 		Scheduling currentScheduling = find(schedulingAtt.getId());
 		
 		if(schedulingAtt.getBloodcenter().getId() != currentScheduling.getBloodcenter().getId()) {
-			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", schedulingAtt.getName()));
             throw new CannotBeUpdated(String.format("Não é possível alterar o id do hemocentro do agendamento!"));
 		}
 
@@ -63,5 +62,9 @@ public class SchedulingService {
 
     public List<Scheduling> schedulingsByBloodCenter(Long bcID){
         return repository.allScheduling(bcID);
+    }
+
+    public List<Scheduling> schedulings(){
+        return repository.findAll();
     }
 }

@@ -12,5 +12,5 @@ public interface DonationFormRepository extends JpaRepository<DonationForm, Long
         value = "SELECT * FROM donation_form WHERE fk_donor = :donorID",
         nativeQuery = true
     )
-    Optional<DonationForm> findByDonor(@Param("donorID") Long donorID);
+    DonationForm findByDonor(@Param("donorID") Long donorID);
 }

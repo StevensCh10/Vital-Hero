@@ -142,7 +142,7 @@ public class DonorController {
 
     @GetMapping("/donationform/findbydonor/{donorID}")
     public DonationForm getDonationForm(@PathVariable Long donorID){
-        return donationFormService.findByDonor(donorID);
+        return donationFormService.verfifyDonationFormByDonor(donorID);
     }
 
     @DeleteMapping("/doantionform")
@@ -154,6 +154,7 @@ public class DonorController {
     //DONATION
     @GetMapping("/donationform/all/{donorID}")
     public List<Donation> allDonationsByDonor(@PathVariable Long donorID){
+        donorService.find(donorID);
         return donationsService.allDonationsByDonor(donorID);
     }
 }

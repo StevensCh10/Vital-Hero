@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
 import com.vitalhero.fullstack.service.DonationService;
+import com.vitalhero.fullstack.service.DonorService;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -31,13 +32,15 @@ public class BloodCenterController {
     private final BloodStockService bloodStockService;
     private final SchedulingService schedulingService;
     private final DonationService donationService;
+    private final DonorService donorService;
 
     public BloodCenterController(BloodCenterService bloodCenterService, BloodStockService bloodStockService,
-            SchedulingService schedulingService, DonationService donationService){
+            SchedulingService schedulingService, DonationService donationService, DonorService donorService){
         this.bloodCenterService = bloodCenterService;
         this.bloodStockService = bloodStockService;
         this.schedulingService =schedulingService;
         this.donationService = donationService;
+        this.donorService = donorService;
     }
     
     //BLOODCENTER
@@ -55,6 +58,11 @@ public class BloodCenterController {
     @GetMapping("/{bcID}")
     public BloodCenter findBloodCenter(@PathVariable Long bcID){
         return bloodCenterService.find(bcID);
+    }
+
+    @GetMapping("/findall")
+    public List<BloodCenter> findAll(){
+        return bloodCenterService.findAll();
     }
 
     @DeleteMapping("/{bcID}")
@@ -111,6 +119,11 @@ public class BloodCenterController {
         return schedulingService.schedulingsByBloodCenter(bcID);
     }
 
+    @GetMapping("/scheduling/all")
+    public List<Scheduling> schedulings(){
+        return schedulingService.schedulings();
+    }
+
     @DeleteMapping("/scheduling/{bsID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteScheduling(@PathVariable Long bsID){
@@ -120,6 +133,8 @@ public class BloodCenterController {
     //DONATION
     @PostMapping("/donation")
     public Donation donationMade(@RequestBody Donation newDonation){
-        return donationService.addDonation(newDonation);
+        Donation donation = donationService.addDonation(newDonation);
+        donorService.scheduleMadeOrUnscheduled(newDonation.getDonor().getId());
+        return donation;
     }
 }

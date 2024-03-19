@@ -16,7 +16,15 @@ public class DonationFormService {
     }
 
     public DonationForm findByDonor(Long donorID){
-        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFound(String.format("Formulário com id '%d' não está registrado", donorID)));
+        return repository.findByDonor(donorID);
+    }
+
+    public DonationForm verfifyDonationFormByDonor(Long donorID){
+        DonationForm found = findByDonor(donorID);
+        if(found == null){
+            throw new EntityNotFound(String.format("Doador não preencheu seu formulário de doação", donorID));
+        }
+        return found;
     }
 
     public DonationForm addDonationForm(DonationForm newDonationForm){

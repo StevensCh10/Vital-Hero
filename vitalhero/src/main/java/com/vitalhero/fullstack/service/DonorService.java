@@ -67,7 +67,7 @@ public class DonorService {
 		return repository.saveAndFlush(currentDonor);
 	}
 
-    public void toSchedule(Long schedulingID, Long id){
+    public void toSchedule(Long id, Long schedulingID){
         find(id);
         repository.updateFkScheduling(schedulingID, id);
     }
