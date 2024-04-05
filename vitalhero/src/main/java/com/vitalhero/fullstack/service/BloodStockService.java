@@ -1,5 +1,7 @@
 package com.vitalhero.fullstack.service;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
@@ -24,6 +26,10 @@ public class BloodStockService {
 
     public BloodStock findByBloodCenter(Long bcID){
         return repository.findByBloodCenter(bcID);
+    }
+
+    public List<BloodStock> findAll(){
+        return repository.findAll();
     }
 
     public BloodStock addBloodStock(BloodStock newBloodStock){

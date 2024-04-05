@@ -87,6 +87,12 @@ public class BloodCenterController {
         return bloodStockService.find(bsID);
     }
 
+    @GetMapping("bloodstock/all")
+    public List<BloodStock> findAllBloodStock(){
+        return bloodStockService.findAll();
+    }
+
+
     @GetMapping("bloodstock/findbybloodcenter/{bcID}")
     public BloodStock findBloodStockByBloodCenter(@PathVariable Long bcID){
         return bloodStockService.findByBloodCenter(bcID);
