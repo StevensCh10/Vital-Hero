@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.map-content {
+  margin-top: 2%;
+  margin-bottom: 0;
+}
+
+.bloodcenters-container{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.info-page-bloodcenters{
+  margin: 0 auto;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5%;
+  margin-top: 2%;
+}
+
+.info-page-bloodcenters .image{
+  width: 100px;
+  
+}
+
+.info-page-bloodcenters .text{
+  width: 60%;
+}
+
+.info-page-bloodcenters .text span{
+  font-size: 20px;
+}
+
+.bloodcenters-container span{
+  font-size: 35px;
+  color: #035e89;
+}

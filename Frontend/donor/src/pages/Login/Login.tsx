@@ -1,0 +1,77 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import "./Login.css";
+
+const Login = () => {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (email && password) {
+      const isLogged = await auth.signin(email, password);
+      if (isLogged) {
+        navigate("/");
+      } else {
+        //POSSO FAZER O QUE EU QUISER AQUI PRA AVISAR AO USUÁRIO
+      }
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <div className="login-content">
+        <div className="logo-container">
+          <h1 className="logo-text">Vital</h1>
+          <img src="/Logo.png" alt="Logo" className="logo-image-login" />
+          <h1 className="logo-text">Hero</h1>
+        </div>
+        <form onSubmit={handleLogin} className="login-form">
+          <label>Email:</label>
+          <input
+          style={{marginBottom: "3%"}}
+            placeholder="Email"
+            type="email"
+            id="email"
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <label>Senha:</label>
+          <input
+            placeholder="Senha"
+            type={showPassword ? "text" : "password"}
+            id="password"
+            name="password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span
+            className="toggle-password"
+            onClick={() => setShowPassword(!showPassword)}
+          ></span>
+
+          <p className="forgot-password">
+            <Link to="/forgot-password">Esqueceu a senha?</Link>
+          </p>
+
+          <button type="submit">
+            Entrar
+          </button>
+        </form>
+
+        <p className="signup-link">
+          Não tem uma conta? <Link to="/register">Cadastre-se</Link>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

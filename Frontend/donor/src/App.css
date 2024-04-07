@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  margin: 0;
+}
+
+.app {
+  width: 76%;
+  height: 100%;
+}
