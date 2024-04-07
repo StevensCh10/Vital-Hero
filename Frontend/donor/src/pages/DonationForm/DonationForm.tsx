@@ -84,7 +84,7 @@ const DonationForm = () => {
         <div className="donation-form-content">
           <span>Formulário de Doação</span>
           <form>
-            <div className="form-donation-no-info">
+            <div className="form-donation">
               <div className="form-row">
                 <label htmlFor="fatherName">
                   Nome do Pai:
@@ -93,6 +93,7 @@ const DonationForm = () => {
                   type="text"
                   id="fatherName"
                   name="fatherName"
+                  pattern="\S.*"
                   required
                 />
               </div>
@@ -104,6 +105,7 @@ const DonationForm = () => {
                   type="text"
                   id="motherName"
                   name="motherName"
+                  pattern="\S.*"
                   required
                 />
               </div>
@@ -177,30 +179,14 @@ const DonationForm = () => {
                 </select>
               </div>
               <div className="form-row">
-                <label htmlFor="UF">
-                  UF:
-                </label>
-                <select
-                  id="UF"
-                  name="UF"
-                  required
-                >
-                  <option value="">Selecione a UF</option>
-                  {estadosBrasileiros.map((estado) => (
-                    <option key={estado.sigla} value={estado.sigla}>
-                      {estado.sigla}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-row">
-                <label htmlFor="estadoCivil">
+                <label htmlFor="documentNumber">
                   Número do documento:
                 </label>
                 <input
                   type="text"
-                  id="estadoCivil"
-                  name="estadoCivil"
+                  id="documentNumber"
+                  name="documentNumber"
+                  pattern="\S.*"
                   required
                 />
               </div>
@@ -213,6 +199,7 @@ const DonationForm = () => {
                   id="issuingBody"
                   name="issuingBody"
                   placeholder="Ex: SDS"
+                  pattern="\S.*"
                   required
                 />
               </div>
@@ -243,7 +230,8 @@ const DonationForm = () => {
                   <option value="Doutorado">Doutorado</option>
                   <option value="Outro">Outro</option>
                 </select>
-
+              </div>
+              <div className="form-row">
                 <label htmlFor="profession">
                   Profissão:
                 </label>
@@ -251,21 +239,22 @@ const DonationForm = () => {
                   type="text"
                   id="profession"
                   name="profession"
+                  pattern="\S.*"
                   required
                 />
               </div>
-              <div className="form-row"></div>
-            </div>
-            <div className="form-row">
-              <label htmlFor="currentJob">
-                Trabalho atual:
-              </label>
-              <input
-                type="text"
-                id="currentJob"
-                name="currentJob"
-                required
-              />
+              <div className="form-row">
+                <label htmlFor="currentJob">
+                  Trabalho atual:
+                </label>
+                <input
+                  type="text"
+                  id="currentJob"
+                  name="currentJob"
+                  pattern="\S.*"
+                  required
+                />
+              </div>
             </div>
             <button type="submit">
               Salvar

@@ -1,6 +1,5 @@
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useState } from "react";
-import { Donor } from "../../types/Donor";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
