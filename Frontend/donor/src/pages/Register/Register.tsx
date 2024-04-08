@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
 
 const Register = () => {
-    const auth = useContext(AuthContext);
-    const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
@@ -16,7 +16,6 @@ const Register = () => {
   const [bloodType, setBloodType] = useState("");
   const [address, setAddress] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
-  const [photo, setPhoto] = useState(0);
   const [password, setPassword] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -39,45 +38,35 @@ const Register = () => {
     }
   };
 
-  const byBytes = () => {
-    if (selectedFile) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const fileSizeInBytes = selectedFile.size;
-        setPhoto(fileSizeInBytes);
-        console.log("Tamanho da imagem em bytes:", fileSizeInBytes);
-      };
-      reader.readAsArrayBuffer(selectedFile);
-    }
-  };
-
   const whatGender = () => {
-    if(gender === "M"){
-        setGender("Masculino");
+    if (gender === "M") {
+      setGender("Masculino");
     }
     setGender("Feminino");
-  }
+  };
 
-  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    byBytes();
+
     whatGender();
 
-    const donor = {
-      scheduling: null,
-      name: name,
-      cpf: cpf,
-      email: email,
-      age: calculateAge(dateOfBirth),
-      gender: gender,
-      maritalStatus: maritalStatus,
-      address: `${address},${addressNumber}`,
-      photo: photo,
-      phone: phone,
-      password: password,
-    };
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('cpf', cpf);
+    formData.append('email', email);
+    formData.append('age', calculateAge(dateOfBirth).toString());
+    formData.append('gender', gender);
+    formData.append('maritalStatus', maritalStatus);
+    formData.append('address', `${address},${addressNumber}`);
+    formData.append('phone', phone);
+    formData.append('photo', 'sem');
+    formData.append('password', password);
 
-    auth.register(donor);
+    if(selectedFile){
+      formData.append('file', selectedFile);
+    }
+
+    auth.register(formData);
     navigate("/");
   };
 
@@ -85,7 +74,7 @@ const Register = () => {
     <div className="register-container">
       <img src="Logo.png"></img>
       <span style={{ color: "#035e89" }}>Cadastre-se e salve vidas.</span>
-      <form onSubmit={handleRegister} style={{ width: "100%" }}>
+      <form onSubmit={handleRegister} encType="multipart/form-data" style={{ width: "100%" }}>
         <div className="form-register">
           <div className="form-row">
             <label htmlFor="name">Nome Completo:</label>
@@ -218,7 +207,7 @@ const Register = () => {
           </div>
           <div className="form-row">
             <label>Foto:</label>
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <input type="file" accept="image/" onChange={handleFileChange} />
           </div>
           <div className="form-row">
             <label htmlFor="password">Senha:</label>

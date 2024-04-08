@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return await api.findAllBloodstocks();
     }
 
-    const register = async(donor: Donor) => {
+    const register = async(donor: FormData) => {
         const data = await api.register(donor);
         if(data){
             setUser(data);

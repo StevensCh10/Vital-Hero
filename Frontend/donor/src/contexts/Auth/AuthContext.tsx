@@ -22,7 +22,7 @@ export type AuthContextType = {
     toSchedule: (idDonor: number, idSched: number) => void;
     unSchedule: (idDonor: number) => void;
     findAllBloodstocks: () => Promise<Bloodstock[]>;
-    register: (donor: any) => Promise<Donor>;
+    register: (donor: FormData) => Promise<Donor>;
 }
 
 export const AuthContext = createContext<AuthContextType>(null!);

@@ -8,7 +8,7 @@ export type Donor = {
     gender: string;
     maritalStatus: string;
     address: string;
-    photo?: number;
+    photo: string;
     phone: string;
     password: string;
 }

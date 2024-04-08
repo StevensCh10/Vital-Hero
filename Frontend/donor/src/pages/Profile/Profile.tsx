@@ -11,6 +11,7 @@ const Profile = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [photo, setPhoto] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +22,7 @@ const Profile = () => {
         setPhone(auth.user!.phone);
         setEmail(auth.user!.email);
         setAddress(auth.user!.address);
+        setPhoto(auth.user!.photo);
       } catch (error) {
         console.error("Erro:", error);
       }
@@ -54,7 +56,7 @@ const Profile = () => {
         <div className="profile-header">
           <div className="profile-image">
             {/* Substitua a imagem pelo avatar do usuário */}
-            <img src="Logo.png" />
+            <img src={`http://localhost:8080/donor/img/${photo}`} alt="Foto do usuário" />
           </div>
         </div>
         <form onSubmit={handleAtt} className="profile-form">

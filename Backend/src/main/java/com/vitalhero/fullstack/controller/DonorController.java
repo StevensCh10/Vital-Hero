@@ -1,5 +1,10 @@
 package com.vitalhero.fullstack.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,8 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.Donor;
@@ -38,6 +45,8 @@ public class DonorController {
     private final DonationService donationsService;
     private final ReviewService reviewService;
 
+    private final String pathImgs = "C:/Users/steve/OneDrive/Documentos/TCC_Stevens_2024.1/imgProfile/";
+
     public DonorController(DonorService donorService, SchedulingService schedulingService,
             ScreeningService screeningService, DonationFormService donationFormService,
             DonationService donationsService, ReviewService reviewService){
@@ -56,10 +65,45 @@ public class DonorController {
         return donorService.checkLogin(email, password);
     }
 
-    @PostMapping()
+    @PostMapping(consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
-    public Donor registerDonor(@RequestBody @Valid Donor donor){
-        return donorService.register(donor);
+    //public Donor registerDonor(@RequestBody @Valid Donor donor, @RequestParam("file") MultipartFile file){
+        public Donor registerDonor(
+            @RequestParam("name") String name,
+            @RequestParam("cpf") String cpf,
+            @RequestParam("email") String email,
+            @RequestParam("age") int age,
+            @RequestParam("gender") String gender,
+            @RequestParam("maritalStatus") String maritalStatus,
+            @RequestParam("address") String address,
+            @RequestParam("phone") String phone,
+            @RequestParam("photo") String photo,
+            @RequestParam("password") String password,
+            @RequestParam(value = "file", required = false) MultipartFile file){
+
+                Donor newDonor = new Donor(name, cpf, email, age, gender, maritalStatus, address, photo, phone, password);
+                Donor flushDonor = donorService.register(newDonor);
+                try{
+                    if(!file.isEmpty()){
+                        byte[] bytes = file.getBytes();
+                        Path path = Paths.get(pathImgs+String.valueOf(flushDonor.getId())+file.getOriginalFilename());
+                        Files.write(path, bytes);
+
+                        flushDonor.setPhoto(String.valueOf(flushDonor.getId())+file.getOriginalFilename());
+                    }
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+                return donorService.update(flushDonor);
+    }
+
+    @GetMapping("/img/{nameImg}")
+    public byte[] getImgProfile(@PathVariable("nameImg") String nameImg) throws IOException{
+        File fileImg = new File(pathImgs + nameImg);
+        if(nameImg != null || nameImg.trim().length() > 0){
+            return Files.readAllBytes(fileImg.toPath());
+        }
+        return null;
     }
 
     @PutMapping()

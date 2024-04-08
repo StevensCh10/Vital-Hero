@@ -69,8 +69,8 @@ export const useApi = () => ({
         .then((response) => response.data)
         .catch(() => null)
     },
-    register: async (donor: Donor) => {
-        return await api.post('donor', donor)
+    register: async (formData: FormData) => {
+        return await api.post('donor', formData)
         .then((response) => response.data)
         .catch(() => null)
     }

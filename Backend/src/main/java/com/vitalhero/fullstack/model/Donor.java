@@ -26,6 +26,20 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Donor implements Serializable{
 
+    public Donor(String name, String cpf, String email, int age, String gender,
+                 String maritalStatus, String address, String photo, String phone, String password) {
+        this.name = name;
+        this.cpf = cpf;
+        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.maritalStatus = maritalStatus;
+        this.address = address;
+        this.photo = photo;
+        this.phone = phone;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
@@ -54,6 +68,7 @@ public class Donor implements Serializable{
 
     @NotBlank
     private String gender, maritalStatus, address, photo, phone; /* Fazer um enum para cada opção */
+
 
     @NotBlank
     @Column(updatable = true)

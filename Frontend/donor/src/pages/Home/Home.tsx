@@ -178,22 +178,21 @@ const Home = () => {
             <div style={{padding: "2%", backgroundColor: "#f9f9f9", marginBottom: "5%"}}>
               <div className="title-form-home">
                 <p>Marque um agendamento e faça sua parte</p>
-                {donationForm === null && screenings.length === 0 ? (
+                {donationForm === null && screenings.length === 0 && (
                   <label className="alert">
-                  (É necessario preencher o formulário de doação
-                  e a triagem para marcar um agendamento)
+                    (É necessário preencher o formulário de doação e a triagem para marcar um agendamento)
                   </label>
-                ) : null}
-                {donationForm === null ? (
+                )}
+                {donationForm === null && screenings.length !== 0 && (
                   <label className="alert">
-                    (É necessario preencher o formulário de doação para marcar um agendamento)
+                    (É necessário preencher o formulário de doação para marcar um agendamento)
                   </label>
-                ) : null}
-                {screenings.length === 0  ? (
+                )}
+                {donationForm !== null && screenings.length === 0 && (
                   <label className="alert">
-                    (É necessario preencher a triagem para marcar um agendamento)
+                    (É necessário preencher a triagem para marcar um agendamento)
                   </label>
-                ) : null}
+                )}
               </div>
               <form onSubmit={handleSubmit} className="form-home">
                 <label htmlFor="bloodcenter">Hemocentro</label>
