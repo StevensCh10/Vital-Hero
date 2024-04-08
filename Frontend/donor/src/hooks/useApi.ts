@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Donor } from '../types/Donor';
+import { Screening } from '../types/Screening';
 
 const api = axios.create({
     baseURL: 'http://localhost:8080/'
@@ -71,6 +72,11 @@ export const useApi = () => ({
     },
     register: async (formData: FormData) => {
         return await api.post('donor', formData)
+        .then((response) => response.data)
+        .catch(() => null)
+    },
+    addScreening: async(screening: Screening) => {
+        return await api.post('donor/screening', screening)
         .then((response) => response.data)
         .catch(() => null)
     }

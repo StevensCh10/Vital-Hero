@@ -169,6 +169,7 @@ public class DonorController {
     //SCREENING
     @PostMapping("/screening")
     public Screening doScreening(@RequestBody @Valid Screening newScreening){
+        System.out.println("ID donor: "+newScreening);
         return screeningService.addScreening(newScreening);
     }
 

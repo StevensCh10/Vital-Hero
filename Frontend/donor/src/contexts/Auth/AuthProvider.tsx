@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { Donor } from "../../types/Donor";
 import { useApi } from "../../hooks/useApi";
+import { Screening } from "../../types/Screening";
 
 export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const [user, setUser] = useState<Donor | null>(() => {
@@ -83,13 +84,24 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         }
         return data;
     }
+
+    const addScreening = async(screening: Screening) => {
+        const data = await api.addScreening(screening);
+        if(data){
+            const currentScreenings = JSON.parse(localStorage.getItem("screenings")!);
+            currentScreenings.push(data);
+            localStorage.setItem("screenings", currentScreenings); 
+        }
+        return data;
+    }
+
     return (
         <AuthContext.Provider value={{user, signin, signout, 
                 findAllBloodCenters, findAllSchedulings,
                 findDonationForm, findScreening, changePassword,
                 findDonations, findSchedulingById, toSchedule,
                 findDonorById, unSchedule, findAllBloodstocks,
-                register}}>
+                register, addScreening}}>
             {children}
         </AuthContext.Provider>
     );
