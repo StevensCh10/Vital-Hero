@@ -66,6 +66,11 @@ html,body {
   margin-bottom: 15px;
 }
 
+.gender{
+  display: flex;
+  width: 80%;
+}
+
 .register-container button {
   background-color: rgb(184, 14, 20);
   border-radius: 10px;
