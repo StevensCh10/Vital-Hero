@@ -44,7 +44,7 @@ body {
   padding: 2% 2% 2% 2%;
   align-items: center;
   text-align: center;
-  margin-bottom: 0%;
+  margin-bottom: 5%;
 }
 
 .form-screening {
@@ -69,8 +69,30 @@ body {
 
 .form-screening label {
   display: flexbox;
-  width: 100%;
+  width: 106%;
   text-align: start;
+}
+
+.form-screening select {
+  width: 106%;/* Definindo uma largura fixa para os selects */
+  padding: 8px; /* Espaçamento interno */
+  border: 1px solid #ccccccbe;
+  border-radius: 10px;
+  background-color: white;
+  position: relative;
+  margin-bottom: 5%;
+  font-size: 14px;
+}
+
+.form-screening select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  border-color: #333 transparent transparent;
 }
 
 .screening-content button {
