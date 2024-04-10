@@ -12,6 +12,8 @@ import ChangePassword from './pages/ChangePassword/ChangePassword'
 import './App.css'
 import Footer from './components/Footer/Footer'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
+import DonationSteps from './pages/DonationSteps/DonationSteps'
+import Review from './pages/Review/Review'
 
 const App = () => {
 
@@ -29,6 +31,8 @@ const App = () => {
           <Route path='/donations' element={<RequireAuth><Donations/></RequireAuth>}/>
           <Route path='/profile' element={<RequireAuth><Profile/></RequireAuth>}/>
           <Route path='/change-password' element={<RequireAuth><ChangePassword/></RequireAuth>}/>
+          <Route path='/donation-steps' element={<RequireAuth><DonationSteps/></RequireAuth>}/>
+          <Route path='/review' element={<RequireAuth><Review/></RequireAuth>}/>
         </Routes>
         <Footer />
       </div>

@@ -67,7 +67,7 @@ const Navbar = () => {
               </div>
             </div>
             <div className="modal-item"><img src="/feedback.png"></img><Link to="/">Feedback</Link></div>
-            <div className="modal-item"><img src="/etapa.png"></img><Link to="/">Etapas no processo de doação</Link></div>
+            <div className="modal-item"><img src="/etapa.png"></img><Link to="/donation-steps">Etapas no processo de doação</Link></div>
             <div className="modal-item"><img src="/informacoes.png"></img><Link to="/">Mais informações</Link></div>
           </Modal>
           
