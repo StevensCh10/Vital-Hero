@@ -28,8 +28,11 @@ body {
 }
 
 .info-page-bloodcenters .image{
-  width: 100px;
-  
+  width: 100%;
+}
+
+.info-page-bloodcenters .image img{
+  width: 100%;
 }
 
 .info-page-bloodcenters .text{
