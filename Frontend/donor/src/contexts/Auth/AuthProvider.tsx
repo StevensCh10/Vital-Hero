@@ -85,8 +85,8 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return data;
     }
 
-    const addScreening = async(screening: Screening) => {
-        const data = await api.addScreening(screening);
+    const addScreening = async(screening: Screening, idDonor: number) => {
+        const data = await api.addScreening(screening, idDonor);
         if(data){
             const currentScreenings = JSON.parse(localStorage.getItem("screenings")!);
             currentScreenings.push(data);

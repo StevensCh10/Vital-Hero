@@ -38,6 +38,7 @@ const Screening = () => {
     const fetchData = async () => {
       try {
         const screeningsFromLocalStorage =localStorage.getItem("screenings");
+        
         if (screeningsFromLocalStorage !== null) {
           const screeningsObject = JSON.parse(screeningsFromLocalStorage);
           setScreenings(screeningsObject);
@@ -53,7 +54,8 @@ const Screening = () => {
     e.preventDefault();
 
     const screening: ScreeningType = {
-      donor: user!.id,
+      donor: undefined,
+      doctor: undefined,
       q1: q1, 
       q2: q2, 
       q3: q3, 
@@ -80,7 +82,8 @@ const Screening = () => {
       q24: q24 
     }
 
-    await auth.addScreening(screening);
+    await auth.addScreening(screening, user!.id);
+
     window.location.reload;
   }
 
@@ -141,8 +144,9 @@ const Screening = () => {
                     name="q6"
                     required onChange={(e) => setQ6(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -154,8 +158,9 @@ const Screening = () => {
                     name="q7"
                     required onChange={(e) => setQ7(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -167,8 +172,9 @@ const Screening = () => {
                     name="q8"
                     required onChange={(e) => setQ8(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -180,8 +186,9 @@ const Screening = () => {
                     name="q9"
                     required onChange={(e) => setQ9(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -193,8 +200,9 @@ const Screening = () => {
                     name="q10"
                     required onChange={(e) => setQ10(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -206,8 +214,9 @@ const Screening = () => {
                     name="q11"
                     required onChange={(e) => setQ11(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -219,8 +228,9 @@ const Screening = () => {
                     name="q12"
                     required onChange={(e) => setQ12(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -232,8 +242,9 @@ const Screening = () => {
                     name="q13"
                     required onChange={(e) => setQ13(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -245,8 +256,9 @@ const Screening = () => {
                     name="q14"
                     required onChange={(e) => setQ14(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -258,8 +270,9 @@ const Screening = () => {
                     name="q15"
                     required onChange={(e) => setQ15(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -271,8 +284,9 @@ const Screening = () => {
                     name="q16"
                     required onChange={(e) => setQ16(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -284,8 +298,9 @@ const Screening = () => {
                     name="q17"
                     required onChange={(e) => setQ17(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -297,8 +312,9 @@ const Screening = () => {
                     name="q18"
                     required onChange={(e) => setQ18(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -310,8 +326,9 @@ const Screening = () => {
                     name="q19"
                     required onChange={(e) => setQ19(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -323,8 +340,9 @@ const Screening = () => {
                     name="q20"
                     required onChange={(e) => setQ20(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -336,8 +354,9 @@ const Screening = () => {
                     name="q21"
                     required onChange={(e) => setQ21(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -349,8 +368,9 @@ const Screening = () => {
                     name="q22"
                     required onChange={(e) => setQ22(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -362,8 +382,9 @@ const Screening = () => {
                     name="q23"
                     required onChange={(e) => setQ23(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
                 <div className="form-row">
@@ -375,8 +396,9 @@ const Screening = () => {
                     name="q24"
                     required onChange={(e) => setQ24(e.target.value)}
                   >
-                    <option value="no">Não</option>
-                    <option value="yes">Sim</option>
+                    <option></option>
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
                   </select>
                 </div>
             </div>
@@ -421,8 +443,9 @@ const Screening = () => {
                   name="q6"
                   required onChange={(e) => setQ6(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -434,8 +457,9 @@ const Screening = () => {
                   name="q7"
                   required onChange={(e) => setQ7(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -447,8 +471,9 @@ const Screening = () => {
                   name="q8"
                   required onChange={(e) => setQ8(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -460,8 +485,9 @@ const Screening = () => {
                   name="q9"
                   required onChange={(e) => setQ9(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -473,8 +499,9 @@ const Screening = () => {
                   name="q10"
                   required onChange={(e) => setQ10(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -486,8 +513,9 @@ const Screening = () => {
                   name="q11"
                   required onChange={(e) => setQ11(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -499,8 +527,9 @@ const Screening = () => {
                   name="q12"
                   required onChange={(e) => setQ12(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -512,8 +541,9 @@ const Screening = () => {
                   name="q13"
                   required onChange={(e) => setQ13(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -525,8 +555,9 @@ const Screening = () => {
                   name="q14"
                   required onChange={(e) => setQ14(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -538,8 +569,9 @@ const Screening = () => {
                   name="q15"
                   required onChange={(e) => setQ15(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -551,8 +583,9 @@ const Screening = () => {
                   name="q16"
                   required onChange={(e) => setQ16(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -564,8 +597,9 @@ const Screening = () => {
                   name="q17"
                   required onChange={(e) => setQ17(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -577,8 +611,9 @@ const Screening = () => {
                   name="q18"
                   required onChange={(e) => setQ18(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -590,8 +625,9 @@ const Screening = () => {
                   name="q19"
                   required onChange={(e) => setQ19(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -603,8 +639,9 @@ const Screening = () => {
                   name="q20"
                   required onChange={(e) => setQ20(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -616,8 +653,9 @@ const Screening = () => {
                   name="q21"
                   required onChange={(e) => setQ21(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -629,8 +667,9 @@ const Screening = () => {
                   name="q22"
                   required onChange={(e) => setQ22(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -642,8 +681,9 @@ const Screening = () => {
                   name="q23"
                   required onChange={(e) => setQ23(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
               <div className="form-row">
@@ -655,8 +695,9 @@ const Screening = () => {
                   name="q24"
                   required onChange={(e) => setQ24(e.target.value)}
                 >
-                  <option value="no">Não</option>
-                  <option value="yes">Sim</option>
+                  <option></option>
+                  <option value="Não">Não</option>
+                  <option value="Sim">Sim</option>
                 </select>
               </div>
           </div>

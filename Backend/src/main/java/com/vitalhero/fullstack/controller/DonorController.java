@@ -167,9 +167,11 @@ public class DonorController {
     }
 
     //SCREENING
-    @PostMapping("/screening")
-    public Screening doScreening(@RequestBody @Valid Screening newScreening){
-        System.out.println("ID donor: "+newScreening);
+    @PostMapping("/screening/{donorID}")
+    public Screening doScreening(@RequestBody @Valid Screening newScreening, @PathVariable Long donorID){
+        Donor donor = donorService.find(donorID);
+        newScreening.setDonor(donor);
+        newScreening.setDoctor(null);
         return screeningService.addScreening(newScreening);
     }
 

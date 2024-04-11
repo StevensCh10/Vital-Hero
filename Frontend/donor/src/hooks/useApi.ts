@@ -51,22 +51,22 @@ export const useApi = () => ({
         .catch(() => null)
     },
     findSchedById: async (idSched: number) => {
-        return await api.get(`/bloodcenter/scheduling/${idSched}`)
+        return await api.get(`bloodcenter/scheduling/${idSched}`)
         .then((response) => response.data)
         .catch(() => null)
     },
     toSchedule: async (idDonor: number, idSched: number) => {
-        await api.put(`/donor/toschedule/${idDonor}/${idSched}`)
+        await api.put(`donor/toschedule/${idDonor}/${idSched}`)
         .then((response) => response.data)
         .catch(() => null)
     },
     unSchedule: async (idDonor: number) => {
-        await api.put(`/donor/unschedule/${idDonor}`)
+        await api.put(`donor/unschedule/${idDonor}`)
         .then((response) => response.data)
         .catch(() => null)
     },
     findAllBloodstocks: async () => {
-        return await api.get(`/bloodcenter/bloodstock/all`)
+        return await api.get(`bloodcenter/bloodstock/all`)
         .then((response) => response.data)
         .catch(() => null)
     },
@@ -75,8 +75,8 @@ export const useApi = () => ({
         .then((response) => response.data)
         .catch(() => null)
     },
-    addScreening: async(screening: Screening) => {
-        return await api.post('donor/screening', screening)
+    addScreening: async(screening: Screening, idDonor: number) => {
+        return await api.post(`donor/screening/${idDonor}`, screening)
         .then((response) => response.data)
         .catch(() => null)
     }
