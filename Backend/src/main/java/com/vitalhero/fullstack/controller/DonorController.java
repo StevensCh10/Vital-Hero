@@ -167,12 +167,14 @@ public class DonorController {
     }
 
     //SCREENING
-    @PostMapping("/screening/{donorID}")
-    public Screening doScreening(@RequestBody @Valid Screening newScreening, @PathVariable Long donorID){
-        Donor donor = donorService.find(donorID);
-        newScreening.setDonor(donor);
-        newScreening.setDoctor(null);
+    @PostMapping("/screening")
+    public Screening doScreening(@RequestBody @Valid Screening newScreening){
         return screeningService.addScreening(newScreening);
+    }
+
+    @PutMapping("/screening")
+    public Screening attScreening(@RequestBody @Valid Screening attScreening){
+        return screeningService.attScreening(attScreening);
     }
 
     @GetMapping("/screening/all/{donorID}")

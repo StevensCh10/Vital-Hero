@@ -85,12 +85,26 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return data;
     }
 
-    const addScreening = async(screening: Screening, idDonor: number) => {
-        const data = await api.addScreening(screening, idDonor);
+    const addScreening = async(screening: Screening) => {
+        const data = await api.addScreening(screening);
         if(data){
             const currentScreenings = JSON.parse(localStorage.getItem("screenings")!);
-            currentScreenings.push(data);
-            localStorage.setItem("screenings", currentScreenings); 
+            if(currentScreenings[0]){
+                currentScreenings[0] = (data);
+            }else{
+                currentScreenings.push(data);
+            }
+            localStorage.setItem("screenings", JSON.stringify(currentScreenings)); 
+        }
+        return data;
+    }
+
+    const attScreening = async(screening: Screening) => {
+        const data = await api.attScreening(screening);
+        if(data){
+            const currentScreenings = JSON.parse(localStorage.getItem("screenings")!);
+            currentScreenings[0] = (data);
+            localStorage.setItem("screenings", JSON.stringify(currentScreenings)); 
         }
         return data;
     }
@@ -101,7 +115,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
                 findDonationForm, findScreening, changePassword,
                 findDonations, findSchedulingById, toSchedule,
                 findDonorById, unSchedule, findAllBloodstocks,
-                register, addScreening}}>
+                register, addScreening, attScreening}}>
             {children}
         </AuthContext.Provider>
     );

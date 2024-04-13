@@ -75,9 +75,14 @@ export const useApi = () => ({
         .then((response) => response.data)
         .catch(() => null)
     },
-    addScreening: async(screening: Screening, idDonor: number) => {
-        return await api.post(`donor/screening/${idDonor}`, screening)
+    addScreening: async(screening: Screening) => {
+        return await api.post(`donor/screening`, screening)
         .then((response) => response.data)
         .catch(() => null)
+    },
+    attScreening: async(screening: Screening) => {
+        return await api.put(`donor/screening`, screening)
+        .then((response) => response.data)
+        .catch((e) => console.log(e))
     }
 });

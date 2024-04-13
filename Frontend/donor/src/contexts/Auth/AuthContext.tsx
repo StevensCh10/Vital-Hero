@@ -23,7 +23,8 @@ export type AuthContextType = {
     unSchedule: (idDonor: number) => void;
     findAllBloodstocks: () => Promise<Bloodstock[]>;
     register: (donor: FormData) => Promise<Donor>;
-    addScreening: (screening: Screening, idDonor: number) => Promise<Screening>;
+    addScreening: (screening: Screening) => Promise<Screening>;
+    attScreening: (screening: Screening) => Promise<Screening>;
 }
 
 export const AuthContext = createContext<AuthContextType>(null!);
