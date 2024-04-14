@@ -28,11 +28,10 @@ public class ScreeningService {
     }
 
     @Transactional
-    public Screening attScreening(Screening s){
-        System.out.println(s);
+    public Screening updateScreening(Screening s){
         Screening oldS = find(s.getId());
-        if(oldS.getDonor() != s.getDonor()){
-            throw new CannotBeUpdated("Formulário não pode ser atualizado pois houve mudança no seu proprietário.");
+        if(oldS.getDonor().getId() != s.getDonor().getId()){
+            throw new CannotBeUpdated("Triagem não pode ser atualizada pois houve mudança no seu proprietário.");
         }
         return repository.saveAndFlush(s);
     }

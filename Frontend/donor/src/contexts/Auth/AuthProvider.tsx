@@ -3,6 +3,7 @@ import { AuthContext } from "./AuthContext";
 import { Donor } from "../../types/Donor";
 import { useApi } from "../../hooks/useApi";
 import { Screening } from "../../types/Screening";
+import { DonationForm } from "../../types/DonationForm";
 
 export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const [user, setUser] = useState<Donor | null>(() => {
@@ -49,8 +50,8 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return await api.findScreeningByDonor(idDonor);
     }
 
-    const changePassword = async(donorAtt: Donor) => {
-        const data = await api.changePassword(donorAtt);
+    const updateDonor = async(donorAtt: Donor) => {
+        const data = await api.updateDonor(donorAtt);
         setUser(data);
         localStorage.setItem('user', JSON.stringify(data));
         return data;
@@ -99,7 +100,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return data;
     }
 
-    const attScreening = async(screening: Screening) => {
+    const updateScreening = async(screening: Screening) => {
         const data = await api.attScreening(screening);
         if(data){
             const currentScreenings = JSON.parse(localStorage.getItem("screenings")!);
@@ -109,13 +110,30 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return data;
     }
 
+    const addDonationForm = async(donationForm: DonationForm) => {
+        const data = await api.addDonationForm(donationForm);
+        if(data){
+            localStorage.setItem("donationForm", JSON.stringify(data)); 
+        }
+        return data;
+    }
+
+    const updateDonationForm = async(donationForm: DonationForm) => {
+        const data = await api.updateDonationForm(donationForm);
+        if(data){
+            localStorage.setItem("donationForm", JSON.stringify(data)); 
+        }
+        return data;
+    }
+
     return (
         <AuthContext.Provider value={{user, signin, signout, 
                 findAllBloodCenters, findAllSchedulings,
-                findDonationForm, findScreening, changePassword,
+                findDonationForm, findScreening, updateDonor: updateDonor,
                 findDonations, findSchedulingById, toSchedule,
                 findDonorById, unSchedule, findAllBloodstocks,
-                register, addScreening, attScreening}}>
+                register, addScreening, updateScreening: updateScreening,
+                addDonationForm, updateDonationForm}}>
             {children}
         </AuthContext.Provider>
     );

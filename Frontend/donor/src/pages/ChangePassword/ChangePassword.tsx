@@ -42,7 +42,7 @@ const ChangePassword = () => {
             oldPasswordRef.current!.focus();
         }else{
             auth.user!.password = newPassword;
-            auth.changePassword(auth.user!);
+            auth.updateDonor(auth.user!);
             setPasswordChanged(true);
             setNewPassword('');
             setConfirmPassword('');

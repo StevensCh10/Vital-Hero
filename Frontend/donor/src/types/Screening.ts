@@ -1,6 +1,8 @@
+import { Donor } from "./Donor";
+
 export type Screening = {
     id?: number;
-    donor?: number | null;
+    donor?: Donor | null;
     doctor?: number | null;
     q1: string; //Ja doou sangue? Há quanto tempo? Sentiu-se mal?
     q2: string; //Tem alergia? A que? Quando foi a ultima crise? Faz tratamento? Qual?

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Donor } from '../types/Donor';
 import { Screening } from '../types/Screening';
+import { DonationForm } from '../types/DonationForm';
 
 const api = axios.create({
     baseURL: 'http://localhost:8080/'
@@ -40,7 +41,7 @@ export const useApi = () => ({
             .then((response) => response.data)
             .catch(() => null); 
     },
-    changePassword: async (donorAtt: Donor) => {
+    updateDonor: async (donorAtt: Donor) => {
         return await api.put('donor', donorAtt)
         .then((response) => response.data)
         .catch((e) => console.log(e))
@@ -82,6 +83,16 @@ export const useApi = () => ({
     },
     attScreening: async(screening: Screening) => {
         return await api.put(`donor/screening`, screening)
+        .then((response) => response.data)
+        .catch((e) => console.log(e))
+    },
+    addDonationForm: async(donationForm: DonationForm) => {
+        return await api.post(`donor/donationform`, donationForm)
+        .then((response) => response.data)
+        .catch(() => null)
+    },
+    updateDonationForm: async(donationForm: DonationForm) => {
+        return await api.put(`donor/donationform`, donationForm)
         .then((response) => response.data)
         .catch((e) => console.log(e))
     }

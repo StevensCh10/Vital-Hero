@@ -3,24 +3,26 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./DonationForm.css";
 import { DonationForm as DonationFormType } from "../../types/DonationForm";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { Donor } from "../../types/Donor";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
-  const [donationFormAux, setDonationFormAux] = useState<DonationFormType>({
-    id: 0,
-    donor: 0,
-    q1: "",
-    q2: "",
-    q3: "",
-    q4: "",
-    q5: "",
-    q6: "",
-    q7: "",
-    q8: "",
-    q9: "",
-    q10: "",
-    q11: "",
-  });
+  const [donationFormAux, setDonationFormAux] = useState<DonationFormType>(
+    localStorage.getItem('donationForm') !== null ?
+    JSON.parse(localStorage.getItem('donationForm')!) : {}
+  );
+  const [q1, setQ1] = useState(donationFormAux?.q1);
+  const [q2, setQ2] = useState(donationFormAux?.q2);
+  const [q3, setQ3] = useState(donationFormAux?.q3);
+  const [q4, setQ4] = useState(donationFormAux?.q4);
+  const [q5, setQ5] = useState(donationFormAux?.q5);
+  const [q6, setQ6] = useState(donationFormAux?.q6);
+  const [q7, setQ7] = useState(donationFormAux?.q7);
+  const [q8, setQ8] = useState(donationFormAux?.q8);
+  const [q9, setQ9] = useState(donationFormAux?.q9);
+  const [q10, setQ10] = useState(donationFormAux?.q10);
+  const [q11, setQ11] = useState(donationFormAux?.q11);
+  const donorid: Donor ={id: auth.user!.id!}
 
   const estadosBrasileiros = [
     { sigla: "AC", nome: "Acre" },
@@ -54,18 +56,55 @@ const DonationForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const donationFormFromLocalStorage = localStorage.getItem('donationForm');
-        if (donationFormFromLocalStorage !== null) {
-          const donationFormObject = JSON.parse(donationFormFromLocalStorage);
-          setDonationFormAux(donationFormObject);
-        }
-      } catch (error) {
-        console.error("Erro:", error);
-      }
+      
     };
     fetchData();
   }, [auth]);
+
+  const handleAddDonationForm = async(e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const donationForm: DonationFormType = {
+      donor: donorid,
+      q1: q1, 
+      q2: q2, 
+      q3: q3, 
+      q4: q4, 
+      q5: q5, 
+      q6: q6, 
+      q7: q7, 
+      q8: q8, 
+      q9: q9, 
+      q10: q10, 
+      q11: q11
+    }
+
+    await auth.addDonationForm(donationForm);
+    window.location.reload();
+  }
+
+  const handleUpdateDonationForm = async(e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const donationForm: DonationFormType = {
+      id: donationFormAux.id,
+      donor: donorid,
+      q1: q1, 
+      q2: q2, 
+      q3: q3, 
+      q4: q4, 
+      q5: q5, 
+      q6: q6, 
+      q7: q7, 
+      q8: q8, 
+      q9: q9, 
+      q10: q10, 
+      q11: q11
+    }
+
+    await auth.updateDonationForm(donationForm);
+    window.location.reload();
+  }
 
   return (
     <div className="donation-form-container">
@@ -83,7 +122,7 @@ const DonationForm = () => {
       {donationFormAux === null ? (
         <div className="donation-form-content">
           <span>Formulário de Doação</span>
-          <form>
+          <form onSubmit={handleAddDonationForm}>
             <div className="form-donation">
               <div className="form-row">
                 <label htmlFor="fatherName">
@@ -94,7 +133,7 @@ const DonationForm = () => {
                   id="fatherName"
                   name="fatherName"
                   pattern="\S.*"
-                  required
+                  required onChange={(e) => setQ1(e.target.value)}
                 />
               </div>
               <div className="form-row">
@@ -106,7 +145,19 @@ const DonationForm = () => {
                   id="motherName"
                   name="motherName"
                   pattern="\S.*"
-                  required
+                  required onChange={(e) => setQ2(e.target.value)}
+                />
+              </div>
+              <div className="form-row">
+                <label htmlFor="emergencyPhone">
+                  Número para contato de emergência:
+                </label>
+                <input
+                  type="text"
+                  id="emergencyPhone"
+                  name="emergencyPhone"
+                  pattern="\S.*"
+                  required onChange={(e) => setQ3(e.target.value)}
                 />
               </div>
               <div className="form-row">
@@ -116,7 +167,7 @@ const DonationForm = () => {
                 <select
                   id="naturalness"
                   name="naturalness"
-                  required
+                  required onChange={(e) => setQ4(e.target.value)}
                 >
                   <option value="">Selecione a naturalidade</option>
                   <option value="AC">Acre</option>
@@ -152,30 +203,13 @@ const DonationForm = () => {
                 <label htmlFor="document">
                   Documento:
                 </label>
-                <select id="document" name="document" required>
+                <select id="document" name="document" required onChange={(e) => setQ5(e.target.value)}>
                   <option value="">Selecione o tipo de documento</option>
                   <option value="RG">RG</option>
                   <option value="CPF">CPF</option>
                   <option value="CNH">CNH</option>
                   <option value="Passaporte">Passaporte</option>
                   <option value="Outro">Outro</option>
-                </select>
-              </div>
-              <div className="form-row">
-                <label htmlFor="UF">
-                  UF:
-                </label>
-                <select
-                  id="UF"
-                  name="UF"
-                  required
-                >
-                  <option value="">Selecione a UF</option>
-                  {estadosBrasileiros.map((estado) => (
-                    <option key={estado.sigla} value={estado.sigla}>
-                      {estado.sigla}
-                    </option>
-                  ))}
                 </select>
               </div>
               <div className="form-row">
@@ -187,8 +221,25 @@ const DonationForm = () => {
                   id="documentNumber"
                   name="documentNumber"
                   pattern="\S.*"
-                  required
+                  required onChange={(e) => setQ6(e.target.value)}
                 />
+              </div>
+              <div className="form-row">
+                <label htmlFor="UF">
+                  UF:
+                </label>
+                <select
+                  id="UF"
+                  name="UF"
+                  required onChange={(e) => setQ7(e.target.value)}
+                >
+                  <option value="">Selecione a UF</option>
+                  {estadosBrasileiros.map((estado) => (
+                    <option key={estado.sigla} value={estado.sigla}>
+                      {estado.sigla}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-row">
                 <label htmlFor="issuingBody">
@@ -200,7 +251,7 @@ const DonationForm = () => {
                   name="issuingBody"
                   placeholder="Ex: SDS"
                   pattern="\S.*"
-                  required
+                  required onChange={(e) => setQ8(e.target.value)}
                 />
               </div>
               <div className="form-row">
@@ -210,7 +261,7 @@ const DonationForm = () => {
                 <select
                   id="education"
                   name="education"
-                  required
+                  required onChange={(e) => setQ9(e.target.value)}
                 >
                   <option value="">Selecione a escolaridade</option>
                   <option value="Ensino Médio Completo">
@@ -240,7 +291,7 @@ const DonationForm = () => {
                   id="profession"
                   name="profession"
                   pattern="\S.*"
-                  required
+                  required onChange={(e) => setQ10(e.target.value)}
                 />
               </div>
               <div className="form-row">
@@ -252,7 +303,7 @@ const DonationForm = () => {
                   id="currentJob"
                   name="currentJob"
                   pattern="\S.*"
-                  required
+                  required onChange={(e) => setQ11(e.target.value)}
                 />
               </div>
             </div>
@@ -264,14 +315,14 @@ const DonationForm = () => {
       ) : (
         <div className="donation-form-content">
           <span>Formulário de Doação</span>
-          <form>
+          <form onSubmit={handleUpdateDonationForm}>
             <div className="form-donation">
               <div className="form-row">
                 <label htmlFor="fatherName">
                   Nome do Pai:
                 </label>
                 <input
-                  defaultValue={donationFormAux.q1}
+                  defaultValue={q1}
                   type="text"
                   id="fatherName"
                   name="fatherName"
@@ -283,11 +334,24 @@ const DonationForm = () => {
                   Nome da Mãe:
                 </label>
                 <input
-                  defaultValue={donationFormAux.q2}
+                  defaultValue={q2}
                   type="text"
                   id="motherName"
                   name="motherName"
                   readOnly
+                />
+              </div>
+              <div className="form-row">
+                <label htmlFor="emergencyPhone">
+                  Número para contato de emergência:
+                </label>
+                <input
+                  type="text"
+                  id="emergencyPhone"
+                  name="emergencyPhone"
+                  pattern="\S.*"
+                  value={q3}
+                  required onChange={(e) => setQ3(e.target.value)}
                 />
               </div>
               <div className="form-row">
@@ -296,9 +360,10 @@ const DonationForm = () => {
                 </label>
                 <input
                   id="naturalness"
-                  defaultValue={donationFormAux.q3}
+                  defaultValue={q4}
                   name="naturalness"
                   required
+                  readOnly
                 />
               </div>
               <div className="form-row">
@@ -308,19 +373,9 @@ const DonationForm = () => {
                 <input
                   id="document"
                   name="document"
-                  defaultValue={donationFormAux.q4}
+                  defaultValue={q5}
                   required
-                />
-              </div>
-              <div className="form-row">
-                <label htmlFor="UF">
-                  UF:
-                </label>
-                <input
-                  defaultValue={donationFormAux.q5}
-                  id="UF"
-                  name="UF"
-                  required
+                  readOnly
                 />
               </div>
               <div className="form-row">
@@ -328,10 +383,22 @@ const DonationForm = () => {
                   Número do documento:
                 </label>
                 <input
-                  defaultValue={donationFormAux.q6}
+                  defaultValue={q6}
                   type="text"
                   id="estadoCivil"
                   name="estadoCivil"
+                  readOnly
+                />
+              </div>
+              <div className="form-row">
+                <label htmlFor="UF">
+                  UF:
+                </label>
+                <input
+                  defaultValue={q7}
+                  id="UF"
+                  name="UF"
+                  required
                   readOnly
                 />
               </div>
@@ -340,7 +407,7 @@ const DonationForm = () => {
                   Orgão Expedidor:
                 </label>
                 <input
-                  defaultValue={donationFormAux.q7}
+                  defaultValue={q8}
                   type="text"
                   id="issuingBody"
                   name="issuingBody"
@@ -354,7 +421,7 @@ const DonationForm = () => {
                 </label>
                 <select
                   id="education"
-                  defaultValue={donationFormAux.q8}
+                  defaultValue={q9}
                   name="education"
                   required
                 >
@@ -382,7 +449,7 @@ const DonationForm = () => {
                   Profissão:
                 </label>
                 <input
-                  defaultValue={donationFormAux.q9}
+                  defaultValue={q10}
                   type="text"
                   id="profession"
                   name="profession"
@@ -394,7 +461,7 @@ const DonationForm = () => {
                   Trabalho atual:
                 </label>
                 <input
-                  defaultValue={donationFormAux.q10}
+                  defaultValue={q11}
                   type="text"
                   id="currentJob"
                   name="currentJob"

@@ -16,12 +16,12 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setName(auth.user!.name);
-        setCpf(auth.user!.cpf);
-        setAge(auth.user!.age);
-        setPhone(auth.user!.phone);
-        setEmail(auth.user!.email);
-        setAddress(auth.user!.address);
+        setName(auth.user!.name!);
+        setCpf(auth.user!.cpf!);
+        setAge(auth.user!.age!);
+        setPhone(auth.user!.phone!);
+        setEmail(auth.user!.email!);
+        setAddress(auth.user!.address!);
 
         const response = await fetch(`http://localhost:8080/donor/img/${auth.user!.photo}`);
         const blob = await response.blob();
@@ -34,9 +34,15 @@ const Profile = () => {
     fetchData();
   }, [auth]);
 
-  const handleAtt = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAtt = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Adicione aqui a lógica para salvar as informações do perfil
+    
+    auth.user!.phone = phone;
+    auth.user!.email = email;
+    auth.user!.address = address;
+
+    await auth.updateDonor(auth.user!);
+    window.location.reload();
   };
 
   const formatCPF = (auxCpf: string) => {
@@ -88,6 +94,7 @@ const Profile = () => {
               value={age}
               onChange={(e) => setAge(parseInt(e.target.value))}
               style={{ width: "15%", marginRight: "20%" }}
+              readOnly
               required
             />
             <input

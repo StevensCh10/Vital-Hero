@@ -39,7 +39,7 @@ const Home = () => {
         localStorage.setItem('screenings', JSON.stringify(resultScreenings));
 
         if(user!.scheduling !== null){
-          const resultScheduling = await auth.findSchedulingById(user!.scheduling);
+          const resultScheduling = await auth.findSchedulingById(user!.scheduling!);
           localStorage.setItem('scheduling', JSON.stringify(resultScheduling));
         }
 

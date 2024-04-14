@@ -3,6 +3,7 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState} from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import "./Screening.css";
+import { Donor } from "../../types/Donor";
 
 const Screening = () => {
   const auth = useContext(AuthContext);
@@ -36,6 +37,7 @@ const Screening = () => {
   const [q22, setQ22] = useState(screenings[0]?.q22);
   const [q23, setQ23] = useState(screenings[0]?.q23);
   const [q24, setQ24] = useState(screenings[0]?.q24);
+  const donorid: Donor ={id: auth.user!.id!}
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +50,7 @@ const Screening = () => {
     e.preventDefault();
 
     const screening: ScreeningType = {
-      donor: null,
+      donor: donorid,
       doctor: null,
       q1: q1, 
       q2: q2, 
@@ -84,7 +86,9 @@ const Screening = () => {
     e.preventDefault();
 
     const updateScreening = {
-      ...screenings[0],
+      id: screenings[0].id,
+      donor: donorid,
+      doctor: null,
       q1: q1, 
       q2: q2, 
       q3: q3, 
@@ -111,7 +115,8 @@ const Screening = () => {
       q24: q24 
     }
 
-    await auth.attScreening(updateScreening);
+    console.log(updateScreening)
+    await auth.updateScreening(updateScreening);
     window.location.reload();
   }
 
