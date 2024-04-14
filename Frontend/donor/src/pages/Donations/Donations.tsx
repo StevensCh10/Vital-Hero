@@ -90,7 +90,11 @@ const Donations = () => {
                   <p className="date-info">{dateFormat(new Date(donation.scheduling.dateTime))} - {hourFormat(new Date(donation.scheduling.dateTime))}</p>
                 </div>
               ))
-            ) : null}
+            ) : (
+              <div>
+                Você ainda não realizou nenhuma doação
+              </div>
+            )}
           </div>
         ) : (
           <div style={{width: "100%"}}>
