@@ -38,7 +38,6 @@ const Profile = () => {
     e.preventDefault();
     
     auth.user!.phone = phone;
-    auth.user!.email = email;
     auth.user!.address = address;
 
     await auth.updateDonor(auth.user!);
@@ -110,6 +109,7 @@ const Profile = () => {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              readOnly
               required
             />
             <input

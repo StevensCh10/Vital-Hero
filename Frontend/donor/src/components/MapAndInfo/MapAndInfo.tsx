@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { BloodCenter } from "../../types/BloodCenter";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
-import { Bloodstock } from "../../types/Bloodstock";
+import React, { useContext, useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { BloodCenter } from "../../types/BloodCenter";
+import { Bloodstock } from "../../types/Bloodstock";
 import "leaflet/dist/leaflet.css";
 import "./MapAndInfo.css";
 
@@ -91,20 +91,6 @@ const Map: React.FC = () => {
       throw error;
     }
   };
-
-  //Bloodstock
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resultBloodstocks = await auth.findAllBloodstocks();
-        setBloodstocks(resultBloodstocks);
-      } catch (error) {
-        console.error("Erro:", error);
-      }
-    };
-    fetchData();
-  }, [auth]);
 
   const toggleSelected = (centerId: string) => {
     setSelectedCenter((prevId) => (prevId === centerId ? null : centerId));
