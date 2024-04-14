@@ -1,10 +1,38 @@
 # Vital Hero
 
-Trabalho realizado como forma de TCC da Universiade Católica de Pernambuco, iniciado em 2024.1.
+-Vital Hero
+Trabalho realizado como TCC da Universidade Católica de Pernambuco, iniciado em 2024.1.
 
-Projeto fullstack que irá utilizar tecnologias como React(TypeScript) para criação de frontend e SpringBoot(java) para o seu backend. 
-Está sendo desenvolvido usando as boas práticas de desenvolvimento.
+-Descrição do Projeto
+O Vital Hero é um projeto fullstack desenvolvido com o objetivo de viabilizar e incentivar a doação regular de sangue. Utilizando tecnologias modernas como React (com TypeScript) para o frontend e Spring Boot (Java) para o backend, estamos construindo uma plataforma que permitirá aos usuários acessar informações vitais sobre doação de sangue, como estoques sanguíneos de hemocentros, agendar doações e muito mais.
 
-O objetivo geral da aplicação é viabilizar e incentivar a doação regular de sangue, onde os usuários poderão ter acesso a informações como estoque sanguíneo de hemocentros, agendar doações e etc.
+-Principais Tecnologias Utilizadas
+Spring boot
+Spring Security
+Hibernate
+Lombok
+MySql
+React + vite
+axios
+typescript
+flaticons
 
-O Frontend ainda não está integrado com o Backend, para acessar a aplicação completa e seus fluxos, é necessário rodar ambas as partes separadas.
+-Funcionalidades Planejadas
+Visualização do estoque sanguíneo de hemocentros.
+Agendamento de doações de sangue.
+Notificações automáticas para lembretes de doação.
+Perfis de usuário para acompanhamento do histórico de doações.
+E muito mais!
+
+-Como Utilizar
+Para utilizar o projeto, é necessário executar separadamente o frontend e o backend. Siga as instruções abaixo:
+
+-Frontend
+Navegue até a pasta frontend.
+Execute o comando npm install para instalar as dependências.
+Execute o comando npm run dev para iniciar o servidor de desenvolvimento.
+
+-Backend
+Navegue até a pasta backend.
+Execute o comando mvn spring-boot:run para iniciar o servidor backend.
+Certifique-se de configurar corretamente as variáveis de ambiente e conexões de banco de dados conforme necessário.
