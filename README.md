@@ -36,3 +36,15 @@ Para utilizar o projeto, é necessário executar separadamente o frontend e o ba
   1. Navegue até a pasta backend.
   2. Execute o comando mvn spring-boot:run para iniciar o servidor backend.
   3. Certifique-se de configurar corretamente as variáveis de ambiente e conexões de banco de dados conforme necessário.
+
+- 🔭 Hoje a procura de um estágio.
+- 📫 Contate-me no email: Stevench10@outlook.com
+- ⚡ Curiosidades: 
+-  Experiência na criação de REST APIs utilizando Spring boot, junto com Spring data jpa, hibernate, lombok...
+-  Experiência com MySQL
+-  Estudando React
+-  Estudando Node com Javascript e Typescript
+-  Pretendo estudar Docker
+-  Pretendo estudar AWS
+- ⚡ Frequentemente estudando para continuar evoluindo nas tecnologias.
+
