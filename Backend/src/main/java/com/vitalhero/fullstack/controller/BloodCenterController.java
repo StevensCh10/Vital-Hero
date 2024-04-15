@@ -22,6 +22,7 @@ import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
 import com.vitalhero.fullstack.service.DonationService;
 import com.vitalhero.fullstack.service.DonorService;
+import com.vitalhero.fullstack.service.QuartzDonationService;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -33,14 +34,17 @@ public class BloodCenterController {
     private final SchedulingService schedulingService;
     private final DonationService donationService;
     private final DonorService donorService;
+    private final QuartzDonationService quartzDonationService;
 
     public BloodCenterController(BloodCenterService bloodCenterService, BloodStockService bloodStockService,
-            SchedulingService schedulingService, DonationService donationService, DonorService donorService){
+            SchedulingService schedulingService, DonationService donationService, DonorService donorService,
+            QuartzDonationService quartzDonationService){
         this.bloodCenterService = bloodCenterService;
         this.bloodStockService = bloodStockService;
         this.schedulingService =schedulingService;
         this.donationService = donationService;
         this.donorService = donorService;
+        this.quartzDonationService = quartzDonationService;
     }
     
     //BLOODCENTER
@@ -137,10 +141,20 @@ public class BloodCenterController {
     }
 
     //DONATION
-    @PostMapping("/donation")
-    public Donation donationMade(@RequestBody Donation newDonation){
+    @PostMapping("/donation/{gender}")
+    public Donation donationMade(@RequestBody Donation newDonation, @PathVariable String gender){
         Donation donation = donationService.addDonation(newDonation);
+        scheduleDonationNotification(donation, gender);
         donorService.scheduleMadeOrUnscheduled(newDonation.getDonor().getId());
         return donation;
+    }
+
+    //@PostMapping("/schedule-donation-notification/{gender}")
+    private void scheduleDonationNotification(Donation donation, String gender) {
+        try {
+            quartzDonationService.scheduleNotification(donation, gender);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
