@@ -50,7 +50,7 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@SuppressWarnings("null") ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 }

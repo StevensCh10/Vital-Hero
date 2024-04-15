@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,7 +23,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
-import com.vitalhero.fullstack.exception.EntityInUse;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.exception.PropertyNotExist;
@@ -79,8 +79,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	}
 	
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
-			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(@NonNull MethodArgumentNotValidException e,
+			@NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
 		List<Problem.Field> problemFields = e.getBindingResult().getFieldErrors().stream()
 				.map(fieldError -> {
 					String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
@@ -94,8 +94,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	}
 
 	@Override
-	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException e,
-			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(@NonNull HttpMessageNotReadableException e,
+	@NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
 		Throwable rootCause = e.getCause();
 		
 		if(rootCause instanceof InvalidFormatException) { //valor de entrada de atributo não correspondido p
@@ -125,16 +125,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	}
 	
 	@Override
-	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException e, HttpHeaders headers, //URL INEXISTENTE
-			HttpStatusCode status, WebRequest request) {
+	protected ResponseEntity<Object> handleNoHandlerFoundException(@NonNull NoHandlerFoundException e, @NonNull HttpHeaders headers, //URL INEXISTENTE
+	@NonNull HttpStatusCode status, @NonNull WebRequest request) {
 		String detail = String.format("The resource '%s' you tried to access does not exist.", e.getRequestURL());
 		Problem problem = handleProblem(HttpStatus.valueOf(status.value()), ProblemType.RESOURCE_NOT_FOUND, detail);
 		return handleExceptionInternal(e, problem, headers, status, request);
 	}
 	
 	@Override
-	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-			HttpStatusCode status, WebRequest request) {
+	protected ResponseEntity<Object> handleExceptionInternal(@NonNull Exception ex, @SuppressWarnings("null") Object body, @NonNull HttpHeaders headers,
+		@NonNull HttpStatusCode status, @NonNull WebRequest request) {
 		
 		if(body == null) {
 			body = new Problem(LocalDateTime.now(), status.value(), null, HttpStatus.valueOf(status.value()).getReasonPhrase(), null, null);			

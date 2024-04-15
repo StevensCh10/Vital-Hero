@@ -97,6 +97,7 @@ public class DonorController {
                 return donorService.update(flushDonor);
     }
 
+    @SuppressWarnings("null")
     @GetMapping("/img/{nameImg}")
     public byte[] getImgProfile(@PathVariable("nameImg") String nameImg) throws IOException{
         File fileImg = new File(pathImgs + nameImg);
