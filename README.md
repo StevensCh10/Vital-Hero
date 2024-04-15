@@ -7,7 +7,7 @@ O Vital Hero é um projeto fullstack desenvolvido com o objetivo de viabilizar e
 
 ## Principais Tecnologias Utilizadas:
   - Spring boot
-  - Spring Security
+  - Biblioteca Quartz
   - Hibernate
   - Lombok
   - MySql
