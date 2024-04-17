@@ -33,5 +33,5 @@ Para utilizar o projeto, é necessário executar separadamente o frontend e o ba
 
 ### Backend
 1. Navegue até a pasta backend.
-2. Execute o comando mvn spring-boot:run para iniciar o servidor backend.
-3. Certifique-se de configurar corretamente as variáveis de ambiente e conexões de banco de dados conforme necessário.
+2. Execute o comando ./mvn spring-boot:run para iniciar o servidor backend.
+3. Certifique-se de configurar corretamente as variáveis de ambiente e conexões de banco de dados conforme necessário na pasta /src/main/resources/application.properties.
