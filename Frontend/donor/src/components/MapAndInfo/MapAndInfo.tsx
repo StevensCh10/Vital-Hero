@@ -18,13 +18,14 @@ const Map: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bloodcentersFromLocalStorage =
-          localStorage.getItem("bloodcenters");
+        const resultBloodstocks = await auth.findAllBloodstocks();
+        setBloodstocks(resultBloodstocks);
+        const bloodcentersFromLocalStorage = localStorage.getItem("bloodcenters");
         if (bloodcentersFromLocalStorage !== null) {
           const bloodcentersObject = JSON.parse(bloodcentersFromLocalStorage);
           setBloodcenters(bloodcentersObject);
         } else {
-          setBloodcenters([]); // Inicializar bloodcenters como um array vazio
+          setBloodcenters([]);
         }
       } catch (error) {
         console.error("Erro:", error);
@@ -56,9 +57,6 @@ const Map: React.FC = () => {
   }, [bloodcenters]);
 
   const handleMarkerClick = (markerId: number) => {
-    //setSelectedMarker(markerId);
-
-    // Adicionar classe "selected" à div correta
     const bloodcenterBoxes = document.querySelectorAll(".bloodcenter-box");
     bloodcenterBoxes.forEach((box) => {
       if (box.id === markerId.toString()) {
