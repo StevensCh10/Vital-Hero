@@ -21,7 +21,7 @@ const App = () => {
     <div className='container'>
       <div className='app'>
         <Routes>
-          <Route path="/" element={<RequireAuth><Home/></RequireAuth>}/> 
+          <Route path="/" element={<RequireAuth><Home/></RequireAuth>}/>
           <Route path="/login" element={<RequireAuth><Login/></RequireAuth>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/forgot-password' element={<ForgotPassword/>}/>

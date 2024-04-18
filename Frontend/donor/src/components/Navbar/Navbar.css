@@ -74,7 +74,7 @@
 .navbar-center-home {
   display: flex;
   align-items: center;
-  color: rgb(184, 14, 20);
+  cursor: pointer;
 }
 
 .logo-container-home {

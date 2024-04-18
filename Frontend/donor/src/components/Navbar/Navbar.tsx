@@ -1,11 +1,11 @@
 import { FaAlignJustify, FaUserLarge } from "react-icons/fa6";
-import customStylesLeft from "./CustomStylesLeft";
+import { AuthContext } from "../../contexts/Auth/AuthContext";
 import customStylesRight from "./CustomStylesRight";
+import customStylesLeft from "./CustomStylesLeft";
 import { useContext, useState } from "react"
+import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import './Navbar.css'
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
 
 const Navbar = () => {
     const auth = useContext(AuthContext);
@@ -56,7 +56,7 @@ const Navbar = () => {
           >
             <div className="modal-item"><img src="/formulario.png"></img><Link to="/donation-form">Formulário de doação</Link></div>
             <div className="modal-item"><img src="/medico.png"></img><Link to="/screening">Triagem</Link></div>
-            <div className="modal-item"><img src="/cruz-vermelha.png"></img><Link to="/#section-home">Agendar Doação</Link></div>
+            <div className="modal-item"><img src="/Logo.png"></img><Link to="/">Home</Link></div>
             <div className="modal-item"><img src="/hospital.png"></img><Link to="/bloodcenters">Hemocentros</Link></div>
             <div className="modal-item"><img src="/blood-donation.png"></img><Link to="/donations">Doações</Link></div>
             <div className="modal-item">
@@ -73,11 +73,13 @@ const Navbar = () => {
           
         </div>
         <div className="navbar-center-home">
-          <div className="logo-container-home">
-            <h1 className="logo-text">Vital</h1>
-            <img src="/Logo.png" alt="Logo" className="logo-image" />
-            <h1 className="logo-text">Hero</h1>
-          </div>
+          <Link to="/" style={{color: "rgb(184, 14, 20)"}}>
+            <div className="logo-container-home">
+              <h1 className="logo-text">Vital</h1>
+              <img src="/Logo.png" alt="Logo" className="logo-image" />
+              <h1 className="logo-text">Hero</h1>
+            </div>
+          </Link>
         </div>
         <div className="navbar-right">
           <button className={`round-button ${isModalRightOpen ? 'active' : ''}`} onClick={toggleRightOptions}>
