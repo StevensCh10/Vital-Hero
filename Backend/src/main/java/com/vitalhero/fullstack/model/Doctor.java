@@ -3,6 +3,7 @@ package com.vitalhero.fullstack.model;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.vitalhero.fullstack.enums.Roles;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,5 +49,7 @@ public class Doctor implements Serializable{
     @NotBlank
     @Column(updatable = true)
     private String password;
+
+    private String role;
 
 }

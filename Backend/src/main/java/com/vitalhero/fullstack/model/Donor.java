@@ -74,4 +74,6 @@ public class Donor implements Serializable{
     @Column(updatable = true)
     private String password;
 
+    private String role;
+
 }

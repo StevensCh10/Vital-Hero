@@ -28,4 +28,6 @@ public class BloodCenter implements Serializable{
 
     @NotBlank
     private String phone;
+
+    private String role;
 }

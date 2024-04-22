@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.1</version>
+		<version>3.2.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.vitalhero</groupId>
@@ -77,15 +77,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.3.2</version> <!-- ou a versão mais recente disponível -->
+			<artifactId>quartz</artifactId> <!-- ou a versão mais recente disponível -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-quartz</artifactId>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -102,5 +100,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
