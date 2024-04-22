@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/NavbarDonor/NavbarDonor";
 import "./DonationForm.css";
 import { DonationForm as DonationFormType } from "../../types/DonationForm";
 import { AuthContext } from "../../contexts/Auth/AuthContext";

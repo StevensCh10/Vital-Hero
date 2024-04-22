@@ -1,19 +1,22 @@
-import { Route, Routes } from 'react-router-dom'
-import Login from './pages/Login/Login'
-import { RequireAuth } from './contexts/Auth/RequireAuth'
-import Home from './pages/Home/Home'
-import Register from './pages/Register/Register'
-import Bloodcenters from './pages/Bloodcenters/Bloodcenters'
-import Donations from './pages/Donations/Donations'
-import Profile from './pages/Profile/Profile'
-import DonationFormType from './pages/DonationForm/DonationForm'
-import ScreeningType from './pages/Screening/Screening'
-import ChangePassword from './pages/ChangePassword/ChangePassword'
-import './App.css'
-import Footer from './components/Footer/Footer'
+import HomeBloodcenter from './pages/HomeBloodcenter/HomeBloodcenter'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
+import ChangePassword from './pages/ChangePassword/ChangePassword'
+import DonationFormType from './pages/DonationForm/DonationForm'
 import DonationSteps from './pages/DonationSteps/DonationSteps'
+import Bloodcenters from './pages/Bloodcenters/Bloodcenters'
+import { RequireAuth } from './contexts/Auth/RequireAuth'
+import ScreeningType from './pages/Screening/Screening'
+import HomeDoctor from './pages/HomeDoctor/HomeDoctor'
+import AnalyzeTheRole from './pages/AnalyzeTheRole'
+import Donations from './pages/Donations/Donations'
+import HomeDonor from './pages/HomeDonor/HomeDonor'
+import { Route, Routes } from 'react-router-dom'
+import Register from './pages/Register/Register'
+import Footer from './components/Footer/Footer'
+import Profile from './pages/Profile/Profile'
 import Review from './pages/Review/Review'
+import Login from './pages/Login/Login'
+import './App.css'
 
 const App = () => {
 
@@ -21,9 +24,12 @@ const App = () => {
     <div className='container'>
       <div className='app'>
         <Routes>
-          <Route path="/" element={<RequireAuth><Home/></RequireAuth>}/>
+          <Route path="/" element={<RequireAuth><AnalyzeTheRole/></RequireAuth>}/>
           <Route path="/login" element={<RequireAuth><Login/></RequireAuth>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path="/home-donor" element={<RequireAuth><HomeDonor/></RequireAuth>}/>
+          <Route path="/home-doctor" element={<RequireAuth><HomeDoctor/></RequireAuth>}/>
+          <Route path="/home-bloodcenter" element={<RequireAuth><HomeBloodcenter/></RequireAuth>}/>
           <Route path='/forgot-password' element={<ForgotPassword/>}/>
           <Route path='/donation-form' element={<RequireAuth><DonationFormType/></RequireAuth>}/>
           <Route path='/screening' element={<RequireAuth><ScreeningType/></RequireAuth>}/>

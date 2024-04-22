@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import "./Profile.css";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/NavbarDonor/NavbarDonor";
 
 const Profile = () => {
   const auth = useContext(AuthContext);

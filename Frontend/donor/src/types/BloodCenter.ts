@@ -6,4 +6,5 @@ export type BloodCenter = {
     referencePoint: string;
     photo: string;
     phone: string;
+    role?: string;
 }

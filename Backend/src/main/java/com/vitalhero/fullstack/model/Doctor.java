@@ -3,6 +3,8 @@ package com.vitalhero.fullstack.model;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.vitalhero.fullstack.intrerfaces.User;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class Doctor implements Serializable{
+public class Doctor implements Serializable, User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

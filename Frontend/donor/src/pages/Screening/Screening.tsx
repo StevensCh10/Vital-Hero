@@ -1,7 +1,7 @@
 import { Screening as ScreeningType } from "../../types/Screening";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState} from "react";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/NavbarDonor/NavbarDonor";
 import "./Screening.css";
 import { Donor } from "../../types/Donor";
 

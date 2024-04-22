@@ -1,14 +1,15 @@
-import { createContext } from "react";
-import { Donor } from "../../types/Donor";
-import { BloodCenter } from "../../types/BloodCenter";
-import { Scheduling } from "../../types/Scheduling";
 import { DonationForm } from "../../types/DonationForm";
+import { BloodCenter } from "../../types/BloodCenter";
+import { Bloodstock } from "../../types/Bloodstock";
+import { Scheduling } from "../../types/Scheduling";
 import { Screening } from "../../types/Screening";
 import { Donation } from "../../types/Donation";
-import { Bloodstock } from "../../types/Bloodstock";
+import { Doctor } from "../../types/Doctor";
+import { Donor } from "../../types/Donor";
+import { createContext } from "react";
 
 export type AuthContextType = {
-    user: Donor |  null;
+    user: Donor | Doctor | BloodCenter |  null;
     signin: (email: string, password: string) => Promise<boolean>;
     signout: () => void;
     findDonorById: (idDonor: number) => Promise<Donor>;

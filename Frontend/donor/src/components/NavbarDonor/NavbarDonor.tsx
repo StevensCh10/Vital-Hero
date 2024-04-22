@@ -5,9 +5,9 @@ import customStylesLeft from "./CustomStylesLeft";
 import { useContext, useState } from "react"
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import './Navbar.css'
+import './NavbarDonor.css'
 
-const Navbar = () => {
+const NavbarDonor = () => {
     const auth = useContext(AuthContext);
     const [showLeftOptions, setShowLeftOptions] = useState(false);
     const [showRightOptions, setShowRightOptions] = useState(false);
@@ -107,4 +107,4 @@ const Navbar = () => {
     );
 }
 
-export default Navbar
+export default NavbarDonor;

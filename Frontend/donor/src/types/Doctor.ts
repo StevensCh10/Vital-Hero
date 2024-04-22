@@ -1,8 +1,8 @@
-export type Donor = {
+export type Doctor = {
     id: number;
-    scheduling?: number| null;
     name?: string;
     cpf?: string;
+    crm?: string;
     email?: string;
     age?: number;
     gender?: string;

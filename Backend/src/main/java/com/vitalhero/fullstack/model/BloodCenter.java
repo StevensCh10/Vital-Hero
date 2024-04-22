@@ -1,6 +1,9 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
+
+import com.vitalhero.fullstack.intrerfaces.User;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-public class BloodCenter implements Serializable{
+public class BloodCenter implements Serializable, User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +27,11 @@ public class BloodCenter implements Serializable{
 
     @NotBlank
     @Column(updatable = false, unique = true)
-    private String name, institutionalEmail, address, referencePoint, photo;
+    private String name, email, address, referencePoint, photo;
+
+    @NotBlank
+    @Column(updatable = true)
+    private String password;
 
     @NotBlank
     private String phone;

@@ -11,7 +11,8 @@ export const useApi = () => ({
     //validateToken: async(token: string) => {},
 
     signin: async (email: string, password: string) => {
-        return await api.get(`donor/${email}/${password}`)
+        var user = {email: email, password: password}
+        return await api.post(`api/auth/login`, user)
             .then((response) => response.data)
             .catch((error) => console.log(error));     
     },

@@ -1,17 +1,17 @@
-import { useContext, useState, useEffect } from "react"
-import { AuthContext } from "../../contexts/Auth/AuthContext"
+import { Scheduling as SchedulingType } from "../../types/Scheduling";
+import NavbarDonor from "../../components/NavbarDonor/NavbarDonor";
+import Scheduling from "../../components/Scheduling/Scheduling";
+import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { DonationForm } from "../../types/DonationForm";
+import { useContext, useState, useEffect } from "react";
 import { BloodCenter } from "../../types/BloodCenter";
+import { Screening } from "../../types/Screening";
 import { BiDonateBlood } from "react-icons/bi";
 import { MdBloodtype } from "react-icons/md";
 import { GiLifeTap } from "react-icons/gi";
-import Navbar from "../../components/Navbar/Navbar";
-import { Scheduling as SchedulingType } from "../../types/Scheduling";
-import { Screening } from "../../types/Screening";
-import { DonationForm } from "../../types/DonationForm";
-import Scheduling from "../../components/Scheduling/Scheduling";
-import "./Home.css"
+import "./HomeDonor.css"
 
-const Home = () => {
+const HomeDonor = () => {
   const auth = useContext(AuthContext);
   const user = auth.user;
   const [bloodcenters, setBloodCenters] = useState<BloodCenter[]>([]);
@@ -102,7 +102,7 @@ const Home = () => {
     <>
     
       <div className="home-container">
-        <Navbar />
+        <NavbarDonor />
 
         <div className="be-to-hero">
           <div className="text">
@@ -244,4 +244,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomeDonor;
