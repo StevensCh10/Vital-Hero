@@ -1,19 +1,20 @@
-import { Scheduling as SchedulingType } from "../../types/Scheduling";
-import NavbarDonor from "../../components/NavbarDonor/NavbarDonor";
-import Scheduling from "../../components/Scheduling/Scheduling";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
-import { DonationForm } from "../../types/DonationForm";
+import { Scheduling as SchedulingType } from "../../../types/Scheduling";
+import NavbarDonor from "../../../components/NavbarDonor/NavbarDonor";
+import Scheduling from "../../../components/Scheduling/Scheduling";
+import { AuthContext } from "../../../contexts/Auth/AuthContext";
+import { DonationForm } from "../../../types/DonationForm";
 import { useContext, useState, useEffect } from "react";
-import { BloodCenter } from "../../types/BloodCenter";
-import { Screening } from "../../types/Screening";
+import { BloodCenter } from "../../../types/BloodCenter";
+import { Screening } from "../../../types/Screening";
 import { BiDonateBlood } from "react-icons/bi";
+import { Donor } from "../../../types/Donor";
 import { MdBloodtype } from "react-icons/md";
 import { GiLifeTap } from "react-icons/gi";
 import "./HomeDonor.css"
 
 const HomeDonor = () => {
   const auth = useContext(AuthContext);
-  const user = auth.user;
+  const user = auth.user as Donor;
   const [bloodcenters, setBloodCenters] = useState<BloodCenter[]>([]);
   const [schedulingsBloodcenter, setSchedulingsBloodcenter] = useState<SchedulingType[]>([]);
   const [donationForm, setDonationForm] = useState<DonationForm>(null as unknown as DonationForm);
@@ -191,6 +192,11 @@ const HomeDonor = () => {
                 {donationForm !== null && screenings.length === 0 && (
                   <label className="alert">
                     (É necessário preencher a triagem para marcar um agendamento)
+                  </label>
+                )}
+                {donationForm !== null && screenings.length !== 0 && screenings[0] && screenings[0].doctor === null && (
+                  <label className="alert">
+                    (Sua triagem está em processo de validação. Após a validação informaremos se é você está apto para fazer a doação)
                   </label>
                 )}
               </div>

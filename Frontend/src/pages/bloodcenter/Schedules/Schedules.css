@@ -1,0 +1,31 @@
+html,
+body {
+  margin: 0;
+  height: 0;
+  margin: 0;
+}
+
+.schedules-container {
+  width: 100%;
+  position: relative;
+  border-radius: 10px;
+  min-height: 91vh;
+}
+
+.scheduling-info {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%; /* Defina a largura total da área de visualização */
+  margin-top: 2%;
+}
+
+.scheduling-box{
+    width: 30%;
+  margin-bottom: 20px; /* Espaçamento entre as caixas */
+  margin-left: 4%;
+  margin-right: 4%;
+  padding: 1.5%; /* Espaçamento interno */
+  z-index: 3;
+  height: auto;
+}

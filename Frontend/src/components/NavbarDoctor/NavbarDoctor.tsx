@@ -54,11 +54,8 @@ const NavbarDoctor = () => {
             onRequestClose={toggleLeftOptions}
             ariaHideApp={false}
           >
-            <div className="modal-item"><img src="/formulario.png"></img><Link to="/donation-form">Formulário de doação</Link></div>
-            <div className="modal-item"><img src="/medico.png"></img><Link to="/screening">Triagem</Link></div>
+            <div className="modal-item"><img src="/formulario.png"></img><Link to="/">Triagens</Link></div>
             <div className="modal-item"><img src="/Logo.png"></img><Link to="/">Home</Link></div>
-            <div className="modal-item"><img src="/hospital.png"></img><Link to="/bloodcenters">Hemocentros</Link></div>
-            <div className="modal-item"><img src="/blood-donation.png"></img><Link to="/donations">Doações</Link></div>
             <div className="modal-item">
               <div className="line">
                 <fieldset>
@@ -67,8 +64,6 @@ const NavbarDoctor = () => {
               </div>
             </div>
             <div className="modal-item"><img src="/feedback.png"></img><Link to="/">Feedback</Link></div>
-            <div className="modal-item"><img src="/etapa.png"></img><Link to="/donation-steps">Etapas no processo de doação</Link></div>
-            <div className="modal-item"><img src="/informacoes.png"></img><Link to="/">Mais informações</Link></div>
           </Modal>
           
         </div>

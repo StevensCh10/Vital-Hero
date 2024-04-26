@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import Navbar from "../../components/NavbarDonor/NavbarDonor";
+import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import "./DonationForm.css";
-import { DonationForm as DonationFormType } from "../../types/DonationForm";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
-import { Donor } from "../../types/Donor";
+import { DonationForm as DonationFormType } from "../../../types/DonationForm";
+import { AuthContext } from "../../../contexts/Auth/AuthContext";
+import { Donor } from "../../../types/Donor";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);

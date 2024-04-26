@@ -1,5 +1,5 @@
-import Map from "../../components/MapAndInfo/MapAndInfo";
-import Navbar from "../../components/NavbarDonor/NavbarDonor";
+import Map from "../../../components/MapAndInfo/MapAndInfo";
+import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import "./Bloodcenters.css";
 
 const Bloodcenters = () => {

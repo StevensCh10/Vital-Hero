@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import Navbar from "../../components/NavbarDonor/NavbarDonor";
+import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import './ChangePassword.css';
-import { AuthContext } from '../../contexts/Auth/AuthContext';
+import { AuthContext } from '../../../contexts/Auth/AuthContext';
 
 const ChangePassword = () => {
     const auth = useContext(AuthContext);

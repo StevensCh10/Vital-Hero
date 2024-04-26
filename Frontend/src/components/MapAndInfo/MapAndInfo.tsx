@@ -234,7 +234,7 @@ const Map: React.FC = () => {
               <div className="topics">
                 <p><span>Endereço:</span> <label>{center.address}</label></p>
                 <p><span>Telefone:</span> <label>{formatPhone(center.phone)}</label></p>
-                <p><span>Email:</span> <label>{center.institutionalEmail}</label></p>
+                <p><span>Email:</span> <label>{center.email}</label></p>
                 
               </div>
             </div>

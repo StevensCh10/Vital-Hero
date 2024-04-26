@@ -32,6 +32,11 @@ export const useApi = () => ({
             .then((response) => response.data)
             .catch((error) => console.log(error));  
     },
+    findSchedulingsByBloodcenter: async (bcID: number) => {
+        return await api.get(`bloodcenter/scheduling/all/${bcID}`)
+            .then((response) => response.data)
+            .catch((error) => console.log(error));  
+    },
     findDonationFormByDonor: async (idDonor: number) => {
         return await api.get(`donor/donationform/findbydonor/${idDonor}`)
             .then((response) => response.data)
@@ -39,6 +44,11 @@ export const useApi = () => ({
     },
     findScreeningByDonor: async (idDonor: number) => {
         return await api.get(`donor/screening/all/${idDonor}`)
+            .then((response) => response.data)
+            .catch(() => null); 
+    },
+    allScheduledDonors: async () => {
+        return await api.get('donor/allScheduled')
             .then((response) => response.data)
             .catch(() => null); 
     },

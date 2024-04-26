@@ -1,7 +1,11 @@
 package com.vitalhero.fullstack.service;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
@@ -43,6 +47,7 @@ public class DonorService {
 			if(repository.findByEmail(donor.getEmail()) != null) {
                 throw new EntityAlreadyExists(String.format("Email '%s' já está cadastrado.", donor.getEmail()));
 			}
+            donor.setRole(Roles.DONOR.toString());
 			return repository.save(donor);			
 		}
         throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", donor.getCpf()));
@@ -78,6 +83,10 @@ public class DonorService {
             throw new EntityNotFound(String.format("Doador '%s' não está agendado em nenhuma doação.", donor.getName()));
         }
         repository.FkSchedulingToNull(id);
+    }
+
+    public List<Donor> allScheduledDonors(){
+        return repository.allScheduledDonors();
     }
     
     public void deleteDonor(Long id){

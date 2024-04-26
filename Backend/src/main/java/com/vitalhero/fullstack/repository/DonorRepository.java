@@ -1,5 +1,7 @@
 package com.vitalhero.fullstack.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -30,6 +32,12 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
         nativeQuery = true
     )
     void FkSchedulingToNull(@Param("id") Long id);
+
+    @Query(
+        value = "SELECT * FROM donor WHERE fk_scheduling != null",
+        nativeQuery = true
+    )
+    List<Donor> allScheduledDonors();
 
     Donor findByEmail(String email);
     Donor findByName(String name);

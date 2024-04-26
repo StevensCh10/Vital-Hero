@@ -1,4 +1,4 @@
-import Navbar from "../../components/NavbarDonor/NavbarDonor";
+import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 
 const DonationSteps = () => {
     return(

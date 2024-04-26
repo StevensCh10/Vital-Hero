@@ -1,9 +1,9 @@
-import { Screening as ScreeningType } from "../../types/Screening";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { Screening as ScreeningType } from "../../../types/Screening";
+import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState} from "react";
-import Navbar from "../../components/NavbarDonor/NavbarDonor";
+import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import "./Screening.css";
-import { Donor } from "../../types/Donor";
+import { Donor } from "../../../types/Donor";
 
 const Screening = () => {
   const auth = useContext(AuthContext);

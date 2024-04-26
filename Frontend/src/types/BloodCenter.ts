@@ -1,7 +1,7 @@
 export type BloodCenter = {
     id: number,
     name: string;
-    institutionalEmail: string;
+    email: string;
     address: string;
     referencePoint: string;
     photo: string;

@@ -54,7 +54,7 @@ const NavbarBloodcenter = () => {
             onRequestClose={toggleLeftOptions}
             ariaHideApp={false}
           >
-            <div className="modal-item"><img src="/formulario.png"></img><Link to="/donation-form">Agendamentos</Link></div>
+            <div className="modal-item"><img src="/formulario.png"></img><Link to="/schedules">Agendamentos</Link></div>
             <div className="modal-item"><img src="/Logo.png"></img><Link to="/">Home</Link></div>
             <div className="modal-item">
               <div className="line">
@@ -93,7 +93,6 @@ const NavbarBloodcenter = () => {
             onRequestClose={toggleRightOptions}
             ariaHideApp={false}
           >
-            <div className="modal-item"><img src="/perfil.png"></img><Link to="/profile">Perfil</Link></div>
             <div className="modal-item"><img src="/senha.png"></img><Link to="/change-password">Alterar Senha</Link></div>
             <div className="modal-item"><img src="/sair.png"></img><Link onClick={handleLogout} to="/">Sair</Link></div>
           </Modal>

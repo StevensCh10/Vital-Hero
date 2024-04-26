@@ -50,6 +50,14 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return await api.findScreeningByDonor(idDonor);
     }
 
+    const allScheduledDonors = async() => {
+        return await api.allScheduledDonors();
+    }
+
+    const findSchedulingsByBloodcenter = async(bdID: number) => {
+        return await api.findSchedulingsByBloodcenter(bdID);
+    }
+
     const updateDonor = async(donorAtt: Donor) => {
         const data = await api.updateDonor(donorAtt);
         setUser(data);
@@ -129,11 +137,11 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     return (
         <AuthContext.Provider value={{user, signin, signout, 
                 findAllBloodCenters, findAllSchedulings,
-                findDonationForm, findScreening, updateDonor: updateDonor,
-                findDonations, findSchedulingById, toSchedule,
-                findDonorById, unSchedule, findAllBloodstocks,
+                findDonationForm, findScreening, allScheduledDonors, 
+                updateDonor: updateDonor, findDonations, findSchedulingById,
+                toSchedule, findDonorById, unSchedule, findAllBloodstocks,
                 register, addScreening, updateScreening: updateScreening,
-                addDonationForm, updateDonationForm}}>
+                addDonationForm, updateDonationForm, findSchedulingsByBloodcenter}}>
             {children}
         </AuthContext.Provider>
     );

@@ -2,6 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Doctor;
@@ -26,6 +28,7 @@ public class DoctorService {
 		if(repository.findByCpf(doctor.getCpf()) == null) {
 			if(repository.findByEmail(doctor.getEmail()) == null) {
                 if(repository.findByCrm(doctor.getCrm()) == null){
+                    doctor.setRole(Roles.DOCTOR.toString());
                     return repository.save(doctor);			
                 }
                 throw new EntityAlreadyExists(String.format("Crm '%s' indisponível", doctor.getCrm()));    

@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
-import { Donation } from "../../types/Donation";
-import Navbar from "../../components/NavbarDonor/NavbarDonor";
-import { BloodCenter } from "../../types/BloodCenter";
+import { AuthContext } from "../../../contexts/Auth/AuthContext";
+import { Donation } from "../../../types/Donation";
+import Navbar from "../../../components/NavbarDonor/NavbarDonor";
+import { BloodCenter } from "../../../types/BloodCenter";
 import './Donations.css'
-import { Scheduling as SchedulingType } from "../../types/Scheduling";
-import Scheduling from "../../components/Scheduling/Scheduling";
+import { Scheduling as SchedulingType } from "../../../types/Scheduling";
+import Scheduling from "../../../components/Scheduling/Scheduling";
 
 const Donations = () => {
   const auth = useContext(AuthContext);

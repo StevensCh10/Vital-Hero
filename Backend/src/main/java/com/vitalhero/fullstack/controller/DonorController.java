@@ -117,6 +117,11 @@ public class DonorController {
         return donorService.find(donorID);
     }
 
+    @GetMapping("/allScheduled")
+    public List<Donor> allScheduledDonors(){
+        return donorService.allScheduledDonors();
+    }
+
     @DeleteMapping("/{donorID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDonor(@PathVariable Long donorID){

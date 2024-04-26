@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../../contexts/Auth/AuthContext";
+import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import './ForgotPassword.css'
 
