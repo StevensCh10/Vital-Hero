@@ -42,7 +42,6 @@ public class ScreeningService {
 
     public List<Screening> allScreeningsByDonor(Long donorID){
         List<Screening> list = repository.allScreening(donorID);
-        System.out.println(list);
         return list;
     }
 

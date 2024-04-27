@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.vitalhero.fullstack.enums.Roles;
+import com.vitalhero.fullstack.exception.CannotBeScheduling;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
@@ -73,8 +74,12 @@ public class DonorService {
 	}
 
     public void toSchedule(Long id, Long schedulingID){
-        find(id);
-        repository.updateFkScheduling(schedulingID, id);
+        var donor = find(id);
+        if(donor.getScheduling() == null){
+            throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName()));
+        }else{
+            //repository.updateFkScheduling(schedulingID, id);
+        }
     }
 
     public void scheduleMadeOrUnscheduled(Long id){

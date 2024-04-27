@@ -66,12 +66,15 @@ const HomeDonor = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    auth.toSchedule(user!.id, parseInt(selectedHour));
-    user!.scheduling = parseInt(selectedHour);
-    await auth.findDonorById(user!.id).then(() => {
-      localStorage.setItem('user', JSON.stringify(user));
-      window.location.reload();
-    });
+    try {
+      await auth.toSchedule(user!.id, parseInt(selectedHour));
+      await auth.findDonorById(user!.id).then(() => {
+        localStorage.setItem('user', JSON.stringify(user));
+        window.location.reload();
+      });
+    } catch (error) {
+        console.error(error);
+    }
   };
 
   const dateFormat = (dateTime: Date) => {
@@ -234,7 +237,11 @@ const HomeDonor = () => {
                     )
                 )}
                 </select>
-                <button type="submit" className="schedule">Agendar</button>
+                {user.scheduling !== null ? (
+                  <button type="submit" className="schedule">Agendar</button>
+                ): (
+                  <button disabled type="submit" className="schedule" style={{pointerEvents: "none", backgroundColor: "rgba(184, 14, 20, 0.459)"}}>Agendar</button>
+                )}
               </form> 
             </div>
           ) : (
