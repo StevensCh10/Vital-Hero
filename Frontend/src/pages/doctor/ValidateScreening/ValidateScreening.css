@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.validate-screening-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 96vh;
+}
+
+.validate-screening-container span {
+  margin-bottom: 1%;
+}
+
+.buttons .button-fit {
+  margin-right: 1.5%;
+  background-color: green;
+}
+
+.buttons .button-fit:hover {
+  background-color: rgba(0, 128, 0, 0.87);
+}
+
+.buttons .button-unfit {
+  margin-left: 1.5%;
+}

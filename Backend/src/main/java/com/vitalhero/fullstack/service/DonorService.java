@@ -93,6 +93,10 @@ public class DonorService {
     public List<Donor> allScheduledDonors(){
         return repository.allScheduledDonors();
     }
+
+    public List<Donor> allDonorScreenings(){
+        return repository.allDonorScreenings();
+    }
     
     public void deleteDonor(Long id){
         find(id);

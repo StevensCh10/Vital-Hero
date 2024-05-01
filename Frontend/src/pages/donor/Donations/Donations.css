@@ -113,12 +113,6 @@ body {
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.donations-container .navbar-donations {
-  display: flex;
-  align-items: center;
-  color: rgb(184, 14, 20);
-}
-
 .no-scheduling{
   display: flex;
   flex-direction: column;

@@ -134,6 +134,18 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return data;
     }
 
+    const findAllScreenings = async() => {
+        return await api.allScreenings();
+    }
+
+    const allDonorsScreenings = async() => {
+        return await api.allDonorsScreenings();
+    }
+
+    const validateScreening = async(idScreening: number, idDoctor: number) => {
+        await api.validateScreening(idScreening, idDoctor);
+    }
+
     return (
         <AuthContext.Provider value={{user, signin, signout, 
                 findAllBloodCenters, findAllSchedulings,
@@ -141,7 +153,8 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
                 updateDonor: updateDonor, findDonations, findSchedulingById,
                 toSchedule, findDonorById, unSchedule, findAllBloodstocks,
                 register, addScreening, updateScreening: updateScreening,
-                addDonationForm, updateDonationForm, findSchedulingsByBloodcenter}}>
+                addDonationForm, updateDonationForm, findSchedulingsByBloodcenter,
+                findAllScreenings, allDonorsScreenings, validateScreening}}>
             {children}
         </AuthContext.Provider>
     );

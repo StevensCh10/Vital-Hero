@@ -1,10 +1,12 @@
+import NavbarDoctor from "../../components/NavbarDoctor/NavbarDoctor";
+import NavbarDonor from "../../components/NavbarDonor/NavbarDonor";
+import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import "./Profile.css";
-import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
+  const user = auth.user;
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [age, setAge] = useState(0);
@@ -16,17 +18,20 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setName(auth.user!.name!);
-        setCpf(auth.user!.cpf!);
-        setAge(auth.user!.age!);
-        setPhone(auth.user!.phone!);
-        setEmail(auth.user!.email!);
-        setAddress(auth.user!.address!);
+        setName(user!.name!);
+        setCpf(user!.cpf!);
+        setAge(user!.age!);
+        setPhone(user!.phone!);
+        setEmail(user!.email!);
+        setAddress(user!.address!);
 
-        const response = await fetch(`http://localhost:8080/donor/img/${auth.user!.photo}`);
-        const blob = await response.blob();
-        const imageUrl = URL.createObjectURL(blob);
-        setPhotoURL(imageUrl);
+        if(user!.photo !== "sem" && user!.photo !== null){
+          const response = await fetch(`http://localhost:8080/donor/img/${user!.photo}`);
+          const blob = await response.blob();
+          const imageUrl = URL.createObjectURL(blob);
+          setPhotoURL(imageUrl);
+        }
+        setPhotoURL("Logo.png");
       } catch (error) {
         console.error("Erro:", error);
       }
@@ -37,10 +42,10 @@ const Profile = () => {
   const handleAtt = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    auth.user!.phone = phone;
-    auth.user!.address = address;
+    user!.phone = phone;
+    user!.address = address;
 
-    await auth.updateDonor(auth.user!);
+    await auth.updateDonor(user!);
     window.location.reload();
   };
 
@@ -60,7 +65,11 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <Navbar />
+      {user?.role === "DOCTOR" ? (
+        <NavbarDoctor />
+      ) : (
+        <NavbarDonor />
+      )}
       <div className="profile-content">
         <div className="profile-header">
           <div className="profile-image">

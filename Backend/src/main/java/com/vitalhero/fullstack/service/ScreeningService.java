@@ -40,13 +40,17 @@ public class ScreeningService {
         repository.deleteById(id);
     }
 
+    public List<Screening> allScreenings(){
+        return repository.findAll();
+    }
+
     public List<Screening> allScreeningsByDonor(Long donorID){
         List<Screening> list = repository.allScreening(donorID);
         return list;
     }
 
     public void validatedScreening(Long id, Long doctorID){
-        find(doctorID);
+        find(id);
         repository.validate(id, doctorID);
     }
     

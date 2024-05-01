@@ -4,20 +4,22 @@ import ChangePassword from './pages/donor/ChangePassword/ChangePassword'
 import DonationFormType from './pages/donor/DonationForm/DonationForm'
 import DonationSteps from './pages/donor/DonationSteps/DonationSteps'
 import Bloodcenters from './pages/donor/Bloodcenters/Bloodcenters'
-import { RequireAuth } from './contexts/Auth/RequireAuth'
+import Schedules from './pages/bloodcenter/Schedules/Schedules'
 import ScreeningType from './pages/donor/Screening/Screening'
 import HomeDoctor from './pages/doctor/HomeDoctor/HomeDoctor'
-import AnalyzeTheRole from './pages/AnalyzeTheRole'
+import Screenings from './pages/doctor/Screenings/Screenings'
 import Donations from './pages/donor/Donations/Donations'
 import HomeDonor from './pages/donor/HomeDonor/HomeDonor'
+import { RequireAuth } from './contexts/Auth/RequireAuth'
+import Profile from './pages/Profile/Profile'
+import AnalyzeTheRole from './pages/AnalyzeTheRole'
 import { Route, Routes } from 'react-router-dom'
 import Register from './pages/Register/Register'
 import Footer from './components/Footer/Footer'
-import Profile from './pages/donor/Profile/Profile'
 import Review from './pages/Review/Review'
 import Login from './pages/Login/Login'
 import './App.css'
-import Schedules from './pages/bloodcenter/Schedules/Schedules'
+import ValidateScreening from './pages/doctor/ValidateScreening/ValidateScreening'
 
 const App = () => {
 
@@ -41,6 +43,8 @@ const App = () => {
           <Route path='/donation-steps' element={<RequireAuth><DonationSteps/></RequireAuth>}/>
           <Route path='/review' element={<RequireAuth><Review/></RequireAuth>}/>
           <Route path='/schedules' element={<RequireAuth><Schedules/></RequireAuth>}/>
+          <Route path='/screenings' element={<RequireAuth><Screenings/></RequireAuth>}/>
+          <Route path='/screenings/validate-screening' element={<RequireAuth><ValidateScreening/></RequireAuth>}/>
         </Routes>
         <Footer />
       </div>

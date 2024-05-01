@@ -2,8 +2,10 @@ package com.vitalhero.fullstack.repository;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import com.vitalhero.fullstack.model.Screening;
 
 public interface ScreeningRepository extends JpaRepository<Screening, Long>{
@@ -14,9 +16,11 @@ public interface ScreeningRepository extends JpaRepository<Screening, Long>{
     )
     List<Screening> allScreening(@Param("donorID") Long donorID);
 
+    @Transactional
+    @Modifying
     @Query(
-        value = "UPDATE screening SET fk_donor = :donorID WHERE id = :id",
+        value = "UPDATE screening SET fk_doctor = :doctorID WHERE id = :id",
         nativeQuery = true
     )
-    void validate(@Param("id") Long id, @Param("donorID") Long donorID);
+    void validate(@Param("id") Long id, @Param("doctorID") Long doctorID);
 }

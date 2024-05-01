@@ -108,5 +108,20 @@ export const useApi = () => ({
         return await api.put(`donor/donationform`, donationForm)
         .then((response) => response.data)
         .catch((e) => console.log(e))
-    }
+    },
+    allScreenings: async() => {
+        return await api.get(`doctor/screenings/all`)
+        .then((response) => response.data)
+        .catch((e) => console.log(e))
+    },
+    allDonorsScreenings: async() => {
+        return await api.get(`doctor/donorscreenings/all`)
+        .then((response) => response.data)
+        .catch((e) => console.log(e))
+    },
+    validateScreening: async(idScreening: Number, idDoctor: number) => {
+        return await api.put(`doctor/validatescreening/${idScreening}/${idDoctor}`)
+        .then((response) => response.data)
+        .catch((e) => console.log(e))
+    },
 });

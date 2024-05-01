@@ -15,7 +15,7 @@ const customStylesRight: CustomStylesRight = {
     alignItems: "start",
     justifyContent: "center",
     width: "160px",
-    height: "150px",
+    height: "105px",
     borderRadius: "2%",
     backgroundColor: "white",
     color: "black",

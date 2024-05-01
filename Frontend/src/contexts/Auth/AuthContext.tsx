@@ -15,10 +15,12 @@ export type AuthContextType = {
     findDonorById: (idDonor: number) => Promise<Donor>;
     findAllBloodCenters: () => Promise<BloodCenter[]>;
     findAllSchedulings: () => Promise<Scheduling[]>;
+    findAllScreenings: () => Promise<Screening[]>;
     findSchedulingsByBloodcenter: (bdID: number) => Promise<Scheduling[]>;
     findDonationForm: (idDonor: number) => Promise<DonationForm>;
     findScreening: (idDonor: number) => Promise<Screening[]>;
     allScheduledDonors: () => Promise<Donor[]>;
+    allDonorsScreenings: () => Promise<Donor[]>;
     updateDonor: (donorAtt: Donor) => Promise<Donor>;
     findDonations: (idDonor: number) => Promise<Donation[]>;
     findSchedulingById: (idScheduling: number) => Promise<Scheduling>;
@@ -30,6 +32,7 @@ export type AuthContextType = {
     updateScreening: (screening: Screening) => Promise<Screening>;
     addDonationForm: (donationForm: DonationForm) => Promise<DonationForm>;
     updateDonationForm: (donationForm: DonationForm) => Promise<DonationForm>;
+    validateScreening: (idScreening: number, idDoctor: number) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>(null!);
