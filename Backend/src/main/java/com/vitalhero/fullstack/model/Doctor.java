@@ -1,8 +1,6 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.vitalhero.fullstack.intrerfaces.User;
 
 import jakarta.persistence.Id;
