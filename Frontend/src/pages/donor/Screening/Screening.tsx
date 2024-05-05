@@ -7,12 +7,8 @@ import { Donor } from "../../../types/Donor";
 
 const Screening = () => {
   const auth = useContext(AuthContext);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [screenings, setScreenings] = useState<ScreeningType[]>(
-    localStorage.getItem('screenings') !== null ?
-    JSON.parse(localStorage.getItem('screenings')!) : []
-  );
+  const screenings = JSON.parse(localStorage.getItem('screenings') ?? '[]') as ScreeningType[];
+  
   const [q1, setQ1] = useState(screenings[0]?.q1);
   const [q2, setQ2] = useState(screenings[0]?.q2);
   const [q3, setQ3] = useState(screenings[0]?.q3);

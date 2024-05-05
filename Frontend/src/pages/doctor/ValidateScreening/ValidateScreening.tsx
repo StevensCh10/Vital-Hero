@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import NavbarDoctor from "../../../components/NavbarDoctor/NavbarDoctor";
 import "./ValidateScreening.css";
 import { Screening } from "../../../types/Screening";
@@ -9,18 +9,8 @@ import { useNavigate } from "react-router-dom";
 const ValidateScreening = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [donor, setDonor] = useState<Donor>(
-    localStorage.getItem("donor") !== null
-      ? JSON.parse(localStorage.getItem("donor")!)
-      : null
-  );
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [screening, setScreening] = useState<Screening>(
-    localStorage.getItem("validateScreening") !== null
-      ? JSON.parse(localStorage.getItem("validateScreening")!)
-      : null
-  );
+  const donor =  JSON.parse(localStorage.getItem("donor")! ?? null) as Donor;
+  const screening = JSON.parse(localStorage.getItem("validateScreening")! ?? null) as Screening;
 
   const handleFit = () => {
     auth.validateScreening(screening.id!, auth.user?.id!);
