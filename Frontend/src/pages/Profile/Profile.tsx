@@ -3,10 +3,12 @@ import NavbarDonor from "../../components/NavbarDonor/NavbarDonor";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import "./Profile.css";
+import { Donor } from "../../types/Donor";
+import { Doctor } from "../../types/Doctor";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
-  const user = auth.user;
+  let user;
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [age, setAge] = useState(0);
@@ -18,9 +20,14 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setName(user!.name!);
+        if(auth.user?.role === "DONOR"){
+          user = auth.user as Donor;
+       }else if(auth.user?.role === "DOCTOR"){
+          user = auth.user as Doctor;
+       } 
         setCpf(user!.cpf!);
         setAge(user!.age!);
+        setName(user!.name!);
         setPhone(user!.phone!);
         setEmail(user!.email!);
         setAddress(user!.address!);
@@ -65,7 +72,7 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      {user?.role === "DOCTOR" ? (
+      {auth.user?.role === "DOCTOR" ? (
         <NavbarDoctor />
       ) : (
         <NavbarDonor />

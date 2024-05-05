@@ -1,6 +1,6 @@
 import { AuthContext } from "../../contexts/Auth/AuthContext";
-import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import "./Register.css";
 
 const Register = () => {
@@ -61,6 +61,7 @@ const Register = () => {
     formData.append('phone', phone);
     formData.append('photo', 'sem');
     formData.append('password', password);
+    formData.append('bloodType', bloodType);
 
     if(selectedFile){
       formData.append('file', selectedFile);

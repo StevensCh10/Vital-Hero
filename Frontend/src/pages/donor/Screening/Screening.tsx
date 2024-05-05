@@ -7,8 +7,8 @@ import { Donor } from "../../../types/Donor";
 
 const Screening = () => {
   const auth = useContext(AuthContext);
-  const user = auth.user;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [screenings, setScreenings] = useState<ScreeningType[]>(
     localStorage.getItem('screenings') !== null ?
     JSON.parse(localStorage.getItem('screenings')!) : []

@@ -93,7 +93,6 @@ const NavbarBloodcenter = () => {
             onRequestClose={toggleRightOptions}
             ariaHideApp={false}
           >
-            <div className="modal-item"><img src="/senha.png"></img><Link to="/change-password">Alterar Senha</Link></div>
             <div className="modal-item"><img src="/sair.png"></img><Link onClick={handleLogout} to="/">Sair</Link></div>
           </Modal>
         </div>

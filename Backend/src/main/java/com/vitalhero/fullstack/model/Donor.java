@@ -29,7 +29,8 @@ import lombok.NoArgsConstructor;
 public class Donor implements Serializable, User{
 
     public Donor(String name, String cpf, String email, int age, String gender,
-                 String maritalStatus, String address, String photo, String phone, String password) {
+                 String maritalStatus, String address, String photo, String phone,
+                 String password, String bloodType) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
@@ -69,7 +70,7 @@ public class Donor implements Serializable, User{
     private int age;
 
     @NotBlank
-    private String gender, maritalStatus, address, photo, phone; /* Fazer um enum para cada opção */
+    private String gender, maritalStatus, address, photo, phone, bloodType; /* Fazer um enum para cada opção */
 
 
     @NotBlank

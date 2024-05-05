@@ -34,7 +34,7 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
     void FkSchedulingToNull(@Param("id") Long id);
 
     @Query(
-        value = "SELECT * FROM donor WHERE fk_scheduling != null",
+        value = "SELECT * FROM donor WHERE fk_scheduling IS NOT NULL",
         nativeQuery = true
     )
     List<Donor> allScheduledDonors();

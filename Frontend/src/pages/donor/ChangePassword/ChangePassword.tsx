@@ -1,10 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react';
 import Navbar from "../../../components/NavbarDonor/NavbarDonor";
-import './ChangePassword.css';
 import { AuthContext } from '../../../contexts/Auth/AuthContext';
+import { useContext, useEffect, useRef, useState } from 'react';
+import './ChangePassword.css';
+import { Donor } from "../../../types/Donor";
 
 const ChangePassword = () => {
     const auth = useContext(AuthContext);
+    const user = auth.user as Donor;
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [oldPassword, setOldPassword] = useState('');
@@ -38,16 +40,16 @@ const ChangePassword = () => {
         e.preventDefault();
         if(newPasswordRef.current!.value !== confirmPasswordRef.current!.value){
             confirmPasswordRef.current!.focus();
-        }else if(oldPasswordRef.current!.value !== auth.user!.password){
+        }else if(oldPasswordRef.current!.value !== user!.password){
             oldPasswordRef.current!.focus();
         }else{
-            auth.user!.password = newPassword;
-            auth.updateDonor(auth.user!);
+            user!.password = newPassword;
+            auth.updateDonor(user!);
             setPasswordChanged(true);
             setNewPassword('');
             setConfirmPassword('');
             setOldPassword('');
-            localStorage.setItem('user', JSON.stringify(auth.user!));
+            localStorage.setItem('user', JSON.stringify(user!));
         }
     };
 

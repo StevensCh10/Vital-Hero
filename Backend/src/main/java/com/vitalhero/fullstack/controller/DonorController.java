@@ -79,9 +79,10 @@ public class DonorController {
             @RequestParam("phone") String phone,
             @RequestParam("photo") String photo,
             @RequestParam("password") String password,
+            @RequestParam("bloodType") String bloodType,
             @RequestParam(value = "file", required = false) MultipartFile file){
 
-                Donor newDonor = new Donor(name, cpf, email, age, gender, maritalStatus, address, photo, phone, password);
+                Donor newDonor = new Donor(name, cpf, email, age, gender, maritalStatus, address, photo, phone, password, bloodType);
                 Donor flushDonor = donorService.register(newDonor);
                 try{
                     if(!file.isEmpty()){

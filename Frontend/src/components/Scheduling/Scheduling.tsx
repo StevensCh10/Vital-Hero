@@ -3,9 +3,11 @@ import { BloodCenter } from "../../types/BloodCenter";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Scheduling as SchedulingType } from "../../types/Scheduling";
 import "./Scheduling.css";
+import { Donor } from "../../types/Donor";
 
 const Scheduling = () => {
     const auth = useContext(AuthContext);
+    const user = auth.user as Donor;
   const [bloodcenters] = useState<BloodCenter[]>(
     localStorage.getItem("bloodcenters") !== null
       ? JSON.parse(localStorage.getItem("bloodcenters")!)
@@ -59,10 +61,10 @@ const Scheduling = () => {
 
   const handleClick = async(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    auth.unSchedule(auth.user!.id);
-    auth.user!.scheduling = null;
-    await auth.findDonorById(auth.user!.id).then(() => {
-      localStorage.setItem('user', JSON.stringify(auth.user));
+    auth.unSchedule(user!.id); 
+    user!.scheduling = null;
+    await auth.findDonorById(user!.id).then(() => {
+      localStorage.setItem('user', JSON.stringify(user));
       localStorage.removeItem('scheduling');
       window.location.reload();
     });
