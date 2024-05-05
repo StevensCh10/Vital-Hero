@@ -14,10 +14,8 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# Instalar o MySQL Client
-RUN apt-get update && apt-get install -y mysql-client
+EXPOSE 8080
 
-# Copiar o JAR da etapa de construção
 COPY --from=build /app/target/*.jar app.jar
 
 # Configurar variáveis de ambiente para o MySQL
@@ -26,5 +24,4 @@ ENV MYSQL_USER=root
 ENV MYSQL_PASSWORD=root
 ENV MYSQL_ROOT_PASSWORD=root
 
-# Iniciar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
