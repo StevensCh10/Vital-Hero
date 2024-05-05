@@ -7,6 +7,7 @@ import { Donor } from "../../../types/Donor";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [donationFormAux, setDonationFormAux] = useState<DonationFormType>(
     localStorage.getItem('donationForm') !== null ?
     JSON.parse(localStorage.getItem('donationForm')!) : {}

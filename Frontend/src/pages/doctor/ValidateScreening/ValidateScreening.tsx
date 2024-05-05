@@ -9,11 +9,13 @@ import { useNavigate } from "react-router-dom";
 const ValidateScreening = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [donor, setDonor] = useState<Donor>(
     localStorage.getItem("donor") !== null
       ? JSON.parse(localStorage.getItem("donor")!)
       : null
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [screening, setScreening] = useState<Screening>(
     localStorage.getItem("validateScreening") !== null
       ? JSON.parse(localStorage.getItem("validateScreening")!)
