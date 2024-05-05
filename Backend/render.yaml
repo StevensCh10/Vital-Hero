@@ -1,6 +1,0 @@
-services:
-  - name: vitalhero-backend
-    env: docker
-    buildCommand: 'mvn clean package'
-    startCommand: 'java -jar target/my-app.jar'
-    port: 8080
