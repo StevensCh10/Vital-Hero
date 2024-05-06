@@ -19,9 +19,9 @@ EXPOSE 8080
 COPY --from=build /app/target/*.jar app.jar
 
 # Configurar variáveis de ambiente para o MySQL
-ENV MYSQL_DATABASE=vitalheromanagement
-ENV MYSQL_USER=root
-ENV MYSQL_PASSWORD=root
-ENV MYSQL_ROOT_PASSWORD=root
+#ENV MYSQL_DATABASE=vitalheromanagement
+#ENV MYSQL_USER=root
+#ENV MYSQL_PASSWORD=root
+#ENV MYSQL_ROOT_PASSWORD=root
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
