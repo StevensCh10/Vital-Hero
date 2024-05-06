@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.23</version> <!-- ou a versão mais recente disponível -->
+			<scope>runtime</scope> <!-- ou a versão mais recente disponível -->
 		</dependency>
 	</dependencies>
 	<build>

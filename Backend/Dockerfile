@@ -1,27 +1,16 @@
-# Estágio de construção
-FROM maven:3.8.3-openjdk-17 AS build
+FROM ubuntu:latest AS build
 
-WORKDIR /app
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
+COPY . .
 
-COPY pom.xml .
-RUN mvn dependency:go-offline
+RUN apt-get install maven -y
+RUN mvn clean install 
 
-COPY src ./src
-RUN mvn package -DskipTests
-
-# Estágio de execução
 FROM openjdk:17-jdk-slim
-
-WORKDIR /app
 
 EXPOSE 8080
 
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /target/vitalhero-0.0.1-SNAPSHOT.jar app.jar
 
-# Configurar variáveis de ambiente para o MySQL
-#ENV MYSQL_DATABASE=vitalheromanagement
-#ENV MYSQL_USER=root
-#ENV MYSQL_PASSWORD=root
-#ENV MYSQL_ROOT_PASSWORD=root
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
