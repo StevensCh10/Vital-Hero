@@ -4,7 +4,7 @@ import { Screening } from '../types/Screening';
 import { DonationForm } from '../types/DonationForm';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/'
+    baseURL: 'https://vital-hero.onrender.com/'
 });
 
 export const useApi = () => ({
