@@ -41,6 +41,7 @@ public class Donor implements Serializable, User{
         this.photo = photo;
         this.phone = phone;
         this.password = password;
+        this.bloodType = bloodType;
     }
 
     @Id
