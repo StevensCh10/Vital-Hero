@@ -124,4 +124,8 @@ export const useApi = () => ({
         .then((response) => response.data)
         .catch((e) => console.log(e))
     },
+    sendFeedback: async(idDonor: number, feedback: string) => {
+        await api.post(`donor/sendfeedback/${idDonor}?feedback=${encodeURIComponent(feedback)}`)
+        .catch((e) => console.log(e))
+    }
 });

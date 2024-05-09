@@ -11,5 +11,6 @@ export type Donor = {
     photo?: string;
     phone?: string;
     password?: string;
+    bloodType?: string;
     role?: string;
 }

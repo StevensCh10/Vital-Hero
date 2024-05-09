@@ -107,18 +107,18 @@ const DonationForm = () => {
   return (
     <div className="donation-form-container">
       <Navbar />
-      <div className="info-container">
-        <div className="info-page-donation-form">
-          <div className="image">
-            <img src="formulario-de-registro.png"></img>
-          </div>
-          <div className="text">
-            <span>Preencha as informações abaixo.</span>
-          </div>
-        </div>
-      </div>
       {donationFormAux === null ? (
         <div className="donation-form-content">
+          <div className="info-container">
+            <div className="info-page-donation-form">
+              <div className="image">
+                <img src="formulario-de-registro.png"></img>
+              </div>
+              <div className="text">
+                <span>Preencha as informações abaixo.</span>
+              </div>
+            </div>
+          </div>
           <span>Formulário de Doação</span>
           <form onSubmit={handleAddDonationForm}>
             <div className="form-donation">
@@ -154,6 +154,7 @@ const DonationForm = () => {
                   type="text"
                   id="emergencyPhone"
                   name="emergencyPhone"
+                  placeholder="Ex: 8199546165"
                   pattern="\S.*"
                   required onChange={(e) => setQ3(e.target.value)}
                 />

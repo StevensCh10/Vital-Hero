@@ -199,7 +199,7 @@ const HomeDonor = () => {
                 )}
                 {donationForm !== null && screenings.length !== 0 && screenings[0] && screenings[0].doctor === null && (
                   <label className="alert">
-                    (Sua triagem está em processo de validação. Após a validação informaremos se é você está apto para fazer a doação)
+                    (Sua triagem está em processo de validação. Após a validação informaremos se você está apto para fazer a doação)
                   </label>
                 )}
               </div>

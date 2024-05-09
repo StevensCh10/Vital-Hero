@@ -22,8 +22,6 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
         DonationService donationService = applicationContext.getBean(DonationService.class);
         DonorService donorService = applicationContext.getBean(DonorService.class);
 
-        System.out.println("Cheguei no Execute do DonationNotificationJob");
-
         Long donationId = context.getMergedJobDataMap().getLong("donationId");
         Donation donation = donationService.find(donationId);
         Donor donor = donorService.find(donation.getDonor().getId());

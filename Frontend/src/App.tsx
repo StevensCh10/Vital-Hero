@@ -20,6 +20,7 @@ import Review from './pages/Review/Review'
 import Login from './pages/Login/Login'
 import './App.css'
 import ValidateScreening from './pages/doctor/ValidateScreening/ValidateScreening'
+import Feedback from './pages/Feedback/Feedback'
 
 const App = () => {
 
@@ -45,6 +46,7 @@ const App = () => {
           <Route path='/schedules' element={<RequireAuth><Schedules/></RequireAuth>}/>
           <Route path='/screenings' element={<RequireAuth><Screenings/></RequireAuth>}/>
           <Route path='/screenings/validate-screening' element={<RequireAuth><ValidateScreening/></RequireAuth>}/>
+          <Route path='/feedback' element={<RequireAuth><Feedback/></RequireAuth>}/>
         </Routes>
         <Footer />
       </div>

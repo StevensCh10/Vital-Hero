@@ -2,13 +2,13 @@ import NavbarDoctor from "../../components/NavbarDoctor/NavbarDoctor";
 import NavbarDonor from "../../components/NavbarDonor/NavbarDonor";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import "./Profile.css";
-import { Donor } from "../../types/Donor";
 import { Doctor } from "../../types/Doctor";
+import { Donor } from "../../types/Donor";
+import "./Profile.css";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
-  let user;
+  const user: Donor | Doctor = auth.user!.role === "DONOR" ? auth.user! as Donor : auth.user! as Doctor;
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [age, setAge] = useState(0);
@@ -16,15 +16,15 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+  const [bloodType, setBloodType] = useState("");
+  const role = user.role;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if(auth.user?.role === "DONOR"){
-          user = auth.user as Donor;
-       }else if(auth.user?.role === "DOCTOR"){
-          user = auth.user as Doctor;
-       } 
+        if(role === "DONOR"){
+          setBloodType((user as Donor).bloodType!)
+        }
         setCpf(user!.cpf!);
         setAge(user!.age!);
         setName(user!.name!);
@@ -33,12 +33,13 @@ const Profile = () => {
         setAddress(user!.address!);
 
         if(user!.photo !== "sem" && user!.photo !== null){
-          const response = await fetch(`http://localhost:8080/donor/img/${user!.photo}`);
+          const response = await fetch(`https://vital-hero.onrender.com/donor/img/${user!.photo}`);
           const blob = await response.blob();
           const imageUrl = URL.createObjectURL(blob);
           setPhotoURL(imageUrl);
+        }else{
+          setPhotoURL("Logo.png");
         }
-        setPhotoURL("Logo.png");
       } catch (error) {
         console.error("Erro:", error);
       }
@@ -52,7 +53,7 @@ const Profile = () => {
     user!.phone = phone;
     user!.address = address;
 
-    await auth.updateDonor(user!);
+    await auth.updateDonor(user! as Donor);
     window.location.reload();
   };
 
@@ -72,7 +73,7 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      {auth.user?.role === "DOCTOR" ? (
+      {role === "DOCTOR" ? (
         <NavbarDoctor />
       ) : (
         <NavbarDonor />
@@ -80,7 +81,6 @@ const Profile = () => {
       <div className="profile-content">
         <div className="profile-header">
           <div className="profile-image">
-            {/* Substitua a imagem pelo avatar do usuário */}
             <img src={photoURL} alt="Foto do usuário" />
           </div>
         </div>
@@ -106,9 +106,9 @@ const Profile = () => {
               type="age"
               id="age"
               name="age"
-              value={age}
+              value={`${age} anos`}
               onChange={(e) => setAge(parseInt(e.target.value))}
-              style={{ width: "15%", marginRight: "20%" }}
+              style={{ width: "33%", marginRight: "2%" }}
               readOnly
               required
             />
@@ -120,6 +120,16 @@ const Profile = () => {
               style={{ width: "55%" }}
               required
             />
+            {role === "DONOR" &&  (user as Donor).bloodType !== "Não sei" && (
+              <input
+                id="bloodType"
+                name="bloodType"
+                value={`Tipo sanguíneo: ${bloodType}`}
+                onChange={(e) => setEmail(e.target.value)}
+                readOnly
+                required
+              />
+            )}
             <input
               id="email"
               name="email"

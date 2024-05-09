@@ -1,5 +1,6 @@
 package com.vitalhero.fullstack.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -12,15 +13,19 @@ import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DonorRepository;
+
+import jakarta.mail.internet.MimeUtility;
 import jakarta.transaction.Transactional;
 
 @Service
 public class DonorService {
 
     private final DonorRepository repository;
+    private final EmailService emailService;
 
-    public DonorService(DonorRepository repository){
+    public DonorService(DonorRepository repository, EmailService emailService){
             this.repository = repository;
+            this.emailService = emailService;
     }
 
     //NECESSÁRIO PERSONALIZAR TODAS AS EXCEÇÕES LANÇADAS
@@ -78,7 +83,7 @@ public class DonorService {
         if(donor.getScheduling() == null){
             throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName()));
         }else{
-            //repository.updateFkScheduling(schedulingID, id);
+            repository.updateFkScheduling(schedulingID, id);
         }
     }
 
@@ -96,6 +101,22 @@ public class DonorService {
 
     public List<Donor> allDonorScreenings(){
         return repository.allDonorScreenings();
+    }
+
+    public void sendFeedback(Long id, String feedback){
+        Donor donor = find(id);
+        String fromName = "Vital Hero";
+        String from = "stevenschaves10@gmail.com";
+        String personal = null;
+        try {
+            personal = "=?utf-8?Q?" + MimeUtility.encodeText(fromName) + "?=";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String subject = "Feedback da aplicação";
+        String to = "stevenschaves10@gmail.com";
+        String text = "Feedback enviado por "+donor.getName()+":\n\n"+"\""+(feedback)+"\"";
+        emailService.sendEmail(to, subject, text, from, personal);
     }
     
     public void deleteDonor(Long id){

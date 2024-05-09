@@ -63,7 +63,7 @@ const NavbarBloodcenter = () => {
                 </fieldset>
               </div>
             </div>
-            <div className="modal-item"><img src="/feedback.png"></img><Link to="/">Feedback</Link></div>
+            <div className="modal-item"><img src="/feedback.png"></img><Link to="/feedback">Feedback</Link></div>
           </Modal>
           
         </div>

@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../contexts/Auth/AuthContext";
-import { Donation } from "../../../types/Donation";
-import Navbar from "../../../components/NavbarDonor/NavbarDonor";
-import { BloodCenter } from "../../../types/BloodCenter";
-import './Donations.css'
 import { Scheduling as SchedulingType } from "../../../types/Scheduling";
 import Scheduling from "../../../components/Scheduling/Scheduling";
+import { AuthContext } from "../../../contexts/Auth/AuthContext";
+import Navbar from "../../../components/NavbarDonor/NavbarDonor";
+import { BloodCenter } from "../../../types/BloodCenter";
+import { useContext, useEffect, useState } from "react";
+import { Donation } from "../../../types/Donation";
+import './Donations.css';
 
 const Donations = () => {
   const auth = useContext(AuthContext);
@@ -91,8 +91,9 @@ const Donations = () => {
                 </div>
               ))
             ) : (
-              <div>
-                Você ainda não realizou nenhuma doação
+              <div className="no-scheduling">
+                <h2>Você ainda não realizou nenhuma doação!</h2>
+                <p> <img src="triste.png"></img></p>
               </div>
             )}
           </div>

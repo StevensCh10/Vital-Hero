@@ -33,9 +33,12 @@ const Register = () => {
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
+    const file = event.target.files && event.target.files[0];
+    if (!file) {
+      setSelectedFile(null);
+      return;
     }
+    setSelectedFile(file);
   };
 
   const whatGender = () => {
@@ -65,6 +68,10 @@ const Register = () => {
 
     if(selectedFile){
       formData.append('file', selectedFile);
+    }else{
+      const emptyBlob = new Blob([], { type: 'application/octet-stream' });
+      const emptyFile = new File([emptyBlob], 'empty-file.txt', { type: 'text/plain' });
+      formData.append('file', emptyFile);
     }
 
     auth.register(formData);

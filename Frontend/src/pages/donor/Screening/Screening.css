@@ -71,6 +71,7 @@ body {
   display: flexbox;
   width: 106%;
   text-align: start;
+  height: 100%;
 }
 
 .form-screening select {

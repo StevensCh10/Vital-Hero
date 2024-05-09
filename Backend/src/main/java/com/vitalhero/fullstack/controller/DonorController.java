@@ -91,6 +91,8 @@ public class DonorController {
                         Files.write(path, bytes);
 
                         flushDonor.setPhoto(String.valueOf(flushDonor.getId())+file.getOriginalFilename());
+                    }else{
+                        flushDonor.setPhoto("sem");
                     }
                 }catch(IOException e){
                     e.printStackTrace();
@@ -111,6 +113,12 @@ public class DonorController {
     @PutMapping()
     public Donor updateDonor(@RequestBody @Valid Donor donorAtt){
         return donorService.update(donorAtt);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/sendfeedback/{donorID}")
+    public void sendFeedback(@PathVariable Long donorID, @RequestParam String feedback){
+        donorService.sendFeedback(donorID, feedback);
     }
 
     @GetMapping("/{donorID}")

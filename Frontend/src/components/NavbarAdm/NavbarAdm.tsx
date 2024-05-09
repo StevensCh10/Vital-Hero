@@ -5,9 +5,9 @@ import customStylesLeft from "./CustomStylesLeft";
 import { useContext, useState } from "react"
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import './NavbarDonor.css'
+import './NavbarAdm.css'
 
-const NavbarDonor = () => {
+const NavbarAdm = () => {
     const auth = useContext(AuthContext);
     const [showLeftOptions, setShowLeftOptions] = useState(false);
     const [showRightOptions, setShowRightOptions] = useState(false);
@@ -54,11 +54,8 @@ const NavbarDonor = () => {
             onRequestClose={toggleLeftOptions}
             ariaHideApp={false}
           >
-            <div className="modal-item"><img src="/formulario.png"></img><Link to="/donation-form">Formulário de doação</Link></div>
-            <div className="modal-item"><img src="/medico.png"></img><Link to="/screening">Triagem</Link></div>
+            <div className="modal-item"><img src="/formulario.png"></img><Link to="/schedules">Agendamentos</Link></div>
             <div className="modal-item"><img src="/Logo.png"></img><Link to="/">Home</Link></div>
-            <div className="modal-item"><img src="/hospital.png"></img><Link to="/bloodcenters">Hemocentros</Link></div>
-            <div className="modal-item"><img src="/blood-donation.png"></img><Link to="/donations">Doações</Link></div>
             <div className="modal-item">
               <div className="line">
                 <fieldset>
@@ -66,7 +63,7 @@ const NavbarDonor = () => {
                 </fieldset>
               </div>
             </div>
-            <div className="modal-item"><img src="/feedback.png"></img><Link to="/feedback">Feedback</Link></div>
+            <div className="modal-item"><img src="/feedback.png"></img><Link to="/">Feedback</Link></div>
           </Modal>
           
         </div>
@@ -96,8 +93,6 @@ const NavbarDonor = () => {
             onRequestClose={toggleRightOptions}
             ariaHideApp={false}
           >
-            <div className="modal-item"><img src="/perfil.png"></img><Link to="/profile">Perfil</Link></div>
-            <div className="modal-item"><img src="/senha.png"></img><Link to="/change-password">Alterar Senha</Link></div>
             <div className="modal-item"><img src="/sair.png"></img><Link onClick={handleLogout} to="/">Sair</Link></div>
           </Modal>
         </div>
@@ -105,4 +100,4 @@ const NavbarDonor = () => {
     );
 }
 
-export default NavbarDonor;
+export default NavbarAdm;

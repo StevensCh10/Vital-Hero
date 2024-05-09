@@ -33,6 +33,7 @@ export type AuthContextType = {
     addDonationForm: (donationForm: DonationForm) => Promise<DonationForm>;
     updateDonationForm: (donationForm: DonationForm) => Promise<DonationForm>;
     validateScreening: (idScreening: number, idDoctor: number) => void;
+    sendFeedback: (idDonor: number, feedback: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>(null!);

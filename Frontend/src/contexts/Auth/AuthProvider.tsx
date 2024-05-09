@@ -4,16 +4,18 @@ import { Donor } from "../../types/Donor";
 import { useApi } from "../../hooks/useApi";
 import { Screening } from "../../types/Screening";
 import { DonationForm } from "../../types/DonationForm";
+import { BloodCenter } from "../../types/BloodCenter";
+import { Doctor } from "../../types/Doctor";
 
 export const AuthProvider = ({ children }: {children: JSX.Element}) => {
-    const [user, setUser] = useState<Donor | null>(() => {
+    const [user, setUser] = useState<Donor | Doctor | BloodCenter |  null>(() => {
         const storedUser = localStorage.getItem('user');
         return storedUser ? JSON.parse(storedUser) : null;
     });
     const api = useApi();
 
     const signin = async (email: string, password: string) => {
-        const data = await api.signin(email, password);
+        let data = await api.signin(email, password);
         if(data){
             setUser(data);
             localStorage.setItem('user', JSON.stringify(data)); 
@@ -146,6 +148,10 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         await api.validateScreening(idScreening, idDoctor);
     }
 
+    const sendFeedback = async(idDonor: number, feedback: string)  => {
+        await api.sendFeedback(idDonor, feedback);
+    }
+
     return (
         <AuthContext.Provider value={{user, signin, signout, 
                 findAllBloodCenters, findAllSchedulings,
@@ -154,7 +160,8 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
                 toSchedule, findDonorById, unSchedule, findAllBloodstocks,
                 register, addScreening, updateScreening: updateScreening,
                 addDonationForm, updateDonationForm, findSchedulingsByBloodcenter,
-                findAllScreenings, allDonorsScreenings, validateScreening}}>
+                findAllScreenings, allDonorsScreenings, validateScreening,
+                sendFeedback}}>
             {children}
         </AuthContext.Provider>
     );

@@ -14,7 +14,7 @@ const customStylesRight: CustomStylesRight = {
     flexDirection: "column",
     alignItems: "start",
     justifyContent: "center",
-    width: "160px",
+    width: "165px",
     height: "150px",
     borderRadius: "2%",
     backgroundColor: "white",

@@ -1,7 +1,7 @@
 INSERT INTO blood_center (name, email, address, reference_point, photo, password, phone, role)
 VALUES 
-    ('Hemope', 'hemope.oficial@gmail.com', 'Rua Joaquim Nabuco, 171', 'Ao lado de alguma coisa', NULL, "Hemope2024", '8131824600', 'BLOODCENTER'),
-    ('Hemato', 'hemato.oficial@gmail.com', 'Rua Dom Bosco, 723', 'Ao lado de alguma coisaaa', NULL, "Hemato2024", '8151139033', 'BLOODCENTER');
+    ('Hemope', 'hemope.oficial@gmail.com', 'Rua Joaquim Nabuco, 171', 'Ao lado de alguma coisa', NULL, 'Hemope2024', '8131824600', 'BLOODCENTER'),
+    ('Hemato', 'hemato.oficial@gmail.com', 'Rua Dom Bosco, 723', 'Ao lado de alguma coisaaa', NULL, 'Hemato2024', '8151139033', 'BLOODCENTER');
 
 INSERT INTO blood_stock (fk_bloodcenter, o_positive, o_negative, a_positive, a_negative, b_positive, b_negative, ab_positive, ab_negative)
 VALUES 

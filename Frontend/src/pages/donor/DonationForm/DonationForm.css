@@ -1,7 +1,8 @@
-html,body {
+body {
   margin: 0;
   padding: 0;
   height: 0;
+  
 }
 
 .donation-form-container {
@@ -45,6 +46,8 @@ html,body {
   flex-direction: column;
   width: 100%;
   align-items: center;
+  min-height: 75.5vh;
+  margin-top: 3%;
 }
 
 .donation-form-content form{
