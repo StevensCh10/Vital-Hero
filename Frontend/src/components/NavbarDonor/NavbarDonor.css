@@ -83,8 +83,9 @@
   align-self: center;
 }
 
-.logo-image {
-  height: 70px;
+.logo-container-home .logo-image {
+  width: 60px;
+  height: 65px;
 }
 
 .modal-item {

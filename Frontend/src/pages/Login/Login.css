@@ -30,6 +30,7 @@ body {
   justify-content: center;
   margin-bottom: 1%;
   color: rgb(184, 14, 20);
+  justify-content: center;
 }
 
 .logo-text {
@@ -39,7 +40,8 @@ body {
 }
 
 .logo-image-login {
-  height: 80px;
+  width: 60px;
+  height: 65px;
 }
 
 .login-form {

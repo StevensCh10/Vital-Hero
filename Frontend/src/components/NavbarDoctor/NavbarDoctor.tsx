@@ -5,7 +5,6 @@ import customStylesLeft from "./CustomStylesLeft";
 import { useContext, useState } from "react"
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import './NavbarDoctor.css'
 
 const NavbarDoctor = () => {
     const auth = useContext(AuthContext);
