@@ -78,6 +78,12 @@ public class DonorService {
 		return repository.saveAndFlush(currentDonor);
 	}
 
+    public Donor updatePassword(Long id, String newPassword){
+        Donor currentDonor = find(id);
+        currentDonor.setPassword(newPassword);
+        return repository.saveAndFlush(currentDonor);
+    }
+
     public void toSchedule(Long id, Long schedulingID){
         var donor = find(id);
         if(donor.getScheduling() == null){

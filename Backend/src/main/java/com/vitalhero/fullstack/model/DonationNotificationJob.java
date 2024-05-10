@@ -30,10 +30,10 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
 
         String to = donor.getEmail();
         String subject = "O seu apoio é vital! Doe sangue novamente e salve mais vidas.";
-        String text = textBegin+"\n\nObrigado pela sua última doação de sangue! Seu gesto fez a diferença. Queremos convidá-lo(a) a doar novamente e continuar salvando vidas. Sua generosidade é fundamental para nossa causa."+
-        "\n\nSe estiver interessado em doar novamente ou tiver dúvidas, entre em contato conosco. Estamos aqui para ajudar."+
-        "\n\nCom gratidão,"+
-        "\n\nStevens Wendell\nCEO";
+        String text = textBegin+"<br><br>Obrigado pela sua última doação de sangue! Seu gesto fez a diferença. Queremos convidá-lo(a) a doar novamente e continuar salvando vidas. Sua generosidade é fundamental para nossa causa."+
+        "<br><br>Se estiver interessado em doar novamente ou tiver dúvidas, entre em contato conosco. Estamos aqui para ajudar."+
+        "<br><br>Com gratidão,"+
+        "<br><br>Stevens Wendell<br>CEO";
 
         String fromName = "Vital Hero";
         String from = "stevenschaves10@gmail.com";

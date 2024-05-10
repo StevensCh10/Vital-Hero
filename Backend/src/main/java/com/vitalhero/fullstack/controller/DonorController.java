@@ -115,6 +115,11 @@ public class DonorController {
         return donorService.update(donorAtt);
     }
 
+    @PutMapping("/updatepassword/{donorID}")
+    public Donor updatePassword(@PathVariable Long donorID, @RequestParam("password") String password){
+        return donorService.updatePassword(donorID, password);
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/sendfeedback/{donorID}")
     public void sendFeedback(@PathVariable Long donorID, @RequestParam String feedback){

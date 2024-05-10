@@ -127,5 +127,13 @@ export const useApi = () => ({
     sendFeedback: async(idDonor: number, feedback: string) => {
         await api.post(`donor/sendfeedback/${idDonor}?feedback=${encodeURIComponent(feedback)}`)
         .catch((e) => console.log(e))
+    },
+    sendEmailForgotPassword: async(email: string) => {
+        await api.post(`api/auth/forgotpassword?email=${email}`)
+        .catch((e) => console.log(e))
+    },
+    updatePassword: async(idDonor: number, password: string) => {
+        await api.put(`donor/updatepassword/${idDonor}?password=${password}`)
+        .catch((e) => console.log(e))
     }
 });

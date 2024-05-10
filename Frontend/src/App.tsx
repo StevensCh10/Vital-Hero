@@ -1,5 +1,5 @@
 import HomeBloodcenter from './pages/bloodcenter/HomeBloodcenter/HomeBloodcenter'
-import ForgotPassword from './pages/donor/ForgotPassword/ForgotPassword'
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import ChangePassword from './pages/donor/ChangePassword/ChangePassword'
 import DonationFormType from './pages/donor/DonationForm/DonationForm'
 import DonationSteps from './pages/donor/DonationSteps/DonationSteps'
@@ -21,6 +21,7 @@ import Login from './pages/Login/Login'
 import './App.css'
 import ValidateScreening from './pages/doctor/ValidateScreening/ValidateScreening'
 import Feedback from './pages/Feedback/Feedback'
+import RedefinePassword from './pages/redefinePassword/RedefinePassword'
 
 const App = () => {
 
@@ -47,6 +48,8 @@ const App = () => {
           <Route path='/screenings' element={<RequireAuth><Screenings/></RequireAuth>}/>
           <Route path='/screenings/validate-screening' element={<RequireAuth><ValidateScreening/></RequireAuth>}/>
           <Route path='/feedback' element={<RequireAuth><Feedback/></RequireAuth>}/>
+          <Route path='/forgot-password' element={<RequireAuth><ForgotPassword/></RequireAuth>}/>
+          <Route path='/redefine-password' element={<RedefinePassword/>}/>
         </Routes>
         <Footer />
       </div>

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../../../contexts/Auth/AuthContext";
+import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import './ForgotPassword.css'
 
@@ -8,18 +8,14 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
-  const [password] = useState("");
   //const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email && password) {
-      const isLogged = await auth.signin(email, password);
-      if (isLogged) {
-        navigate("/");
-      } else {
-        //POSSO FAZER O QUE EU QUISER AQUI PRA AVISAR AO USUÁRIO
-      }
+    if (email) {
+      auth.sendEmailForgotPassword(email);
+      alert("Verifique seu email para alteração de senha!");
+      navigate("/");
     }
   };
 

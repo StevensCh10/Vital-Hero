@@ -152,6 +152,14 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         await api.sendFeedback(idDonor, feedback);
     }
 
+    const sendEmailForgotPassword = async(email: string) => {
+        await api.sendEmailForgotPassword(email);
+    }
+
+    const updatePassword = async(idDonor: number, password: string) => {
+        await api.updatePassword(idDonor, password);
+    }
+
     return (
         <AuthContext.Provider value={{user, signin, signout, 
                 findAllBloodCenters, findAllSchedulings,
@@ -161,7 +169,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
                 register, addScreening, updateScreening: updateScreening,
                 addDonationForm, updateDonationForm, findSchedulingsByBloodcenter,
                 findAllScreenings, allDonorsScreenings, validateScreening,
-                sendFeedback}}>
+                sendFeedback, sendEmailForgotPassword, updatePassword}}>
             {children}
         </AuthContext.Provider>
     );
