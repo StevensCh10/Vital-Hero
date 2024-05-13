@@ -190,7 +190,8 @@ const Map: React.FC = () => {
 
         // Executa a ação correspondente, se encontrada
         if (interval) {
-          interval.action();
+          const result = interval.action(); // Captura o resultado da função de ação
+          return result;
         } else {
           return "";
         }
@@ -235,7 +236,7 @@ const Map: React.FC = () => {
                 <p><span>Endereço:</span> <label>{center.address}</label></p>
                 <p><span>Telefone:</span> <label>{formatPhone(center.phone)}</label></p>
                 <p><span>Email:</span> <label>{center.email}</label></p>
-                
+                <p><span>Referência:</span> <label>{center.referencePoint}</label></p>
               </div>
             </div>
 
@@ -264,35 +265,35 @@ const Map: React.FC = () => {
                   <div className="types-container">
                     <div className="type-info">
                       <label>A-</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_negative))!} alt="Tipo A-" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_negative))!} alt="Tipo A-" />
                     </div>
                     <div className="type-info">
                       <label>A+</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_positive))!} alt="Tipo A+" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_positive))!} alt="Tipo A+" />
                     </div>
                     <div className="type-info">
                       <label>B-</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_negative))!} alt="Tipo B-" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_negative))!} alt="Tipo B-" />
                     </div>
                     <div className="type-info">
                       <label>B+</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_positive))!} alt="Tipo B+" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_positive))!} alt="Tipo B+" />
                     </div>
                     <div className="type-info">
                       <label>AB-</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_negative))!} alt="Tipo AB-" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_negative))!} alt="Tipo AB-" />
                     </div>
                     <div className="type-info">
                       <label>AB+</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_positive))!} alt="Tipo AB+" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_positive))!} alt="Tipo AB+" />
                     </div>
                     <div className="type-info">
                       <label>O-</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_negative))!} alt="Tipo O-" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_negative))!} alt="Tipo O-" />
                     </div>
                     <div className="type-info">
                       <label>O+</label>
-                      <img src={UrlGenerator(parseInt(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_positive))!} alt="Tipo O+" />
+                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_positive))!} alt="Tipo O+" />
                     </div>
                   </div>
                 ) : (
@@ -307,7 +308,7 @@ const Map: React.FC = () => {
       </div>
       <div className="about-bloodstock">
         <fieldset>
-          <legend>SOBRE O ESTOQUE SANGUÍNEO</legend>
+          <legend>IMPORTÂNCIA DO ESTOQUE SANGUÍNEO</legend>
         </fieldset>
         <p>O estoque sanguíneo é a vida pulsante por trás de cada emergência médica, cirurgia ou tratamento. É a dádiva preciosa que conecta doadores altruístas a pacientes necessitados, transformando vidas em momentos de desespero. Cada doação de sangue representa uma promessa de esperança e cura para aqueles que enfrentam desafios de saúde.</p>
         <p>A doação de sangue é um ato de pura generosidade que transcende fronteiras e diferenças. Ao doar sangue, você se torna um elo vital na corrente da vida, oferecendo uma oportunidade única para salvar vidas e fazer a diferença na comunidade. Seu gesto altruísta não apenas fornece um recurso essencial, mas também transmite uma mensagem poderosa de compaixão e apoio mútuo.</p>

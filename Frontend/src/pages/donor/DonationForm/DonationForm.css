@@ -51,7 +51,6 @@ body {
 }
 
 .donation-form-content form{
-  background-color: #f8f8f8;
   padding: 2% 2% 2% 2%;
   align-items: center;
   text-align: center;
@@ -94,7 +93,7 @@ body {
   padding: 8px; /* Espaçamento interno */
   border: 1px solid #ccccccbe;
   border-radius: 10px;
-  background-color: white;
+  background-color: #f8f8f8;
   position: relative;
   margin-bottom: 5%;
   font-size: 14px;
@@ -135,6 +134,7 @@ body {
   width: 100%;
   margin-bottom: 5%;
   opacity: 0.9;
+  background-color: #f8f8f8;
 }
 
 .donation-form-content input::after {

@@ -24,7 +24,6 @@ html, body{
   margin-left: 4%;
   margin-right: 4%;
   padding: 1.5%; /* Espaçamento interno */
-  z-index: 3;
   height: auto;
 }
 
@@ -104,6 +103,10 @@ html, body{
   padding-top: 1%;
   background-color: #f8f8f8;
   width:28.8%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.222);
+  border-left: 1px solid rgba(0, 0, 0, 0.222);
+  border-right: 1px solid rgba(0, 0, 0, 0.222);
+  z-index: 9999;
 }
 
 .types-container p{
