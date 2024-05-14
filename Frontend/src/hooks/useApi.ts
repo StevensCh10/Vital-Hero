@@ -89,6 +89,11 @@ export const useApi = () => ({
         .then((response) => response.data)
         .catch(() => null)
     },
+    registerDoctor: async (formData: FormData) => {
+        return await api.post('doctor', formData)
+        .then((response) => response.data)
+        .catch((e) => console.log(e))
+    },
     addScreening: async(screening: Screening) => {
         return await api.post(`donor/screening`, screening)
         .then((response) => response.data)

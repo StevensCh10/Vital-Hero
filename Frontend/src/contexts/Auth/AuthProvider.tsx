@@ -96,6 +96,15 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return data;
     }
 
+    const registerDoctor = async(doctor: FormData) => {
+        const data = await api.registerDoctor(doctor);
+        if(data){
+            setUser(data);
+            localStorage.setItem('user', JSON.stringify(data)); 
+        }
+        return data;
+    }
+
     const addScreening = async(screening: Screening) => {
         const data = await api.addScreening(screening);
         if(data){
@@ -166,7 +175,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
                 findDonationForm, findScreening, allScheduledDonors, 
                 updateDonor: updateDonor, findDonations, findSchedulingById,
                 toSchedule, findDonorById, unSchedule, findAllBloodstocks,
-                register, addScreening, updateScreening: updateScreening,
+                register, registerDoctor, addScreening, updateScreening: updateScreening,
                 addDonationForm, updateDonationForm, findSchedulingsByBloodcenter,
                 findAllScreenings, allDonorsScreenings, validateScreening,
                 sendFeedback, sendEmailForgotPassword, updatePassword}}>

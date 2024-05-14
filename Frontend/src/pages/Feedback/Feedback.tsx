@@ -23,8 +23,8 @@ const Feedback = () => {
       {user?.role === "DONOR" ? (
         <NavbarDonor />
       ) : (
-        <div>
-          {user?.role === "Doctor" ? <NavbarDoctor /> : <NavbarBloodcenter />}
+        <div style={{width: "100%"}}>
+          {user?.role === "DOCTOR" ? <NavbarDoctor /> : <NavbarBloodcenter />}
         </div>
       )}
 

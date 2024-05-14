@@ -16,6 +16,7 @@ const Profile = () => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+  const [crm, setCrm] = useState("");
   const [bloodType, setBloodType] = useState("");
   const role = user.role;
 
@@ -24,6 +25,8 @@ const Profile = () => {
       try {
         if(role === "DONOR"){
           setBloodType((user as Donor).bloodType!)
+        }else if(role === "DOCTOR"){
+          setCrm((user as Doctor).crm!)
         }
         setCpf(user!.cpf!);
         setAge(user!.age!);
@@ -146,6 +149,15 @@ const Profile = () => {
               onChange={(e) => setAddress(e.target.value)}
               required
             />
+            {role === "DOCTOR"}{
+              <input
+              type="professionalIdCard"
+              id="professionalIdCard"
+              name="professionalIdCard"
+              value={crm}
+              readOnly
+              />
+            }
           </div>
           <button type="submit">
             Salvar

@@ -22,6 +22,22 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Doctor implements Serializable, User{
 
+    public Doctor(String name, String cpf, String crm, String email, int age, String gender,
+                 String maritalStatus, String address, String photo, String phone,
+                 String password) {
+        this.name = name;
+        this.cpf = cpf;
+        this.crm = crm;
+        this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.maritalStatus = maritalStatus;
+        this.address = address;
+        this.photo = photo;
+        this.phone = phone;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)

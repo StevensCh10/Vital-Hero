@@ -40,7 +40,6 @@ body {
 }
 
 .screening-content form{
-  background-color: #f8f8f8;
   padding: 2% 2% 2% 2%;
   align-items: center;
   text-align: center;
@@ -79,7 +78,7 @@ body {
   padding: 8px; /* Espaçamento interno */
   border: 1px solid #ccccccbe;
   border-radius: 10px;
-  background-color: white;
+  background-color: #f8f8f8;
   position: relative;
   margin-bottom: 5%;
   font-size: 14px;
@@ -109,36 +108,4 @@ body {
 
 .screening-content button:hover {
   background-color: rgb(235, 17, 24);
-}
-
-.screening-content input {
-  font-size: 14px;
-  border: 1px solid #ccccccbe;
-  border-radius: 10px;
-  padding: 8px;
-  width: 100%;
-  margin-bottom: 5%;
-  opacity: 0.9;
-}
-
-.screening-content input::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 5px 5px 0;
-  border-color: #333 transparent transparent;
-}
-
-.screening-content input:focus {
-  outline: none;
-  border-color: rgb(26, 55, 68);
-}
-
-.screening-content input option {
-  background-color: #f8f8f8;
-  color: hsl(0, 0%, 20%);
 }

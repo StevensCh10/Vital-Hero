@@ -28,6 +28,7 @@ export type AuthContextType = {
     unSchedule: (idDonor: number) => void;
     findAllBloodstocks: () => Promise<Bloodstock[]>;
     register: (donor: FormData) => Promise<Donor>;
+    registerDoctor: (doctor: FormData) => Promise<Doctor>;
     addScreening: (screening: Screening) => Promise<Screening>;
     updateScreening: (screening: Screening) => Promise<Screening>;
     addDonationForm: (donationForm: DonationForm) => Promise<DonationForm>;

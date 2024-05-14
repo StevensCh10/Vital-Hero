@@ -68,36 +68,36 @@ public class DonorController {
     @PostMapping(consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     //public Donor registerDonor(@RequestBody @Valid Donor donor, @RequestParam("file") MultipartFile file){
-        public Donor registerDonor(
-            @RequestParam("name") String name,
-            @RequestParam("cpf") String cpf,
-            @RequestParam("email") String email,
-            @RequestParam("age") int age,
-            @RequestParam("gender") String gender,
-            @RequestParam("maritalStatus") String maritalStatus,
-            @RequestParam("address") String address,
-            @RequestParam("phone") String phone,
-            @RequestParam("photo") String photo,
-            @RequestParam("password") String password,
-            @RequestParam("bloodType") String bloodType,
-            @RequestParam(value = "file", required = false) MultipartFile file){
+    public Donor registerDonor(
+        @RequestParam("name") String name,
+        @RequestParam("cpf") String cpf,
+        @RequestParam("email") String email,
+        @RequestParam("age") int age,
+        @RequestParam("gender") String gender,
+        @RequestParam("maritalStatus") String maritalStatus,
+        @RequestParam("address") String address,
+        @RequestParam("phone") String phone,
+        @RequestParam("photo") String photo,
+        @RequestParam("password") String password,
+        @RequestParam("bloodType") String bloodType,
+        @RequestParam(value = "file", required = false) MultipartFile file){
 
-                Donor newDonor = new Donor(name, cpf, email, age, gender, maritalStatus, address, photo, phone, password, bloodType);
-                Donor flushDonor = donorService.register(newDonor);
-                try{
-                    if(!file.isEmpty()){
-                        byte[] bytes = file.getBytes();
-                        Path path = Paths.get(pathImgs+String.valueOf(flushDonor.getId())+file.getOriginalFilename());
-                        Files.write(path, bytes);
+            Donor newDonor = new Donor(name, cpf, email, age, gender, maritalStatus, address, photo, phone, password, bloodType);
+            Donor flushDonor = donorService.register(newDonor);
+            try{
+                if(!file.isEmpty()){
+                    byte[] bytes = file.getBytes();
+                    Path path = Paths.get(pathImgs+String.valueOf(flushDonor.getId())+file.getOriginalFilename());
+                    Files.write(path, bytes);
 
-                        flushDonor.setPhoto(String.valueOf(flushDonor.getId())+file.getOriginalFilename());
-                    }else{
-                        flushDonor.setPhoto("sem");
-                    }
-                }catch(IOException e){
-                    e.printStackTrace();
+                    flushDonor.setPhoto(String.valueOf(flushDonor.getId())+file.getOriginalFilename());
+                }else{
+                    flushDonor.setPhoto("sem");
                 }
-                return donorService.update(flushDonor);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+            return donorService.update(flushDonor);
     }
 
     @SuppressWarnings("null")

@@ -69,6 +69,10 @@ const Login = () => {
         <p className="signup-link">
           Não tem uma conta? <Link to="/register">Cadastre-se</Link>
         </p>
+
+        <p className="signup-link-doctor">
+          É da área de saúde e deseja colaborar conosco? <Link to="/register-doctor">Clique aqui</Link>
+        </p>
       </div>
     </div>
   );

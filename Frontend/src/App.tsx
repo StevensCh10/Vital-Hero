@@ -22,6 +22,8 @@ import './App.css'
 import ValidateScreening from './pages/doctor/ValidateScreening/ValidateScreening'
 import Feedback from './pages/Feedback/Feedback'
 import RedefinePassword from './pages/redefinePassword/RedefinePassword'
+import RegisterDoctor from './pages/RegisterDoctor/RegisterDoctor'
+
 
 const App = () => {
 
@@ -32,6 +34,7 @@ const App = () => {
           <Route path="/" element={<RequireAuth><AnalyzeTheRole/></RequireAuth>}/>
           <Route path="/login" element={<RequireAuth><Login/></RequireAuth>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/register-doctor' element={<RegisterDoctor/>}/>
           <Route path="/home-donor" element={<RequireAuth><HomeDonor/></RequireAuth>}/>
           <Route path="/home-doctor" element={<RequireAuth><HomeDoctor/></RequireAuth>}/>
           <Route path="/home-bloodcenter" element={<RequireAuth><HomeBloodcenter/></RequireAuth>}/>
