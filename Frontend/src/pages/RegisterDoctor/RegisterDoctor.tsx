@@ -50,9 +50,7 @@ const RegisterDoctor = () => {
     formData.append('email', email);
     formData.append('age', calculateAge(dateOfBirth).toString());
     formData.append('gender', gender);
-    console.log(gender)
     formData.append('maritalStatus', maritalStatus);
-    console.log(maritalStatus)
     formData.append('address', `${address},${addressNumber}`);
     formData.append('phone', phone);
     formData.append('photo', 'sem');
@@ -113,6 +111,7 @@ const RegisterDoctor = () => {
               type="tel"
               id="phone"
               name="phone"
+              placeholder="Ex: 8199546165"
               onChange={(e) => setPhone(e.target.value)}
               required
             />

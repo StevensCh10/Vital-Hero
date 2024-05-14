@@ -121,6 +121,7 @@ const Register = () => {
               type="tel"
               id="phone"
               name="phone"
+              placeholder="Ex: 8199546165"
               onChange={(e) => setPhone(e.target.value)}
               required
             />
