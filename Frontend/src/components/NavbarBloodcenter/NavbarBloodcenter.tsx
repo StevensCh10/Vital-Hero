@@ -1,6 +1,5 @@
-import { FaAlignJustify, FaUserLarge } from "react-icons/fa6";
+import { FaAlignJustify } from "react-icons/fa6";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
-import customStylesRight from "./CustomStylesRight";
 import customStylesLeft from "./CustomStylesLeft";
 import { useContext, useState } from "react"
 import { Link } from "react-router-dom";
@@ -9,24 +8,14 @@ import Modal from "react-modal";
 const NavbarBloodcenter = () => {
     const auth = useContext(AuthContext);
     const [showLeftOptions, setShowLeftOptions] = useState(false);
-    const [showRightOptions, setShowRightOptions] = useState(false);
     const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
     const [isModalLeftOpen, setIsModalLeftOpen] = useState(false);
-    const [isModalRightOpen, setIsModalRightOpen] = useState(false);
 
     const toggleLeftOptions = (e: any) => {
       const buttonRect = e.currentTarget.getBoundingClientRect();
       setModalPosition({ top: buttonRect.bottom + window.scrollY, left: buttonRect.left + window.scrollX });
       setShowLeftOptions(!showLeftOptions);
       setIsModalLeftOpen(!isModalLeftOpen);
-    };
-
-    const toggleRightOptions = (e: any) => {
-      const buttonRect = e.currentTarget.getBoundingClientRect();
-      //const modalLeft = buttonRect.right - 270;
-      setModalPosition({ top: buttonRect.bottom + window.scrollY, left: buttonRect.left - window.scrollX - 119});
-      setShowRightOptions(!showRightOptions);
-      setIsModalRightOpen(!isModalRightOpen);
     };
 
     const handleLogout = (e: any) => {
