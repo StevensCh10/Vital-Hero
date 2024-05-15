@@ -76,24 +76,7 @@ const NavbarBloodcenter = () => {
           </Link>
         </div>
         <div className="navbar-right">
-          <button className={`round-button ${isModalRightOpen ? 'active' : ''}`} onClick={toggleRightOptions}>
-            <FaUserLarge size={22} className="icon"/>
-          </button>
-          <Modal
-            style={{
-              overlay: { ...customStylesRight.overlay },
-              content: {
-                  ...customStylesRight.content,
-                  top: modalPosition.top + 20, // Manter top dinâmico
-                  left: modalPosition.left, // Manter left dinâmico
-              },
-            }}
-            isOpen={showRightOptions}
-            onRequestClose={toggleRightOptions}
-            ariaHideApp={false}
-          >
-            <div className="modal-item"><img src="/sair.png"></img><Link onClick={handleLogout} to="/">Sair</Link></div>
-          </Modal>
+            <div className="modal-item"><img onClick={handleLogout} style={{width: "45px", height: "45px", cursor: "pointer"}} src="/sair.png"></img></div>
         </div>
       </nav>
     );

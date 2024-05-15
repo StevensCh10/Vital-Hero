@@ -1,10 +1,10 @@
-import { useContext } from "react";
 import NavbarDoctor from "../../../components/NavbarDoctor/NavbarDoctor";
-import "./ValidateScreening.css";
-import { Screening } from "../../../types/Screening";
-import { Donor } from "../../../types/Donor";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
+import { Screening } from "../../../types/Screening";
 import { useNavigate } from "react-router-dom";
+import { Donor } from "../../../types/Donor";
+import { useContext } from "react";
+import "./ValidateScreening.css";
 
 const ValidateScreening = () => {
   const auth = useContext(AuthContext);

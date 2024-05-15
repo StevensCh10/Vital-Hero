@@ -4,10 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import "./Screening.css";
 import { Donor } from "../../../types/Donor";
+import { useNavigate } from "react-router-dom";
 
 const Screening = () => {
   const auth = useContext(AuthContext);
   const user = auth.user as Donor;
+  const navigate = useNavigate();
   const screenings = JSON.parse(
     localStorage.getItem("screenings") ?? "[]"
   ) as ScreeningType[];
@@ -82,7 +84,7 @@ const Screening = () => {
     };
 
     await auth.addScreening(screening);
-    window.location.reload();
+    navigate("donation-form");
   };
 
   const handleAttScreening = async (e: React.FormEvent<HTMLFormElement>) => {

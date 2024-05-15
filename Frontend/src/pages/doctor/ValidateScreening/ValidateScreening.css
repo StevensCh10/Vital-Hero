@@ -20,9 +20,42 @@ body {
 }
 
 .buttons .button-fit:hover {
-  background-color: rgba(0, 128, 0, 0.87);
+  background-color: rgba(0, 128, 0, 0.788);
 }
 
 .buttons .button-unfit {
   margin-left: 1.5%;
+}
+
+.form-row input {
+  font-size: 14px;
+  border: 1px solid #ccccccbe;
+  border-radius: 10px;
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 5%;
+  opacity: 0.9;
+  background-color: #f8f8f8;
+}
+
+.form-row input::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  border-color: #333 transparent transparent;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: rgb(26, 55, 68);
+}
+
+.form-row input option {
+  background-color: #f8f8f8;
+  color: hsl(0, 0%, 20%);
 }

@@ -6,30 +6,53 @@ import { BloodCenter } from "../../../types/BloodCenter";
 import { useContext, useEffect, useState } from "react";
 import { Donation } from "../../../types/Donation";
 import './Donations.css';
+import { Donor } from "../../../types/Donor";
+import { DonationForm } from "../../../types/DonationForm";
+import { Screening } from "../../../types/Screening";
 
 const Donations = () => {
   const auth = useContext(AuthContext);
-
-  const [activeButtonLeft, setActiveButtonLeft] = useState(false);
-  const [activeButtonRight, setActiveButtonRight] = useState(true);
+  const user = auth.user as Donor;
+  const [activeButtonLeft, setActiveButtonLeft] = useState(true);
+  const [activeButtonRight, setActiveButtonRight] = useState(false);
+  const [bloodcenters, setBloodCenters] = useState<BloodCenter[]>([]);
+  const [schedulingsBloodcenter, setSchedulingsBloodcenter] = useState<SchedulingType[]>([]);
+  const [donationForm, setDonationForm] = useState<DonationForm>(null as unknown as DonationForm);
+  const [screenings, setScreenings] = useState<Screening[]>([]);
+  const [selectedBloodcenter, setSelectedBloodcenter] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedHour, setSelectedHour] = useState('');
+  const [loading, setLoading] = useState(true);
   const [donations, setDonations] = useState<Donation[]>([]);
   const [scheduling] = useState<SchedulingType>(
     localStorage.getItem('scheduling') !== null ?
     JSON.parse(localStorage.getItem('scheduling')!) : undefined
   );
-  const [bloodcenters, setBloodcenters] = useState<BloodCenter[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const resultBloodcenters = await auth.findAllBloodCenters();
+        const resultDateTimes = await auth.findAllSchedulings();
+        const resultDonationForm = await auth.findDonationForm(user!.id);
+        const resultScreenings = await auth.findScreening(user!.id);
+        setSchedulingsBloodcenter(resultDateTimes);
+        setBloodCenters(resultBloodcenters);
+        localStorage.setItem('bloodcenters', JSON.stringify(resultBloodcenters));
+        setDonationForm(resultDonationForm);
+        localStorage.setItem('donationForm', JSON.stringify(resultDonationForm));
+        setScreenings(resultScreenings);
+        localStorage.setItem('screenings', JSON.stringify(resultScreenings));
+
+        if(user!.scheduling !== null){
+          const resultScheduling = await auth.findSchedulingById(user!.scheduling!);
+          localStorage.setItem('scheduling', JSON.stringify(resultScheduling));
+        }
+
+        setLoading(false);
         const resultDonations = await auth.findDonations(auth.user!.id);
         setDonations(resultDonations);
         
-        const bloodcentersFromLocalStorage = localStorage.getItem('bloodcenters');
-        if (bloodcentersFromLocalStorage !== null) {
-          const bloodcentersObject = JSON.parse(bloodcentersFromLocalStorage);
-            setBloodcenters(bloodcentersObject);
-        }
       } catch (error) {
         console.error("Erro:", error);
       }
@@ -50,6 +73,18 @@ const Donations = () => {
     return `${hour}:${minute}`;
   };
 
+  const handleChangeBloodcenter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBloodcenter(e.target.value);
+  };
+  
+  const handleChangeDate = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDate(e.target.value);
+  };
+
+  const handleChangeHour = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedHour(e.target.value);
+  };
+
   const handleClickLeft = () => {
     setActiveButtonLeft(true);
     setActiveButtonRight(false);
@@ -58,7 +93,33 @@ const Donations = () => {
   const handleClickRight = () => {
     setActiveButtonRight(true);
     setActiveButtonLeft(false);
-  }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await auth.toSchedule(user!.id, parseInt(selectedHour));
+      await auth.findDonorById(user!.id).then(() => {
+        localStorage.setItem('user', JSON.stringify(user));
+        window.location.reload();
+      });
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+  const uniqueDate = new Set();
+  const auxSchedulings = schedulingsBloodcenter.
+    filter(scheduling => scheduling.bloodcenter === parseInt(selectedBloodcenter))
+    .filter(scheduling => {
+      let date = new Date(scheduling.dateTime)
+      const dataFormatada = dateFormat(date);
+      if (uniqueDate.has(dataFormatada)) {
+        return false;
+      }
+      uniqueDate.add(dataFormatada);
+      return true;
+    });
 
   return (
     <>
@@ -101,12 +162,84 @@ const Donations = () => {
           <div style={{width: "100%"}}>
             <div className="scheduling-info">
               {scheduling == null ? (
-                  <div className="no-scheduling">
-                    <h2>Você não tem nenhuma doação agendada!</h2>
-                    <p> <img src="triste.png"></img></p>
+                  <div className="form-scheduling-dontations-container" id="section-scheduling-dontations">
+                    {user!.scheduling === null ? (
+                      <div >
+                        <div className="title-form-scheduling-dontations ">
+                          <span>Marque um agendamento e faça sua parte</span>
+                          {donationForm === null && screenings.length === 0 && (
+                            <label className="alert">
+                              *É necessário preencher o formulário de doação e a triagem para marcar um agendamento*
+                            </label>
+                          )}
+                          {donationForm === null && screenings.length !== 0 && (
+                            <label className="alert">
+                              *É necessário preencher o formulário de doação para marcar um agendamento*
+                            </label>
+                          )}
+                          {donationForm !== null && screenings.length === 0 && (
+                            <label className="alert">
+                              *É necessário preencher a triagem para marcar um agendamento*
+                            </label>
+                          )}
+                          {donationForm !== null && screenings.length !== 0 && screenings[0] && screenings[0].doctor === null && (
+                            <label className="alert">
+                              *Sua triagem está em processo de validação. Após a validação informaremos se você está apto para fazer a doação*
+                            </label>
+                          )}
+                        </div>
+                        <form onSubmit={handleSubmit} className="form-scheduling-dontations">
+                          <label htmlFor="bloodcenter">Hemocentro</label>
+                          <select id="bloodcenter" name="bloodcenter" value={selectedBloodcenter} onChange={handleChangeBloodcenter}>
+                            <option key="">Escolha um Hemocentro</option>
+                            {bloodcenters.map(bloodcenter => (
+                              <option key={bloodcenter.id} value={bloodcenter.id}>
+                                {`${bloodcenter.name} - ${bloodcenter.address}`}
+                              </option>
+                            ))}
+                          </select>
+                          <label htmlFor="date">Data</label>
+                          <select id="date" name="date" value={selectedDate} onChange={handleChangeDate}>
+                            <option key="">Escolha uma Data</option>
+                            {auxSchedulings
+                              .map(scheduling => (   
+                                <option key={scheduling.id} value={dateFormat(new Date(scheduling.dateTime))}>
+                                  {dateFormat(new Date(scheduling.dateTime))}
+                                </option>
+                              )
+                            )}
+                          </select>
+                          <label htmlFor="hour">Hora</label>
+                          <select id="hour" name="hour" value={selectedHour} onChange={handleChangeHour}>
+                            <option value="">Escolha uma Hora</option>
+                          {schedulingsBloodcenter
+                              .filter(scheduling => scheduling.bloodcenter === parseInt(selectedBloodcenter) 
+                                  && dateFormat(new Date(scheduling.dateTime)) === selectedDate)
+                              .map(scheduling => (
+                                <option key={scheduling.id} value={scheduling.id}>
+                                  {hourFormat(new Date(scheduling.dateTime))}
+                                </option>
+                              )
+                          )}
+                          </select>
+                          {user.scheduling !== null ? (
+                            <button type="submit" className="schedule">Agendar</button>
+                          ): (
+                            <button disabled type="submit" className="schedule" style={{pointerEvents: "none", backgroundColor: "rgba(184, 14, 20, 0.459)"}}>Agendar</button>
+                          )}
+                        </form> 
+                      </div>
+                    
+                    ) : (
+                      <div className="sched-info" id="section-scheduling-dontations">
+                        {!loading && (
+                            <Scheduling />
+                        )}
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <Scheduling />
+              ) : (
+                <Scheduling />
               )}
             </div>
           </div>

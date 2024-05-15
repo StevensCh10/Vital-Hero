@@ -40,8 +40,8 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
     List<Donor> allScheduledDonors();
 
     @Query(
-        value = "SELECT d.* FROM vitalheromanagement.screening s\n" + //
-                    "JOIN vitalheromanagement.donor d ON s.fk_donor = d.id\n" + //
+        value = "SELECT d.* FROM screening s\n" + //
+                    "JOIN donor d ON s.fk_donor = d.id\n" + //
                     "WHERE s.fk_donor IS NOT NULL;",
         nativeQuery = true
     )

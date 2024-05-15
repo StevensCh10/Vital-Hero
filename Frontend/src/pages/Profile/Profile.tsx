@@ -94,7 +94,6 @@ const Profile = () => {
               id="name"
               name="name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
               readOnly
             />
             <input
@@ -102,7 +101,6 @@ const Profile = () => {
               id="cpf"
               name="cpf"
               value={formatCPF(cpf)}
-              onChange={(e) => setCpf(e.target.value)}
               readOnly
             />
             <input
@@ -128,7 +126,6 @@ const Profile = () => {
                 id="bloodType"
                 name="bloodType"
                 value={`Tipo sanguíneo: ${bloodType}`}
-                onChange={(e) => setEmail(e.target.value)}
                 readOnly
                 required
               />
@@ -149,7 +146,7 @@ const Profile = () => {
               onChange={(e) => setAddress(e.target.value)}
               required
             />
-            {role === "DOCTOR"}{
+            {role === "DOCTOR" && (
               <input
               type="professionalIdCard"
               id="professionalIdCard"
@@ -157,7 +154,7 @@ const Profile = () => {
               value={crm}
               readOnly
               />
-            }
+            )}
           </div>
           <button type="submit">
             Salvar
