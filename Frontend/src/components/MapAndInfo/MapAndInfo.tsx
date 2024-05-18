@@ -17,7 +17,10 @@ const Map: React.FC = () => {
   const [selectedCenter, setSelectedCenter] = useState<string | null>(null);
 
   const customIcon = new L.Icon({
-    iconUrl: "Logo.png",
+    iconUrl: "pino-de-localizacao.png",
+    iconSize: [30, 30], // Tamanho do ícone
+    iconAnchor: [12, 41], // Ponto do ícone que será ancorado ao marcador
+    popupAnchor: [1, -34], // Ponto onde o popup será ancorado
   });
 
   useEffect(() => {
