@@ -6,6 +6,7 @@ import { BloodCenter } from "../../types/BloodCenter";
 import { Bloodstock } from "../../types/Bloodstock";
 import "leaflet/dist/leaflet.css";
 import "./MapAndInfo.css";
+import L from 'leaflet';
 
 const Map: React.FC = () => {
   const auth = useContext(AuthContext);
@@ -14,6 +15,10 @@ const Map: React.FC = () => {
   const [markers, setMarkers] = useState<JSX.Element[]>([]);
   const [bloodstocks, setBloodstocks] = useState<Bloodstock[]>([]);
   const [selectedCenter, setSelectedCenter] = useState<string | null>(null);
+
+  const customIcon = new L.Icon({
+    iconUrl: "Logo.png",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +48,7 @@ const Map: React.FC = () => {
             key={center.id}
             position={coordinates}
             eventHandlers={{ click: () => handleMarkerClick(center.id) }}
+            icon={customIcon}
           >
             <Popup>{center.name}</Popup>
           </Marker>
