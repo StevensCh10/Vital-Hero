@@ -58,7 +58,7 @@ const NavbarDonor = () => {
             <div className="modal-item"><img src="/medico.png"></img><Link to="/screening">Triagem</Link></div>
             <div className="modal-item"><img src="/Logo.png"></img><Link to="/">Home</Link></div>
             <div className="modal-item"><img src="/hospital.png"></img><Link to="/bloodcenters">Hemocentros</Link></div>
-            <div className="modal-item"><img src="/blood-donation.png"></img><Link to="/donations">Agendamento e Doações</Link></div>
+            <div className="modal-item"><img src="/blood-donation.png"></img><Link to="/scheduling-donation">Agendamento e Doações</Link></div>
             <div className="modal-item">
               <div className="line">
                 <fieldset>

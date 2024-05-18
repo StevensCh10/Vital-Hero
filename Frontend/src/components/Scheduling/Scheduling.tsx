@@ -16,7 +16,7 @@ const Scheduling = () => {
   const [scheduling] = useState<SchedulingType>(
     localStorage.getItem("scheduling") !== null
       ? JSON.parse(localStorage.getItem("scheduling")!)
-      : undefined
+      : null
   );
   const [bloodcenterInfo] = useState<BloodCenter | undefined>(
     bloodcenters.find((bd) => bd.id === scheduling?.bloodcenter)

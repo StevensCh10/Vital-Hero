@@ -1,11 +1,47 @@
 import NavbarDonor from "../../../components/NavbarDonor/NavbarDonor";
-import { BiDonateBlood } from "react-icons/bi";
-import { MdBloodtype } from "react-icons/md";
-import { GiLifeTap } from "react-icons/gi";
-import "./HomeDonor.css"
+import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { BiDonateBlood } from "react-icons/bi";
+import { useContext, useEffect, useState } from "react";
+import { MdBloodtype } from "react-icons/md";
+import { Donor } from "../../../types/Donor";
+import { GiLifeTap } from "react-icons/gi";
+import "./HomeDonor.css";
+import { DonationForm } from "../../../types/DonationForm";
+import { Screening } from "../../../types/Screening";
 
 const HomeDonor = () => {
+  const auth = useContext(AuthContext);
+  const user = auth.user as Donor;
+
+  const [donationForm, setDonationForm] = useState<DonationForm>();
+  const [screenings, setScreenings] = useState<Screening[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resultBloodcenters = await auth.findAllBloodCenters();
+        const resultDonationForm = await auth.findDonationForm(user!.id);
+        const resultScreenings = await auth.findScreening(user!.id);
+        localStorage.setItem('bloodcenters', JSON.stringify(resultBloodcenters));
+        localStorage.setItem('donationForm', JSON.stringify(resultDonationForm));
+        setDonationForm(resultDonationForm);
+        localStorage.setItem('screenings', JSON.stringify(resultScreenings));
+        setScreenings(resultScreenings);
+
+        console.log(user.scheduling)
+
+        if(user!.scheduling !== null){
+          const resultScheduling = await auth.findSchedulingById(user!.scheduling!);
+          localStorage.setItem('scheduling', JSON.stringify(resultScheduling));
+        }
+        
+      } catch (error) {
+        console.error("Erro:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   const navigate = useNavigate();
     return (
     <>
@@ -85,7 +121,16 @@ const HomeDonor = () => {
             <p><label style={{fontWeight: "500"}}>Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
               Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label style={{fontWeight: "500"}}>Faça sua parte agora!</label></p>
           </div>
-          <button onClick={(() => navigate("/screening"))}>Começar</button>
+          <button onClick={(() =>{ 
+            {console.log(screenings.length)}
+            if(donationForm === null){
+              navigate("/donation-form")
+            }else if(screenings.length === 0 || screenings[0] === null){
+              navigate("/screening")
+            }else{
+              navigate("/scheduling-donation")
+            }
+          })}>Começar</button>
         </div>
       </div>
     </>

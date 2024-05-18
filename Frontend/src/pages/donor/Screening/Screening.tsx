@@ -84,7 +84,7 @@ const Screening = () => {
     };
 
     await auth.addScreening(screening);
-    navigate("donation-form");
+    navigate("/scheduling-donation");
   };
 
   const handleAttScreening = async (e: React.FormEvent<HTMLFormElement>) => {

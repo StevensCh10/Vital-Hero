@@ -1,3 +1,4 @@
+import SchedulingAndDonation from './pages/donor/schedulingAndDonation/SchedulingAndDonation'
 import HomeBloodcenter from './pages/bloodcenter/HomeBloodcenter/HomeBloodcenter'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import ChangePassword from './pages/donor/ChangePassword/ChangePassword'
@@ -8,7 +9,6 @@ import Schedules from './pages/bloodcenter/Schedules/Schedules'
 import ScreeningType from './pages/donor/Screening/Screening'
 import HomeDoctor from './pages/doctor/HomeDoctor/HomeDoctor'
 import Screenings from './pages/doctor/Screenings/Screenings'
-import Donations from './pages/donor/Donations/Donations'
 import HomeDonor from './pages/donor/HomeDonor/HomeDonor'
 import { RequireAuth } from './contexts/Auth/RequireAuth'
 import Profile from './pages/Profile/Profile'
@@ -42,7 +42,7 @@ const App = () => {
           <Route path='/donation-form' element={<RequireAuth><DonationFormType/></RequireAuth>}/>
           <Route path='/screening' element={<RequireAuth><ScreeningType/></RequireAuth>}/>
           <Route path='/bloodcenters' element={<RequireAuth><Bloodcenters/></RequireAuth>}/>
-          <Route path='/donations' element={<RequireAuth><Donations/></RequireAuth>}/>
+          <Route path='/scheduling-donation' element={<RequireAuth><SchedulingAndDonation/></RequireAuth>}/>
           <Route path='/profile' element={<RequireAuth><Profile/></RequireAuth>}/>
           <Route path='/change-password' element={<RequireAuth><ChangePassword/></RequireAuth>}/>
           <Route path='/donation-steps' element={<RequireAuth><DonationSteps/></RequireAuth>}/>

@@ -70,7 +70,7 @@ const Map: React.FC = () => {
 
   const getCoordinates = async (address: string): Promise<[number, number]> => {
     const fullAddress = `${address}, Pernambuco, Brasil`;
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+    const url = `http://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
       fullAddress
     )}`;
 

@@ -4,10 +4,12 @@ import "./DonationForm.css";
 import { DonationForm as DonationFormType } from "../../../types/DonationForm";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { Donor } from "../../../types/Donor";
+import { useNavigate } from "react-router-dom";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
   const donationFormAux = JSON.parse(localStorage.getItem('donationForm')! ?? {}) as DonationFormType; 
+  const navigate = useNavigate();
 
   const [q1, setQ1] = useState(donationFormAux?.q1);
   const [q2, setQ2] = useState(donationFormAux?.q2);
@@ -78,7 +80,7 @@ const DonationForm = () => {
     }
 
     await auth.addDonationForm(donationForm);
-    window.location.reload();
+    navigate("/screening");
   }
 
   const handleUpdateDonationForm = async(e: React.FormEvent<HTMLFormElement>) => {
