@@ -28,8 +28,6 @@ const HomeDonor = () => {
         localStorage.setItem('screenings', JSON.stringify(resultScreenings));
         setScreenings(resultScreenings);
 
-        console.log(user.scheduling)
-
         if(user!.scheduling !== null){
           const resultScheduling = await auth.findSchedulingById(user!.scheduling!);
           localStorage.setItem('scheduling', JSON.stringify(resultScheduling));
