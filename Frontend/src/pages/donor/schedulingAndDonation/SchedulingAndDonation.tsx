@@ -30,7 +30,7 @@ const SchedulingAndDonation = () => {
   const [selectedBloodcenter, setSelectedBloodcenter] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
-  const [loading, setLoading] = useState(true);
+  //const [loading, setLoading] = useState(true);
   const [donations, setDonations] = useState<Donation[]>([]);
   const scheduling =
     localStorage.getItem("scheduling") !== null
@@ -42,7 +42,7 @@ const SchedulingAndDonation = () => {
       try {
         const resultDateTimes = await auth.findAllSchedulings();
         setSchedulingsBloodcenter(resultDateTimes);
-        setLoading(false);
+        //setLoading(false);
         const resultDonations = await auth.findDonations(auth.user!.id);
         setDonations(resultDonations);
       } catch (error) {
