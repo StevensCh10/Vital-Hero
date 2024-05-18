@@ -42,7 +42,6 @@ const SchedulingAndDonation = () => {
       try {
         const resultDateTimes = await auth.findAllSchedulings();
         setSchedulingsBloodcenter(resultDateTimes);
-        //setLoading(false);
         const resultDonations = await auth.findDonations(auth.user!.id);
         setDonations(resultDonations);
       } catch (error) {
@@ -90,7 +89,8 @@ const SchedulingAndDonation = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await auth.toSchedule(user!.id, parseInt(selectedHour));
+      auth.toSchedule(user!.id, parseInt(selectedHour));
+      localStorage.setItem("scheduling", JSON.stringify(schedulingsBloodcenter.find(s => s.id === Number(selectedHour))));
       await auth.findDonorById(user!.id).then(() => {
         localStorage.setItem("user", JSON.stringify(user));
         window.location.reload();
@@ -277,7 +277,10 @@ const SchedulingAndDonation = () => {
                               </option>
                             ))}
                         </select>
-                        {user.scheduling !== null ? (
+                        {donationForm !== null &&
+                          screenings.length !== 0 &&
+                          screenings[0] &&
+                          screenings[0].doctor !== null ? (
                           <button type="submit" className="schedule">
                             Agendar
                           </button>
@@ -298,7 +301,9 @@ const SchedulingAndDonation = () => {
                     </div>
                   </div>
                 ) : (
-                  <Scheduling />
+                  <div style={{margin: "5% 0 5% 0"}}>
+                    <Scheduling />
+                  </div>
                 )}
               </div>
             </div>

@@ -1,6 +1,6 @@
 import NavbarDonor from "../../../components/NavbarDonor/NavbarDonor";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiDonateBlood } from "react-icons/bi";
 import { useContext, useEffect, useState } from "react";
 import { MdBloodtype } from "react-icons/md";
@@ -119,16 +119,19 @@ const HomeDonor = () => {
             <p><label style={{fontWeight: "500"}}>Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
               Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label style={{fontWeight: "500"}}>Faça sua parte agora!</label></p>
           </div>
-          <button onClick={(() =>{ 
-            {console.log(screenings.length)}
-            if(donationForm === null){
-              navigate("/donation-form")
-            }else if(screenings.length === 0 || screenings[0] === null){
-              navigate("/screening")
-            }else{
-              navigate("/scheduling-donation")
-            }
-          })}>Começar</button>
+          {user.scheduling === null ? (
+            <button onClick={(() =>{ 
+              if(donationForm === null){
+                navigate("/donation-form")
+              }else if(screenings.length === 0 || screenings[0] === null){
+                navigate("/screening")
+              }else{
+                navigate("/scheduling-donation")
+              }
+            })}>Começar</button>
+          ) : (
+            <label style={{marginTop: "3%", fontSize: "1.1em"}}>Você já fez seu agendamento, pra verificar detalhes <Link style={{color: "rgb(184, 14, 20)", fontSize: "1.2em"}} to={"/scheduling-donation"}>clique aqui</Link></label>
+          )}
         </div>
       </div>
     </>

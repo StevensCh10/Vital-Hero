@@ -171,7 +171,7 @@ public class DonorController {
     @ResponseStatus(HttpStatus.OK)
     public void toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
         schedulingService.find(schedulingID);
-        donorService.toSchedule(donorID, schedulingID);
+        donorService.toSchedule(donorID, screeningService.allScreeningsByDonor(donorID), schedulingID);
     }
 
     @GetMapping("/scheduled/{donorID}")

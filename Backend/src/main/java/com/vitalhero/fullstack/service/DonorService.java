@@ -12,6 +12,7 @@ import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
+import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
 
 import jakarta.mail.internet.MimeUtility;
@@ -84,12 +85,16 @@ public class DonorService {
         return repository.saveAndFlush(currentDonor);
     }
 
-    public void toSchedule(Long id, Long schedulingID){
+    public void toSchedule(Long id, List<Screening> screenings, Long schedulingID){
         var donor = find(id);
-        if(donor.getScheduling() == null){
-            throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName()));
-        }else{
+        if(!screenings.isEmpty()){
+            System.out.println(screenings.toString());
+            if(screenings.get(0).getDoctor() == null){
+                throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName()));
+            }
             repository.updateFkScheduling(schedulingID, id);
+        }else{
+            throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois ainda não preencheu sua triagem", donor.getName()));
         }
     }
 
