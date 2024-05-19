@@ -40,7 +40,7 @@ public class Screening implements Serializable{
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
-    @JoinColumn(name = "fk_doctor", unique = false)
+    @JoinColumn(name = "fk_doctor")
     //@Valid
     private Doctor doctor;
 
