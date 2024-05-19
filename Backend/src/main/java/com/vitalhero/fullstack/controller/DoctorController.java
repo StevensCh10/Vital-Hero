@@ -1,6 +1,5 @@
 package com.vitalhero.fullstack.controller;
 
-import java.io.File;
 import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.Paths;

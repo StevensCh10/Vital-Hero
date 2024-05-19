@@ -21,7 +21,6 @@ const Screenings = () => {
         setScreenings(resultScreenings);
         const resulAllScheduled = await auth.allDonorsScreenings();
         setAllDonorScreenings(resulAllScheduled);
-        console.log(activeButtonLeft)
       } catch (error) {
         console.error("Erro:", error);
       }

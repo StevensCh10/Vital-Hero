@@ -1,6 +1,5 @@
 package com.vitalhero.fullstack.service;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.stereotype.Service;
@@ -12,9 +11,7 @@ import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetHeaders;
-import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeUtility;
 import jakarta.persistence.EntityNotFoundException;
 

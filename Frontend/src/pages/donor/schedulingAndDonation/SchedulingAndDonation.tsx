@@ -24,9 +24,10 @@ const SchedulingAndDonation = () => {
   const donationForm = JSON.parse(
     localStorage.getItem("donationForm")! ?? {}
   ) as DonationForm;
-  const screenings = JSON.parse(
-    localStorage.getItem("screenings")! ?? []
-  ) as Screening[];
+  const [screenings, setScreenings] = useState<Screening[]>(() => {
+    const storedScreenings = localStorage.getItem("screenings");
+    return storedScreenings ? JSON.parse(storedScreenings) as Screening[] : [];
+  });
   const [selectedBloodcenter, setSelectedBloodcenter] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
@@ -44,6 +45,10 @@ const SchedulingAndDonation = () => {
         setSchedulingsBloodcenter(resultDateTimes);
         const resultDonations = await auth.findDonations(auth.user!.id);
         setDonations(resultDonations);
+        const resultScreenings = await auth.findScreening(user!.id);
+        localStorage.setItem('screenings', JSON.stringify(resultScreenings));
+        setScreenings(resultScreenings);
+        console.log(resultScreenings)
       } catch (error) {
         console.error("Erro:", error);
       }
