@@ -40,9 +40,8 @@ public class Screening implements Serializable{
     @JsonIgnoreProperties(value = {"name", "cpf", "crm", "email", "age", "gender", "maritalStatus", "address", "photo", "phone", "password"}, allowGetters = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    @Column(unique = false)
     @OneToOne
-    @JoinColumn(name = "fk_doctor")
+    @JoinColumn(name = "fk_doctor", unique = false)
     //@Valid
     private Doctor doctor;
 
