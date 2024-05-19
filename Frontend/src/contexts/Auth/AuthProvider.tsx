@@ -6,7 +6,6 @@ import { Screening } from "../../types/Screening";
 import { DonationForm } from "../../types/DonationForm";
 import { BloodCenter } from "../../types/BloodCenter";
 import { Doctor } from "../../types/Doctor";
-import { Donation } from "../../types/Donation";
 
 export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const [user, setUser] = useState<Donor | Doctor | BloodCenter |  null>(() => {
