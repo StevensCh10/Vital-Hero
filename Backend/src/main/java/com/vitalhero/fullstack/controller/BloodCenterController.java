@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.model.Donation;
+import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.service.SchedulingService;
 import jakarta.validation.Valid;
@@ -141,12 +143,24 @@ public class BloodCenterController {
     }
 
     //DONATION
-    @PostMapping("/donation/{gender}")
-    public Donation donationMade(@RequestBody Donation newDonation, @PathVariable String gender){
-        Donation donation = donationService.addDonation(newDonation);
-        scheduleDonationNotification(donation, gender);
-        donorService.scheduleMadeOrUnscheduled(newDonation.getDonor().getId());
-        return donation;
+    @PostMapping("/donation")
+    public void donationMade(@RequestParam List<Long> donorIdsDonated, @RequestParam List<Long> donorIdsNotDonated){
+
+            for (Long donorId : donorIdsDonated) {
+                Donor donor = donorService.find(donorId);
+
+                Donation donation = new Donation();
+                donation.setDonor(donor);
+                donation.setScheduling(donor.getScheduling());
+
+                Donation addedDonation = donationService.addDonation(donation);
+                scheduleDonationNotification(addedDonation, donor.getGender());
+                donorService.scheduleMadeOrUnscheduled(donorId);
+            }
+
+            for(Long donorId : donorIdsNotDonated){
+                donorService.scheduleMadeOrUnscheduled(donorId);
+            }
     }
 
     //@PostMapping("/schedule-donation-notification/{gender}")

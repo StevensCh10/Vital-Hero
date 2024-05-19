@@ -37,6 +37,7 @@ export type AuthContextType = {
     sendFeedback: (idDonor: number, feedback: string) => void;
     sendEmailForgotPassword: (email: string) => void;
     updatePassword: (idDonor: number, email: string) => void;
+    donationMade: (idDonorDonated: number[], idDonorNotDonated: number[]) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>(null!);

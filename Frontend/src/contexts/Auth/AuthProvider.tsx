@@ -6,6 +6,7 @@ import { Screening } from "../../types/Screening";
 import { DonationForm } from "../../types/DonationForm";
 import { BloodCenter } from "../../types/BloodCenter";
 import { Doctor } from "../../types/Doctor";
+import { Donation } from "../../types/Donation";
 
 export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const [user, setUser] = useState<Donor | Doctor | BloodCenter |  null>(() => {
@@ -169,6 +170,10 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         await api.updatePassword(idDonor, password);
     }
 
+    const donationMade = async(idDonorDonated: number[], idDonorNotDonated: number[]) => {
+        await api.donationMade(idDonorDonated, idDonorNotDonated);
+    }
+
     return (
         <AuthContext.Provider value={{user, signin, signout, 
                 findAllBloodCenters, findAllSchedulings,
@@ -178,7 +183,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
                 register, registerDoctor, addScreening, updateScreening: updateScreening,
                 addDonationForm, updateDonationForm, findSchedulingsByBloodcenter,
                 findAllScreenings, allDonorsScreenings, validateScreening,
-                sendFeedback, sendEmailForgotPassword, updatePassword}}>
+                sendFeedback, sendEmailForgotPassword, updatePassword, donationMade}}>
             {children}
         </AuthContext.Provider>
     );

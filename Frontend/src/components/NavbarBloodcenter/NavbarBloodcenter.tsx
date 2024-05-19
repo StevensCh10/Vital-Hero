@@ -42,7 +42,6 @@ const NavbarBloodcenter = () => {
             onRequestClose={toggleLeftOptions}
             ariaHideApp={false}
           >
-            <div className="modal-item"><img src="/formulario.png"></img><Link to="/schedules">Agendamentos</Link></div>
             <div className="modal-item"><img src="/Logo.png"></img><Link to="/">Home</Link></div>
             <div className="modal-item">
               <div className="line">

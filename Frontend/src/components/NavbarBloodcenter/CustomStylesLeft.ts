@@ -15,7 +15,7 @@ const customStylesLeft: CustomStylesLeft = {
     alignItems: "start", // Centraliza os itens horizontalmente
     justifyContent: "center", 
     width: "240px",
-    height: "180px",
+    height: "130px",
     borderRadius: "2%",
     backgroundColor: "white",
     color: "black",

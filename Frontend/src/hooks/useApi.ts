@@ -140,5 +140,9 @@ export const useApi = () => ({
     updatePassword: async(idDonor: number, password: string) => {
         await api.put(`donor/updatepassword/${idDonor}?password=${password}`)
         .catch((e) => console.log(e))
+    },
+    donationMade: async(idDonorDonated: number[], idDonorNotDonated: number[]) => {
+        await api.post(`bloodcenter/donation?donorIdsDonated=${idDonorDonated}&donorIdsNotDonated=${idDonorNotDonated}`)
+        .catch((e) => console.log(e))
     }
 });
