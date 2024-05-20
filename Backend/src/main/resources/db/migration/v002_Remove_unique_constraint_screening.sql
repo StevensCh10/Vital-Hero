@@ -1,1 +1,0 @@
-ALTER TABLE screening DROP CONSTRAINT IF EXISTS screening_fk_doctor_key;

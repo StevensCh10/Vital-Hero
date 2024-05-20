@@ -18,7 +18,10 @@ import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
+import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.service.SchedulingService;
+import com.vitalhero.fullstack.service.ScreeningService;
+
 import jakarta.validation.Valid;
 import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
@@ -37,16 +40,18 @@ public class BloodCenterController {
     private final DonationService donationService;
     private final DonorService donorService;
     private final QuartzDonationService quartzDonationService;
+    private final ScreeningService screeningService;
 
     public BloodCenterController(BloodCenterService bloodCenterService, BloodStockService bloodStockService,
             SchedulingService schedulingService, DonationService donationService, DonorService donorService,
-            QuartzDonationService quartzDonationService){
+            QuartzDonationService quartzDonationService, ScreeningService screeningService){
         this.bloodCenterService = bloodCenterService;
         this.bloodStockService = bloodStockService;
         this.schedulingService =schedulingService;
         this.donationService = donationService;
         this.donorService = donorService;
         this.quartzDonationService = quartzDonationService;
+        this.screeningService = screeningService;
     }
     
     //BLOODCENTER
@@ -156,6 +161,12 @@ public class BloodCenterController {
                 Donation addedDonation = donationService.addDonation(donation);
                 scheduleDonationNotification(addedDonation, donor.getGender());
                 donorService.scheduleMadeOrUnscheduled(donorId);
+
+                List<Screening> screenings = screeningService.allScreeningsByDonor(donorId);
+                for(Screening s: screenings){
+                    s.setDoctor(null);
+                    screeningService.updateScreening(s);
+                }
             }
 
             for(Long donorId : donorIdsNotDonated){

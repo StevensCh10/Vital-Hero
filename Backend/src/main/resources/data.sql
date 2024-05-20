@@ -114,3 +114,15 @@ SELECT 3, '2024-11-03 07:04:00.000000'
 WHERE NOT EXISTS (
     SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
 );
+
+INSERT INTO donor (name, cpf, email, age, gender, marital_status, address, photo, phone, blood_type, password, role)
+SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'M', 'S', 'Rua A, 123', NULL, '81987654321', 'O+', '1234', 'DONOR'
+WHERE NOT EXISTS (
+    SELECT 1 FROM donor WHERE cpf = '123.456.789-10'
+);
+
+INSERT INTO doctor (name, cpf, crm, email, age, gender, marital_status, address, photo, phone, password, role)
+SELECT 'Robson da Silva', '123.456.789-11', 'CRM123456', 'robson@outlook.com', 28, 'M', 'C', 'Rua A, 123', NULL, '81987654322', '456', 'DOCTOR'
+WHERE NOT EXISTS (
+    SELECT 1 FROM doctor WHERE cpf = '123.456.789-11'
+);

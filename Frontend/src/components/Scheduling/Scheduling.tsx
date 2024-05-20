@@ -64,7 +64,6 @@ const Scheduling = () => {
     auth.unSchedule(user!.id); 
     user!.scheduling = null;
     await auth.findDonorById(user!.id).then(() => {
-      localStorage.setItem('user', JSON.stringify(user));
       localStorage.removeItem('scheduling');
       window.location.reload();
     });

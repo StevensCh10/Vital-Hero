@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const findDonorById = async(idDonor: number) => {
         const data = await api.findDonorById(idDonor)
         setUser(data);
-        //localStorage.setItem('user', JSON.stringify(data))
+        localStorage.setItem('user', JSON.stringify(data))
         return data;
     }
 

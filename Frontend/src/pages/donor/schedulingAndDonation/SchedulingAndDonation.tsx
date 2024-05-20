@@ -48,7 +48,6 @@ const SchedulingAndDonation = () => {
         const resultScreenings = await auth.findScreening(user!.id);
         localStorage.setItem('screenings', JSON.stringify(resultScreenings));
         setScreenings(resultScreenings);
-        console.log(resultScreenings)
       } catch (error) {
         console.error("Erro:", error);
       }
@@ -97,7 +96,6 @@ const SchedulingAndDonation = () => {
       auth.toSchedule(user!.id, parseInt(selectedHour));
       localStorage.setItem("scheduling", JSON.stringify(schedulingsBloodcenter.find(s => s.id === Number(selectedHour))));
       await auth.findDonorById(user!.id).then(() => {
-        localStorage.setItem("user", JSON.stringify(user));
         window.location.reload();
       });
     } catch (error) {

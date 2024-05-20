@@ -99,9 +99,6 @@ const HomeBloodcenter = () => {
       }
     });
     
-        console.log('id donor donated:', idDonorDonated);
-        console.log('id donor not donated:', idDonorNotDonated);
-    
     auth.donationMade(idDonorDonated, idDonorNotDonated);
     window.location.reload();
   };

@@ -120,7 +120,6 @@ const Screening = () => {
       q24: q24,
     };
 
-    console.log(updateScreening);
     await auth.updateScreening(updateScreening);
     window.location.reload();
   };

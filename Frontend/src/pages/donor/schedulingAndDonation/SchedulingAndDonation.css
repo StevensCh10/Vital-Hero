@@ -20,15 +20,17 @@ body {
 }
 
 .donations-info {
-  margin-top: 5%;
+  display: flex;
+  margin-top: 3%;
   text-align: start;
   align-items: center;
   width: 100%;
+  justify-content: center;
 }
 
 .with-content-box {
   /* Alterado para ocupar 100% da largura */
-  margin-bottom: 2%; /* Espaçamento entre as caixas */
+  margin: 2% 2% 0% 2%; /* Espaçamento entre as caixas */
   background-color: #f8f8f8; /* Cor de fundo */
   border: none; /* Borda */
   border-radius: 10px; /* Bordas arredondadas */
@@ -160,6 +162,7 @@ img{
 }
 
 .form-scheduling-dontations {
+  margin-top: 2%;
   display: flex;
   flex-direction: column;
   align-items: center;
