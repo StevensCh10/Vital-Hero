@@ -3,7 +3,6 @@ import HomeBloodcenter from './pages/bloodcenter/HomeBloodcenter/HomeBloodcenter
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import ChangePassword from './pages/donor/ChangePassword/ChangePassword'
 import DonationFormType from './pages/donor/DonationForm/DonationForm'
-import DonationSteps from './pages/donor/DonationSteps/DonationSteps'
 import Bloodcenters from './pages/donor/Bloodcenters/Bloodcenters'
 import Schedules from './pages/bloodcenter/Schedules/Schedules'
 import ScreeningType from './pages/donor/Screening/Screening'
@@ -45,7 +44,6 @@ const App = () => {
           <Route path='/scheduling-donation' element={<RequireAuth><SchedulingAndDonation/></RequireAuth>}/>
           <Route path='/profile' element={<RequireAuth><Profile/></RequireAuth>}/>
           <Route path='/change-password' element={<RequireAuth><ChangePassword/></RequireAuth>}/>
-          <Route path='/donation-steps' element={<RequireAuth><DonationSteps/></RequireAuth>}/>
           <Route path='/review' element={<RequireAuth><Review/></RequireAuth>}/>
           <Route path='/schedules' element={<RequireAuth><Schedules/></RequireAuth>}/>
           <Route path='/screenings' element={<RequireAuth><Screenings/></RequireAuth>}/>
