@@ -13,7 +13,8 @@ export const useApi = () => ({
     signin: async (email: string, password: string) => {
         var user = {email: email, password: password}
         return await api.post(`api/auth/login`, user)
-            .then((response) => response.data); 
+            .then((response) => response.data)
+            .catch(() => null); 
     },
     findDonorById: async (idDonor: number) => {
         return await api.get(`donor/${idDonor}`)
@@ -21,16 +22,19 @@ export const useApi = () => ({
     },
     findAllBloodCenters: async () => {
         return await api.get('bloodcenter/findall')
-            .then((response) => response.data);
+            .then((response) => response.data)
+            .catch(() => null); 
             
     },
     findAllSchedulings: async () => {
         return await api.get(`bloodcenter/scheduling/all`)
-            .then((response) => response.data);
+            .then((response) => response.data)
+            .catch(() => null); 
     },
     findSchedulingsByBloodcenter: async (bcID: number) => {
         return await api.get(`bloodcenter/scheduling/all/${bcID}`)
-            .then((response) => response.data);
+            .then((response) => response.data)
+            .catch(() => null); 
     },
     findDonationFormByDonor: async (idDonor: number) => {
         return await api.get(`donor/donationform/findbydonor/${idDonor}`)

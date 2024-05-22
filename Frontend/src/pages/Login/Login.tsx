@@ -18,7 +18,7 @@ const Login = () => {
       if (isLogged) {
         navigate("/");
       } else {
-        //POSSO FAZER O QUE EU QUISER AQUI PRA AVISAR AO USUÁRIO
+        alert("Credênciais inválidas!");
       }
     }
   };

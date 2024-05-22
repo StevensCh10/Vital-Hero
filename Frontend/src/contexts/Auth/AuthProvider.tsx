@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const api = useApi();
 
     const signin = async (email: string, password: string) => {
-        let data = await api.signin(email, password);
+        const data = await api.signin(email, password);
         if(data){
             setUser(data);
             localStorage.setItem('user', JSON.stringify(data)); 
