@@ -10,10 +10,10 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [phone, setPhone] = useState("");
-  const [maritalStatus, setMaritalStatus] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState("C");
   const [gender, setGender] = useState("");
   const [cpf, setCpf] = useState("");
-  const [bloodType, setBloodType] = useState("");
+  const [bloodType, setBloodType] = useState("A+");
   const [address, setAddress] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -74,8 +74,13 @@ const Register = () => {
       formData.append('file', emptyFile);
     }
 
-    auth.register(formData);
-    navigate("/");
+    const response = await auth.register(formData);
+    if(response.id !== undefined){
+      navigate("/");
+    }else{
+      alert("Registro falhou");
+      window.location.reload();
+    }
   };
 
   return (
