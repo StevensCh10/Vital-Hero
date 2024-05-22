@@ -8,7 +8,10 @@ import "./Profile.css";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
-  const user: Donor | Doctor = auth.user!.role === "DONOR" ? auth.user! as Donor : auth.user! as Doctor;
+  const user: Donor | Doctor =
+    auth.user!.role === "DONOR"
+      ? (auth.user! as Donor)
+      : (auth.user! as Doctor);
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [age, setAge] = useState(0);
@@ -23,10 +26,10 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if(role === "DONOR"){
-          setBloodType((user as Donor).bloodType!)
-        }else if(role === "DOCTOR"){
-          setCrm((user as Doctor).crm!)
+        if (role === "DONOR") {
+          setBloodType((user as Donor).bloodType!);
+        } else if (role === "DOCTOR") {
+          setCrm((user as Doctor).crm!);
         }
         setCpf(user!.cpf!);
         setAge(user!.age!);
@@ -35,12 +38,14 @@ const Profile = () => {
         setEmail(user!.email!);
         setAddress(user!.address!);
 
-        if(user!.photo !== "sem" && user!.photo !== null){
-          const response = await fetch(`https://vital-hero.onrender.com/donor/img/${user!.photo}`);
+        if (user!.photo !== "sem" && user!.photo !== null) {
+          const response = await fetch(
+            `https://vital-hero.onrender.com/donor/img/${user!.photo}`
+          );
           const blob = await response.blob();
           const imageUrl = URL.createObjectURL(blob);
           setPhotoURL(imageUrl);
-        }else{
+        } else {
           setPhotoURL("Logo.png");
         }
       } catch (error) {
@@ -50,9 +55,9 @@ const Profile = () => {
     fetchData();
   }, [auth]);
 
-  const handleAtt = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleAtt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     user!.phone = phone;
     user!.address = address;
 
@@ -76,26 +81,24 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      {role === "DOCTOR" ? (
-        <NavbarDoctor />
-      ) : (
-        <NavbarDonor />
-      )}
+      {role === "DOCTOR" ? <NavbarDoctor /> : <NavbarDonor />}
       <div className="profile-content">
         <div className="profile-header">
-          <div className="profile-image">
-            <img src={photoURL} alt="Foto do usuário" />
-          </div>
+          {photoURL === "Logo.png" ? (
+            <img
+              src={photoURL}
+              style={{ width: "120px" }}
+              alt="Foto do usuário"
+            />
+          ) : (
+            <div className="profile-image">
+              <img src={photoURL} alt="Foto do usuário" />
+            </div>
+          )}
         </div>
         <form onSubmit={handleAtt} className="profile-form">
           <div className="profile-info">
-            <input
-              type="name"
-              id="name"
-              name="name"
-              value={name}
-              readOnly
-            />
+            <input type="name" id="name" name="name" value={name} readOnly />
             <input
               type="cpf"
               id="cpf"
@@ -121,7 +124,7 @@ const Profile = () => {
               style={{ width: "55%" }}
               required
             />
-            {role === "DONOR" &&  (user as Donor).bloodType !== "Não sei" && (
+            {role === "DONOR" && (user as Donor).bloodType !== "Não sei" && (
               <input
                 id="bloodType"
                 name="bloodType"
@@ -148,17 +151,15 @@ const Profile = () => {
             />
             {role === "DOCTOR" && (
               <input
-              type="professionalIdCard"
-              id="professionalIdCard"
-              name="professionalIdCard"
-              value={crm}
-              readOnly
+                type="professionalIdCard"
+                id="professionalIdCard"
+                name="professionalIdCard"
+                value={crm}
+                readOnly
               />
             )}
           </div>
-          <button type="submit">
-            Salvar
-          </button>
+          <button type="submit">Salvar</button>
         </form>
       </div>
     </div>
