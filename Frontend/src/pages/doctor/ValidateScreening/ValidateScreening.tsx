@@ -43,32 +43,31 @@ const ValidateScreening = () => {
           <div className="form-screening">
             <div className="form-row">
               <label className="label-screening" htmlFor="q1">
-                Já doou sangue? Há quanto tempo? Sentiu-se mal?
+                Foi operado recentemente?
               </label>
               <input type="text" id="q1" name="q1" value={screening.q1} readOnly />
             </div>
             <div className="form-row">
               <label className="label-screening" htmlFor="q2">
-                Tem alergia? A que? Quando foi a ultima crise? Faz tratamento?
-                Qual?
+                Teve reação alérgica recentemente?
               </label>
               <input type="text" id="q2" name="q2" value={screening.q2} readOnly />
             </div>
             <div className="form-row">
               <label className="label-screening" htmlFor="q3">
-                Já foi operado? Quando? De que? Precisou tomar sangue?
+                Foi vacinado recentemente?
               </label>
               <input type="text" id="q3" name="q3" value={screening.q3} readOnly />
             </div>
             <div className="form-row">
               <label className="label-screening" htmlFor="q4">
-                Tomou alguma vacina recente? Qual?
+                Teve convulsões recentemente?
               </label>
               <input type="text" id="q4" name="q4" value={screening.q4} readOnly />
             </div>
             <div className="form-row">
               <label className="label-screening" htmlFor="q5">
-                Tem ou teve convulsões? Quando?
+                Pesa mais que 50kg?
               </label>
               <input type="text" id="q5" name="q5" value={screening.q5} readOnly />
             </div>
