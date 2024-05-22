@@ -336,7 +336,7 @@ const Screening = () => {
                     required
                     onChange={(e) => setQ13(e.target.value)}
                   >
-                    <option></option>
+                    <option>{q13}</option>
                     <option value="Não">Não</option>
                     <option value="Sim">Sim</option>
                   </select>
