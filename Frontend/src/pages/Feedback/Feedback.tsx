@@ -18,6 +18,10 @@ const Feedback = () => {
     window.location.reload();
   }
 
+  function isEmptyOrWhitespace(str: string): boolean {
+    return !str || str.trim().length === 0;
+  }
+
   return (
     <div className="feedback-container">
       {user?.role === "DONOR" ? (
@@ -37,7 +41,14 @@ const Feedback = () => {
 
       <form onSubmit={handleSendFeedback}>
         <textarea placeholder="Conte sua experiência..." onChange={((e) => setFeedback(e.target.value))}></textarea>
-        <button>Enviar</button>
+        {isEmptyOrWhitespace(feedback) ? (
+          <button disabled style={{
+            pointerEvents: "none",
+            backgroundColor: "rgba(184, 14, 20, 0.459)",
+          }}>Enviar</button>
+        ) : (
+          <button>Enviar</button>
+        )}
       </form>
     </div>
   );
