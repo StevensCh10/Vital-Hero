@@ -85,7 +85,13 @@ export const useApi = () => ({
     register: async (formData: FormData) => {
         return await api.post('donor', formData)
         .then((response) => response.data)
-        .catch((e) => e)
+        .catch((e) => {
+            if (axios.isAxiosError(e) && e.response) {
+                throw e.response.data;
+            } else {
+                throw e;
+            }
+        })
     },
     registerDoctor: async (formData: FormData) => {
         return await api.post('doctor', formData)

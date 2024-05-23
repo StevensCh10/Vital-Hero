@@ -2,6 +2,7 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import "./Register.css";
+import { ErrorType } from "../../types/ErrorType";
 
 const Register = () => {
   const auth = useContext(AuthContext);
@@ -74,12 +75,13 @@ const Register = () => {
       formData.append('file', emptyFile);
     }
 
-    const response = await auth.register(formData);
-    if(response.id !== undefined){
-      navigate("/");
-    }else{
-      alert("Registro falhou");
-      window.location.reload();
+    try {
+      const response = await auth.register(formData);
+      if(response.id !== undefined){
+          navigate("/");
+      }
+    } catch (error) {
+        alert((error as ErrorType).detail);
     }
   };
 
