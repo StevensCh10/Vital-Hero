@@ -70,49 +70,49 @@ WHERE NOT EXISTS (
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 2, '2024-10-20 06:28:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 2 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 2, '2024-06-14 22:03:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 2 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 2, '2024-09-05 13:20:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 2 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 2, '2024-12-11 08:55:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 2 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 3, '2024-07-27 19:40:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 3 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 3, '2024-04-01 10:12:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 3 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 3, '2024-08-22 16:38:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 3 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO scheduling (fk_bloodcenter, date_time)
 SELECT 3, '2024-11-03 07:04:00.000000'
 WHERE NOT EXISTS (
-    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 1 AND date_time = '2024-11-29 17:42:00.000000'
+    SELECT 1 FROM scheduling WHERE fk_bloodcenter = 3 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
 INSERT INTO donor (name, cpf, email, age, gender, marital_status, address, photo, phone, blood_type, password, role)
