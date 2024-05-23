@@ -49,7 +49,7 @@ public class UserService {
         InternetHeaders headers = new InternetHeaders();
         headers.addHeader("Content-type", "text/html; charset=UTF-8");
         String text = "Olá,<br><br>Foi solicitada a recuperação de senha para este usuário, se não foi você quem solicitou, desconsidere "+
-            "esta mensagem e continue usando sua senha atual.<br><br>Para recuperar sua senha acesse o link: <a href='http://localhost:5173/redefine-password?id=" + id + "'>Esqueci minha senha</a>."+
+            "esta mensagem e continue usando sua senha atual.<br><br>Para recuperar sua senha acesse o link: <a href='https://vital-hero.onrender.com/redefine-password?id=" + id + "'>Esqueci minha senha</a>."+
             "<br><br>Este é um email automático enviado pelo VitalHero, favor não responder.";
 
         emailService.sendEmail(to, subject, text, from, personal);
