@@ -1,6 +1,7 @@
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
+import { ErrorType } from "../../types/ErrorType";
 
 const RegisterDoctor = () => {
   const auth = useContext(AuthContext);
@@ -64,8 +65,14 @@ const RegisterDoctor = () => {
       formData.append('file', emptyFile);
     }
 
-    auth.registerDoctor(formData);
-    navigate("/");
+    try {
+      const response = await auth.registerDoctor(formData);
+      if(response.id !== undefined){
+          navigate("/");
+      }
+    } catch (error) {
+        alert((error as ErrorType).detail);
+    }
   };
 
   return (
