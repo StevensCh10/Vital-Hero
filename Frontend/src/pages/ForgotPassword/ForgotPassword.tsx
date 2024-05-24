@@ -14,14 +14,14 @@ const ForgotPassword = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email) {
+      console.log("opa")
       try {
-        const response = await auth.sendEmailForgotPassword(email);;
-        if(response !== undefined){
-            navigate("/");
-        }
+        auth.sendEmailForgotPassword(email);
+        alert("E-mail enviado com sucesso!");
+        navigate("/");
       } catch (error) {
-          alert((error as ErrorType).detail);
-          //navigate("/");
+        alert((error as ErrorType).detail);
+        //navigate("/");
       }
     }
   };
