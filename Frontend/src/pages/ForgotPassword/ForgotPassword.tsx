@@ -14,9 +14,8 @@ const ForgotPassword = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email) {
-      console.log("opa")
       try {
-        auth.sendEmailForgotPassword(email);
+        await auth.sendEmailForgotPassword(email);
         alert("E-mail enviado com sucesso!");
         navigate("/");
       } catch (error) {
