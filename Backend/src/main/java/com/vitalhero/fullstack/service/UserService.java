@@ -1,16 +1,12 @@
 package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
-
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.vitalhero.fullstack.intrerfaces.User;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
-
 import jakarta.mail.internet.InternetHeaders;
 import jakarta.mail.internet.MimeUtility;
 import jakarta.persistence.EntityNotFoundException;
@@ -56,7 +52,7 @@ public class UserService {
 
     }
 
-    public User findUserByEmail(@RequestBody String email){
+    public User findUserByEmail(String email){
         var findDonor = donorRepository.findByEmail(email);
         if(findDonor == null){
             var findDoctor = doctorRepository.findByEmail(email);

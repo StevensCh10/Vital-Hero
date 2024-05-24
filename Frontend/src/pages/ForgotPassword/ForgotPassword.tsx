@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import './ForgotPassword.css'
+import { ErrorType } from "../../types/ErrorType";
 
 const ForgotPassword = () => {
     const auth = useContext(AuthContext);
@@ -13,9 +14,15 @@ const ForgotPassword = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email) {
-      auth.sendEmailForgotPassword(email);
-      alert("Verifique seu email para alteração de senha!");
-      navigate("/");
+      try {
+        const response = await auth.sendEmailForgotPassword(email);;
+        if(response !== undefined){
+            navigate("/");
+        }
+      } catch (error) {
+          alert((error as ErrorType).detail);
+          //navigate("/");
+      }
     }
   };
 

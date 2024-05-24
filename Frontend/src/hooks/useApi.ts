@@ -131,7 +131,14 @@ export const useApi = () => ({
         await api.post(`donor/sendfeedback/${idDonor}?feedback=${encodeURIComponent(feedback)}`);
     },
     sendEmailForgotPassword: async(email: string) => {
-        await api.post(`api/auth/forgotpassword?email=${email}`);
+        await api.post(`api/auth/forgotpassword?email=${email}`)
+        .catch((e) => {
+            if (axios.isAxiosError(e) && e.response) {
+                throw e.response.data;
+            } else {
+                throw e;
+            }
+        });
     },
     updatePassword: async(idDonor: number, password: string) => {
         await api.put(`donor/updatepassword/${idDonor}?password=${password}`);
