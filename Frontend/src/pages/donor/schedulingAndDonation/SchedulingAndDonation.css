@@ -119,6 +119,7 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
+  margin-top: 3%;
 }
 
 p{
@@ -147,12 +148,6 @@ img{
   margin-bottom: 0;
 }
 
-.title-form-scheduling-dontations p {
-  margin: 0;
-  color: #035e89;
-  font-size: 28px;
-}
-
 .title-form-scheduling-dontations .alert {
   margin: 0;
   margin-bottom: 4%;
@@ -170,24 +165,28 @@ img{
   width: 100%;
 }
 
+.form-scheduling-dontations label{
+  margin-top: 4%;
+}
+
 .form-scheduling-dontations .schedule {
   background-color: rgb(184, 14, 20);
   border-radius: 10px;
-  width: 10%;
+  width: 30%;
   color: white;
   padding: 10px;
   border: none;
   cursor: pointer;
   align-self: center; /* Centralizando o botão horizontalmente */
-  margin-top: 2%;
+  margin-top: 12%;
 }
 
 .form-scheduling-dontations .schedule:hover {
   background-color: rgb(235, 17, 24);
 }
 
-.form-scheduling-dontations select {
-  width: 30%; /* Definindo uma largura fixa para os selects */
+.form-scheduling-dontations form select {
+  width: 100%; /* Definindo uma largura fixa para os selects */
   padding: 7px; /* Espaçamento interno */
   border: 1px solid #ccccccbe;
   border-radius: 10px;

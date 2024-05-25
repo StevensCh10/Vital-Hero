@@ -26,7 +26,9 @@ const SchedulingAndDonation = () => {
   ) as DonationForm;
   const [screenings, setScreenings] = useState<Screening[]>(() => {
     const storedScreenings = localStorage.getItem("screenings");
-    return storedScreenings ? JSON.parse(storedScreenings) as Screening[] : [];
+    return storedScreenings
+      ? (JSON.parse(storedScreenings) as Screening[])
+      : [];
   });
   const [selectedBloodcenter, setSelectedBloodcenter] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -46,7 +48,7 @@ const SchedulingAndDonation = () => {
         const resultDonations = await auth.findDonations(auth.user!.id);
         setDonations(resultDonations);
         const resultScreenings = await auth.findScreening(user!.id);
-        localStorage.setItem('screenings', JSON.stringify(resultScreenings));
+        localStorage.setItem("screenings", JSON.stringify(resultScreenings));
         setScreenings(resultScreenings);
       } catch (error) {
         console.error("Erro:", error);
@@ -94,7 +96,12 @@ const SchedulingAndDonation = () => {
     e.preventDefault();
     try {
       auth.toSchedule(user!.id, parseInt(selectedHour));
-      localStorage.setItem("scheduling", JSON.stringify(schedulingsBloodcenter.find(s => s.id === Number(selectedHour))));
+      localStorage.setItem(
+        "scheduling",
+        JSON.stringify(
+          schedulingsBloodcenter.find((s) => s.id === Number(selectedHour))
+        )
+      );
       await auth.findDonorById(user!.id).then(() => {
         window.location.reload();
       });
@@ -191,120 +198,116 @@ const SchedulingAndDonation = () => {
                     className="form-scheduling-dontations-container"
                     id="section-scheduling-dontations"
                   >
-                    <div>
-                      <div className="title-form-scheduling-dontations ">
-                        <span>Marque um agendamento e faça sua parte</span>
-                        {donationForm === null && screenings.length === 0 && (
-                          <label className="alert">
-                            *É necessário preencher o formulário de doação e a
-                            triagem para marcar um agendamento*
-                          </label>
+                    <div className="title-form-scheduling-donations">
+                      {donationForm === null && screenings.length === 0 && (
+                        <h2 className="alert">
+                          *É necessário preencher o formulário de doação e a
+                          triagem para marcar um agendamento*
+                        </h2>
+                      )}
+                      {donationForm === null && screenings.length !== 0 && (
+                        <h2 className="alert">
+                          *É necessário preencher o formulário de doação para
+                          marcar um agendamento*
+                        </h2>
+                      )}
+                      {donationForm !== null && screenings.length === 0 && (
+                        <h2 className="alert">
+                          *É necessário preencher a triagem para marcar um
+                          agendamento*
+                        </h2>
+                      )}
+                      {donationForm !== null &&
+                        screenings.length !== 0 &&
+                        screenings[0] &&
+                        screenings[0].doctor === null && (
+                          <h2 className="alert">
+                            *Sua triagem está em processo de validação. Após a
+                            validação informaremos se você está apto para fazer
+                            a doação*
+                          </h2>
                         )}
-                        {donationForm === null && screenings.length !== 0 && (
-                          <label className="alert">
-                            *É necessário preencher o formulário de doação para
-                            marcar um agendamento*
-                          </label>
-                        )}
-                        {donationForm !== null && screenings.length === 0 && (
-                          <label className="alert">
-                            *É necessário preencher a triagem para marcar um
-                            agendamento*
-                          </label>
-                        )}
-                        {donationForm !== null &&
-                          screenings.length !== 0 &&
-                          screenings[0] &&
-                          screenings[0].doctor === null && (
-                            <label className="alert">
-                              *Sua triagem está em processo de validação. Após a
-                              validação informaremos se você está apto para
-                              fazer a doação*
-                            </label>
-                          )}
-                      </div>
-                      <form
-                        onSubmit={handleSubmit}
-                        className="form-scheduling-dontations"
-                      >
-                        <label htmlFor="bloodcenter">Hemocentro</label>
-                        <select
-                          id="bloodcenter"
-                          name="bloodcenter"
-                          value={selectedBloodcenter}
-                          onChange={handleChangeBloodcenter}
-                        >
-                          <option key="">Escolha um Hemocentro</option>
-                          {bloodcenters.map((bloodcenter) => (
-                            <option key={bloodcenter.id} value={bloodcenter.id}>
-                              {`${bloodcenter.name} - ${bloodcenter.address}`}
-                            </option>
-                          ))}
-                        </select>
-                        <label htmlFor="date">Data</label>
-                        <select
-                          id="date"
-                          name="date"
-                          value={selectedDate}
-                          onChange={handleChangeDate}
-                        >
-                          <option key="">Escolha uma Data</option>
-                          {auxSchedulings.map((scheduling) => (
-                            <option
-                              key={scheduling.id}
-                              value={dateFormat(new Date(scheduling.dateTime))}
-                            >
-                              {dateFormat(new Date(scheduling.dateTime))}
-                            </option>
-                          ))}
-                        </select>
-                        <label htmlFor="hour">Hora</label>
-                        <select
-                          id="hour"
-                          name="hour"
-                          value={selectedHour}
-                          onChange={handleChangeHour}
-                        >
-                          <option value="">Escolha uma Hora</option>
-                          {schedulingsBloodcenter
-                            .filter(
-                              (scheduling) =>
-                                scheduling.bloodcenter ===
-                                  parseInt(selectedBloodcenter) &&
-                                dateFormat(new Date(scheduling.dateTime)) ===
-                                  selectedDate
-                            )
-                            .map((scheduling) => (
-                              <option key={scheduling.id} value={scheduling.id}>
-                                {hourFormat(new Date(scheduling.dateTime))}
-                              </option>
-                            ))}
-                        </select>
-                        {donationForm !== null &&
-                          screenings.length !== 0 &&
-                          screenings[0] &&
-                          screenings[0].doctor !== null ? (
-                          <button type="submit" className="schedule">
-                            Agendar
-                          </button>
-                        ) : (
-                          <button
-                            disabled
-                            type="submit"
-                            className="schedule"
-                            style={{
-                              pointerEvents: "none",
-                              backgroundColor: "rgba(184, 14, 20, 0.459)",
-                            }}
-                          >
-                            Agendar
-                          </button>
-                        )}
-                      </form>
                     </div>
+                    {donationForm !== null &&
+                      screenings.length !== 0 &&
+                      screenings[0] &&
+                      screenings[0].doctor !== null && (
+                        <div className="form-scheduling-dontations">
+                          <span style={{marginBottom: "2%"}}>Marque um agendamento e faça sua parte</span>
+                          <form
+                            onSubmit={handleSubmit}
+                            style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}
+                          >
+                            <label htmlFor="bloodcenter">Hemocentro</label>
+                            <select
+                              id="bloodcenter"
+                              name="bloodcenter"
+                              value={selectedBloodcenter}
+                              onChange={handleChangeBloodcenter}
+                            >
+                              <option key="">Escolha um Hemocentro</option>
+                              {bloodcenters.map((bloodcenter) => (
+                                <option
+                                  key={bloodcenter.id}
+                                  value={bloodcenter.id}
+                                >
+                                  {`${bloodcenter.name} - ${bloodcenter.address}`}
+                                </option>
+                              ))}
+                            </select>
+                            <label htmlFor="date">Data</label>
+                            <select
+                              id="date"
+                              name="date"
+                              value={selectedDate}
+                              onChange={handleChangeDate}
+                            >
+                              <option key="">Escolha uma Data</option>
+                              {auxSchedulings.map((scheduling) => (
+                                <option
+                                  key={scheduling.id}
+                                  value={dateFormat(
+                                    new Date(scheduling.dateTime)
+                                  )}
+                                >
+                                  {dateFormat(new Date(scheduling.dateTime))}
+                                </option>
+                              ))}
+                            </select>
+                            <label htmlFor="hour">Hora</label>
+                            <select
+                              id="hour"
+                              name="hour"
+                              value={selectedHour}
+                              onChange={handleChangeHour}
+                            >
+                              <option value="">Escolha uma Hora</option>
+                              {schedulingsBloodcenter
+                                .filter(
+                                  (scheduling) =>
+                                    scheduling.bloodcenter ===
+                                      parseInt(selectedBloodcenter) &&
+                                    dateFormat(new Date(scheduling.dateTime)) ===
+                                      selectedDate
+                                )
+                                .map((scheduling) => (
+                                  <option
+                                    key={scheduling.id}
+                                    value={scheduling.id}
+                                  >
+                                    {hourFormat(new Date(scheduling.dateTime))}
+                                  </option>
+                                ))}
+                            </select>
+                            <button type="submit" className="schedule">
+                              Agendar
+                            </button>
+                          </form>
+                        </div>
+                      )}
                   </div>
                 ) : (
-                  <div style={{margin: "5% 0 5% 0"}}>
+                  <div style={{ margin: "5% 0 5% 0" }}>
                     <Scheduling />
                   </div>
                 )}
