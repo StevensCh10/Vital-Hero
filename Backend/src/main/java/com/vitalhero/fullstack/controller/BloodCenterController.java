@@ -168,7 +168,6 @@ public class BloodCenterController {
                     screeningService.updateScreening(s);
                 }
             }
-
             for(Long donorId : donorIdsNotDonated){
                 donorService.scheduleMadeOrUnscheduled(donorId);
             }
@@ -176,6 +175,8 @@ public class BloodCenterController {
 
     //@PostMapping("/schedule-donation-notification/{gender}")
     private void scheduleDonationNotification(Donation donation, String gender) {
+        Donor donor = donorService.find(donation.getDonor().getId());
+        quartzDonationService.sendEmailDonor(donor);
         try {
             quartzDonationService.scheduleNotification(donation, gender);
         } catch (Exception e) {

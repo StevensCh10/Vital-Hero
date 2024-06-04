@@ -35,11 +35,10 @@ const SchedulingAndDonation = () => {
   const [selectedHour, setSelectedHour] = useState("");
   //const [loading, setLoading] = useState(true);
   const [donations, setDonations] = useState<Donation[]>([]);
-  const scheduling =
-    localStorage.getItem("scheduling") !== null
-      ? JSON.parse(localStorage.getItem("scheduling")!)
-      : null;
-
+  const [scheduling, setScheduling] = useState<SchedulingType | null>(() => {
+    const savedScheduling = localStorage.getItem("scheduling");
+    return savedScheduling ? JSON.parse(savedScheduling) : null;
+  });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +49,12 @@ const SchedulingAndDonation = () => {
         const resultScreenings = await auth.findScreening(user!.id);
         localStorage.setItem("screenings", JSON.stringify(resultScreenings));
         setScreenings(resultScreenings);
+        if(user.scheduling === null){
+            if(scheduling !== null){
+              setScheduling(null);
+              localStorage.setItem("scheduling", "");
+            }
+        }
       } catch (error) {
         console.error("Erro:", error);
       }
@@ -102,7 +107,8 @@ const SchedulingAndDonation = () => {
           schedulingsBloodcenter.find((s) => s.id === Number(selectedHour))
         )
       );
-      await auth.findDonorById(user!.id).then(() => {
+      await auth.findDonorById(user!.id).then((response) => {
+        auth.user = response;
         window.location.reload();
       });
     } catch (error) {

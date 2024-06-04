@@ -88,7 +88,6 @@ public class DonorService {
     public void toSchedule(Long id, List<Screening> screenings, Long schedulingID){
         var donor = find(id);
         if(!screenings.isEmpty()){
-            System.out.println(screenings.toString());
             if(screenings.get(0).getDoctor() == null){
                 throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName()));
             }

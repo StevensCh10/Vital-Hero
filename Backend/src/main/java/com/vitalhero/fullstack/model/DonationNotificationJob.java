@@ -21,7 +21,6 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
         EmailService emailService = applicationContext.getBean(EmailService.class);
         DonationService donationService = applicationContext.getBean(DonationService.class);
         DonorService donorService = applicationContext.getBean(DonorService.class);
-
         Long donationId = context.getMergedJobDataMap().getLong("donationId");
         Donation donation = donationService.find(donationId);
         Donor donor = donorService.find(donation.getDonor().getId());
@@ -34,12 +33,14 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
         String text = "";
 
         if(donor.getGender().equalsIgnoreCase("M")){
-            text = textBegin+"<br><br>Obrigado pela sua última doação de sangue! Seu gesto fez a diferença. Queremos convidá-lo a doar novamente após 60 dias para continuar fazendo parte dessa causa tão importante."+
+            text = textBegin+"<br><br>Esperamos que esteja bem! Queremos informar que o prazo de 60 dias desde sua última doação já passou. Isso significa que você já pode doar sangue novamente e continuar ajudando a salvar vidas."+
+            "<br><br>Sua generosidade é fundamental para nós, e gostaríamos muito de contar com você mais uma vez. Se desejar agendar uma nova doação, por favor, visite nosso site: <a href='https://vital-hero.vercel.app/'>Vital Hero</a>"+
             "<br><br>Se tiver dúvidas, entre em contato conosco. Estamos aqui para ajudar."+
             "<br><br>Com gratidão,"+
             "<br><br>Stevens Wendell<br>CEO";
         }else{
-            text = textBegin+"<br><br>Obrigado pela sua última doação de sangue! Seu gesto fez a diferença. Queremos convidá-la a doar novamente após 90 dias para continuar fazendo parte dessa causa tão importante."+
+            text = textBegin+"<br><br>Esperamos que esteja bem! Queremos informar que o prazo de 90 dias desde sua última doação já passou. Isso significa que você já pode doar sangue novamente e continuar ajudando a salvar vidas."+
+            "<br><br>Sua generosidade é fundamental para nós, e gostaríamos muito de contar com você mais uma vez. Se desejar agendar uma nova doação, por favor, visite nosso site: <a href='https://vital-hero.vercel.app/'>Vital Hero</a>"+
             "<br><br>Se tiver dúvidas, entre em contato conosco. Estamos aqui para ajudar."+
             "<br><br>Com gratidão,"+
             "<br><br>Stevens Wendell<br>CEO";
