@@ -14,7 +14,7 @@ O Vital Hero é um projeto fullstack desenvolvido com o objetivo de viabilizar e
   - Spring Validation
   - Spring Devtools
   - Spring Email
-  - MySql connector
+  - PostgreSQL
   - Quartz
   - Commons lang
   - Hibernate
