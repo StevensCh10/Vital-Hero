@@ -9,7 +9,7 @@ O Vital Hero é um projeto fullstack desenvolvido com o objetivo de facilitar e 
 Este trabalho é resultado de esforços dedicados a melhorar o processo de doação de sangue, visando contribuir para o bem-estar e a qualidade de vida da população.
 
 ## Monografia
-Para uma análise detalhada do projeto, incluindo objetivos, metodologia e resultados, consulte a nossa <a href="https://github.com/StevensCh10/Vital-Hero/blob/main/TCC2_StevensWendell.pdf" target="_blank">monografia</a>. <br>
+Para uma análise detalhada do projeto, incluindo objetivos, metodologia e resultados, consulte a nossa <a href="https://github.com/StevensCh10/Vital-Hero/blob/main/Monografia.pdf" target="_blank">monografia</a>. <br>
 
 ## Principais Tecnologias Utilizadas:
 
