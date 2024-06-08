@@ -2,7 +2,7 @@
 
 Título: VitalHero: Uma aplicação web para incentivar a doação de sangue <br>
 Aluno: Stevens Wendell Marinho Chaves <br>
-Orientador: @Iago Richard Rodrigues Silva <br>
+Orientador: Orientador: [Iago Richard Rodrigues Silva](https://github.com/iagorichard) <br>
 
 ## Descrição do Projeto
 O Vital Hero é um projeto fullstack desenvolvido com o objetivo de facilitar e incentivar a doação regular de sangue. Utilizando tecnologias modernas como React (com TypeScript) para o frontend e Spring Boot (Java) para o backend, estamos construindo uma plataforma que permitirá aos usuários acessar informações vitais sobre doação de sangue, como estoques sanguíneos de hemocentros, agendar doações e muito mais.
