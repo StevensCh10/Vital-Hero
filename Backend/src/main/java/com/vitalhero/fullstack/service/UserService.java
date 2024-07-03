@@ -11,18 +11,15 @@ import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import jakarta.mail.internet.InternetHeaders;
 import jakarta.mail.internet.MimeUtility;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
+    
     private final DoctorRepository doctorRepository;
     private final DonorRepository donorRepository;
     private final EmailService emailService;
-
-    public UserService(DoctorRepository doctorRepository, DonorRepository donorRepository, EmailService emailService){
-        this.doctorRepository = doctorRepository;
-        this.donorRepository = donorRepository;
-        this.emailService = emailService;
-    }
 
     public void findEmailForgotPassword(String email){
         var user = findUserByEmail(email);

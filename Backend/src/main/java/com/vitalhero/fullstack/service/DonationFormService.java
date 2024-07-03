@@ -7,15 +7,13 @@ import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.repository.DonationFormRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class DonationFormService {
     
     private final DonationFormRepository repository;
-
-    public DonationFormService(DonationFormRepository repository){
-        this.repository = repository;
-    }
 
     public DonationForm find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Formulário de doação com id '%d' não encontrada", id)));

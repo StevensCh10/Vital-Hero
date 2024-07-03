@@ -2,10 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.CannotBeScheduling;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
@@ -14,23 +12,16 @@ import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
-
 import jakarta.mail.internet.MimeUtility;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class DonorService {
 
     private final DonorRepository repository;
     private final EmailService emailService;
-
-    public DonorService(DonorRepository repository, EmailService emailService){
-            this.repository = repository;
-            this.emailService = emailService;
-    }
-
-    //NECESSÁRIO PERSONALIZAR TODAS AS EXCEÇÕES LANÇADAS
-    //Provavelmente tenho que validar como será a exclusão de outras entidades que tem um Donor como FK
 
     public Donor find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Doador com id '%d' não está registrado.", id)));
@@ -50,13 +41,15 @@ public class DonorService {
 
     @Transactional
 	public Donor register(Donor donor) {
-		if(repository.findByCpf(donor.getCpf()) == null) {
+        Donor currentDonor = repository.findByCpf(donor.getCpf());
+		if(currentDonor == null) {
 			if(repository.findByEmail(donor.getEmail()) != null) {
                 throw new EntityAlreadyExists(String.format("Email '%s' já está cadastrado.", donor.getEmail()));
 			}
             donor.setRole(Roles.DONOR.toString());
 			return repository.save(donor);			
 		}
+        System.out.println(currentDonor);
         throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", donor.getCpf()));
 	}
 

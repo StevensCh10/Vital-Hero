@@ -1,8 +1,8 @@
 package com.vitalhero.fullstack.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import com.vitalhero.fullstack.dto.ResponseDTO;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.intrerfaces.User;
 import com.vitalhero.fullstack.model.BloodCenter;
@@ -11,39 +11,62 @@ import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
+import com.vitalhero.fullstack.security.TokenService;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    @Autowired
-    private DonorRepository donorRepository;
+    private final DonorRepository donorRepository;
+    private final DoctorRepository doctorRepository;
+    private final BloodCenterRepository bloodcenterRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final TokenService tokenService;
 
-    @Autowired
-    private DoctorRepository doctorRepository;
-
-    @Autowired
-    private BloodCenterRepository bloodcenterRepository;
-
-    public User authenticate(String email, String password) {
-        // Primeiro, tenta encontrar o usuário no repositório de Donor
+    public ResponseDTO authenticate(String email, String password) {
         Donor donor = donorRepository.findByEmail(email);
-        if (donor != null && donor.getPassword().equals(password)) {
+        System.out.println(donor);
+        if (donor != null) {
+            return invalidPassword(password, donor);
+        }
+
+        Doctor doctor = doctorRepository.findByEmail(email);
+        if (doctor != null && passwordEncoder.matches(password, doctor.getPassword())) {
+            return invalidPassword(password, doctor);
+        }
+
+        BloodCenter bloodcenter = bloodcenterRepository.findByEmail(email);
+        if (bloodcenter != null && passwordEncoder.matches(password, bloodcenter.getPassword())) {
+            return invalidPassword(password, bloodcenter);
+        }
+
+        throw new EntityNotFoundInTheAppeal("Email não encontrado");
+    }
+
+    public User findByEmail(String email){
+        Donor donor = donorRepository.findByEmail(email);
+        if(donor != null){
             return donor;
         }
-
-        // Se não encontrar no repositório de Donor, tenta no repositório de Doctor
         Doctor doctor = doctorRepository.findByEmail(email);
-        if (doctor != null && doctor.getPassword().equals(password)) {
+        if(doctor != null){
             return doctor;
         }
-
-        // Se não encontrar no repositório de Doctor, tenta no repositório de Bloodcenter
         BloodCenter bloodcenter = bloodcenterRepository.findByEmail(email);
-        if (bloodcenter != null && bloodcenter.getPassword().equals(password)) {
+        if(bloodcenter != null){
             return bloodcenter;
         }
 
-        // Se não encontrar em nenhum dos repositórios, retorna null
-        throw new EntityNotFoundInTheAppeal("Credenciais Inválidas");
+        return null;
+    }
+
+    private ResponseDTO invalidPassword(String password, User user){
+        if(passwordEncoder.matches(password, user.getPassword())){
+            String token = this.tokenService.generateToken(user);
+            return new ResponseDTO(user, token);
+        }else{
+            throw new EntityNotFoundInTheAppeal("Senha inválida");
+        }
     }
 }

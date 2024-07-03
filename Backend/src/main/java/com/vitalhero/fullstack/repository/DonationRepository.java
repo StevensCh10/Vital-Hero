@@ -9,13 +9,13 @@ import com.vitalhero.fullstack.model.Donation;
 public interface DonationRepository extends JpaRepository<Donation, Long>{
     
     @Query(
-        value = "SELECT * FROM donation WHERE fk_donor = :donorID",
+        value = "SELECT * FROM donation WHERE fk_donor = :donorID" + "",
         nativeQuery = true
     )
     List<Donation> allDonationsByDonor(@Param("donorID") Long donorID);
 
     @Query(
-        value = "SELECT * FROM donation WHERE fk_donor = :donorID AND fk_scheduling = :schedID",
+        value = "SELECT * FROM donation WHERE fk_donor = :donorID AND fk_scheduling = :schedID" + "",
         nativeQuery = true
     )
     Donation findByDonorAndScheduling(@Param("donorID") Long donorID, @Param("schedID") Long schedID);

@@ -21,8 +21,9 @@ import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.service.SchedulingService;
 import com.vitalhero.fullstack.service.ScreeningService;
-
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
 import com.vitalhero.fullstack.service.DonationService;
@@ -32,6 +33,7 @@ import com.vitalhero.fullstack.service.QuartzDonationService;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/bloodcenter")
+@RequiredArgsConstructor
 public class BloodCenterController {
 
     private final BloodCenterService bloodCenterService;
@@ -42,18 +44,6 @@ public class BloodCenterController {
     private final QuartzDonationService quartzDonationService;
     private final ScreeningService screeningService;
 
-    public BloodCenterController(BloodCenterService bloodCenterService, BloodStockService bloodStockService,
-            SchedulingService schedulingService, DonationService donationService, DonorService donorService,
-            QuartzDonationService quartzDonationService, ScreeningService screeningService){
-        this.bloodCenterService = bloodCenterService;
-        this.bloodStockService = bloodStockService;
-        this.schedulingService =schedulingService;
-        this.donationService = donationService;
-        this.donorService = donorService;
-        this.quartzDonationService = quartzDonationService;
-        this.screeningService = screeningService;
-    }
-    
     //BLOODCENTER
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)

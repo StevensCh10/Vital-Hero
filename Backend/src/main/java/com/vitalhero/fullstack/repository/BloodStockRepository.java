@@ -8,7 +8,7 @@ import com.vitalhero.fullstack.model.BloodStock;
 public interface BloodStockRepository extends JpaRepository<BloodStock, Long>{
     
     @Query(
-        value = "SELECT * FROM blood_stock WHERE fk_bloodcenter = :bloodCenterID",
+        value = "SELECT * FROM blood_stock WHERE fk_bloodcenter = :bloodCenterID" + "",
         nativeQuery = true
     )
     BloodStock findByBloodCenter(@Param("bloodCenterID") Long bloodCenterID);

@@ -18,7 +18,7 @@ public interface SchedulingRepository extends JpaRepository<Scheduling, Long>{
      @Param("dateTime") LocalDateTime dateTime);
 
     @Query(
-        value = "SELECT * FROM scheduling WHERE fk_bloodcenter = :bcID",
+        value = "SELECT * FROM scheduling WHERE fk_bloodcenter = :bcID" + "",
         nativeQuery = true
     )
     List<Scheduling> allScheduling(@Param("bcID") Long bcID);

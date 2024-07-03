@@ -2,22 +2,19 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorService {
     
     private final DoctorRepository repository;
-
-    public DoctorService(DoctorRepository repository){
-        this.repository = repository;
-    }
 
     public Doctor find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Médico com id '%d' não está registrado", id)));

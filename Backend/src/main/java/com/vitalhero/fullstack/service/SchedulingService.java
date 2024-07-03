@@ -5,20 +5,19 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.repository.SchedulingRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class SchedulingService {
     
     private SchedulingRepository repository;
-
-    public SchedulingService(SchedulingRepository repository){
-        this.repository = repository;
-    }
 
     public Scheduling find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Agendamento com id '%d' não encontrado.", id)));
@@ -65,6 +64,10 @@ public class SchedulingService {
     }
 
     public List<Scheduling> schedulings(){
-        return repository.findAll();
+        try{
+            return repository.findAll();
+        }catch(Exception e){
+            throw new EntityNotFound(String.format("Triagens não encontradas!"));
+        }
     }
 }

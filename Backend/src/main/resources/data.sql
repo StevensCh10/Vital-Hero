@@ -1,18 +1,18 @@
 -- Inserir dados na tabela blood_center apenas se não existirem
 INSERT INTO blood_center (name, email, address, reference_point, photo, password, phone, role)
-SELECT 'Hemope', 'hemope.oficial@gmail.com', 'Rua Joaquim Nabuco, 171', 'Por trás do hospital da Restauração', NULL, 'Hemope2024', '8131824600', 'BLOODCENTER'
+SELECT 'Hemope', 'hemope.oficial@gmail.com', 'Rua Joaquim Nabuco, 171', 'Por trás do hospital da Restauração', NULL, '$2b$12$b5.CGtarBVZ196zWpD5Cf.mroQiYXfhBBkx9UfKww0URaMYqx96Iq', '8131824600', 'BLOODCENTER'
 WHERE NOT EXISTS (
     SELECT 1 FROM blood_center WHERE name = 'Hemope'
 );
 
 INSERT INTO blood_center (name, email, address, reference_point, photo, password, phone, role)
-SELECT 'Hemato', 'hemato.oficial@gmail.com', 'Rua Dom Bosco, 723', 'Em "frente" a Praça Chora Menino', NULL, 'Hemato2024', '8151139033', 'BLOODCENTER'
+SELECT 'Hemato', 'hemato.oficial@gmail.com', 'Rua Dom Bosco, 723', 'Em "frente" a Praça Chora Menino', NULL, '$2b$12$PYci.BYRx0022pDrTZVss./OyMtmTYUVaQyvvgvR7/NET2UVigCny', '8151139033', 'BLOODCENTER'
 WHERE NOT EXISTS (
     SELECT 1 FROM blood_center WHERE name = 'Hemato'
 );
 
 INSERT INTO blood_center (name, email, address, reference_point, photo, password, phone, role)
-SELECT 'Ihene', 'ihene.oficial@gmail.com', 'Rua Tabira, 54', 'Por trás da Global Outsourcing', NULL, 'Ihene2024', '8121383500', 'BLOODCENTER'
+SELECT 'Ihene', 'ihene.oficial@gmail.com', 'Rua Tabira, 54', 'Por trás da Global Outsourcing', NULL, '$2b$12$tvL282avWUXwT5gatlPjv.ImYT.Wcxh.sS55b3k1LnVQp.Mf/IWnW', '8121383500', 'BLOODCENTER'
 WHERE NOT EXISTS (
     SELECT 1 FROM blood_center WHERE name = 'Ihene'
 );
@@ -116,13 +116,13 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO donor (name, cpf, email, age, gender, marital_status, address, photo, phone, blood_type, password, role)
-SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'M', 'S', 'Rua A, 123', NULL, '81987654321', 'O+', '1234', 'DONOR'
+SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'M', 'S', 'Rua A, 123', NULL, '81987654321', 'O+', '$2a$10$3cAfne/Ek0lSYQ35oVcB6.CPtc0j7Wldz8kBTZg9aAT8FCt4RgJG6', 'DONOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM donor WHERE cpf = '123.456.789-10'
 );
 
 INSERT INTO doctor (name, cpf, crm, email, age, gender, marital_status, address, photo, phone, password, role)
-SELECT 'Robson da Silva', '123.456.789-11', 'CRM123456', 'robson@outlook.com', 28, 'M', 'C', 'Rua A, 123', NULL, '81987654322', '456', 'DOCTOR'
+SELECT 'Robson da Silva', '123.456.789-11', 'CRM123456', 'robson@outlook.com', 28, 'M', 'C', 'Rua A, 123', NULL, '81987654322', '$2b$12$EIkZUEIZq0jLsBJ4XXKoderOiw8Q9WaR7dEvcV55RA5sAxMqg2H6G', 'DOCTOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM doctor WHERE cpf = '123.456.789-11'
 );

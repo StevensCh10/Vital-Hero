@@ -8,7 +8,7 @@ import com.vitalhero.fullstack.model.BloodCenter;
 public interface BloodCenterRepository extends JpaRepository<BloodCenter, Long>{
     
     @Query(
-        value = "SELECT * FROM donor WHERE email = :email AND password = :password",
+        value = "SELECT * FROM donor WHERE email = :email AND password = :password" + "",
         nativeQuery = true
     )
     BloodCenter checkLogin(@Param("email") String email, @Param("password") String password);

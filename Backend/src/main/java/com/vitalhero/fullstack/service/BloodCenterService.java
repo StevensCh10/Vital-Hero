@@ -1,7 +1,6 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
@@ -9,15 +8,13 @@ import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class BloodCenterService {
     
     private final BloodCenterRepository repository;
-
-    public BloodCenterService(BloodCenterRepository repository){
-            this.repository = repository;
-    }
 
     public BloodCenter find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Hemocentro com id %d não está registrado.", id)));

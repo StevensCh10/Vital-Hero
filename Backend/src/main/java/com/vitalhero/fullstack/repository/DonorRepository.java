@@ -12,7 +12,7 @@ import com.vitalhero.fullstack.model.Donor;
 public interface DonorRepository extends JpaRepository<Donor, Long>{
     
     @Query(
-        value = "SELECT * FROM donor WHERE email = :email AND password = :password",
+        value = "SELECT * FROM donor WHERE email = :email AND password = :password" + "",
         nativeQuery = true
     )
     Donor checkLogin(@Param("email") String email, @Param("password") String password);
@@ -20,7 +20,7 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
     @Transactional
     @Modifying
     @Query(
-        value = "UPDATE donor SET fk_scheduling = :schedulingID WHERE id = :donorID",
+        value = "UPDATE donor SET fk_scheduling = :schedulingID WHERE id = :donorID" + "",
         nativeQuery = true
     )
     void updateFkScheduling(@Param("schedulingID")Long schedulingID, @Param("donorID") Long donorID);
@@ -28,7 +28,7 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
     @Transactional
     @Modifying
     @Query(
-        value = "UPDATE donor SET fk_scheduling = NULL WHERE id = :id",
+        value = "UPDATE donor SET fk_scheduling = NULL WHERE id = :id" + "",
         nativeQuery = true
     )
     void FkSchedulingToNull(@Param("id") Long id);

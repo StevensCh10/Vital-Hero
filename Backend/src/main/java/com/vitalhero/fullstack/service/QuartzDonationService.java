@@ -1,25 +1,23 @@
 package com.vitalhero.fullstack.service;
 
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.DonationNotificationJob;
 import com.vitalhero.fullstack.model.Donor;
 import jakarta.mail.internet.MimeUtility;
+import lombok.RequiredArgsConstructor;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class QuartzDonationService {
 
-    @Autowired
-    private Scheduler scheduler;
-
-    @Autowired
-    private EmailService emailService;
+    private final Scheduler scheduler;
+    private final EmailService emailService;
 
     public void scheduleNotification(Donation donation, String gender) throws SchedulerException {
         LocalDateTime notificationDateTime = null;

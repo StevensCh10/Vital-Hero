@@ -8,7 +8,7 @@ import com.vitalhero.fullstack.model.DonationForm;
 public interface DonationFormRepository extends JpaRepository<DonationForm, Long>{
     
     @Query(
-        value = "SELECT * FROM donation_form WHERE fk_donor = :donorID",
+        value = "SELECT * FROM donation_form WHERE fk_donor = :donorID" + "",
         nativeQuery = true
     )
     DonationForm findByDonor(@Param("donorID") Long donorID);

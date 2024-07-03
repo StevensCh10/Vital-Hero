@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
+import { ErrorType } from "../../types/ErrorType";
 
 const Login = () => {
   const auth = useContext(AuthContext);
@@ -14,11 +15,14 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email && password) {
-      const isLogged = await auth.signin(email, password);
-      if (isLogged) {
-        navigate("/");
-      } else {
-        alert("Credênciais inválidas!");
+      try{
+        const isLogged = await auth.signin(email, password);
+        console.log(isLogged)
+        if (isLogged) {
+          navigate("/");
+        }
+      }catch(error){
+        alert((error as ErrorType).detail);
       }
     }
   };

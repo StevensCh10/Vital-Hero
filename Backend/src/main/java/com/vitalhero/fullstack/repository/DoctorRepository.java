@@ -8,7 +8,7 @@ import com.vitalhero.fullstack.model.Doctor;
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
     
     @Query(
-        value = "SELECT * FROM donor WHERE email = :email AND password = :password",
+        value = "SELECT * FROM donor WHERE email = :email AND password = :password" + "",
         nativeQuery = true
     )
     Doctor checkLogin(@Param("email") String email, @Param("password") String password);

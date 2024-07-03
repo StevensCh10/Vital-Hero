@@ -11,7 +11,7 @@ import com.vitalhero.fullstack.model.Screening;
 public interface ScreeningRepository extends JpaRepository<Screening, Long>{
     
     @Query(
-        value = "SELECT * FROM screening WHERE fk_donor = :donorID",
+        value = "SELECT * FROM screening WHERE fk_donor = :donorID" + "",
         nativeQuery = true
     )
     List<Screening> allScreening(@Param("donorID") Long donorID);
@@ -19,7 +19,7 @@ public interface ScreeningRepository extends JpaRepository<Screening, Long>{
     @Transactional
     @Modifying
     @Query(
-        value = "UPDATE screening SET fk_doctor = :doctorID WHERE id = :id",
+        value = "UPDATE screening SET fk_doctor = :doctorID WHERE id = :id" + "",
         nativeQuery = true
     )
     void validate(@Param("id") Long id, @Param("doctorID") Long doctorID);
