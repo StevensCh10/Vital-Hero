@@ -17,7 +17,6 @@ const Login = () => {
     if (email && password) {
       try{
         const isLogged = await auth.signin(email, password);
-        console.log(isLogged)
         if (isLogged) {
           navigate("/");
         }

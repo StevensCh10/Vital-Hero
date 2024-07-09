@@ -26,18 +26,17 @@ public class AuthService {
 
     public ResponseDTO authenticate(String email, String password) {
         Donor donor = donorRepository.findByEmail(email);
-        System.out.println(donor);
         if (donor != null) {
             return invalidPassword(password, donor);
         }
 
         Doctor doctor = doctorRepository.findByEmail(email);
-        if (doctor != null && passwordEncoder.matches(password, doctor.getPassword())) {
+        if (doctor != null) {
             return invalidPassword(password, doctor);
         }
 
         BloodCenter bloodcenter = bloodcenterRepository.findByEmail(email);
-        if (bloodcenter != null && passwordEncoder.matches(password, bloodcenter.getPassword())) {
+        if (bloodcenter != null) {
             return invalidPassword(password, bloodcenter);
         }
 

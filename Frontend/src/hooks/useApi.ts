@@ -205,12 +205,14 @@ export const useApi = () => ({
         .then((response) => response.data);
     },
     validateScreening: async(idScreening: Number, idDoctor: number) => {
-        return await api.put(`doctor/validatescreening/${idScreening}/${idDoctor}`, {
-            headers: {
-                Authorization: `Bearer ${authToken}`
-            }
-        })
-        .then((response) => response.data);
+        await api.put(`doctor/validatescreening/${idScreening}/${idDoctor}`,{}, 
+              {
+                headers: {
+                  Authorization: `Bearer ${authToken}`,
+                  'Content-Type': 'application/json' // Caso seja necessário
+                }
+              }
+            );
     },
     sendFeedback: async(idDonor: number, feedback: string) => {
         await api.post(`donor/sendfeedback/${idDonor}?feedback=${encodeURIComponent(feedback)}`, {

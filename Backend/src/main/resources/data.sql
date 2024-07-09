@@ -116,7 +116,7 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO donor (name, cpf, email, age, gender, marital_status, address, photo, phone, blood_type, password, role)
-SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'M', 'S', 'Rua A, 123', NULL, '81987654321', 'O+', '$2a$10$3cAfne/Ek0lSYQ35oVcB6.CPtc0j7Wldz8kBTZg9aAT8FCt4RgJG6', 'DONOR'
+SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'M', 'S', 'Rua A, 123', NULL, '81987654321', 'O+', '$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu', 'DONOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM donor WHERE cpf = '123.456.789-10'
 );
