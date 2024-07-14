@@ -4,8 +4,7 @@ import { Screening } from '../types/Screening';
 import { DonationForm } from '../types/DonationForm';
 
 const api = axios.create({
-    //baseURL: 'https://vital-hero.onrender.com/'
-    baseURL: 'http://localhost:8080/'
+    baseURL: 'https://vital-hero.onrender.com/'
 });
 
 const authToken = localStorage.getItem("authToken");
