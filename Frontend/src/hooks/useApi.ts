@@ -29,13 +29,12 @@ export const useApi = () => ({
             .then((response) => response.data);
     },
     findAllBloodCenters: async () => {
-        return await api.get('bloodcenter/findall', {
+        return await api.get('bloodcenter/all', {
             headers: {
                 Authorization: `Bearer ${authToken}`
             }
         })
-            .then((response) => response.data)
-            .catch((e) => {throw e.response.data});   
+            .then((response) => response.data) 
     },
     findAllSchedulings: async () => {
         return await api.get(`bloodcenter/scheduling/all`, {
@@ -43,8 +42,7 @@ export const useApi = () => ({
                 Authorization: `Bearer ${authToken}`
             }
         })
-            .then((response) => response.data)
-            
+            .then((response) => response.data)       
     },
     findSchedulingsByBloodcenter: async (bcID: number) => {
         return await api.get(`bloodcenter/scheduling/all/${bcID}`, {
@@ -92,7 +90,7 @@ export const useApi = () => ({
         .catch((e) => {throw e.response.data});
     },
     findDonations: async (idDonor: number) => {
-        return await api.get(`donor/donationform/all/${idDonor}`, {
+        return await api.get(`donor/donation/all/${idDonor}`, {
             headers: {
                 Authorization: `Bearer ${authToken}`
             }
@@ -110,12 +108,11 @@ export const useApi = () => ({
         .catch((e) => {throw e.response.data});
     },
     toSchedule: async (idDonor: number, idSched: number) => {
-        await api.put(`donor/toschedule/${idDonor}/${idSched}`, {
+        await api.put(`donor/toschedule/${idDonor}/${idSched}`, {}, {
             headers: {
                 Authorization: `Bearer ${authToken}`
             }
         })
-        .then((response) => response.data)
         .catch((e) => {throw e.response.data});
     },
     unSchedule: async (idDonor: number) => {

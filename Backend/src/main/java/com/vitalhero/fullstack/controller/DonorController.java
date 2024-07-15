@@ -177,20 +177,9 @@ public class DonorController {
     }
 
     //DONATION
-    @GetMapping("/donationform/all/{donorID}")
+    @GetMapping("/donation/all/{donorID}")
     public List<Donation> allDonationsByDonor(@PathVariable Long donorID){
         donorService.find(donorID);
         return donationsService.allDonationsByDonor(donorID);
     }
-
-    /*
-    @PostMapping("/send-email")
-    public String sendEmail(@RequestBody EmailRequest emailRequest) {
-        try {
-            emailService.sendEmail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getBody());
-            return "E-mail enviado com sucesso para " + emailRequest.getTo();
-        } catch (Exception e) {
-            return "Erro ao enviar e-mail: " + e.getMessage();
-        }
-    }*/
 }

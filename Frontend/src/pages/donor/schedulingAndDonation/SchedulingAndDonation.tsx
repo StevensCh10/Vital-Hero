@@ -101,14 +101,12 @@ const SchedulingAndDonation = () => {
     e.preventDefault();
     try {
       auth.toSchedule(user!.id, parseInt(selectedHour));
-      localStorage.setItem(
-        "scheduling",
-        JSON.stringify(
+      localStorage.setItem("scheduling",JSON.stringify(
           schedulingsBloodcenter.find((s) => s.id === Number(selectedHour))
         )
       );
       await auth.findDonorById(user!.id).then((response) => {
-        auth.user = response;
+        localStorage.setItem("user", JSON.stringify(response));
         window.location.reload();
       });
     } catch (error) {

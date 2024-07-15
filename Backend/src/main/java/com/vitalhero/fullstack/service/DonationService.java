@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DonationService {
     
-    private DonationRepository repository;
+    private final DonationRepository repository;
 
     public Donation find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Doação com id '%d' não está registrada.", id)));

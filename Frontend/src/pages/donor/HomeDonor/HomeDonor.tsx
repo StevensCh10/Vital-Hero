@@ -113,24 +113,26 @@ const HomeDonor = () => {
             <p>Junte-se à causa da doação de sangue e seja parte dessa corrente de solidariedade e esperança. Sua doação pode ser a luz no fim do túnel para alguém que precisa desesperadamente de sangue. Lembre-se: uma única doação pode fazer toda a diferença.</p>
           </div>
         </div>
-        <span style={{color: "#035e89"}}>Faça sua doação</span>
         <div className="go-schedule">
-          <div style={{width: "90%"}}>
-            <p><label style={{fontWeight: "500"}}>Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
-              Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label style={{fontWeight: "500"}}>Faça sua parte agora!</label></p>
-          </div>
           {user.scheduling === null ? (
-            <button onClick={(() =>{ 
-              if(donationForm === null){
-                navigate("/donation-form")
-              }else if(screenings.length === 0 || screenings[0] === null){
-                navigate("/screening")
-              }else{
-                navigate("/scheduling-donation")
-              }
-            })}>Começar</button>
+            <div>
+              <span style={{color: "#035e89"}}>Faça sua doação</span>
+              <div style={{width: "90%"}}>
+                <p><label style={{fontWeight: "500"}}>Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
+                  Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label style={{fontWeight: "500"}}>Faça sua parte agora!</label></p>
+              </div>
+                <button onClick={(() =>{ 
+                  if(donationForm === null){
+                    navigate("/donation-form")
+                  }else if(screenings.length === 0 || screenings[0] === null){
+                    navigate("/screening")
+                  }else{
+                    navigate("/scheduling-donation")
+                  }
+                })}>Começar</button>
+            </div>  
           ) : (
-            <label style={{marginTop: "3%", fontSize: "1.1em"}}>Você já fez seu agendamento, pra verificar detalhes <Link style={{color: "rgb(184, 14, 20)", fontSize: "1.2em"}} to={"/scheduling-donation"}>clique aqui</Link></label>
+            <label style={{fontSize: "1.1em"}}>Você já fez seu agendamento, pra verificar detalhes <Link style={{color: "rgb(184, 14, 20)", fontSize: "1.2em"}} to={"/scheduling-donation"}>clique aqui</Link></label>
           )}
         </div>
       </div>

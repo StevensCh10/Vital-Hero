@@ -1,6 +1,9 @@
 package com.vitalhero.fullstack.controller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +26,6 @@ import com.vitalhero.fullstack.service.SchedulingService;
 import com.vitalhero.fullstack.service.ScreeningService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
 import com.vitalhero.fullstack.service.DonationService;
@@ -61,7 +63,7 @@ public class BloodCenterController {
         return bloodCenterService.find(bcID);
     }
 
-    @GetMapping("/findall")
+    @GetMapping("/all")
     public List<BloodCenter> findAll(){
         return bloodCenterService.findAll();
     }
@@ -127,8 +129,11 @@ public class BloodCenterController {
     }
 
     @GetMapping("/scheduling/all")
-    public List<Scheduling> schedulings(){
-        return schedulingService.schedulings();
+    public List<Scheduling> schedulings() {
+        List<Scheduling> sortedScheduling = schedulingService.schedulings().stream()
+                .sorted(Comparator.comparing(Scheduling::getDateTime))
+                .collect(Collectors.toList());
+        return sortedScheduling;
     }
 
     @DeleteMapping("/scheduling/{bsID}")
