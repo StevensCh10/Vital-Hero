@@ -42,7 +42,7 @@ public class BloodStockService {
 		
 		if(bloodStockAtt.getBloodcenter().getId() != currentBloodStock.getBloodcenter().getId()) {
 			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", bloodStockAtt.getName()));
-            throw new CannotBeUpdated("O id do Hemocentro não pode ser atualizado");
+            throw new CannotBeUpdated("O id do Hemocentro não pode ser atualizado.");
 		}
 
 		BeanUtils.copyProperties(bloodStockAtt, currentBloodStock, "id");

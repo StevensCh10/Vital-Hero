@@ -49,17 +49,17 @@ public class BloodCenterController {
     //BLOODCENTER
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public BloodCenter addBloodCenter(@RequestBody @Valid BloodCenter newBloodCenter){
+    public BloodCenter addBloodCenter(@Valid @RequestBody BloodCenter newBloodCenter){
         return bloodCenterService.addBloodCenter(newBloodCenter);
     }
 
     @PutMapping()
-    public BloodCenter updateBloodCenter(@RequestBody BloodCenter bloodCenterAtt){
+    public BloodCenter updateBloodCenter(@Valid @RequestBody BloodCenter bloodCenterAtt){
         return bloodCenterService.update(bloodCenterAtt);
     }
 
     @GetMapping("/{bcID}")
-    public BloodCenter findBloodCenter(@PathVariable Long bcID){
+    public BloodCenter findBloodCenter(@Valid @PathVariable Long bcID){
         return bloodCenterService.find(bcID);
     }
 
@@ -70,23 +70,23 @@ public class BloodCenterController {
 
     @DeleteMapping("/{bcID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBloodCenter(@PathVariable Long bcID){
+    public void deleteBloodCenter(@Valid @PathVariable Long bcID){
         bloodCenterService.deleteBloodCenter(bcID);
     }
 
     //BLOODSTOCK
     @PostMapping("/bloodstock")
-    public BloodStock addBloodStock(@RequestBody @Valid BloodStock newBloodStock){
+    public BloodStock addBloodStock(@Valid @RequestBody BloodStock newBloodStock){
         return bloodStockService.addBloodStock(newBloodStock);
     }
 
     @PutMapping("/bloodstock")
-    public BloodStock updateBloodStock(@RequestBody BloodStock bloodStockAtt){
+    public BloodStock updateBloodStock(@Valid @RequestBody BloodStock bloodStockAtt){
         return bloodStockService.update(bloodStockAtt);
     }
 
     @GetMapping("bloodstock/{bsID}")
-    public BloodStock findBloodStock(@PathVariable Long bsID){
+    public BloodStock findBloodStock(@Valid @PathVariable Long bsID){
         return bloodStockService.find(bsID);
     }
 
@@ -97,34 +97,34 @@ public class BloodCenterController {
 
 
     @GetMapping("bloodstock/findbybloodcenter/{bcID}")
-    public BloodStock findBloodStockByBloodCenter(@PathVariable Long bcID){
+    public BloodStock findBloodStockByBloodCenter(@Valid @PathVariable Long bcID){
         return bloodStockService.findByBloodCenter(bcID);
     }
 
     @DeleteMapping("/bloodstock/{bsID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBloodStock(@PathVariable Long bsID){
+    public void deleteBloodStock(@Valid @PathVariable Long bsID){
         bloodStockService.deleteBloodStock(bsID);
     }
 
     //SCHEDULING
     @PostMapping("/scheduling")
-    public Scheduling addScheduling(@RequestBody @Valid Scheduling newSched){
+    public Scheduling addScheduling(@Valid @RequestBody Scheduling newSched){
         return schedulingService.addScheduling(newSched);
     }
 
     @PutMapping("/scheduling")
-    public Scheduling updateScheduling(@RequestBody @Valid Scheduling schedulingAtt){
+    public Scheduling updateScheduling(@Valid @RequestBody Scheduling schedulingAtt){
         return schedulingService.update(schedulingAtt);
     }
 
     @GetMapping("scheduling/{schedID}")
-    public Scheduling find(@PathVariable Long schedID){
+    public Scheduling find(@Valid @PathVariable Long schedID){
         return schedulingService.find(schedID);
     }
 
     @GetMapping("/scheduling/all/{bcID}")
-    public List<Scheduling> schedulingsByBloodCenter(@PathVariable Long bcID){
+    public List<Scheduling> schedulingsByBloodCenter(@Valid @PathVariable Long bcID){
         return schedulingService.schedulingsByBloodCenter(bcID);
     }
 
@@ -138,13 +138,13 @@ public class BloodCenterController {
 
     @DeleteMapping("/scheduling/{bsID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteScheduling(@PathVariable Long bsID){
+    public void deleteScheduling(@Valid @PathVariable Long bsID){
         schedulingService.deleteScheduling(bsID);
     }
 
     //DONATION
     @PostMapping("/donation")
-    public void donationMade(@RequestParam List<Long> donorIdsDonated, @RequestParam List<Long> donorIdsNotDonated){
+    public void donationMade(@Valid @RequestParam List<Long> donorIdsDonated, @Valid @RequestParam List<Long> donorIdsNotDonated){
 
             for (Long donorId : donorIdsDonated) {
                 Donor donor = donorService.find(donorId);

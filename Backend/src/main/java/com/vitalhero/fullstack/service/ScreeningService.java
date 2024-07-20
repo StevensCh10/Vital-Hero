@@ -16,7 +16,7 @@ public class ScreeningService {
     private final ScreeningRepository repository;
 
     public Screening find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Triagem com id '%d' não encontrada", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Triagem com id '%d' não está registrado.", id)));
     }
 
     @Transactional
@@ -50,5 +50,4 @@ public class ScreeningService {
         find(id);
         repository.validate(id, doctorID);
     }
-    
 }

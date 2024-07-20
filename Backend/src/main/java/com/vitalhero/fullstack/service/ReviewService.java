@@ -15,7 +15,7 @@ public class ReviewService {
     private final ReviewRepository repository;
 
     public Review find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Review com id '%d' não encontrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Review com id '%d' não está registrado.", id)));
     }
 
     public Review findByDonor(Long donorID){

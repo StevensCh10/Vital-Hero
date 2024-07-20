@@ -45,15 +45,9 @@ public class DonorController {
     private final DonationService donationsService;
     private final ReviewService reviewService;
 
-    //DONOR
-    @GetMapping("/{email}/{password}")
-    public Donor login(@PathVariable String email, @PathVariable String password){
-        return donorService.checkLogin(email, password);
-    }
-
     @SuppressWarnings("null")
     @GetMapping("/img/{nameImg}")
-    public byte[] getImgProfile(@PathVariable("nameImg") String nameImg) throws IOException{
+    public byte[] getImgProfile(@Valid @PathVariable("nameImg") String nameImg) throws IOException{
         File fileImg = new File(pathImgs + nameImg);
         if(nameImg != null || nameImg.trim().length() > 0){
             return Files.readAllBytes(fileImg.toPath());
@@ -62,23 +56,23 @@ public class DonorController {
     }
 
     @PutMapping()
-    public Donor updateDonor(@RequestBody @Valid Donor donorAtt){
+    public Donor updateDonor(@Valid @RequestBody Donor donorAtt){
         return donorService.update(donorAtt);
     }
 
     @PutMapping("/updatepassword/{donorID}")
-    public Donor updatePassword(@PathVariable Long donorID, @RequestParam("password") String password){
+    public Donor updatePassword(@Valid @PathVariable Long donorID, @Valid @RequestParam("password") String password){
         return donorService.updatePassword(donorID, password);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/sendfeedback/{donorID}")
-    public void sendFeedback(@PathVariable Long donorID, @RequestParam String feedback){
+    public void sendFeedback(@Valid @PathVariable Long donorID, @Valid @RequestParam String feedback){
         donorService.sendFeedback(donorID, feedback);
     }
 
     @GetMapping("/{donorID}")
-    public Donor getDonor(@PathVariable Long donorID){
+    public Donor getDonor(@Valid @PathVariable Long donorID){
         return donorService.find(donorID);
     }
 
@@ -89,51 +83,51 @@ public class DonorController {
 
     @DeleteMapping("/{donorID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDonor(@PathVariable Long donorID){
+    public void deleteDonor(@Valid @PathVariable Long donorID){
         donorService.deleteDonor(donorID);
     }
 
     //REVIEW
     @PostMapping("/review")
     @ResponseStatus(HttpStatus.CREATED)
-    public Review addReview(@RequestBody @Valid Review newReview){
+    public Review addReview(@Valid @RequestBody Review newReview){
         return reviewService.addReview(newReview);
     }
 
     @PutMapping("/review")
-    public Review updateReview(@RequestBody @Valid Review review){
+    public Review updateReview(@Valid @RequestBody Review review){
         return reviewService.update(review);
     }
 
     @GetMapping("/review/findbydonor/{donorID}")
-    public Review getReview(@PathVariable Long donorID){
+    public Review getReview(@Valid @PathVariable Long donorID){
         donorService.find(donorID);
         return reviewService.findByDonor(donorID);
     }
 
     @DeleteMapping("review/{reviewID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteReview(@PathVariable Long reviewID){
+    public void deleteReview(@Valid @PathVariable Long reviewID){
         reviewService.deleteReview(reviewID);
     }
 
     //SCHEDULING
     @PutMapping("/toschedule/{donorID}/{schedulingID}")
     @ResponseStatus(HttpStatus.OK)
-    public void toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
+    public void toSchedule(@Valid @PathVariable Long donorID, @Valid @PathVariable Long schedulingID){
         schedulingService.find(schedulingID);
         donorService.toSchedule(donorID, screeningService.allScreeningsByDonor(donorID), schedulingID);
     }
 
     @GetMapping("/scheduled/{donorID}")
-    public Scheduling scheduled(@PathVariable Long donorID){
+    public Scheduling scheduled(@Valid @PathVariable Long donorID){
         Donor donor = donorService.find(donorID);
         return schedulingService.findByDonor(donor);
     }
 
     @PutMapping("/unschedule/{donorID}")
     @ResponseStatus(HttpStatus.OK)
-    public void unschdule(@PathVariable Long donorID){
+    public void unschdule(@Valid @PathVariable Long donorID){
         donorService.scheduleMadeOrUnscheduled(donorID);
     }
 

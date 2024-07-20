@@ -234,8 +234,7 @@ const SchedulingAndDonation = () => {
                     </div>
                     {donationForm !== null &&
                       screenings.length !== 0 &&
-                      screenings[0] &&
-                      screenings[0].doctor !== null && (
+                      screenings[0] &&  screenings[0].doctor !== null && (
                         <div className="form-scheduling-dontations">
                           <span style={{marginBottom: "2%"}}>Marque um agendamento e faça sua parte</span>
                           <form
@@ -287,13 +286,10 @@ const SchedulingAndDonation = () => {
                             >
                               <option value="">Escolha uma Hora</option>
                               {schedulingsBloodcenter
-                                .filter(
-                                  (scheduling) =>
-                                    scheduling.bloodcenter ===
-                                      parseInt(selectedBloodcenter) &&
-                                    dateFormat(new Date(scheduling.dateTime)) ===
-                                      selectedDate
+                                .filter((scheduling) => scheduling.bloodcenter === parseInt(selectedBloodcenter) &&
+                                    dateFormat(new Date(scheduling.dateTime)) === selectedDate
                                 )
+                                
                                 .map((scheduling) => (
                                   <option
                                     key={scheduling.id}

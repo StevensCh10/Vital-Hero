@@ -19,7 +19,7 @@ public class SchedulingService {
     private final SchedulingRepository repository;
 
     public Scheduling find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Agendamento com id '%d' não encontrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Agendamento com id '%d' não está registrado.", id)));
     }
 
     public Scheduling findByDonor(Donor donor){
@@ -36,7 +36,7 @@ public class SchedulingService {
             bloodCenterID, newSched.getDateTime());
         
         if(exists != null){
-            throw new EntityAlreadyExists("Agenda já está cadastrada");
+            throw new EntityAlreadyExists("Agendamento já cadastrado.");
         }
         return repository.save(newSched);
     }
@@ -46,7 +46,7 @@ public class SchedulingService {
 		Scheduling currentScheduling = find(schedulingAtt.getId());
 		
 		if(schedulingAtt.getBloodcenter().getId() != currentScheduling.getBloodcenter().getId()) {
-            throw new CannotBeUpdated(String.format("Não é possível alterar o id do hemocentro do agendamento!"));
+            throw new CannotBeUpdated(String.format("Não é possível alterar o id do hemocentro do agendamento."));
 		}
 
 		BeanUtils.copyProperties(schedulingAtt, currentScheduling, "id");

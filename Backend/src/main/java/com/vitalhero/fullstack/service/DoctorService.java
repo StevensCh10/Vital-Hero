@@ -17,7 +17,7 @@ public class DoctorService {
     private final DoctorRepository repository;
 
     public Doctor find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Médico com id '%d' não está registrado", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Médico com id '%d' não está registrado.", id)));
     }
 
     @Transactional
@@ -28,13 +28,11 @@ public class DoctorService {
                     doctor.setRole(Roles.DOCTOR.toString());
                     return repository.save(doctor);			
                 }
-                throw new EntityAlreadyExists(String.format("Crm '%s' indisponível", doctor.getCrm()));    
+                throw new EntityAlreadyExists(String.format("Crm '%s' já cadastrado.", doctor.getCrm()));    
 			}
-            //throw new EntityAlreadyExists(String.format("Email '%s' is already registered.", doctor.getEmail()));
-            throw new EntityAlreadyExists(String.format("Email '%s' já está cadastrado", doctor.getEmail()));
+            throw new EntityAlreadyExists(String.format("Email '%s' já cadastrado.", doctor.getEmail()));
 		}
-		//throw new EntityAlreadyExists(String.format("Name '%s' unavailable.", user.getName()));
-        throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível", doctor.getCpf()));
+        throw new EntityAlreadyExists(String.format("Cpf '%s' já cadastrado.", doctor.getCpf()));
 	}
 
     @Transactional
@@ -47,7 +45,7 @@ public class DoctorService {
         Doctor findedByPhone = repository.findByPhone(doctorAtt.getPhone());
 		
 		if(findedByName != null && findedByName.getId() != doctorAtt.getId()) {
-            throw new EntityAlreadyExists(String.format("Nome '%s' indisponível", doctorAtt.getName()));
+            throw new EntityAlreadyExists(String.format("Nome '%s' indisponível.", doctorAtt.getName()));
 		}else if(findedByCpf != null && findedByCpf.getId() != doctorAtt.getId()){
             throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", doctorAtt.getCpf()));
         }else if(findedByEmail != null && findedByEmail.getId() != doctorAtt.getId()){

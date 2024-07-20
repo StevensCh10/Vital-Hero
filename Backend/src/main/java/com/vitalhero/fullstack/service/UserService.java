@@ -2,7 +2,6 @@ package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.intrerfaces.User;
 import com.vitalhero.fullstack.model.Doctor;
@@ -55,7 +54,7 @@ public class UserService {
         if(findDonor == null){
             var findDoctor = doctorRepository.findByEmail(email);
             if(findDoctor == null){
-                throw new EntityNotFound("Email informado não cadastrado");
+                throw new EntityNotFound("Email informado não cadastrado.");
             }
             return findDoctor;
         }

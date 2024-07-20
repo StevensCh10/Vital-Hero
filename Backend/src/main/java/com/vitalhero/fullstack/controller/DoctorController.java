@@ -20,6 +20,8 @@ import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.service.DoctorService;
 import com.vitalhero.fullstack.service.DonorService;
 import com.vitalhero.fullstack.service.ScreeningService;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -34,18 +36,18 @@ public class DoctorController {
     private final DonorService donorService;
 
     @PutMapping()
-    public Doctor updateDoctor(@RequestBody Doctor doctorAtt){
+    public Doctor updateDoctor(@Valid @RequestBody Doctor doctorAtt){
         return doctorService.update(doctorAtt);
     }
 
     @GetMapping("/{docID}")
-    public Doctor find(@PathVariable Long docID){
+    public Doctor find(@Valid @PathVariable Long docID){
         return doctorService.find(docID);
     }
 
     @SuppressWarnings("null")
     @GetMapping("/img/{nameImg}")
-    public byte[] getImgProfile(@PathVariable("nameImg") String nameImg) throws IOException{
+    public byte[] getImgProfile(@Valid @PathVariable("nameImg") String nameImg) throws IOException{
         File fileImg = new File(pathImgs + nameImg);
         if(nameImg != null || nameImg.trim().length() > 0){
             return Files.readAllBytes(fileImg.toPath());
@@ -54,7 +56,7 @@ public class DoctorController {
     }
 
     @DeleteMapping("/{docID}")
-    public void deleteDoctor(@PathVariable Long docID){
+    public void deleteDoctor(@Valid @PathVariable Long docID){
         doctorService.deleteDoctor(docID);
     }
 
@@ -66,7 +68,7 @@ public class DoctorController {
 
     @PutMapping("/validatescreening/{screeningID}/{docID}")
     @ResponseStatus(HttpStatus.OK)
-    public void validateScreening(@PathVariable Long screeningID, @PathVariable Long docID){
+    public void validateScreening(@Valid @PathVariable Long screeningID, @Valid @PathVariable Long docID){
         screeningService.validatedScreening(screeningID, docID);
     }
 

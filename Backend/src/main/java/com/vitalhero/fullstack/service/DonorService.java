@@ -28,30 +28,34 @@ public class DonorService {
     }
 
     public Donor checkLogin(String email, String password) {
-		Donor donor = repository.checkLogin(email, password);
-		
-		if(donor == null) {
-			if(repository.findByEmail(email) == null) {
-                throw new EntityNotFoundInTheAppeal(String.format("Email '%s' não está cadastrado.", email));
-			}
-            throw new EntityNotFoundInTheAppeal("Senha incorreta");
-		}
-		return donor;
-	}
+        Donor donor = repository.checkLogin(email, password);
+        if (donor == null) {
+            handleLoginFailure(email);
+        }
+        return donor;
+    }
 
-    @Transactional
-	public Donor register(Donor donor) {
-        Donor currentDonor = repository.findByCpf(donor.getCpf());
-		if(currentDonor == null) {
-			if(repository.findByEmail(donor.getEmail()) != null) {
-                throw new EntityAlreadyExists(String.format("Email '%s' já está cadastrado.", donor.getEmail()));
-			}
-            donor.setRole(Roles.DONOR.toString());
-			return repository.save(donor);			
-		}
-        System.out.println(currentDonor);
-        throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", donor.getCpf()));
-	}
+    private void handleLoginFailure(String email) {
+        if (repository.findByEmail(email) == null) {
+            throw new EntityNotFoundInTheAppeal(String.format("Email '%s' não está cadastrado.", email));
+        }
+        throw new EntityNotFoundInTheAppeal("Senha incorreta.");
+    }
+
+    public Donor register(Donor donor) {
+        validateDonor(donor);
+        donor.setRole(Roles.DONOR.toString());
+        return repository.save(donor);
+    }
+
+    private void validateDonor(Donor donor) {
+        if (repository.findByCpf(donor.getCpf()) != null) {
+            throw new EntityAlreadyExists(String.format("Cpf '%s' já cadastrado.", donor.getCpf()));
+        }
+        if (repository.findByEmail(donor.getEmail()) != null) {
+            throw new EntityAlreadyExists(String.format("Email '%s' já cadastrado.", donor.getEmail()));
+        }
+    }
 
     @Transactional
 	public Donor update(Donor donorAtt) {

@@ -30,11 +30,11 @@ public class BloodCenterService {
                 if(repository.findByAddress(newBloodCenter.getAddress()) == null){
                     return repository.save(newBloodCenter);
                 }
-                throw new EntityAlreadyExists(String.format("Endereço '%s' já está cadastrado no nosso sistema.", newBloodCenter.getAddress()));
+                throw new EntityAlreadyExists(String.format("Endereço '%s' já cadastrado.", newBloodCenter.getAddress()));
             }
-            throw new EntityAlreadyExists(String.format("Email institucional '%s' já está cadastrado no nosso sistema.", newBloodCenter.getEmail()));
+            throw new EntityAlreadyExists(String.format("Email institucional '%s' já cadastrado.", newBloodCenter.getEmail()));
         }
-        throw new EntityAlreadyExists(String.format("Nome '%s' indisponível", newBloodCenter.getName()));
+        throw new EntityAlreadyExists(String.format("Nome '%s' já cadastrado.", newBloodCenter.getName()));
     }
 
     @Transactional
