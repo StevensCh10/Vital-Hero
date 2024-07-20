@@ -58,3 +58,8 @@ Para utilizar o projeto, é necessário executar separadamente o frontend e o ba
 1. Navegue até a pasta backend.
 2. Execute o comando ./mvn spring-boot:run para iniciar o servidor backend.
 3. Certifique-se de configurar corretamente as variáveis de ambiente e conexões de banco de dados conforme necessário na pasta /src/main/resources/application.properties.
+
+## Documentação da API disponível em: 
+  <a>https://vital-hero.onrender.com/swagger-ui/index.html</a>
+  
+  Caso a API seja executada localmente, basta acrescentar "/swagger-ui/index.html" ao final da URL da aplicação.
