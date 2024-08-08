@@ -26,7 +26,7 @@ public class TokenService {
                     .sign(algorithm);
             return token;
         } catch (JWTCreationException exception){
-            throw new RuntimeException("Error while authenticating");
+            throw new RuntimeException("Erro ao autenticar");
         }
     }
 

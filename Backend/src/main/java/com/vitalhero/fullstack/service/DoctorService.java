@@ -2,6 +2,8 @@ package com.vitalhero.fullstack.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.dto.DoctorDTO;
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
@@ -20,6 +22,10 @@ public class DoctorService {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Médico com id '%d' não está registrado.", id)));
     }
 
+    public DoctorDTO getDoctor(Long id){
+        return DoctorDTO.fromEntity(find(id));
+    }
+
     @Transactional
 	public Doctor register(Doctor doctor) {
 		if(repository.findByCpf(doctor.getCpf()) == null) {
@@ -36,7 +42,7 @@ public class DoctorService {
 	}
 
     @Transactional
-	public Doctor update(Doctor doctorAtt) {
+	public DoctorDTO update(Doctor doctorAtt) {
 		Doctor currentDoctor = find(doctorAtt.getId());
 		Doctor findedByName = repository.findByName(doctorAtt.getName());
         Doctor findedByCpf = repository.findByCpf(doctorAtt.getCpf());
@@ -57,7 +63,7 @@ public class DoctorService {
         }
 
 		BeanUtils.copyProperties(doctorAtt, currentDoctor, "id");
-		return repository.saveAndFlush(currentDoctor);
+		return DoctorDTO.fromEntity(repository.saveAndFlush(currentDoctor));
 	}
 
     public void deleteDoctor(Long id){

@@ -1,8 +1,12 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.dto.BloodCenterDTO;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.BloodCenter;
@@ -20,15 +24,22 @@ public class BloodCenterService {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Hemocentro com id %d não está registrado.", id)));
     }
 
-    public List<BloodCenter> findAll(){
-        return repository.findAll();
+    public BloodCenterDTO getBloodCenter(Long id){
+        return BloodCenterDTO.fromEntity(find(id));
+    }
+
+    public List<BloodCenterDTO> findAll(){
+        return repository.findAll()
+                .stream()
+                .map(BloodCenterDTO::fromEntity)
+                .collect(Collectors.toList());
     }
     
-    public BloodCenter addBloodCenter(BloodCenter newBloodCenter){
+    public BloodCenterDTO addBloodCenter(BloodCenter newBloodCenter){
         if(repository.findByName(newBloodCenter.getName()) == null){
             if(repository.findByEmail(newBloodCenter.getEmail()) == null){
                 if(repository.findByAddress(newBloodCenter.getAddress()) == null){
-                    return repository.save(newBloodCenter);
+                    return BloodCenterDTO.fromEntity(repository.save(newBloodCenter));
                 }
                 throw new EntityAlreadyExists(String.format("Endereço '%s' já cadastrado.", newBloodCenter.getAddress()));
             }
@@ -38,7 +49,7 @@ public class BloodCenterService {
     }
 
     @Transactional
-	public BloodCenter update(BloodCenter bloodCenterAtt) {
+	public BloodCenterDTO update(BloodCenter bloodCenterAtt) {
 		BloodCenter currentBloodCenter = find(bloodCenterAtt.getId());
 		BloodCenter findedByName = repository.findByName(bloodCenterAtt.getName());
         BloodCenter findedByInstitutionalEmail = repository.findByEmail(bloodCenterAtt.getEmail());
@@ -56,7 +67,7 @@ public class BloodCenterService {
         }
 
 		BeanUtils.copyProperties(bloodCenterAtt, currentBloodCenter, "id");
-		return repository.saveAndFlush(currentBloodCenter);
+		return BloodCenterDTO.fromEntity(repository.saveAndFlush(currentBloodCenter));
 	}
 
     public void deleteBloodCenter(Long id){

@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import com.vitalhero.fullstack.dto.DoctorDTO;
+import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.model.Doctor;
-import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.service.DoctorService;
 import com.vitalhero.fullstack.service.DonorService;
 import com.vitalhero.fullstack.service.ScreeningService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -36,13 +36,13 @@ public class DoctorController {
     private final DonorService donorService;
 
     @PutMapping()
-    public Doctor updateDoctor(@Valid @RequestBody Doctor doctorAtt){
+    public DoctorDTO updateDoctor(@Valid @RequestBody Doctor doctorAtt){
         return doctorService.update(doctorAtt);
     }
 
     @GetMapping("/{docID}")
-    public Doctor find(@Valid @PathVariable Long docID){
-        return doctorService.find(docID);
+    public DoctorDTO getDoctor(@Valid @PathVariable Long docID){
+        return doctorService.getDoctor(docID);
     }
 
     @SuppressWarnings("null")
@@ -74,7 +74,7 @@ public class DoctorController {
 
     //DOCTOR
     @GetMapping("/donorscreenings/all")
-    public List<Donor> allDonorScreenings(){
+    public List<DonorDTO> allDonorScreenings(){
         return donorService.allDonorScreenings();
     }
 }

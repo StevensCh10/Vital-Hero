@@ -2,8 +2,12 @@ package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.CannotBeScheduling;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
@@ -25,6 +29,10 @@ public class DonorService {
 
     public Donor find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Doador com id '%d' não está registrado.", id)));
+    }
+
+    public DonorDTO getDonor(Long id){
+        return DonorDTO.fromEntity(find(id));
     }
 
     public Donor checkLogin(String email, String password) {
@@ -58,7 +66,7 @@ public class DonorService {
     }
 
     @Transactional
-	public Donor update(Donor donorAtt) {
+	public DonorDTO update(Donor donorAtt) {
 		Donor currentDonor = find(donorAtt.getId());
         Donor findedByCpf = repository.findByCpf(donorAtt.getCpf());
         Donor findedByEmail = repository.findByEmail(donorAtt.getEmail());
@@ -73,13 +81,13 @@ public class DonorService {
         }
 
 		BeanUtils.copyProperties(donorAtt, currentDonor, "id");
-		return repository.saveAndFlush(currentDonor);
+		return DonorDTO.fromEntity(repository.saveAndFlush(currentDonor));
 	}
 
-    public Donor updatePassword(Long id, String newPassword){
+    public DonorDTO updatePassword(Long id, String newPassword){
         Donor currentDonor = find(id);
         currentDonor.setPassword(newPassword);
-        return repository.saveAndFlush(currentDonor);
+        return DonorDTO.fromEntity(repository.saveAndFlush(currentDonor));
     }
 
     public void toSchedule(Long id, List<Screening> screenings, Long schedulingID){
@@ -102,12 +110,17 @@ public class DonorService {
         repository.FkSchedulingToNull(id);
     }
 
-    public List<Donor> allScheduledDonors(){
-        return repository.allScheduledDonors();
+    public List<DonorDTO> allScheduledDonors(){
+        return repository.allScheduledDonors()
+                .stream()
+                .map(DonorDTO::fromEntity)
+                .collect(Collectors.toList());
     }
 
-    public List<Donor> allDonorScreenings(){
-        return repository.allDonorScreenings();
+    public List<DonorDTO> allDonorScreenings(){
+        return repository.allDonorScreenings()
+        .stream().map(DonorDTO::fromEntity)
+        .collect(Collectors.toList());
     }
 
     public void sendFeedback(Long id, String feedback){

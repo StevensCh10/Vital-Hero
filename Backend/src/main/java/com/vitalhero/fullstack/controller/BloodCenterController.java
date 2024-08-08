@@ -3,7 +3,6 @@ package com.vitalhero.fullstack.controller;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import com.vitalhero.fullstack.dto.BloodCenterDTO;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.model.Donation;
@@ -49,22 +49,22 @@ public class BloodCenterController {
     //BLOODCENTER
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public BloodCenter addBloodCenter(@Valid @RequestBody BloodCenter newBloodCenter){
+    public BloodCenterDTO addBloodCenter(@Valid @RequestBody BloodCenter newBloodCenter){
         return bloodCenterService.addBloodCenter(newBloodCenter);
     }
 
     @PutMapping()
-    public BloodCenter updateBloodCenter(@Valid @RequestBody BloodCenter bloodCenterAtt){
+    public BloodCenterDTO updateBloodCenter(@Valid @RequestBody BloodCenter bloodCenterAtt){
         return bloodCenterService.update(bloodCenterAtt);
     }
 
     @GetMapping("/{bcID}")
-    public BloodCenter findBloodCenter(@Valid @PathVariable Long bcID){
-        return bloodCenterService.find(bcID);
+    public BloodCenterDTO findBloodCenter(@Valid @PathVariable Long bcID){
+        return bloodCenterService.getBloodCenter(bcID);
     }
 
     @GetMapping("/all")
-    public List<BloodCenter> findAll(){
+    public List<BloodCenterDTO> findAll(){
         return bloodCenterService.findAll();
     }
 
@@ -94,7 +94,6 @@ public class BloodCenterController {
     public List<BloodStock> findAllBloodStock(){
         return bloodStockService.findAll();
     }
-
 
     @GetMapping("bloodstock/findbybloodcenter/{bcID}")
     public BloodStock findBloodStockByBloodCenter(@Valid @PathVariable Long bcID){

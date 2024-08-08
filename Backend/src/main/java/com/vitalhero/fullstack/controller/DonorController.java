@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.vitalhero.fullstack.model.DonationForm;
+import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Review;
@@ -47,7 +48,7 @@ public class DonorController {
 
     @SuppressWarnings("null")
     @GetMapping("/img/{nameImg}")
-    public byte[] getImgProfile(@Valid @PathVariable("nameImg") String nameImg) throws IOException{
+    public byte[] getImgProfile(@PathVariable String nameImg) throws IOException{
         File fileImg = new File(pathImgs + nameImg);
         if(nameImg != null || nameImg.trim().length() > 0){
             return Files.readAllBytes(fileImg.toPath());
@@ -56,34 +57,34 @@ public class DonorController {
     }
 
     @PutMapping()
-    public Donor updateDonor(@Valid @RequestBody Donor donorAtt){
+    public DonorDTO updateDonor(@Valid @RequestBody Donor donorAtt){
         return donorService.update(donorAtt);
     }
 
     @PutMapping("/updatepassword/{donorID}")
-    public Donor updatePassword(@Valid @PathVariable Long donorID, @Valid @RequestParam("password") String password){
+    public DonorDTO updatePassword(@PathVariable Long donorID, @RequestParam String password){
         return donorService.updatePassword(donorID, password);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/sendfeedback/{donorID}")
-    public void sendFeedback(@Valid @PathVariable Long donorID, @Valid @RequestParam String feedback){
+    public void sendFeedback(@PathVariable Long donorID, @RequestParam String feedback){
         donorService.sendFeedback(donorID, feedback);
     }
 
     @GetMapping("/{donorID}")
-    public Donor getDonor(@Valid @PathVariable Long donorID){
-        return donorService.find(donorID);
+    public DonorDTO getDonor(@PathVariable Long donorID){
+        return donorService.getDonor(donorID);
     }
 
     @GetMapping("/allScheduled")
-    public List<Donor> allScheduledDonors(){
+    public List<DonorDTO> allScheduledDonors(){
         return donorService.allScheduledDonors();
     }
 
     @DeleteMapping("/{donorID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDonor(@Valid @PathVariable Long donorID){
+    public void deleteDonor(@PathVariable Long donorID){
         donorService.deleteDonor(donorID);
     }
 
@@ -100,45 +101,45 @@ public class DonorController {
     }
 
     @GetMapping("/review/findbydonor/{donorID}")
-    public Review getReview(@Valid @PathVariable Long donorID){
+    public Review getReview(@PathVariable Long donorID){
         donorService.find(donorID);
         return reviewService.findByDonor(donorID);
     }
 
     @DeleteMapping("review/{reviewID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteReview(@Valid @PathVariable Long reviewID){
+    public void deleteReview(@PathVariable Long reviewID){
         reviewService.deleteReview(reviewID);
     }
 
     //SCHEDULING
     @PutMapping("/toschedule/{donorID}/{schedulingID}")
     @ResponseStatus(HttpStatus.OK)
-    public void toSchedule(@Valid @PathVariable Long donorID, @Valid @PathVariable Long schedulingID){
+    public void toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
         schedulingService.find(schedulingID);
         donorService.toSchedule(donorID, screeningService.allScreeningsByDonor(donorID), schedulingID);
     }
 
     @GetMapping("/scheduled/{donorID}")
-    public Scheduling scheduled(@Valid @PathVariable Long donorID){
+    public Scheduling scheduled(@PathVariable Long donorID){
         Donor donor = donorService.find(donorID);
         return schedulingService.findByDonor(donor);
     }
 
     @PutMapping("/unschedule/{donorID}")
     @ResponseStatus(HttpStatus.OK)
-    public void unschdule(@Valid @PathVariable Long donorID){
+    public void unschdule(@PathVariable Long donorID){
         donorService.scheduleMadeOrUnscheduled(donorID);
     }
 
     //SCREENING
     @PostMapping("/screening")
-    public Screening doScreening(@RequestBody @Valid Screening newScreening){
+    public Screening doScreening(@Valid @RequestBody Screening newScreening){
         return screeningService.addScreening(newScreening);
     }
 
     @PutMapping("/screening")
-    public Screening updateScreening(@RequestBody @Valid Screening attScreening){
+    public Screening updateScreening(@Valid @RequestBody Screening attScreening){
         return screeningService.updateScreening(attScreening);
     }
 
@@ -150,12 +151,12 @@ public class DonorController {
 
     //DONATIONFORM
     @PostMapping("/donationform")
-    public DonationForm fillOutDonationForm(@RequestBody @Valid DonationForm newDonation){
+    public DonationForm fillOutDonationForm(@Valid @RequestBody DonationForm newDonation){
         return donationFormService.addDonationForm(newDonation);
     }
 
     @PutMapping("/donationform")
-    public DonationForm updateDonationForm(@RequestBody @Valid DonationForm attDonationForm){
+    public DonationForm updateDonationForm(@Valid @RequestBody DonationForm attDonationForm){
         return donationFormService.updateDonationForm(attDonationForm);
     }
 

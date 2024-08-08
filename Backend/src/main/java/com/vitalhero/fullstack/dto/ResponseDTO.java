@@ -1,5 +1,5 @@
 package com.vitalhero.fullstack.dto;
 
-import com.vitalhero.fullstack.intrerfaces.User;
+import com.vitalhero.fullstack.intrerfaces.UserDTO;
 
-public record ResponseDTO (User user, String token) { }
+public record ResponseDTO(UserDTO user, String token) { }

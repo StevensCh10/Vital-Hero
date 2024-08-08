@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.vitalhero.fullstack.dto.LoginRequestDTO;
 import com.vitalhero.fullstack.dto.ResponseDTO;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Donor;
-import com.vitalhero.fullstack.model.LoginRequest;
 import com.vitalhero.fullstack.security.TokenService;
 import com.vitalhero.fullstack.service.AuthService;
 import com.vitalhero.fullstack.service.DoctorService;
@@ -42,7 +43,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDTO authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseDTO authenticateUser(@Valid @RequestBody LoginRequestDTO loginRequest) {
         ResponseDTO response = authService.authenticate(loginRequest.getEmail(), loginRequest.getPassword());
         return response;
     }
@@ -61,25 +62,25 @@ public class AuthController {
 
     @PostMapping("/forgotpassword")
     @ResponseStatus(HttpStatus.OK)
-    public void sendForgotPassword(@Valid @RequestParam String email){
+    public void sendForgotPassword(@RequestParam String email){
         userService.findEmailForgotPassword(email);
     }
 
     @PostMapping(value = "/donor",consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO registerDonor(
-        @Valid @RequestParam("name") String name,
-        @Valid @RequestParam("cpf") String cpf,
-        @Valid @RequestParam("email") String email,
-        @Valid @RequestParam("age") int age,
-        @Valid @RequestParam("gender") String gender,
-        @Valid @RequestParam("maritalStatus") String maritalStatus,
-        @Valid @RequestParam("address") String address,
-        @Valid @RequestParam("phone") String phone,
-        @Valid @RequestParam("photo") String photo,
-        @Valid @RequestParam("password") String password,
-        @Valid @RequestParam("bloodType") String bloodType,
-        @Valid @RequestParam(value = "file", required = false) MultipartFile file){
+       @RequestParam String name,
+       @RequestParam String cpf,
+       @RequestParam String email,
+       @RequestParam int age,
+       @RequestParam String gender,
+       @RequestParam String maritalStatus,
+       @RequestParam String address,
+       @RequestParam String phone,
+       @RequestParam String photo,
+       @RequestParam String password,
+       @RequestParam String bloodType,
+       @RequestParam(value = "file", required = false) MultipartFile file){
 
             Donor newDonor = new Donor(name, cpf, email, age, gender, maritalStatus, address, photo, phone, passwordEncoder.encode(password), bloodType);
             Donor flushDonor = donorService.register(newDonor);
@@ -96,26 +97,26 @@ public class AuthController {
             }catch(IOException e){
                 e.printStackTrace();
             }
-            newDonor = donorService.update(flushDonor);
+            var dto = donorService.update(flushDonor);
             String token = this.tokenService.generateToken(newDonor);
-            return new ResponseDTO(newDonor, token);
+            return new ResponseDTO(dto, token);
     }
 
     @PostMapping(value = "/doctor", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO registerDoctor(
-        @Valid @RequestParam("name") String name,
-        @Valid @RequestParam("cpf") String cpf,
-        @Valid @RequestParam("crm") String crm,
-        @Valid @RequestParam("email") String email,
-        @Valid @RequestParam("age") int age,
-        @Valid @RequestParam("gender") String gender,
-        @Valid @RequestParam("maritalStatus") String maritalStatus,
-        @Valid @RequestParam("address") String address,
-        @Valid @RequestParam("phone") String phone,
-        @Valid @RequestParam("photo") String photo,
-        @Valid @RequestParam("password") String password,
-        @Valid @RequestParam(value = "file", required = false) MultipartFile file){
+        @RequestParam String name,
+        @RequestParam String cpf,
+        @RequestParam String crm,
+        @RequestParam String email,
+        @RequestParam int age,
+        @RequestParam String gender,
+        @RequestParam String maritalStatus,
+        @RequestParam String address,
+        @RequestParam String phone,
+        @RequestParam String photo,
+        @RequestParam String password,
+        @RequestParam(value = "file", required = false) MultipartFile file){
             Doctor newDoctor = new Doctor(name, cpf, crm, email, age, gender, maritalStatus, address, photo, phone, passwordEncoder.encode(password));
             Doctor flushDoctor = doctorService.register(newDoctor);
             try{
@@ -131,8 +132,8 @@ public class AuthController {
             }catch(IOException e){
                 e.printStackTrace();
             }
-            newDoctor = doctorService.update(flushDoctor);
+            var dto = doctorService.update(flushDoctor);
             String token = this.tokenService.generateToken(newDoctor);
-            return new ResponseDTO(newDoctor, token);
+            return new ResponseDTO(dto, token);
     }
 }
