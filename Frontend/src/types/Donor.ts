@@ -2,7 +2,6 @@ export type Donor = {
     id: number;
     scheduling?: number| null;
     name?: string;
-    cpf?: string;
     email?: string;
     age?: number;
     gender?: string;
@@ -10,7 +9,6 @@ export type Donor = {
     address?: string;
     photo?: string;
     phone?: string;
-    password?: string;
     bloodType?: string;
     role?: string;
 }

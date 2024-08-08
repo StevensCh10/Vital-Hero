@@ -1,7 +1,6 @@
 export type Doctor = {
     id: number;
     name?: string;
-    cpf?: string;
     crm?: string;
     email?: string;
     age?: number;
@@ -10,6 +9,5 @@ export type Doctor = {
     address?: string;
     photo?: string;
     phone?: string;
-    password?: string;
     role?: string;
 }
