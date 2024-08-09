@@ -42,11 +42,8 @@ const ChangePassword = () => {
     e.preventDefault();
     if (newPasswordRef.current!.value !== confirmPasswordRef.current!.value) {
       confirmPasswordRef.current!.focus();
-    } else if (oldPasswordRef.current!.value !== user!.password) {
-      oldPasswordRef.current!.focus();
     } else {
-      user!.password = newPassword;
-      auth.updateDonor(user!);
+      auth.updateDonor(user!); //Alterar isso aqui, tenho que mudar no context
       setPasswordChanged(true);
       setNewPassword("");
       setConfirmPassword("");

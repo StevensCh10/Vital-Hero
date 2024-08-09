@@ -13,7 +13,6 @@ const Profile = () => {
       ? (auth.user! as Donor)
       : (auth.user! as Doctor);
   const [name, setName] = useState("");
-  const [cpf, setCpf] = useState("");
   const [age, setAge] = useState(0);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +30,6 @@ const Profile = () => {
         } else if (role === "DOCTOR") {
           setCrm((user as Doctor).crm!);
         }
-        setCpf(user!.cpf!);
         setAge(user!.age!);
         setName(user!.name!);
         setPhone(user!.phone!);
@@ -99,13 +97,6 @@ const Profile = () => {
         <form onSubmit={handleAtt} className="profile-form">
           <div className="profile-info">
             <input type="name" id="name" name="name" value={name} readOnly />
-            <input
-              type="cpf"
-              id="cpf"
-              name="cpf"
-              value={formatCPF(cpf)}
-              readOnly
-            />
             <input
               type="age"
               id="age"

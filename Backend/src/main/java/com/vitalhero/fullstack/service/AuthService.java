@@ -68,7 +68,13 @@ public class AuthService {
     private ResponseDTO invalidPassword(String password, User user){
         if(passwordEncoder.matches(password, user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            return new ResponseDTO((UserDTO) user, token);
+            UserDTO dto = null;
+
+            if(user instanceof Donor) dto = DonorDTO.fromEntity((Donor)user);
+            else if(user instanceof Doctor) dto = DoctorDTO.fromEntity((Doctor)user);
+            else dto = BloodCenterDTO.fromEntity((BloodCenter)user);
+            
+            return new ResponseDTO(dto, token);
         }else{
             throw new EntityNotFoundInTheAppeal("Senha inválida");
         }
