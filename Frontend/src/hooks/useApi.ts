@@ -4,10 +4,19 @@ import { Screening } from '../types/Screening';
 import { DonationForm } from '../types/DonationForm';
 
 const api = axios.create({
-    baseURL: 'https://vital-hero.onrender.com/'
+    //baseURL: 'https://vital-hero.onrender.com/'
+    baseURL: 'http://localhost:8080/'
 });
 
-const authToken = localStorage.getItem("authToken");
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
 
 export const useApi = () => ({
     validateToken: async (token: string) => {
@@ -23,7 +32,7 @@ export const useApi = () => ({
     findDonorById: async (idDonor: number) => {
         return await api.get(`donor/${idDonor}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
             .then((response) => response.data);
@@ -31,7 +40,7 @@ export const useApi = () => ({
     findAllBloodCenters: async () => {
         return await api.get('bloodcenter/all', {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
             .then((response) => response.data) 
@@ -39,7 +48,7 @@ export const useApi = () => ({
     findAllSchedulings: async () => {
         return await api.get(`bloodcenter/scheduling/all`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
             .then((response) => response.data)       
@@ -47,7 +56,7 @@ export const useApi = () => ({
     findSchedulingsByBloodcenter: async (bcID: number) => {
         return await api.get(`bloodcenter/scheduling/all/${bcID}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
             .then((response) => response.data)
@@ -56,7 +65,7 @@ export const useApi = () => ({
     findDonationFormByDonor: async (idDonor: number) => {
         return await api.get(`donor/donationform/findbydonor/${idDonor}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
             .then((response) => response.data)
@@ -65,7 +74,7 @@ export const useApi = () => ({
     findScreeningByDonor: async (idDonor: number) => {
         return await api.get(`donor/screening/all/${idDonor}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
             .then((response) => response.data)
@@ -74,7 +83,7 @@ export const useApi = () => ({
     allScheduledDonors: async () => {
         return await api.get('donor/allScheduled', {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
             .then((response) => response.data)
@@ -83,7 +92,7 @@ export const useApi = () => ({
     updateDonor: async (donorAtt: Donor) => {
         return await api.put('donor', donorAtt, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -92,7 +101,7 @@ export const useApi = () => ({
     findDonations: async (idDonor: number) => {
         return await api.get(`donor/donation/all/${idDonor}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -101,7 +110,7 @@ export const useApi = () => ({
     findSchedById: async (idSched: number) => {
         return await api.get(`bloodcenter/scheduling/${idSched}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -110,7 +119,7 @@ export const useApi = () => ({
     toSchedule: async (idDonor: number, idSched: number) => {
         await api.put(`donor/toschedule/${idDonor}/${idSched}`, {}, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .catch((e) => {throw e.response.data});
@@ -118,7 +127,7 @@ export const useApi = () => ({
     unSchedule: async (idDonor: number) => {
         await api.put(`donor/unschedule/${idDonor}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -127,7 +136,7 @@ export const useApi = () => ({
     findAllBloodstocks: async () => {
         return await api.get(`bloodcenter/bloodstock/all`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -136,7 +145,7 @@ export const useApi = () => ({
     register: async (formData: FormData) => {
         return await api.post('auth/donor', formData, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -145,7 +154,7 @@ export const useApi = () => ({
     registerDoctor: async (formData: FormData) => {
         return await api.post('auth/doctor', formData, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data);
@@ -153,7 +162,7 @@ export const useApi = () => ({
     addScreening: async(screening: Screening) => {
         return await api.post(`donor/screening`, screening, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -162,7 +171,7 @@ export const useApi = () => ({
     attScreening: async(screening: Screening) => {
         return await api.put(`donor/screening`, screening, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data);
@@ -170,7 +179,7 @@ export const useApi = () => ({
     addDonationForm: async(donationForm: DonationForm) => {
         return await api.post(`donor/donationform`, donationForm, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data)
@@ -179,7 +188,7 @@ export const useApi = () => ({
     updateDonationForm: async(donationForm: DonationForm) => {
         return await api.put(`donor/donationform`, donationForm, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data);
@@ -187,7 +196,7 @@ export const useApi = () => ({
     allScreenings: async() => {
         return await api.get(`doctor/screenings/all`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data);
@@ -195,7 +204,7 @@ export const useApi = () => ({
     allDonorsScreenings: async() => {
         return await api.get(`doctor/donorscreenings/all`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .then((response) => response.data);
@@ -204,7 +213,7 @@ export const useApi = () => ({
         await api.put(`doctor/validatescreening/${idScreening}/${idDoctor}`,{}, 
               {
                 headers: {
-                  Authorization: `Bearer ${authToken}`,
+                  //Authorization: `Bearer ${authToken}`,
                   'Content-Type': 'application/json' // Caso seja necessário
                 }
               }
@@ -213,14 +222,14 @@ export const useApi = () => ({
     sendFeedback: async(idDonor: number, feedback: string) => {
         await api.post(`donor/sendfeedback/${idDonor}?feedback=${encodeURIComponent(feedback)}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         });
     },
     sendEmailForgotPassword: async(email: string) => {
         await api.post(`auth/forgotpassword?email=${email}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         })
         .catch((e) => {throw e.response.data});
@@ -228,14 +237,14 @@ export const useApi = () => ({
     updatePassword: async(idDonor: number, password: string) => {
         await api.put(`donor/updatepassword/${idDonor}?password=${password}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         });
     },
     donationMade: async(idDonorDonated: number[], idDonorNotDonated: number[]) => {
         await api.post(`bloodcenter/donation?donorIdsDonated=${idDonorDonated}&donorIdsNotDonated=${idDonorNotDonated}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                //Authorization: `Bearer ${authToken}`
             }
         });
     }

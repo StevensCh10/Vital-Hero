@@ -35,7 +35,7 @@ body {
 
 .be-to-hero .text span {
   color: #035e89;
-  font-size: 25px;
+  font-size: 1.8em;
 }
 
 .be-to-hero .text span b {
@@ -171,11 +171,16 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 75%;
+  width: 100%;
   margin-bottom: 3%;
   background-color: #f8f8f8f8;
-  padding-top: 1.5%;
-  padding-bottom: 1.5%;
+  padding: 1.5%;
+}
+
+.home-container .title-span span{
+  display: flex;
+  justify-content: center;
+  margin: 1%;
 }
 
 .go-schedule p{
@@ -183,7 +188,12 @@ body {
   font-size: 1.1em;
 }
 
-.go-schedule button{
+.button-schedule{
+  display: flex;
+  justify-content: center;
+}
+
+.go-schedule .button-schedule button{
   background-color: rgb(184, 14, 20);
   border-radius: 10px;
   width: 10%;
@@ -191,7 +201,7 @@ body {
   padding: 10px;
   border: none;
   cursor: pointer;
-  align-self: center; /* Centralizando o botão horizontalmente */
+  align-self: center;
   margin-top: 2%;
 }
 

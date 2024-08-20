@@ -1,7 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import "./Login.css";
 import { ErrorType } from "../../types/ErrorType";
 
 const Login = () => {
@@ -10,7 +9,6 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,17 +25,17 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-content">
-        <div className="logo-container">
-          <h1 className="logo-text">Vital</h1>
-          <img src="/Logo.png" alt="Logo" className="logo-image-login" />
-          <h1 className="logo-text">Hero</h1>
+    <div className="flex flex-col items-center justify-center min-h-[95vh]">
+      <div className="flex flex-col items-center w-[340px] bg-white rounded-[20px] pt-[3%] pb-[3%]">
+        <div className="w-[100%] flex flex-row justify-center mb-[1%] text-[#b80e14] mb-[8%]">
+          <h1 className="flex text-5xl m-0 text-center items-center mr-1">Vital</h1>
+          <img src="/Logo.png" alt="Logo" className="w-[60px] h-[65px]" />
+          <h1 className="flex text-5xl m-0 text-center items-center">Hero</h1>
         </div>
-        <form onSubmit={handleLogin} className="login-form">
-          <label>Email:</label>
+        <form onSubmit={handleLogin} className="flex flex-col items-center text-start w-full">
+          <label className="w-[69%] mb-[1%] text-lg" >Email:</label>
           <input
-          style={{marginBottom: "3%"}}
+            className="w-[70%] p-2.5 box-border mb-[3%] rounded-[5px] border border-[#00000008] bg-[#00000015] text-base focus:outline-none focus:border-[#1a3744]"
             placeholder="Email"
             type="email"
             id="email"
@@ -46,35 +44,32 @@ const Login = () => {
             required
           />
 
-          <label>Senha:</label>
+          <label className="w-[69%] mb-[1%] text-lg">Senha:</label>
           <input
+            className="w-[70%] p-2.5 box-border mb-[1%] rounded-[5px] border border-[#00000008] bg-[#00000015] text-base focus:outline-none focus:border-[#1a3744]"
             placeholder="Senha"
-            type={showPassword ? "text" : "password"}
+            type="password"
             id="password"
             name="password"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <span
-            className="toggle-password"
-            onClick={() => setShowPassword(!showPassword)}
-          ></span>
 
-          <p className="forgot-password">
-            <Link to="/forgot-password">Esqueceu a senha?</Link>
+          <p className="mt-0 mb-5">
+            <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/forgot-password">Esqueceu a senha?</Link>
           </p>
 
-          <button type="submit">
+          <button type="submit" className="bg-[#b80e14] rounded-lg w-[30%] text-white p-[8px] border-none cursor-pointer mb-5 hover:bg-[#eb1118b5]">
             Entrar
           </button>
         </form>
 
-        <p className="signup-link">
-          Não tem uma conta? <Link to="/register">Cadastre-se</Link>
+        <p className="w-[80%] text-center">
+          Não tem uma conta? <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/register">Cadastre-se</Link>
         </p>
 
-        <p className="signup-link-doctor">
-          É da área de saúde e deseja colaborar conosco? <Link to="/register-doctor">Clique aqui</Link>
+        <p className="mt-[3%] font-[13px] w-[80%] text-center opacity-80">
+          É da área de saúde e deseja colaborar conosco? <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/register-doctor">Clique aqui</Link>
         </p>
       </div>
     </div>

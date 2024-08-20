@@ -116,20 +116,24 @@ const HomeDonor = () => {
         <div className="go-schedule">
           {user.scheduling === null ? (
             <div>
-              <span style={{color: "#035e89"}}>Faça sua doação</span>
-              <div style={{width: "90%"}}>
+              <div className="title-span">
+                <span style={{color: "#035e89"}}>Faça sua doação</span>
+              </div>
+              <div style={{width: "100%"}}>
                 <p><label style={{fontWeight: "500"}}>Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
                   Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label style={{fontWeight: "500"}}>Faça sua parte agora!</label></p>
               </div>
-                <button onClick={(() =>{ 
-                  if(donationForm === null){
-                    navigate("/donation-form")
-                  }else if(screenings.length === 0 || screenings[0] === null){
-                    navigate("/screening")
-                  }else{
-                    navigate("/scheduling-donation")
-                  }
-                })}>Começar</button>
+                <div className="button-schedule">
+                  <button onClick={(() =>{ 
+                    if(donationForm === null){
+                      navigate("/donation-form")
+                    }else if(screenings.length === 0 || screenings[0] === null){
+                      navigate("/screening")
+                    }else{
+                      navigate("/scheduling-donation")
+                    }
+                  })}>Começar</button>
+                </div>
             </div>  
           ) : (
             <label style={{fontSize: "1.1em"}}>Você já fez seu agendamento, pra verificar detalhes <Link style={{color: "rgb(184, 14, 20)", fontSize: "1.2em"}} to={"/scheduling-donation"}>clique aqui</Link></label>

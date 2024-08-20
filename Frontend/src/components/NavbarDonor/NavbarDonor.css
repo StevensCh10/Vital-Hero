@@ -132,3 +132,55 @@ a {
 a:hover {
   color: #035e89;
 }
+
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    width: 90vw;
+  }
+
+  .round-button {
+    border-radius: 50%;
+    width: 15px;
+    height: 35px;
+  }
+
+  .logo-container-home h1{
+    font-size: 2em;
+  }
+
+  .logo-container-home .logo-image {
+    width: 40px;
+    height: 45px;
+  }
+
+  .navbar-center-home {
+    
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .round-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Navbar em telas muito pequenas */
+@media (max-width: 480px) {
+
+  .round-button {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+  }
+
+  .modal-item {
+  }
+
+  .modal-item img {
+    
+  }
+}

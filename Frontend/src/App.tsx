@@ -17,7 +17,6 @@ import Register from './pages/Register/Register'
 import Footer from './components/Footer/Footer'
 import Review from './pages/Review/Review'
 import Login from './pages/Login/Login'
-import './App.css'
 import ValidateScreening from './pages/doctor/ValidateScreening/ValidateScreening'
 import Feedback from './pages/Feedback/Feedback'
 import RedefinePassword from './pages/redefinePassword/RedefinePassword'
@@ -27,8 +26,8 @@ import RegisterDoctor from './pages/RegisterDoctor/RegisterDoctor'
 const App = () => {
 
   return (
-    <div className='container'>
-      <div className='app'>
+    <div className="flex justify-center items-center m-0">
+      <div className="w-[70vh]">
         <Routes>
           <Route path="/" element={<RequireAuth><AnalyzeTheRole/></RequireAuth>}/>
           <Route path="/login" element={<RequireAuth><Login/></RequireAuth>}/>

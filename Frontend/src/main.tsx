@@ -4,6 +4,7 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './contexts/Auth/AuthProvider.tsx'
 import Modal from 'react-modal';
+import './index.css'
 
 Modal.setAppElement('#root');
 

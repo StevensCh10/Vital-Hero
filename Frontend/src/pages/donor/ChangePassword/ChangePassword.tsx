@@ -38,17 +38,16 @@ const ChangePassword = () => {
     setOldPassword(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (newPasswordRef.current!.value !== confirmPasswordRef.current!.value) {
       confirmPasswordRef.current!.focus();
     } else {
-      auth.updateDonor(user!); //Alterar isso aqui, tenho que mudar no context
+      await auth.updateDonor(user!).then(() => window.location.reload());
       setPasswordChanged(true);
       setNewPassword("");
       setConfirmPassword("");
       setOldPassword("");
-      localStorage.setItem("user", JSON.stringify(user!));
     }
   };
 
