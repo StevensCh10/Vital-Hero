@@ -6,13 +6,15 @@ import { useContext, useEffect, useState } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { Donor } from "../../../types/Donor";
 import { GiLifeTap } from "react-icons/gi";
-import "./HomeDonor.css";
 import { DonationForm } from "../../../types/DonationForm";
 import { Screening } from "../../../types/Screening";
 
 const HomeDonor = () => {
   const auth = useContext(AuthContext);
   const user = auth.user as Donor;
+
+  const liStyle = "m-0 mx-[3%] opacity-9 text-[0.9em] md:text-lg "
+  const pStyle = "m-0 mb-[0.25%] mt-[2%] font-semibold text-md md:text-lg"
 
   const [donationForm, setDonationForm] = useState<DonationForm>();
   const [screenings, setScreenings] = useState<Screening[]>([]);
@@ -43,88 +45,88 @@ const HomeDonor = () => {
   const navigate = useNavigate();
     return (
     <>
-      <div className="home-container">
+      <div className="flex flex-col items-center m-0 min-h-[96vh]">
         <NavbarDonor />
 
-        <div className="be-to-hero">
-          <div className="text">
-            <span>Faça sua doação e seja um <b>HERÓI</b></span>
+        <div className="flex w-[20em] text-center justify-center items-center mb-[4%] mt-[2%]">
+          <div className="w-[30%]">
+            <span className="text-[1.4em] md:text-2xl">Faça sua doação e seja um <b className="text-[#b80e14]">HERÓI</b></span>
           </div>
-          <div className="image">
-            <img src="hero.jpeg"></img>
+          <div className="w-[55%] md:[70%]">
+            <img className="w-[50vw] md:w-[30vw]" src="hero.jpeg"></img>
           </div>
         </div>
 
-        <span style={{color: "#035e89"}}>Critérios para doação</span>
-        <div className="criteria-donation-container">
-          <div className="criteria-donation">
-            <ul>
-              <p>Idade:</p>
-                <li>Entre 18 e 69 anos.</li>
-                <li>Menores de 18 anos precisam do consentimento do responsável legal.</li>
-                <li>Pessoas entre 60 e 69 anos devem ter doado sangue antes dos 60 anos.</li>
-              <p>Documento de Identificação:</p>
-                <li>Apresentar documento com foto emitido por órgão oficial.</li>
-                <li>Documentos digitais com foto são aceitos.</li>
-              <p>Peso:</p>
-                <li>Pesar no mínimo 50 kg.</li>
-              <p>Descanso:</p>
-                <li>Ter dormido pelo menos 6 horas nas últimas 24 horas.</li>
-              <p>Alimentação:</p>
-                <li>Estar alimentado, evitando alimentos gordurosos 3 horas antes da doação.</li>
-                <li>Após o almoço, aguardar 2 horas antes de doar.</li>
+        <span className= "text-[#035e89] mb-6 text-2xl md:text-4xl">Critérios para doação</span>
+        <div className="flex bg-[#f8f8f8] w-full pb-[3%] md:mb-[3%] px-2">
+          <div className="ml-[2vw] w-full md:w-[80vw]">
+            <ul className="list-disc list-inside">
+              <p className={pStyle}>Idade:</p>
+                <li className={liStyle}>Entre 18 e 69 anos.</li>
+                <li className={liStyle}>Menores de 18 anos precisam do consentimento do responsável legal.</li>
+                <li className={liStyle}>Pessoas entre 60 e 69 anos devem ter doado sangue antes dos 60 anos.</li>
+              <p className={pStyle}>Documento de Identificação:</p>
+                <li className={liStyle}>Apresentar documento com foto emitido por órgão oficial.</li>
+                <li className={liStyle}>Documentos digitais com foto são aceitos.</li>
+              <p className={pStyle}>Peso:</p>
+                <li className={liStyle}>Pesar no mínimo 50 kg.</li>
+              <p className={pStyle}>Descanso:</p>
+                <li className={liStyle}>Ter dormido pelo menos 6 horas nas últimas 24 horas.</li>
+              <p className={pStyle}>Alimentação:</p>
+                <li className={liStyle}>Estar alimentado, evitando alimentos gordurosos 3 horas antes da doação.</li>
+                <li className={liStyle}>Após o almoço, aguardar 2 horas antes de doar.</li>
             </ul>
           </div>
-          <div className="image">
-            <img src="/pensando.png" className=""></img>
+          <div className="hidden md:flex items-center justify-start w-[28vw]">
+            <img className="w-[9vw] h-5/6" src="/pensando.png"></img>
           </div>
         </div>
 
-        <div className="container">
-          <div className="content red-dark">
-            <BiDonateBlood size={60} style={{marginBottom: '3%', color: "rgba(184, 14, 20, 0.750)"}}/>
-            <label>O seu sangue pode salvar até quatro vidas</label>
+        <div className="flex flex-row m-0 w-full">
+          <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
+            <BiDonateBlood size={60} className="mb-[3%] text-[#b80e14bf]"/>
+            <label className="w-[90%] text-center text-[#1a3744d3] lg:text-[1.6em] md:text-[1.1em] text-[0.71em]">O seu sangue pode salvar até quatro vidas</label>
           </div>
-          <div className="content red">
-            <MdBloodtype size={60} style={{marginBottom: '3%', color: "rgba(184, 14, 20, 0.750)"}}/>
-            <label>Um ato simples, um impacto imenso.</label>
+          <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
+            <MdBloodtype size={60} className="mb-[3%] text-[#b80e14bf]"/>
+            <label className="w-[90%] text-center text-[#1a3744d3] lg:text-[1.6em] md:text-[1.1em] text-[0.71em]">Um ato simples, um impacto imenso.</label>
           </div>
-          <div className="content red-dark">
-            <GiLifeTap size={60} style={{marginBottom: '3%', color: "rgba(184, 14, 20, 0.750)"}}/>
-            <label>Faça a vida fluir nas veias de quem precisa.</label>
+          <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
+            <GiLifeTap size={60} className="mb-[3%] text-[#b80e14bf]"/>
+            <label className="w-[90%] text-center text-[#1a3744d3] lg:text-[1.6em] md:text-[1.1em] text-[0.71em]">Faça a vida fluir nas veias de quem precisa.</label>
           </div>
-          <div className="content red">
-            <MdBloodtype size={60} style={{marginBottom: '3%', color: "rgba(184, 14, 20, 0.750)"}}/>
-            <label>Cada doação conta. Faça a sua parte.</label>
+          <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
+            <MdBloodtype size={60} className="mb-[3%] text-[#b80e14bf]"/>
+            <label className="w-[90%] text-center text-[#1a3744d3] lg:text-[1.6em] md:text-[1.1em] text-[0.71em]">Cada doação conta. Faça a sua parte.</label>
           </div>
         </div>
-
-        <fieldset>
-          <legend>SOBRE A DOAÇÃO DE SANGUE</legend>
+        <fieldset className="hidden md:border-t border-t-[#00000046] border-0 block text-center mt-[5%] mb-[3%] w-full">
+          <legend className="px-[1.5%] font-semibold text-[#b80e14]">SOBRE A DOAÇÃO DE SANGUE</legend>
         </fieldset>
-        <div className="about-donation">
-          <div className="image">
-            <img src="blood_donation.png"></img>
+
+        <div className="hidden md:flex w-full mb-[3%]">
+          <div className="hidden md:w-[80vw]">
+            <img className="w-[22vw] h-5/6" src="blood_donation.png"></img>
           </div>
-          <div>
-            <p>A doação de sangue é um gesto essencial que pode salvar vidas. É um processo simples e seguro, onde uma única doação pode fazer toda a diferença para pacientes em situações críticas, como cirurgias, tratamentos de câncer, complicações durante o parto e acidentes graves.</p>
-            <p>Qualquer pessoa saudável, entre 18 e 69 anos, pode doar sangue após passar por uma triagem. A doação é rápida e indolor, e o sangue doado é testado, processado e armazenado adequadamente para uso em emergências médicas.</p>
-            <p>Além de salvar vidas, a doação de sangue traz uma sensação de realização e satisfação para os doadores, sabendo que estão ajudando a comunidade e fazendo uma diferença positiva na vida de outras pessoas.</p>
-            <p>Junte-se à causa da doação de sangue e seja parte dessa corrente de solidariedade e esperança. Sua doação pode ser a luz no fim do túnel para alguém que precisa desesperadamente de sangue. Lembre-se: uma única doação pode fazer toda a diferença.</p>
+          <div className="px-5">
+            <p className="opacity-95 text-md">A doação de sangue é um gesto essencial que pode salvar vidas. É um processo simples e seguro, onde uma única doação pode fazer toda a diferença para pacientes em situações críticas, como cirurgias, tratamentos de câncer, complicações durante o parto e acidentes graves.</p>
+            <p className="opacity-95 text-md">Qualquer pessoa saudável, entre 18 e 69 anos, pode doar sangue após passar por uma triagem. A doação é rápida e indolor, e o sangue doado é testado, processado e armazenado adequadamente para uso em emergências médicas.</p>
+            <p className="opacity-95 text-md">Além de salvar vidas, a doação de sangue traz uma sensação de realização e satisfação para os doadores, sabendo que estão ajudando a comunidade e fazendo uma diferença positiva na vida de outras pessoas.</p>
+            <p className="opacity-95 text-md">Junte-se à causa da doação de sangue e seja parte dessa corrente de solidariedade e esperança. Sua doação pode ser a luz no fim do túnel para alguém que precisa desesperadamente de sangue. Lembre-se: uma única doação pode fazer toda a diferença.</p>
           </div>
         </div>
-        <div className="go-schedule">
+        <div className="flex flex-col justify-center items-center w-full mb-[3%] bg-[#f8f8f8f8] p-[1.5%] mt-5 md:mt-0 pb-4">
           {user.scheduling === null ? (
             <div>
-              <div className="title-span">
-                <span style={{color: "#035e89"}}>Faça sua doação</span>
+              <span className="flex justify-center mb-6 text-[#035e89]  text-2xl md:text-4xl">Faça sua doação</span>
+              <div className="w-full px-5">
+                <p className="opacity-95 text-md md:text-lg mb-4"><label className="font-semibold">Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
+                  Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label className="font-semibold">Faça sua parte agora!</label></p>
               </div>
-              <div style={{width: "100%"}}>
-                <p><label style={{fontWeight: "500"}}>Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
-                  Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label style={{fontWeight: "500"}}>Faça sua parte agora!</label></p>
-              </div>
-                <div className="button-schedule">
-                  <button onClick={(() =>{ 
+                <div className="flex justify-center">
+                  <button className="text-white cursor-pointer text-center mt-[2%] bg-[#b80e14] rounded-lg p-[10px] border-none 
+                                    w-[22%] md:w-[10%] hover:bg-[#eb1118ad] "
+                   onClick={(() =>{ 
                     if(donationForm === null){
                       navigate("/donation-form")
                     }else if(screenings.length === 0 || screenings[0] === null){
@@ -136,7 +138,7 @@ const HomeDonor = () => {
                 </div>
             </div>  
           ) : (
-            <label style={{fontSize: "1.1em"}}>Você já fez seu agendamento, pra verificar detalhes <Link style={{color: "rgb(184, 14, 20)", fontSize: "1.2em"}} to={"/scheduling-donation"}>clique aqui</Link></label>
+            <label className="text-[1.1em]">Você já fez seu agendamento, pra verificar detalhes <Link className="text-[#b80e14] text-[1.2em]" to={"/scheduling-donation"}>clique aqui</Link></label>
           )}
         </div>
       </div>

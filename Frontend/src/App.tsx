@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <div className="flex justify-center items-center m-0">
-      <div className="w-[70vh]">
+      <div className="lg:w-[80vw] md:w-[90vw] w-full flex flex-col">
         <Routes>
           <Route path="/" element={<RequireAuth><AnalyzeTheRole/></RequireAuth>}/>
           <Route path="/login" element={<RequireAuth><Login/></RequireAuth>}/>

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.form-row::after {
+  @apply absolute right-2 top-1/2 border-solid;
+  content: "";
+  transform: translateY(-50%);
+  border-width: 5px 5px 0;
+  border-color: #333 transparent transparent;
+}
