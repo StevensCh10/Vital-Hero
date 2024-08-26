@@ -59,7 +59,7 @@ const Login = () => {
             <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/forgot-password">Esqueceu a senha?</Link>
           </p>
 
-          <button type="submit" className="bg-[#b80e14] rounded-lg w-[30%] text-white p-[8px] border-none cursor-pointer mb-5 hover:bg-[#eb1118b5]">
+          <button type="submit" className="bg-[#b80e14] rounded-lg w-[30%] text-white p-[8px] border-none cursor-pointer mb-5 hover:bg-[#b80e14a4]">
             Entrar
           </button>
         </form>

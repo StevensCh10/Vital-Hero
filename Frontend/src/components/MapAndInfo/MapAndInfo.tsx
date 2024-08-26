@@ -5,7 +5,6 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { BloodCenter } from "../../types/BloodCenter";
 import { Bloodstock } from "../../types/Bloodstock";
 import "leaflet/dist/leaflet.css";
-import "./MapAndInfo.css";
 import L from 'leaflet';
 
 const Map: React.FC = () => {
@@ -15,6 +14,10 @@ const Map: React.FC = () => {
   const [markers, setMarkers] = useState<JSX.Element[]>([]);
   const [bloodstocks, setBloodstocks] = useState<Bloodstock[]>([]);
   const [selectedCenter, setSelectedCenter] = useState<string | null>(null);
+
+  const pStyle = "flex text-start justify-space-between m-[0] mb-[1.3%]";
+  const spanStyle = "text-[17px] text-black";
+  const labelStyle = "w-full text-black opacity-[0.8] text-right";
 
   const customIcon = new L.Icon({
     iconUrl: "pino-de-localizacao.png",
@@ -217,12 +220,11 @@ const Map: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center ">
       <MapContainer
-        className="map-container"
+        className="relative w-[90%] rounded-lg h-[300px] md:w-full md:h-[500px]"
         center={[-8.0476, -34.877]}
         zoom={12}
-        style={{ height: "500px" }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -230,83 +232,81 @@ const Map: React.FC = () => {
         />
         {markers}
       </MapContainer>
-      <div className="bloodstock-container">
+      <div className="inline-flex flex-wrap justify-center w-full my-[6%]">
         {bloodcenters.map((center) => (
           <div
             key={center.id}
             id={center?.id.toString()}
-            className={`bloodstock-box ${
-              selectedCenter === center.id.toString() ? "selected" : ""
-            }`}
+            className="mx-[4%] mb-[20px] p-[1.5%] h-auto w-full lg:w-[38%]"
           >
-            <h3 className="bloodstock-title">{center.name}</h3>
-            <div style={{display: "flex", width:"100%"}}>
-              <div className="topics">
-                <p><span>Endereço:</span> <label>{center.address}</label></p>
-                <p><span>Telefone:</span> <label>{formatPhone(center.phone)}</label></p>
-                <p><span>Email:</span> <label>{center.email}</label></p>
-                <p><span>Referência:</span> <label>{center.referencePoint}</label></p>
-              </div>
+            <h3 className="flex justify-center text-[#b80e14] mb-6 text-2xl md:text-3xl">{center.name}</h3>
+            <div className="flex w-full">
+              <div className="bg-[#f8f8f8] w-full p-[4%] rounded-t-lg shadow-custom">
+                <p className={pStyle}><span className={spanStyle}>Endereço:</span> <label className={labelStyle}>{center.address}</label></p>
+                <p className={pStyle}><span className={spanStyle}>Telefone:</span> <label className={labelStyle}>{formatPhone(center.phone)}</label></p>
+                <p className={pStyle}><span className={spanStyle}>Email:</span> <label className={labelStyle}>{center.email}</label></p>
+                <p className={pStyle}><span className={spanStyle}>Referência:</span> <label className={labelStyle}>{center.referencePoint}</label></p>
+                <div className="flex items-center justify-center bg-[#f8f8f8] mt-5 w-full">
+                  {!selectedCenter || selectedCenter !== center.id.toString() ? ( 
+                    <>
+                      <label className="cursor-pointer text-[#035e89]" onClick={() => toggleSelected(center.id.toString())}>Informações do estoque sanguíneo</label>
+                      <IoIosArrowDown
+                        className="ml-[2%]"
+                        onClick={() => toggleSelected(center.id.toString())}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <label className="cursor-pointer text-[#035e89]" onClick={() => toggleSelected(center.id.toString())}>Informações do estoque sanguíneo</label>
+                      <IoIosArrowUp
+                        className="ml-[2%]"
+                        onClick={() => toggleSelected(center.id.toString())}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>  
             </div>
 
-            <div className="arrow-container">
-              {!selectedCenter || selectedCenter !== center.id.toString() ? (
-                <>
-                  <label className="more-info" onClick={() => toggleSelected(center.id.toString())}>Informações do estoque sanguíneo<img src="/gota-de-sangue.png"></img></label>
-                  <IoIosArrowDown
-                    className="arrow"
-                    onClick={() => toggleSelected(center.id.toString())}
-                  />
-                </>
-              ) : (
-                <>
-                  <label className="more-info" onClick={() => toggleSelected(center.id.toString())}>Informações do estoque sanguíneo<img src="/gota-de-sangue.png"></img></label>
-                  <IoIosArrowUp
-                    className="arrow"
-                    onClick={() => toggleSelected(center.id.toString())}
-                  />
-                </>
-              )}
-            </div>
             {selectedCenter === center.id.toString() && (
-              <div style={{backgroundColor: " #f8f8f8"}}>
+              <div className="relative w-full bg-[#f8f8f8]">
                 {bloodstocks.find((stock) => stock.bloodcenter === center.id) ? (
-                  <div className="types-container">
-                    <div className="type-info">
-                      <label>A-</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_negative))!} alt="Tipo A-" />
+                  <div className="absolute flex flex-wrap bg-[#f8f8f8] py-[2%] z-10 rounded-b-lg shadow-custom">
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">A-</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_negative))!} alt="Tipo A-" />
                     </div>
-                    <div className="type-info">
-                      <label>A+</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_positive))!} alt="Tipo A+" />
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">A+</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.a_positive))!} alt="Tipo A+" />
                     </div>
-                    <div className="type-info">
-                      <label>B-</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_negative))!} alt="Tipo B-" />
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">B-</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_negative))!} alt="Tipo B-" />
                     </div>
-                    <div className="type-info">
-                      <label>B+</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_positive))!} alt="Tipo B+" />
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">B+</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.b_positive))!} alt="Tipo B+" />
                     </div>
-                    <div className="type-info">
-                      <label>AB-</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_negative))!} alt="Tipo AB-" />
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">AB-</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_negative))!} alt="Tipo AB-" />
                     </div>
-                    <div className="type-info">
-                      <label>AB+</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_positive))!} alt="Tipo AB+" />
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">AB+</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.ab_positive))!} alt="Tipo AB+" />
                     </div>
-                    <div className="type-info">
-                      <label>O-</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_negative))!} alt="Tipo O-" />
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">O-</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_negative))!} alt="Tipo O-" />
                     </div>
-                    <div className="type-info">
-                      <label>O+</label>
-                      <img src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_positive))!} alt="Tipo O+" />
+                    <div className="flex justify-center w-[30%] m-[5px]">
+                      <label className="block text-center text-[#b80e14]">O+</label>
+                      <img className="block w-[8vh] h-[8vh] m-0" src={UrlGenerator(parseFloat(bloodstocks.find((stock) => stock.bloodcenter === center.id)!.o_positive))!} alt="Tipo O+" />
                     </div>
                   </div>
                 ) : (
-                  <div className="types-container">
+                  <div className="flex justify-center w-[30%] m-[5px]">
                     <p>Estoque sanguíneo não disponível no sistema!</p>
                   </div>
                 )}
@@ -315,13 +315,13 @@ const Map: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="about-bloodstock">
-        <fieldset>
-          <legend>IMPORTÂNCIA DO ESTOQUE SANGUÍNEO</legend>
+      <div className="hidden md:block mb-[5%]">
+        <fieldset className="hidden md:block border-t border-t-[#00000046] border-0 block text-center mt-[5%] mb-[3%] w-full">
+          <legend className="px-[1.5%] font-semibold text-[#b80e14]">IMPORTÂNCIA DO ESTOQUE SANGUÍNEO</legend>
         </fieldset>
-        <p>O estoque sanguíneo é a vida pulsante por trás de cada emergência médica, cirurgia ou tratamento. É a dádiva preciosa que conecta doadores altruístas a pacientes necessitados, transformando vidas em momentos de desespero. Cada doação de sangue representa uma promessa de esperança e cura para aqueles que enfrentam desafios de saúde.</p>
-        <p>A doação de sangue é um ato de pura generosidade que transcende fronteiras e diferenças. Ao doar sangue, você se torna um elo vital na corrente da vida, oferecendo uma oportunidade única para salvar vidas e fazer a diferença na comunidade. Seu gesto altruísta não apenas fornece um recurso essencial, mas também transmite uma mensagem poderosa de compaixão e apoio mútuo.</p>
-        <p>Manter um estoque sanguíneo robusto é crucial para garantir que os pacientes recebam os cuidados de que precisam, quando precisam. Emergências médicas, complicações durante o parto, cirurgias complexas - todas essas situações exigem um suprimento constante de sangue seguro e compatível. Portanto, cada doação é uma contribuição valiosa para sustentar essa reserva vital de esperança.</p>
+        <p className="text-start opacity-95 text-[1.1em]">O estoque sanguíneo é a vida pulsante por trás de cada emergência médica, cirurgia ou tratamento. É a dádiva preciosa que conecta doadores altruístas a pacientes necessitados, transformando vidas em momentos de desespero. Cada doação de sangue representa uma promessa de esperança e cura para aqueles que enfrentam desafios de saúde.</p>
+        <p className="text-start opacity-95 text-[1.1em]">A doação de sangue é um ato de pura generosidade que transcende fronteiras e diferenças. Ao doar sangue, você se torna um elo vital na corrente da vida, oferecendo uma oportunidade única para salvar vidas e fazer a diferença na comunidade. Seu gesto altruísta não apenas fornece um recurso essencial, mas também transmite uma mensagem poderosa de compaixão e apoio mútuo.</p>
+        <p className="text-start opacity-95 text-[1.1em]">Manter um estoque sanguíneo robusto é crucial para garantir que os pacientes recebam os cuidados de que precisam, quando precisam. Emergências médicas, complicações durante o parto, cirurgias complexas - todas essas situações exigem um suprimento constante de sangue seguro e compatível. Portanto, cada doação é uma contribuição valiosa para sustentar essa reserva vital de esperança.</p>
       </div>
     </div>
   );

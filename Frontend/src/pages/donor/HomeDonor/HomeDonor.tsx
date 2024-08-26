@@ -2,7 +2,7 @@ import NavbarDonor from "../../../components/NavbarDonor/NavbarDonor";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { BiDonateBlood } from "react-icons/bi";
-import { useContext, useEffect, useState } from "react";
+import { ButtonHTMLAttributes, useContext, useEffect, useState } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { Donor } from "../../../types/Donor";
 import { GiLifeTap } from "react-icons/gi";
@@ -43,6 +43,17 @@ const HomeDonor = () => {
   }, []);
 
   const navigate = useNavigate();
+  const goDonation = () => {
+     
+      if(donationForm === null){
+        navigate("/donation-form")
+      }else if(screenings.length === 0 || screenings[0] === null){
+        navigate("/screening")
+      }else{
+        navigate("/scheduling-donation")
+      }
+  }
+
     return (
     <>
       <div className="flex flex-col items-center m-0 min-h-[96vh]">
@@ -50,10 +61,10 @@ const HomeDonor = () => {
 
         <div className="flex w-[20em] text-center justify-center items-center mb-[4%] mt-[2%]">
           <div className="w-[30%]">
-            <span className="text-[1.4em] md:text-2xl">Faça sua doação e seja um <b className="text-[#b80e14]">HERÓI</b></span>
+            <span className="text-[1em] md:text-[1.2em]">Faça sua doação e seja um <b className="text-[#b80e14]">HERÓI</b></span>
           </div>
-          <div className="w-[55%] md:[70%]">
-            <img className="w-[50vw] md:w-[30vw]" src="hero.jpeg"></img>
+          <div className="w-[40%]">
+            <img className="w-full" src="hero.jpeg"></img>
           </div>
         </div>
 
@@ -77,7 +88,7 @@ const HomeDonor = () => {
                 <li className={liStyle}>Após o almoço, aguardar 2 horas antes de doar.</li>
             </ul>
           </div>
-          <div className="hidden md:flex items-center justify-start w-[28vw]">
+          <div className="hidden lg:flex items-center justify-start w-[28vw]">
             <img className="w-[9vw] h-5/6" src="/pensando.png"></img>
           </div>
         </div>
@@ -100,22 +111,22 @@ const HomeDonor = () => {
             <label className="w-[90%] text-center text-[#1a3744d3] lg:text-[1.6em] md:text-[1.1em] text-[0.71em]">Cada doação conta. Faça a sua parte.</label>
           </div>
         </div>
-        <fieldset className="hidden md:border-t border-t-[#00000046] border-0 block text-center mt-[5%] mb-[3%] w-full">
+        <fieldset className="hidden md:block border-t border-t-[#00000046] border-0 block text-center mt-[5%] mb-[3%] w-full">
           <legend className="px-[1.5%] font-semibold text-[#b80e14]">SOBRE A DOAÇÃO DE SANGUE</legend>
         </fieldset>
 
         <div className="hidden md:flex w-full mb-[3%]">
-          <div className="hidden md:w-[80vw]">
-            <img className="w-[22vw] h-5/6" src="blood_donation.png"></img>
+          <div className="w-[80vw]">
+            <img className="w-[20vw] h-5/6" src="blood_donation.png"></img>
           </div>
           <div className="px-5">
-            <p className="opacity-95 text-md">A doação de sangue é um gesto essencial que pode salvar vidas. É um processo simples e seguro, onde uma única doação pode fazer toda a diferença para pacientes em situações críticas, como cirurgias, tratamentos de câncer, complicações durante o parto e acidentes graves.</p>
-            <p className="opacity-95 text-md">Qualquer pessoa saudável, entre 18 e 69 anos, pode doar sangue após passar por uma triagem. A doação é rápida e indolor, e o sangue doado é testado, processado e armazenado adequadamente para uso em emergências médicas.</p>
-            <p className="opacity-95 text-md">Além de salvar vidas, a doação de sangue traz uma sensação de realização e satisfação para os doadores, sabendo que estão ajudando a comunidade e fazendo uma diferença positiva na vida de outras pessoas.</p>
-            <p className="opacity-95 text-md">Junte-se à causa da doação de sangue e seja parte dessa corrente de solidariedade e esperança. Sua doação pode ser a luz no fim do túnel para alguém que precisa desesperadamente de sangue. Lembre-se: uma única doação pode fazer toda a diferença.</p>
+            <p className="opacity-95 text-[1.1em]">A doação de sangue é um gesto essencial que pode salvar vidas. É um processo simples e seguro, onde uma única doação pode fazer toda a diferença para pacientes em situações críticas, como cirurgias, tratamentos de câncer, complicações durante o parto e acidentes graves.</p>
+            <p className="opacity-95 text-[1.1em]">Qualquer pessoa saudável, entre 18 e 69 anos, pode doar sangue após passar por uma triagem. A doação é rápida e indolor, e o sangue doado é testado, processado e armazenado adequadamente para uso em emergências médicas.</p>
+            <p className="opacity-95 text-[1.1em]">Além de salvar vidas, a doação de sangue traz uma sensação de realização e satisfação para os doadores, sabendo que estão ajudando a comunidade e fazendo uma diferença positiva na vida de outras pessoas.</p>
+            <p className="opacity-95 text-[1.1em]">Junte-se à causa da doação de sangue e seja parte dessa corrente de solidariedade e esperança. Sua doação pode ser a luz no fim do túnel para alguém que precisa desesperadamente de sangue. Lembre-se: uma única doação pode fazer toda a diferença.</p>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center w-full mb-[3%] bg-[#f8f8f8f8] p-[1.5%] mt-5 md:mt-0 pb-4">
+        <div className="flex flex-col justify-center items-center w-full mb-[3%] bg-[#f8f8f8f8] p-[1.5%] mt-5 md:mt-4 pb-4">
           {user.scheduling === null ? (
             <div>
               <span className="flex justify-center mb-6 text-[#035e89]  text-2xl md:text-4xl">Faça sua doação</span>
@@ -126,15 +137,7 @@ const HomeDonor = () => {
                 <div className="flex justify-center">
                   <button className="text-white cursor-pointer text-center mt-[2%] bg-[#b80e14] rounded-lg p-[10px] border-none 
                                     w-[22%] md:w-[10%] hover:bg-[#eb1118ad] "
-                   onClick={(() =>{ 
-                    if(donationForm === null){
-                      navigate("/donation-form")
-                    }else if(screenings.length === 0 || screenings[0] === null){
-                      navigate("/screening")
-                    }else{
-                      navigate("/scheduling-donation")
-                    }
-                  })}>Começar</button>
+                   onClick={goDonation}>Começar</button>
                 </div>
             </div>  
           ) : (

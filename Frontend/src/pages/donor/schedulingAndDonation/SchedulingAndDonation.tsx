@@ -131,13 +131,14 @@ const SchedulingAndDonation = () => {
 
   return (
     <>
-      <div className="donations-container">
+      <div className="flex flex-col items-center h-screen">
         <Navbar />
-        <nav className="navbar-donations">
-          <div className="left">
+        <nav className="flex box-border items-center justify-center mt-[1%] w-full ">
+          <div className="flex items-center mx-[2%]">
             <button
-              className={`button-options ${
-                activeButtonLeft === true ? "active" : ""
+              className={`text-[#035e89] text-center py-1 px-2  cursor-pointer text-[1.1em]
+                hover:text-white hover:rounded-md hover:shadow-custom hover:bg-[#035e89] ${
+                activeButtonLeft === true ? "text-white bg-[#035e89] rounded-md shadow-custom" : ""
               }`}
               onClick={handleClickLeft}
             >
@@ -145,10 +146,11 @@ const SchedulingAndDonation = () => {
             </button>
           </div>
           <label style={{ fontSize: "20px", color: "black" }}>|</label>
-          <div className="right">
+          <div className="flex items-center mx-[2%]">
             <button
-              className={`button-options ${
-                activeButtonRight === true ? "active" : ""
+              className={`text-[#035e89] text-center py-1 px-2  cursor-pointer text-[1.1em]
+                hover:text-white hover:rounded-md hover:shadow-custom hover:bg-[#035e89] ${
+                activeButtonRight === true ? "text-white bg-[#035e89] rounded-md shadow-custom" : ""
               }`}
               onClick={handleClickRight}
             >
@@ -156,9 +158,9 @@ const SchedulingAndDonation = () => {
             </button>
           </div>
         </nav>
-        <div className="info-container">
+        <div className="flex flex-row w-[90%] items-center justify-start h-screen">
           {activeButtonRight ? (
-            <div className="donations-info">
+            <div className="flex text-start items-center justify-center w-full">
               {donations.length !== 0 ? (
                 donations.slice(0, 10).map((donation) => (
                   <div key={donation.id} className="with-content-box">
@@ -185,38 +187,29 @@ const SchedulingAndDonation = () => {
                   </div>
                 ))
               ) : (
-                <div className="no-scheduling">
-                  <h2>Você ainda não realizou nenhuma doação!</h2>
-                  <p>
-                    {" "}
-                    <img src="triste.png"></img>
-                  </p>
-                </div>
+                <h2 className="text-[1.2em]">Você ainda não realizou nenhuma doação!</h2>
               )}
             </div>
           ) : (
             <div style={{ width: "100%" }}>
-              <div className="scheduling-info">
+              <div className="w-full text-center">
                 {scheduling === null ? (
-                  <div
-                    className="form-scheduling-dontations-container"
-                    id="section-scheduling-dontations"
-                  >
-                    <div className="title-form-scheduling-donations">
+                  <div id="section-scheduling-dontations">
+                    <div className="flex flex-col">
                       {donationForm === null && screenings.length === 0 && (
-                        <h2 className="alert">
+                        <h2 className="text-[1.2em]">
                           *É necessário preencher o formulário de doação e a
                           triagem para marcar um agendamento*
                         </h2>
                       )}
                       {donationForm === null && screenings.length !== 0 && (
-                        <h2 className="alert">
+                        <h2 className="text-[1.2em]">
                           *É necessário preencher o formulário de doação para
                           marcar um agendamento*
                         </h2>
                       )}
                       {donationForm !== null && screenings.length === 0 && (
-                        <h2 className="alert">
+                        <h2 className="text-[1.2em]">
                           *É necessário preencher a triagem para marcar um
                           agendamento*
                         </h2>
@@ -225,7 +218,7 @@ const SchedulingAndDonation = () => {
                         screenings.length !== 0 &&
                         screenings[0] &&
                         screenings[0].doctor === null && (
-                          <h2 className="alert">
+                          <h2 className="text-[1.2em]">
                             *Sua triagem está em processo de validação. Após a
                             validação informaremos se você está apto para fazer
                             a doação*

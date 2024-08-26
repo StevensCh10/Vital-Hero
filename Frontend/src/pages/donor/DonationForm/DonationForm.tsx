@@ -7,14 +7,19 @@ import { useNavigate } from "react-router-dom";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
-  const donationFormAux = JSON.parse(localStorage.getItem('donationForm')! ?? {}) as DonationFormType; 
+  const donationFormAux = JSON.parse(
+    localStorage.getItem("donationForm")! ?? {}
+  ) as DonationFormType;
   const navigate = useNavigate();
 
-  const formRow = "flex flex-col justify-center mx-[2.5%] w-full md:w-[35%] lg:w-[28.3%]";
+  const formRow =
+    "flex flex-col justify-center mx-[2.5%] w-full md:w-[35%] lg:w-[22.3%]";
   const labelStyle = "mb-[1%] text-start text-[1.1em]";
-  const selectStyle = "text-[#333333] w-[99%] p-2 rounded-md bg-[#e2e1e1]" 
-                      + " mb-[5%] text-[1em]";
-  const input = "w-full p-2 rounded-md text-[#333333] bg-[#e2e1e1] mb-[5%] text-[1em]";
+  const selectStyle =
+    "text-[#333333] w-[99%] p-2 rounded-md bg-[#e2e1e1]" +
+    " mb-[5%] text-[1em] focus:outline-none";
+  const inputStyle =
+    "w-full p-2 rounded-md text-[#333333] bg-[#e2e1e1] mb-[5%] text-[1em] focus:outline-none";
 
   const [q1, setQ1] = useState(donationFormAux?.q1);
   const [q2, setQ2] = useState(donationFormAux?.q2);
@@ -27,7 +32,7 @@ const DonationForm = () => {
   const [q9, setQ9] = useState(donationFormAux?.q9);
   const [q10, setQ10] = useState(donationFormAux?.q10);
   const [q11, setQ11] = useState(donationFormAux?.q11);
-  const donorid: Donor ={id: auth.user!.id!}
+  const donorid: Donor = { id: auth.user!.id! };
 
   const estadosBrasileiros = [
     { sigla: "AC", nome: "Acre" },
@@ -60,86 +65,94 @@ const DonationForm = () => {
   ];
 
   useEffect(() => {
-    const fetchData = async () => {
-      
-    };
+    const fetchData = async () => {};
     fetchData();
   }, [auth]);
 
-  const handleAddDonationForm = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddDonationForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const donationForm: DonationFormType = {
       donor: donorid,
-      q1: q1, 
-      q2: q2, 
-      q3: q3, 
-      q4: q4, 
-      q5: q5, 
-      q6: q6, 
-      q7: q7, 
-      q8: q8, 
-      q9: q9, 
-      q10: q10, 
-      q11: q11
-    }
+      q1: q1,
+      q2: q2,
+      q3: q3,
+      q4: q4,
+      q5: q5,
+      q6: q6,
+      q7: q7,
+      q8: q8,
+      q9: q9,
+      q10: q10,
+      q11: q11,
+    };
 
     await auth.addDonationForm(donationForm);
     navigate("/screening");
-  }
+  };
 
-  const handleUpdateDonationForm = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdateDonationForm = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     const donationForm: DonationFormType = {
       id: donationFormAux.id,
       donor: donorid,
-      q1: q1, 
-      q2: q2, 
-      q3: q3, 
-      q4: q4, 
-      q5: q5, 
-      q6: q6, 
-      q7: q7, 
-      q8: q8, 
-      q9: q9, 
-      q10: q10, 
-      q11: q11
-    }
+      q1: q1,
+      q2: q2,
+      q3: q3,
+      q4: q4,
+      q5: q5,
+      q6: q6,
+      q7: q7,
+      q8: q8,
+      q9: q9,
+      q10: q10,
+      q11: q11,
+    };
 
     await auth.updateDonationForm(donationForm);
     window.location.reload();
-  }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="flex flex-col items-center justify-center w-full text-center">
       <Navbar />
       {donationFormAux === null ? (
-        <div className="flex flex-col w-full items-center min-h-[89vh] mt-[3%]">
+        <div className="flex flex-col w-full items-center justify-center min-h-[89vh] mt-[3%]">
           <div className="flex items-center justify-center">
             <div className="flex items-center justify-center w-[40%] m-0 mb-[5%] mt-[2%] md:w-[25%]">
               <div className="w-[40%]">
                 <img className="w-full" src="formulario-de-registro.png"></img>
               </div>
               <div className="w-[60%]">
-                <span className="text-[1em] md:text-[1.2em]">Preencha as informações abaixo.</span>
+                <span className="text-[1em] md:text-[1.2em]">
+                  Preencha as informações abaixo.
+                </span>
               </div>
             </div>
           </div>
-          <span className="flex justify-center mb-6 text-[#035e89]  text-2xl md:text-4xl">Formulário de Doação</span>
-          <form className="flex flex-col items-center justify-center p-[2%] mb-[10%] md:mb-[2%]" onSubmit={handleAddDonationForm}>
-            <div className="flex flex-wrap items-center lg:justify-start md:justify-center">
+          <span className="flex justify-center mb-6 text-[#035e89] text-2xl md:text-4xl">
+            Formulário de Doação
+          </span>
+          <form
+            className="flex flex-col items-center justify-center p-[2%] md:mb-[2%]"
+            onSubmit={handleAddDonationForm}
+          >
+            <div className="flex flex-wrap items-center justify-center">
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="fatherName">
                   Nome do Pai:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="fatherName"
                   name="fatherName"
                   pattern="\S.*"
-                  required onChange={(e) => setQ1(e.target.value)}
+                  required
+                  onChange={(e) => setQ1(e.target.value)}
                 />
               </div>
               <div className={formRow}>
@@ -147,12 +160,13 @@ const DonationForm = () => {
                   Nome da Mãe:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="motherName"
                   name="motherName"
                   pattern="\S.*"
-                  required onChange={(e) => setQ2(e.target.value)}
+                  required
+                  onChange={(e) => setQ2(e.target.value)}
                 />
               </div>
               <div className={formRow}>
@@ -160,24 +174,26 @@ const DonationForm = () => {
                   Número para contato de emergência:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="emergencyPhone"
                   name="emergencyPhone"
                   placeholder="Ex: 8199546165"
                   pattern="\S.*"
-                  required onChange={(e) => setQ3(e.target.value)}
+                  required
+                  onChange={(e) => setQ3(e.target.value)}
                 />
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="naturalness">
                   Naturalidade:
                 </label>
-                <select 
-                  className={selectStyle} 
+                <select
+                  className={selectStyle}
                   id="naturalness"
                   name="naturalness"
-                  required onChange={(e) => setQ4(e.target.value)}
+                  required
+                  onChange={(e) => setQ4(e.target.value)}
                 >
                   <option value="">Selecione a naturalidade</option>
                   <option value="AC">Acre</option>
@@ -213,13 +229,13 @@ const DonationForm = () => {
                 <label className={labelStyle} htmlFor="document">
                   Documento:
                 </label>
-                <select 
+                <select
                   className={selectStyle}
-                  id="document" 
-                  name="document" 
-                  required 
+                  id="document"
+                  name="document"
+                  required
                   onChange={(e) => setQ5(e.target.value)}
-                  >
+                >
                   <option value="CPF">CPF</option>
                   <option value="RG">RG</option>
                   <option value="CNH">CNH</option>
@@ -232,23 +248,25 @@ const DonationForm = () => {
                   Número do documento:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="documentNumber"
                   name="documentNumber"
                   pattern="\S.*"
-                  required onChange={(e) => setQ6(e.target.value)}
+                  required
+                  onChange={(e) => setQ6(e.target.value)}
                 />
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="UF">
                   UF:
                 </label>
-                <select 
-                  className={selectStyle} 
+                <select
+                  className={selectStyle}
                   id="UF"
                   name="UF"
-                  required onChange={(e) => setQ7(e.target.value)}
+                  required
+                  onChange={(e) => setQ7(e.target.value)}
                 >
                   <option value="">Selecione a UF</option>
                   {estadosBrasileiros.map((estado) => (
@@ -263,24 +281,26 @@ const DonationForm = () => {
                   Orgão Expedidor:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="issuingBody"
                   name="issuingBody"
                   placeholder="Ex: SDS"
                   pattern="\S.*"
-                  required onChange={(e) => setQ8(e.target.value)}
+                  required
+                  onChange={(e) => setQ8(e.target.value)}
                 />
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="education">
                   Escolaridade:
                 </label>
-                <select 
-                  className={selectStyle} 
+                <select
+                  className={selectStyle}
                   id="education"
                   name="education"
-                  required onChange={(e) => setQ9(e.target.value)}
+                  required
+                  onChange={(e) => setQ9(e.target.value)}
                 >
                   <option value="">Selecione a escolaridade</option>
                   <option value="Ensino Médio Completo">
@@ -306,12 +326,13 @@ const DonationForm = () => {
                   Profissão:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="profession"
                   name="profession"
                   pattern="\S.*"
-                  required onChange={(e) => setQ10(e.target.value)}
+                  required
+                  onChange={(e) => setQ10(e.target.value)}
                 />
               </div>
               <div className={formRow}>
@@ -319,33 +340,40 @@ const DonationForm = () => {
                   Trabalho atual:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="currentJob"
                   name="currentJob"
                   pattern="\S.*"
-                  required onChange={(e) => setQ11(e.target.value)}
+                  required
+                  onChange={(e) => setQ11(e.target.value)}
                 />
               </div>
             </div>
-            <button 
-              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] w-[25%]  md:w-[10%] hover:bg-[#eb1118af]" 
-              type="submit">
+            <button
+              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] w-[25%]  md:w-[10%] hover:bg-[#eb1118af]"
+              type="submit"
+            >
               Salvar
             </button>
           </form>
         </div>
       ) : (
         <div className="flex flex-col w-full items-center min-h-[89vh] mt-[3%]">
-          <span>Formulário de Doação</span>
-          <form onSubmit={handleUpdateDonationForm}>
-            <div className="flex flex-wrap">
+          <span className="flex justify-center mb-6 text-[#035e89] text-2xl md:text-4xl">
+            Formulário de Doação
+          </span>
+          <form
+            className="flex flex-col items-center justify-center p-[2%] md:mb-[2%]"
+            onSubmit={handleUpdateDonationForm}
+          >
+            <div className="flex flex-wrap items-center justify-center">
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="fatherName">
                   Nome do Pai:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   defaultValue={q1}
                   type="text"
                   id="fatherName"
@@ -358,7 +386,7 @@ const DonationForm = () => {
                   Nome da Mãe:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   defaultValue={q2}
                   type="text"
                   id="motherName"
@@ -371,13 +399,14 @@ const DonationForm = () => {
                   Número para contato de emergência:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   type="text"
                   id="emergencyPhone"
                   name="emergencyPhone"
                   pattern="\S.*"
                   value={q3}
-                  required onChange={(e) => setQ3(e.target.value)}
+                  required
+                  onChange={(e) => setQ3(e.target.value)}
                 />
               </div>
               <div className={formRow}>
@@ -385,7 +414,7 @@ const DonationForm = () => {
                   Naturalidade:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   id="naturalness"
                   defaultValue={q4}
                   name="naturalness"
@@ -398,7 +427,7 @@ const DonationForm = () => {
                   Documento:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   id="document"
                   name="document"
                   defaultValue={q5}
@@ -411,7 +440,7 @@ const DonationForm = () => {
                   Número do documento:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   defaultValue={q6}
                   type="text"
                   id="estadoCivil"
@@ -424,7 +453,7 @@ const DonationForm = () => {
                   UF:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   defaultValue={q7}
                   id="UF"
                   name="UF"
@@ -437,7 +466,7 @@ const DonationForm = () => {
                   Orgão Expedidor:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   defaultValue={q8}
                   type="text"
                   id="issuingBody"
@@ -450,7 +479,7 @@ const DonationForm = () => {
                 <label className={labelStyle} htmlFor="education">
                   Escolaridade:
                 </label>
-                <select 
+                <select
                   className={selectStyle}
                   id="education"
                   defaultValue={q9}
@@ -481,7 +510,7 @@ const DonationForm = () => {
                   Profissão:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   defaultValue={q10}
                   type="text"
                   id="profession"
@@ -494,7 +523,7 @@ const DonationForm = () => {
                   Trabalho atual:
                 </label>
                 <input
-                  className={input}
+                  className={inputStyle}
                   defaultValue={q11}
                   type="text"
                   id="currentJob"
@@ -503,9 +532,10 @@ const DonationForm = () => {
                 />
               </div>
             </div>
-            <button 
-              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] w-[25%]  md:w-[10%] hover:bg-[#eb1118af]" 
-              type="submit">
+            <button
+              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] w-[25%]  md:w-[10%] hover:bg-[#eb1118af]"
+              type="submit"
+            >
               Atualizar
             </button>
           </form>
