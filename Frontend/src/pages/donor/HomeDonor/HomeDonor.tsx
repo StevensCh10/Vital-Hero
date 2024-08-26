@@ -2,7 +2,7 @@ import NavbarDonor from "../../../components/NavbarDonor/NavbarDonor";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { BiDonateBlood } from "react-icons/bi";
-import { ButtonHTMLAttributes, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { Donor } from "../../../types/Donor";
 import { GiLifeTap } from "react-icons/gi";
