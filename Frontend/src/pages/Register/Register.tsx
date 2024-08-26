@@ -33,7 +33,7 @@ const Register = () => {
   };
 
   const formRow =
-  "flex flex-col justify-center mx-[2.5%] w-full md:w-[35%] lg:w-[22.3%] text-start";
+  "flex flex-col justify-center mx-[2.5%] w-[90%] md:w-[35%] lg:w-[22.3%] text-start";
   const labelStyle = "mb-[1%] text-start text-[1.1em]";
   const selectStyle =
     "text-[#333333] w-[99%] p-2 rounded-md bg-[#e2e1e1]" +
