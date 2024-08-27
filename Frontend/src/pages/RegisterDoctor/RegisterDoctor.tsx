@@ -85,7 +85,7 @@ const RegisterDoctor = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[95vh]">
+    <div className="flex flex-col items-center justify-center min-h-[97vh]">
       <img className="mt-[3%] w-[70px] md:w-[100px]" src="Logo.png"></img>
       <span className="text-[#035e89] text-2xl md:text-4xl">Cadastre-se e ajude na causa</span>
       <form className="w-full text-center mt-[8%] md:mt-[3%]" onSubmit={handleRegister} encType="multipart/form-data" style={{ width: "100%" }}>

@@ -25,7 +25,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center min-h-[97vh]">
       <div className="flex flex-col items-center w-[380px] py-[3%] px-[1.5%]">
         <div className="flex flex-col items-center text-center w-[69%] mb-[5%]">
             <p className="mb-0"><img className="w-[100px]" src="esqueceu-senha.png"></img></p>

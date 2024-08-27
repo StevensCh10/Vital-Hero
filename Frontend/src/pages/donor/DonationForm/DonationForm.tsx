@@ -13,10 +13,10 @@ const DonationForm = () => {
   const navigate = useNavigate();
 
   const formRow =
-    "flex flex-col justify-center mx-[2.5%] w-full md:w-[35%] lg:w-[22.3%]";
+    "flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%]";
   const labelStyle = "mb-[1%] text-start text-[1.1em]";
   const selectStyle =
-    "text-[#333333] w-[99%] p-2 rounded-md bg-[#00000015]" +
+    "text-[#333333] w-full p-2 rounded-md bg-[#00000015]" +
     " mb-[5%] text-[1em] focus:outline-none";
   const inputStyle =
     "w-full p-2 rounded-md text-[#333333] bg-[#00000015] mb-[5%] text-[1em] focus:outline-none";
@@ -351,7 +351,7 @@ const DonationForm = () => {
               </div>
             </div>
             <button
-              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] w-[25%]  md:w-[10%] hover:bg-[#eb1118af]"
+              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] mb-[4%] w-[25%] md:w-[10%] md:mb-0 hover:bg-[#eb1118af]"
               type="submit"
             >
               Salvar
@@ -533,7 +533,7 @@ const DonationForm = () => {
               </div>
             </div>
             <button
-              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] w-[25%]  md:w-[10%] hover:bg-[#eb1118af]"
+              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] mb-[4%] w-[25%] md:w-[10%] md:mb-0 hover:bg-[#eb1118af]"
               type="submit"
             >
               Atualizar

@@ -1,9 +1,7 @@
-import './Footer.css'
-
 const Footer = () => {
     return(
-      <div className="footer-container">
-        <div className='copyright'>
+      <div className="flex items-center justify-center text-[0.8em]">
+        <div className="opacity-60">
           <p>VitalHero &copy; 2024 All rights reserved</p>
         </div>
       </div>
