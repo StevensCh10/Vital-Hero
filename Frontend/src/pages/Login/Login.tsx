@@ -35,7 +35,7 @@ const Login = () => {
         <form onSubmit={handleLogin} className="flex flex-col items-center text-start w-full">
           <label className="w-[69%] mb-[1%] text-lg" >Email:</label>
           <input
-            className="w-[70%] p-2.5 box-border mb-[3%] rounded-[5px] border border-[#00000008] bg-[#00000015] text-base focus:outline-none focus:border-[#1a3744]"
+            className="w-[70%] p-2.5 box-border mb-[3%] rounded-[5px] bg-[#00000015] text-base focus:outline-none focus:border-[#1a3744]"
             placeholder="Email"
             type="email"
             id="email"
@@ -46,7 +46,7 @@ const Login = () => {
 
           <label className="w-[69%] mb-[1%] text-lg">Senha:</label>
           <input
-            className="w-[70%] p-2.5 box-border mb-[1%] rounded-[5px] border border-[#00000008] bg-[#00000015] text-base focus:outline-none focus:border-[#1a3744]"
+            className="w-[70%] p-2.5 box-border mb-[1%] rounded-[5px] bg-[#00000015] text-base focus:outline-none focus:border-[#1a3744]"
             placeholder="Senha"
             type="password"
             id="password"

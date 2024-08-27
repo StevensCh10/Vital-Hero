@@ -17,7 +17,7 @@ const Screening = () => {
     "flex flex-col justify-center mx-[2.5%] w-full md:w-[35%] lg:w-[22.3%]";
   const labelStyle = "mb-[1%] text-start text-[1.1em]";
   const selectStyle =
-    "text-[#333333] w-[99%] p-2 rounded-md bg-[#e2e1e1]" +
+    "text-[#333333] w-[99%] p-2 rounded-md bg-[#00000015]" +
     " mb-[5%] text-[1em] focus:outline-none";
 
   const [q1, setQ1] = useState(screenings[0]?.q1);
