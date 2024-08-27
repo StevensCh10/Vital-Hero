@@ -232,7 +232,7 @@ const Map: React.FC = () => {
         />
         {markers}
       </MapContainer>
-      <div className="inline-flex flex-wrap justify-center w-full my-[6%]">
+      <div className="inline-flex flex-wrap justify-center w-full my-[6%] md:my-0 md:mt-[5%]">
         {bloodcenters.map((center) => (
           <div
             key={center.id}
