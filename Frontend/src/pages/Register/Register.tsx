@@ -33,10 +33,10 @@ const Register = () => {
   };
 
   const formRow =
-  "flex flex-col justify-center mx-[2.5%] w-[90%] md:w-[35%] lg:w-[22.3%] text-start";
+  "flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%] text-start";
   const labelStyle = "mb-[1%] text-start text-[1.1em]";
   const selectStyle =
-    "text-[#333333] w-[99%] p-2 rounded-md bg-[#00000015]" +
+    "text-[#333333] w-full p-2 rounded-md bg-[#00000015]" +
     " mb-[5%] text-[1em] focus:outline-none";
   const inputStyle =
     "w-full p-2 rounded-md text-[#333333] bg-[#00000015] mb-[5%] text-[1em] focus:outline-none";
@@ -96,16 +96,17 @@ const Register = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[95vh]">
       <img className="mt-[3%] w-[70px] md:w-[100px]" src="Logo.png"></img>
-      <span className="text-[#035e89] text-2xl md:text-4xl">Cadastre-se e salve vidas.</span>
+      <span className="text-[#035e89] text-2xl md:text-4xl">Cadastre-se e salve vidas</span>
       <form className="w-full text-center mt-[8%] md:mt-[3%]" onSubmit={handleRegister} encType="multipart/form-data">
         <div className="flex flex-wrap items-center justify-center">
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="name">Nome Completo:</label>
+            <label className={labelStyle} htmlFor="name">Nome completo:</label>
             <input
               className={inputStyle}
               type="text"
               id="name"
               name="name"
+              placeholder="Nome completo"
               pattern="\S.*"
               onChange={(e) => setName(e.target.value)}
               required
@@ -118,12 +119,13 @@ const Register = () => {
               type="email"
               id="email"
               name="email"
+              placeholder="exemplo@hotmail.com"
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="dateOfBirth">Data de Nascimento:</label>
+            <label className={labelStyle} htmlFor="dateOfBirth">Data de nascimento:</label>
             <input
               className={inputStyle}
               type="date"
@@ -140,13 +142,13 @@ const Register = () => {
               type="tel"
               id="phone"
               name="phone"
-              placeholder="Ex: 8199546165"
+              placeholder="8199546165"
               onChange={(e) => setPhone(e.target.value)}
               required
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="maritalStatus">Estado Civil:</label>
+            <label className={labelStyle} htmlFor="maritalStatus">Estado civil:</label>
             <select
               className={selectStyle}
               id="maritalStatus"
@@ -154,8 +156,8 @@ const Register = () => {
               onChange={(e) => setMaritalStatus(e.target.value)}
               required
             >
-              <option value="C">Casado</option>
               <option value="S">Solteiro</option>
+              <option value="C">Casado</option>
               <option value="Outros">Outros</option>
             </select>
           </div>
@@ -191,6 +193,7 @@ const Register = () => {
               type="text"
               id="cpf"
               name="cpf"
+              placeholder="11111111111"
               pattern="\S.*"
               onChange={(e) => setCpf(e.target.value)}
               required
@@ -223,6 +226,7 @@ const Register = () => {
               type="text"
               id="address"
               name="address"
+              placeholder="Nome da rua"
               pattern="\S.*"
               onChange={(e) => setAddress(e.target.value)}
               required
@@ -235,6 +239,7 @@ const Register = () => {
               type="text"
               id="addressNumber"
               name="addressNumber"
+              placeholder="Número da sua residência"
               pattern="\S.*"
               onChange={(e) => setAddressNumber(e.target.value)}
               required
@@ -252,6 +257,7 @@ const Register = () => {
               type="password"
               id="password"
               name="password"
+              placeholder="Sua senha"
               pattern="\S.*"
               onChange={(e) => setPassword(e.target.value)}
               required
