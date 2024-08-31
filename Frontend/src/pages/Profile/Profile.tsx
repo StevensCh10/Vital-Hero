@@ -4,7 +4,6 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { Doctor } from "../../types/Doctor";
 import { Donor } from "../../types/Donor";
-import "./Profile.css";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
@@ -53,6 +52,9 @@ const Profile = () => {
     fetchData();
   }, [auth]);
 
+  const inputStyle =
+    "w-[90%] p-2 rounded-md text-[#333333] bg-[#00000015] mb-[3%] text-center text-[1em] focus:outline-none";
+
   const handleAtt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -71,26 +73,29 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile-container">
+    <div className="flex flex-col items-center m-0">
       {role === "DOCTOR" ? <NavbarDoctor /> : <NavbarDonor />}
-      <div className="profile-content">
-        <div className="profile-header">
+      <div className="flex flex-col items-center justify-center min-h-[84vh] w-[80%] text-[0.7em] md:w-full md:text-base">
           {photoURL === "Logo.png" ? (
             <img
+              className="w-[75px] mb-[1%] md:w-[100px]"
               src={photoURL}
-              style={{ width: "120px" }}
               alt="Foto do usuário"
             />
           ) : (
-            <div className="profile-image">
-              <img src={photoURL} alt="Foto do usuário" />
-            </div>
+            <img className="w-[75px] mb-[3%] md:w-[100px]" src={photoURL} alt="Foto do usuário" />
           )}
-        </div>
-        <form onSubmit={handleAtt} className="profile-form">
-          <div className="profile-info">
-            <input type="name" id="name" name="name" value={name} readOnly />
-            <input
+        <form className="text-center w-full max-w-[400px]" onSubmit={handleAtt}>
+          <div>
+
+            <input className={inputStyle} 
+              type="name" 
+              id="name" 
+              name="name" 
+              value={name} 
+              readOnly 
+            />
+            <input className={inputStyle}
               type="age"
               id="age"
               name="age"
@@ -100,7 +105,7 @@ const Profile = () => {
               readOnly
               required
             />
-            <input
+            <input className={inputStyle}
               id="number"
               name="number"
               value={formatPhone(phone)}
@@ -109,7 +114,7 @@ const Profile = () => {
               required
             />
             {role === "DONOR" && (user as Donor).bloodType !== "Não sei" && (
-              <input
+              <input className={inputStyle}
                 id="bloodType"
                 name="bloodType"
                 value={`Tipo sanguíneo: ${bloodType}`}
@@ -117,7 +122,7 @@ const Profile = () => {
                 required
               />
             )}
-            <input
+            <input className={inputStyle}
               id="email"
               name="email"
               value={email}
@@ -125,7 +130,7 @@ const Profile = () => {
               readOnly
               required
             />
-            <input
+            <input className={inputStyle}
               type="address"
               id="address"
               name="address"
@@ -134,7 +139,7 @@ const Profile = () => {
               required
             />
             {role === "DOCTOR" && (
-              <input
+              <input className={inputStyle}
                 type="professionalIdCard"
                 id="professionalIdCard"
                 name="professionalIdCard"
@@ -143,7 +148,12 @@ const Profile = () => {
               />
             )}
           </div>
-          <button type="submit">Salvar</button>
+          <button 
+            className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-5 mb-5 hover:bg-[#b80e14a4] md:w-[15%]" 
+            type="submit"
+          >
+            Salvar
+          </button>
         </form>
       </div>
     </div>

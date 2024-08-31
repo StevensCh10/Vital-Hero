@@ -3,7 +3,6 @@ import NavbarDoctor from "../../components/NavbarDoctor/NavbarDoctor";
 import NavbarDonor from "../../components/NavbarDonor/NavbarDonor";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useState } from "react";
-import "./Feedback.css";
 
 const Feedback = () => {
   const auth = useContext(AuthContext);
@@ -23,33 +22,48 @@ const Feedback = () => {
   }
 
   return (
-    <div className="feedback-container">
+    <div className="flex flex-col items-center m-0 min-h-[96vh]">
       {user?.role === "DONOR" ? (
         <NavbarDonor />
       ) : (
-        <div style={{width: "100%"}}>
+        <div className="w-full">
           {user?.role === "DOCTOR" ? <NavbarDoctor /> : <NavbarBloodcenter />}
         </div>
       )}
+      <div className="flex flex-col justify-center items-center min-h-[91vh]">
 
-      <div className="incentive">
-        <p style={{fontSize: "1.3em"}}>
-        💬 Sua opinião é essencial! Se teve uma experiência positiva ou sugestões de melhoria, 
-        adoraríamos ouvi-lo(a). Seu feedback nos ajuda a crescer e a melhorar continuamente. Compartilhe conosco! 🚀
-        </p>
+        <div className="flex justify-center items-center text-start w-[80%] md:w-[70%]">
+          <p className="text-[0.7em] md:text-[1.2em] lg:text-[1.3em] text-center">
+          💬 Sua opinião é essencial! Se teve uma experiência positiva ou sugestões de melhoria, 
+          adoraríamos ouvi-lo(a). Seu feedback nos ajuda a crescer e a melhorar continuamente. Compartilhe conosco! 🚀
+          </p>
+        </div>
+
+        <form className="flex flex-col justify-center items-center mt-[2%] w-[80%] md:w-[70%]" onSubmit={handleSendFeedback}>
+          <textarea 
+            className="flex text-left items-center justify-center bg-[#00000015] p-[2%] rounded-md resize-none focus:outline-none 
+              text-[0.7em] w-full h-[85px] md:text-base md:w-[95%] md:h-[150px]"
+            placeholder="Conte sua experiência..." 
+            onChange={((e) => setFeedback(e.target.value))}
+          >
+          </textarea>
+          {isEmptyOrWhitespace(feedback) ? (
+            <button disabled
+              className="bg-[#b80e1475] rounded-lg text-white pointer-events-none mt-[4%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+              md:text-base md:w-[15%] lg:w-[10%]"
+            >
+              Enviar
+            </button>
+          ) : (
+            <button
+              className="bg-[#b80e14] rounded-lg text-white cursor-pointer mt-[4%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+              md:text-base md:w-[15%] lg:w-[10%] hover:bg-[#b80e14a4]"
+            >
+              Enviar
+            </button>
+          )}
+        </form>
       </div>
-
-      <form onSubmit={handleSendFeedback}>
-        <textarea placeholder="Conte sua experiência..." onChange={((e) => setFeedback(e.target.value))}></textarea>
-        {isEmptyOrWhitespace(feedback) ? (
-          <button disabled style={{
-            pointerEvents: "none",
-            backgroundColor: "rgba(184, 14, 20, 0.459)",
-          }}>Enviar</button>
-        ) : (
-          <button>Enviar</button>
-        )}
-      </form>
     </div>
   );
 };
