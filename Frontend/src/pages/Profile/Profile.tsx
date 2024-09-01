@@ -75,7 +75,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col items-center m-0">
       {role === "DOCTOR" ? <NavbarDoctor /> : <NavbarDonor />}
-      <div className="flex flex-col items-center justify-center min-h-[84vh] w-[80%] text-[0.7em] md:w-full md:text-base">
+      <div className="flex flex-col items-center justify-center min-h-[86vh] w-[86%] text-[0.9em] md:w-full md:text-base">
           {photoURL === "Logo.png" ? (
             <img
               className="w-[75px] mb-[1%] md:w-[100px]"
@@ -87,7 +87,6 @@ const Profile = () => {
           )}
         <form className="text-center w-full max-w-[400px]" onSubmit={handleAtt}>
           <div>
-
             <input className={inputStyle} 
               type="name" 
               id="name" 
@@ -95,22 +94,20 @@ const Profile = () => {
               value={name} 
               readOnly 
             />
-            <input className={inputStyle}
+            <input className={`${inputStyle} w-[33%] mr-[2%]`}
               type="age"
               id="age"
               name="age"
               value={`${age} anos`}
               onChange={(e) => setAge(parseInt(e.target.value))}
-              style={{ width: "33%", marginRight: "2%" }}
               readOnly
               required
             />
-            <input className={inputStyle}
+            <input className={`${inputStyle} w-[55%]`}
               id="number"
               name="number"
               value={formatPhone(phone)}
               onChange={(e) => setPhone(e.target.value)}
-              style={{ width: "55%" }}
               required
             />
             {role === "DONOR" && (user as Donor).bloodType !== "Não sei" && (
@@ -149,7 +146,7 @@ const Profile = () => {
             )}
           </div>
           <button 
-            className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-5 mb-5 hover:bg-[#b80e14a4] md:w-[15%]" 
+            className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-3 mb-5 hover:bg-[#b80e14a4] md:w-[15%]" 
             type="submit"
           >
             Salvar

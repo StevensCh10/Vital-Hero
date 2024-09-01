@@ -30,26 +30,32 @@ const Feedback = () => {
           {user?.role === "DOCTOR" ? <NavbarDoctor /> : <NavbarBloodcenter />}
         </div>
       )}
-      <div className="flex flex-col justify-center items-center min-h-[91vh]">
+      <div className="flex flex-col justify-center items-center min-h-[86vh]">
 
-        <div className="flex justify-center items-center text-start w-[80%] md:w-[70%]">
-          <p className="text-[0.7em] md:text-[1.2em] lg:text-[1.3em] text-center">
+        <div className="hidden md:flex justify-center items-center text-start w-[80%] md:w-[70%]">
+          <p className="text-[1em] md:text-[1.2em] lg:text-[1.3em] text-center">
           💬 Sua opinião é essencial! Se teve uma experiência positiva ou sugestões de melhoria, 
           adoraríamos ouvi-lo(a). Seu feedback nos ajuda a crescer e a melhorar continuamente. Compartilhe conosco! 🚀
+          </p>
+        </div>
+
+        <div className="flex justify-center items-center text-start w-[80%] md:w-[70%]">
+          <p className="text-[1em] text-center">
+          💬 Seu feedback nos ajuda a crescer e a melhorar continuamente. Compartilhe conosco! 🚀
           </p>
         </div>
 
         <form className="flex flex-col justify-center items-center mt-[2%] w-[80%] md:w-[70%]" onSubmit={handleSendFeedback}>
           <textarea 
             className="flex text-left items-center justify-center bg-[#00000015] p-[2%] rounded-md resize-none focus:outline-none 
-              text-[0.7em] w-full h-[85px] md:text-base md:w-[95%] md:h-[150px]"
+              text-[1em] w-full h-[85px] md:text-base md:w-[95%] md:h-[150px]"
             placeholder="Conte sua experiência..." 
             onChange={((e) => setFeedback(e.target.value))}
           >
           </textarea>
           {isEmptyOrWhitespace(feedback) ? (
             <button disabled
-              className="bg-[#b80e1475] rounded-lg text-white pointer-events-none mt-[4%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+              className="bg-[#b80e1475] rounded-lg text-white pointer-events-none mt-[4%] text-[1em] w-[20%] p-[6px] md:p-[10px] 
               md:text-base md:w-[15%] lg:w-[10%]"
             >
               Enviar
