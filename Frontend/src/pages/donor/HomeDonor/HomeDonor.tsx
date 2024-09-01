@@ -13,8 +13,8 @@ const HomeDonor = () => {
   const auth = useContext(AuthContext);
   const user = auth.user as Donor;
 
-  const liStyle = "m-0 mx-[3%] opacity-9 text-[0.9em] md:text-lg "
-  const pStyle = "m-0 mb-[0.25%] mt-[2%] font-semibold text-md md:text-lg"
+  const liStyle = "m-0 mx-[7%] opacity-75 text-[1em] md:text-lg "
+  const pStyle = "m-0 mb-[0.25%] mt-[2%] text-xl md:text-lg md:font-semibold md:text-md"
 
   const [donationForm, setDonationForm] = useState<DonationForm>();
   const [screenings, setScreenings] = useState<Screening[]>([]);

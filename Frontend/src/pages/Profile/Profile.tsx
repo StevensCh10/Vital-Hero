@@ -76,25 +76,31 @@ const Profile = () => {
     <div className="flex flex-col items-center m-0">
       {role === "DOCTOR" ? <NavbarDoctor /> : <NavbarDonor />}
       <div className="flex flex-col items-center justify-center min-h-[86vh] w-[86%] text-[0.9em] md:w-full md:text-base">
-          {photoURL === "Logo.png" ? (
-            <img
-              className="w-[75px] mb-[1%] md:w-[100px]"
-              src={photoURL}
-              alt="Foto do usuário"
-            />
-          ) : (
-            <img className="w-[75px] mb-[3%] md:w-[100px]" src={photoURL} alt="Foto do usuário" />
-          )}
+        {photoURL === "Logo.png" ? (
+          <img
+            className="w-[75px] mb-[1%] md:w-[100px]"
+            src={photoURL}
+            alt="Foto do usuário"
+          />
+        ) : (
+          <img
+            className="w-[75px] mb-[3%] md:w-[100px]"
+            src={photoURL}
+            alt="Foto do usuário"
+          />
+        )}
         <form className="text-center w-full max-w-[400px]" onSubmit={handleAtt}>
           <div>
-            <input className={inputStyle} 
-              type="name" 
-              id="name" 
-              name="name" 
-              value={name} 
-              readOnly 
+            <input
+              className={inputStyle}
+              type="name"
+              id="name"
+              name="name"
+              value={name}
+              readOnly
             />
-            <input className={`${inputStyle} w-[33%] mr-[2%]`}
+            <input
+              className={`${inputStyle} w-[33%] mr-[2%]`}
               type="age"
               id="age"
               name="age"
@@ -103,7 +109,8 @@ const Profile = () => {
               readOnly
               required
             />
-            <input className={`${inputStyle} w-[55%]`}
+            <input
+              className={`${inputStyle} w-[55%]`}
               id="number"
               name="number"
               value={formatPhone(phone)}
@@ -111,7 +118,8 @@ const Profile = () => {
               required
             />
             {role === "DONOR" && (user as Donor).bloodType !== "Não sei" && (
-              <input className={inputStyle}
+              <input
+                className={inputStyle}
                 id="bloodType"
                 name="bloodType"
                 value={`Tipo sanguíneo: ${bloodType}`}
@@ -119,7 +127,8 @@ const Profile = () => {
                 required
               />
             )}
-            <input className={inputStyle}
+            <input
+              className={inputStyle}
               id="email"
               name="email"
               value={email}
@@ -127,7 +136,8 @@ const Profile = () => {
               readOnly
               required
             />
-            <input className={inputStyle}
+            <input
+              className={inputStyle}
               type="address"
               id="address"
               name="address"
@@ -136,7 +146,8 @@ const Profile = () => {
               required
             />
             {role === "DOCTOR" && (
-              <input className={inputStyle}
+              <input
+                className={inputStyle}
                 type="professionalIdCard"
                 id="professionalIdCard"
                 name="professionalIdCard"
@@ -145,8 +156,8 @@ const Profile = () => {
               />
             )}
           </div>
-          <button 
-            className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-3 mb-5 hover:bg-[#b80e14a4] md:w-[15%]" 
+          <button
+            className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-3 mb-5 hover:bg-[#b80e14a4] md:w-[15%]"
             type="submit"
           >
             Salvar
