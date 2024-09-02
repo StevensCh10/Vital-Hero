@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { BloodCenter } from "../../types/BloodCenter";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Scheduling as SchedulingType } from "../../types/Scheduling";
-import "./Scheduling.css";
 import { Donor } from "../../types/Donor";
 
 const Scheduling = () => {
@@ -70,26 +69,32 @@ const Scheduling = () => {
 
   };
 
+  const titleStyle = "text-[#1a3744] text-justify text-[1em] md:text-[1.3em] w-full";
+  const infoStyle = "text-[#0000008c] text-start w-full";
+
   return (
-    <div className="sched-info">
-      <div className="scheduled">
-        <h3 className="about">Sobre sua doação</h3>
-        <h3 className="bloodcenter-name">{bloodcenterInfo?.name}</h3>
-        <p className="title">Endereço</p>
-        <p className="info">{bloodcenterInfo?.address}</p>
-        <p className="title">Data</p>
-        <p className="info">
+    <div className="flex flex-col items-center justify-center my-[10%] md:my-[5%] w-[80%] md:w-[55%] lg:w-[45%] xl:w-[30%]">
+      <div className="rounded-lg p-[14%] shadow-xl text-center w-full">
+        <h3 className="text-[0.7em] md:text-[0.9em] mb-[4%]">*Sobre sua doação*</h3>
+        <h3 className="text-[1.6em] my-[10%] font-semibold text-[#1a3744] md:text-[1.8em]">{bloodcenterInfo?.name}</h3>
+        <p className={titleStyle}>Endereço</p>
+        <p className={infoStyle}>{bloodcenterInfo?.address}</p>
+        <p className={titleStyle}>Data</p>
+        <p className={infoStyle}>
           {scheduling?.dateTime && dateFormat(new Date(scheduling.dateTime))}
         </p>
-        <p className="title">Hora</p>
-        <p className="info">
+        <p className={titleStyle}>Hora</p>
+        <p className={infoStyle}>
           {scheduling?.dateTime && hourFormat(new Date(scheduling.dateTime))}
         </p>
-        <p className="title">Nº para contato</p>
-        <p className="info">{formatPhone(bloodcenterInfo!.phone)}</p>
-        <p className="title">Ponto de referência</p>
-        <p className="info">{bloodcenterInfo?.referencePoint}</p>
-        <button className="btn" onClick={handleClick}>
+        <p className={titleStyle}>Nº para contato</p>
+        <p className={infoStyle}>{formatPhone(bloodcenterInfo!.phone)}</p>
+        <p className={titleStyle}>Ponto de referência</p>
+        <p className={infoStyle}>{bloodcenterInfo?.referencePoint}</p>
+        <button 
+          className="bg-[#b80e14] rounded-md text-white p-[8px] border border-none cursor-pointer mt-[20%] w-[56%] text-[0.9em] md:w-[50%] md:text-[1.1em] md:mb-0 hover:bg-[#eb1118af]" 
+          onClick={handleClick}
+        >
           Desagendar
         </button>
       </div>

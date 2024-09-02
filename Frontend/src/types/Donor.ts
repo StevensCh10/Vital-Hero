@@ -1,6 +1,8 @@
+import { Scheduling } from "./Scheduling";
+
 export type Donor = {
     id: number;
-    scheduling?: number| null;
+    scheduling?: Scheduling| null;
     name?: string;
     email?: string;
     age?: number;

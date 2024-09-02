@@ -39,6 +39,12 @@ const SchedulingAndDonation = () => {
     const savedScheduling = localStorage.getItem("scheduling");
     return savedScheduling ? JSON.parse(savedScheduling) : null;
   });
+
+  const labelStyle = "mb-[0.5%] text-start text-[1.1em]";
+  const selectStyle =
+    "text-[#333333] p-2 rounded-md bg-[#00000015] mb-[1.5%] text-[1em]" +
+    " text-center focus:outline-none w-[25%]";
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -148,7 +154,7 @@ const SchedulingAndDonation = () => {
             Agendamento
           </button>
         </div>
-        <label style={{ fontSize: "20px", color: "black" }}>|</label>
+        <label className={labelStyle} style={{ fontSize: "20px", color: "black" }}>|</label>
         <div className="flex items-center mx-[2%]">
           <button
             className={`text-[#035e89] text-center py-1 px-2  cursor-pointer text-[1.1em]
@@ -165,7 +171,7 @@ const SchedulingAndDonation = () => {
       </nav>
       <div className="flex flex-row w-[90%] items-center justify-start min-h-[70vh]">
         {activeButtonRight ? (
-          <div className="flex text-start items-center justify-center w-full">
+          <div className="flex text-center items-center justify-center w-full">
             {donations.length !== 0 ? (
               donations.slice(0, 10).map((donation) => (
                 <div key={donation.id} className="with-content-box">
@@ -198,7 +204,7 @@ const SchedulingAndDonation = () => {
             )}
           </div>
         ) : (
-          <div style={{ width: "100%" }}>
+          <div className="w-full">
             <div className="w-full text-center">
               {scheduling === null ? (
                 <div id="section-scheduling-dontations">
@@ -236,21 +242,17 @@ const SchedulingAndDonation = () => {
                     screenings.length !== 0 &&
                     screenings[0] &&
                     screenings[0].doctor !== null && (
-                      <div className="form-scheduling-dontations">
-                        <span style={{ marginBottom: "2%" }}>
+                      <div className="flex flex-col mb-0">
+                        <span className= "text-[#035e89] mb-6 text-2xl md:text-3xl">
                           Marque um agendamento e faça sua parte
                         </span>
                         <form
+                          className="flex flex-col items-center justify-center p-[2%] md:mb-[2%]"
                           onSubmit={handleSubmit}
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
                         >
-                          <label htmlFor="bloodcenter">Hemocentro</label>
+                          <label className={labelStyle} htmlFor="bloodcenter">Hemocentro</label>
                           <select
+                            className={selectStyle}
                             id="bloodcenter"
                             name="bloodcenter"
                             value={selectedBloodcenter}
@@ -266,8 +268,9 @@ const SchedulingAndDonation = () => {
                               </option>
                             ))}
                           </select>
-                          <label htmlFor="date">Data</label>
+                          <label className={labelStyle} htmlFor="date">Data</label>
                           <select
+                            className={selectStyle}
                             id="date"
                             name="date"
                             value={selectedDate}
@@ -285,8 +288,9 @@ const SchedulingAndDonation = () => {
                               </option>
                             ))}
                           </select>
-                          <label htmlFor="hour">Hora</label>
+                          <label className={labelStyle} htmlFor="hour">Hora</label>
                           <select
+                            className={selectStyle}
                             id="hour"
                             name="hour"
                             value={selectedHour}
@@ -311,7 +315,10 @@ const SchedulingAndDonation = () => {
                                 </option>
                               ))}
                           </select>
-                          <button type="submit" className="schedule">
+                          <button 
+                            className="bg-[#b80e14] rounded-md text-white p-[8px] border border-none cursor-pointer mt-[2%] mb-[4%] w-[25%] md:w-[10%] md:mb-0 hover:bg-[#eb1118af]"
+                            type="submit"
+                          >
                             Agendar
                           </button>
                         </form>
@@ -319,7 +326,7 @@ const SchedulingAndDonation = () => {
                     )}
                 </div>
               ) : (
-                <div style={{ margin: "5% 0 5% 0" }}>
+                <div className="flex flex-col items-center justify-center">
                   <Scheduling />
                 </div>
               )}

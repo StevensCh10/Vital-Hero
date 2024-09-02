@@ -39,7 +39,7 @@ const Feedback = () => {
           </p>
         </div>
 
-        <div className="flex justify-center items-center text-start w-[80%] md:w-[70%]">
+        <div className="flex justify-center items-center text-start w-[80%] md:w-[70%] block md:hidden">
           <p className="text-[1em] text-center">
           💬 Seu feedback nos ajuda a crescer e a melhorar continuamente. Compartilhe conosco! 🚀
           </p>
