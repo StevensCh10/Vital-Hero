@@ -86,7 +86,7 @@ const HomeBloodcenter = () => {
     const idDonorNotDonated: number[] = [];
     const schedulingId = Number(dateMap[selectedDate][selectedHour]);
 
-    const scheduledDonors = allScheduledDonors.filter(donor => donor.scheduling === schedulingId);
+    const scheduledDonors = allScheduledDonors.filter(donor => donor.scheduling!.id === schedulingId);
 
     scheduledDonors.forEach(donor => {
       const checkbox = document.getElementById(`checkbox-${donor.id}`) as HTMLInputElement;
@@ -137,9 +137,9 @@ const HomeBloodcenter = () => {
                         </div>
                         {isModalOpen && (
                           <>
-                            {(allScheduledDonors.filter(donor => donor.scheduling! === Number(dateMap[date][hour])).length !== 0) &&
+                            {(allScheduledDonors.filter(donor => donor.scheduling!.id === Number(dateMap[date][hour])).length !== 0) &&
                               (hourFormat(new Date(schedulingsBloodcenter.find(sched => sched.id === Number(dateMap[date][hour]))?.dateTime!)) === selectedHour) ? (
-                              allScheduledDonors.filter(donor => donor.scheduling! === Number(dateMap[date][hour])).map(donor => (
+                              allScheduledDonors.filter(donor => donor.scheduling!.id === Number(dateMap[date][hour])).map(donor => (
                                 <div className="linha" key={donor.id}>
                                   <div className="celula">{donor.name}</div>
                                   <div className="celula" style={{ textAlign: "center", width: "100%" }}>

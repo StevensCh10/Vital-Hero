@@ -97,7 +97,7 @@ const Schedules = () => {
             </div>
             {selectedScheduling === sched.id.toString() && (
               <div style={{ backgroundColor: " #f8f8f8" }}>
-                {sheduledDonors.find((donor) => donor.scheduling === sched.id) ? (
+                {sheduledDonors.find((donor) => donor.scheduling!.id === sched.id) ? (
                   <div className="types-container">
                     <p>donor.name</p>
                   </div>
