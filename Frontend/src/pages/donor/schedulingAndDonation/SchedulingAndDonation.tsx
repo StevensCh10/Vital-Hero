@@ -5,7 +5,6 @@ import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import { BloodCenter } from "../../../types/BloodCenter";
 import { useContext, useEffect, useState } from "react";
 import { Donation } from "../../../types/Donation";
-import "./SchedulingAndDonation.css";
 import { Donor } from "../../../types/Donor";
 import { DonationForm } from "../../../types/DonationForm";
 import { Screening } from "../../../types/Screening";
@@ -154,7 +153,7 @@ const SchedulingAndDonation = () => {
             Agendamento
           </button>
         </div>
-        <label className={labelStyle} style={{ fontSize: "20px", color: "black" }}>|</label>
+        <label className={labelStyle}>|</label>
         <div className="flex items-center mx-[2%]">
           <button
             className={`text-[#035e89] text-center py-1 px-2  cursor-pointer text-[1.1em]
@@ -174,8 +173,8 @@ const SchedulingAndDonation = () => {
           <div className="flex text-center items-center justify-center w-full">
             {donations.length !== 0 ? (
               donations.slice(0, 10).map((donation) => (
-                <div key={donation.id} className="with-content-box">
-                  <h3>
+                <div key={donation.id} className="mx-[2%] mt-[2%] rounded-md p-[1%] w-[22%] shadow-custom">
+                  <h3 className="m-0 bg-[#ff0000a1] text-[1.1em] mb-[3px]" >
                     {
                       bloodcenters!.find(
                         (center) =>
@@ -183,7 +182,7 @@ const SchedulingAndDonation = () => {
                       )?.name
                     }
                   </h3>
-                  <p className="address-info">
+                  <p className="m-0 opacity-90 mb-[3px]">
                     {
                       bloodcenters.find(
                         (center) =>
@@ -191,7 +190,7 @@ const SchedulingAndDonation = () => {
                       )?.address
                     }
                   </p>
-                  <p className="date-info">
+                  <p className="m-0 opacity-90">
                     {dateFormat(new Date(donation.scheduling.dateTime))} -{" "}
                     {hourFormat(new Date(donation.scheduling.dateTime))}
                   </p>
