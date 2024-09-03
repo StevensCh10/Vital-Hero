@@ -1,12 +1,10 @@
 import NavbarBloodcenter from "../../../components/NavbarBloodcenter/NavbarBloodcenter";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
-import { BloodCenter } from "../../../types/BloodCenter";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const HomeBloodcenter = () => {
   const auth = useContext(AuthContext);
-  const user = auth.user as BloodCenter;
 
   useEffect(() => {
     const fetchData = async () => {
