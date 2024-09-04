@@ -83,14 +83,11 @@ const Register = () => {
       formData.append('file', emptyFile);
     }
 
-    try {
-      const response = await auth.register(formData);
-      if(response.id !== undefined){
-          navigate("/");
-      }
-    } catch (error) {
-        alert((error as ErrorType).detail);
-    }
+    await auth.register(formData)
+      .then(() => navigate("/"))
+      .catch(e => {
+        alert((e as ErrorType).detail);
+      });
   };
 
   return (

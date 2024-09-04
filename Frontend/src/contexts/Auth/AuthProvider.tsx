@@ -90,7 +90,10 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     }
 
     const toSchedule = async(idDonor: number, idSched: number) => {
-        await api.toSchedule(idDonor, idSched);
+        const data = await api.toSchedule(idDonor, idSched);
+        localStorage.setItem("scheduling", JSON.stringify(data));
+        findDonorById(idDonor);
+        return data;
     }
 
     const unSchedule = async(idDonor: number) => {
@@ -103,18 +106,22 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
 
     const register = async(donor: FormData) => {
         const data = await api.register(donor);
-        if(data){
-            setUser(data);
-            localStorage.setItem('user', JSON.stringify(data)); 
+        if(data.user && data.token){
+            setUser(data.user);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('authToken', data.token);
+            return data.user;
         }
         return data;
     }
 
     const registerDoctor = async(doctor: FormData) => {
         const data = await api.registerDoctor(doctor);
-        if(data){
-            setUser(data);
-            localStorage.setItem('user', JSON.stringify(data)); 
+        if(data.user && data.token){
+            setUser(data.user);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('authToken', data.token);
+            return data.user;
         }
         return data;
     }

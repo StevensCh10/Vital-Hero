@@ -13,14 +13,9 @@ const Login = () => {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email && password) {
-      try{
-        const isLogged = await auth.signin(email, password);
-        if (isLogged) {
-          navigate("/");
-        }
-      }catch(error){
-        alert((error as ErrorType).detail);
-      }
+      await auth.signin(email, password)
+        .then(() => navigate("/"))
+        .catch(e => (e as ErrorType).detail);
     }
   };
 

@@ -76,7 +76,8 @@ export const useApi = () => ({
         .catch((e) => {throw e.response.data});
     },
     toSchedule: async (idDonor: number, idSched: number) => {
-        await api.put(`donor/toschedule/${idDonor}/${idSched}`, {})
+        return await api.put(`donor/toschedule/${idDonor}/${idSched}`, {})
+        .then(response => response.data)
         .catch((e) => {throw e.response.data});
     },
     unSchedule: async (idDonor: number) => {

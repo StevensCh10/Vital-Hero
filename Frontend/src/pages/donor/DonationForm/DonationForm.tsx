@@ -120,7 +120,7 @@ const DonationForm = () => {
     <div className="flex flex-col items-center justify-center w-full text-center">
       <Navbar />
       {donationFormAux === null ? (
-        <div className="flex flex-col w-full items-center justify-center min-h-[89vh] mt-[3%]">
+        <div className="flex flex-col w-full items-center justify-center mt-[3%] min-h-[87vh] lg:min-h-[89.6vh] xl:min-h-[79vh]">
           <div className="flex items-center justify-center">
             <div className="flex items-center justify-center w-[40%] m-0 mb-[5%] mt-[2%] md:w-[25%]">
               <div className="w-[40%]">
@@ -359,7 +359,7 @@ const DonationForm = () => {
           </form>
         </div>
       ) : (
-        <div className="flex flex-col w-full items-center min-h-[89vh] mt-[3%]">
+        <div className="flex flex-col w-full items-center justify-center mt-[3%] min-h-[87vh] lg:min-h-[89.6vh] xl:min-h-[79vh]">
           <span className="flex justify-center mb-6 text-[#035e89] text-2xl md:text-4xl">
             Formulário de Doação
           </span>

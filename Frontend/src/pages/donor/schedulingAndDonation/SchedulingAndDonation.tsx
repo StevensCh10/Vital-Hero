@@ -104,21 +104,9 @@ const SchedulingAndDonation = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      auth.toSchedule(user!.id, parseInt(selectedHour));
-      localStorage.setItem(
-        "scheduling",
-        JSON.stringify(
-          schedulingsBloodcenter.find((s) => s.id === Number(selectedHour))
-        )
-      );
-      await auth.findDonorById(user!.id).then((response) => {
-        localStorage.setItem("user", JSON.stringify(response));
-        window.location.reload();
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    await auth.toSchedule(user!.id, parseInt(selectedHour))
+      .then(() => window.location.reload())  
+      .catch(e => console.error(e));
   };
 
   const uniqueDate = new Set();
@@ -174,7 +162,7 @@ const SchedulingAndDonation = () => {
             {donations.length !== 0 ? (
               donations.slice(0, 10).map((donation) => (
                 <div key={donation.id} className="mx-[2%] mt-[2%] rounded-md p-[1%] w-[22%] shadow-custom">
-                  <h3 className="m-0 bg-[#ff0000a1] text-[1.1em] mb-[3px]" >
+                  <h3 className="m-0 text-[1.1em] mb-[3px]" >
                     {
                       bloodcenters!.find(
                         (center) =>
