@@ -51,7 +51,7 @@ export const useApi = () => ({
             .catch(() => null);  
     },
     findScreeningByDonor: async (idDonor: number) => {
-        return await api.get(`donor/screening/all/${idDonor}`)
+        return await api.get(`donor/screening/${idDonor}`)
             .then((response) => response.data)
             .catch(() => null); 
     },

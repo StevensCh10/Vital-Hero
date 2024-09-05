@@ -55,7 +55,9 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     }
 
     const findAllSchedulings = async() => {
-        return await api.findAllSchedulings();
+        const data =  await api.findAllSchedulings();
+        console.log(data)
+        return data;
     }
 
     const findDonationForm = async(idDonor: number) => {
@@ -129,13 +131,9 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const addScreening = async(screening: Screening) => {
         const data = await api.addScreening(screening);
         if(data){
-            const currentScreenings = JSON.parse(localStorage.getItem("screenings")!);
-            if(currentScreenings[0]){
-                currentScreenings[0] = (data);
-            }else{
-                currentScreenings.push(data);
-            }
-            localStorage.setItem("screenings", JSON.stringify(currentScreenings)); 
+            let currentScreening = JSON.parse(localStorage.getItem("screening")!);
+            currentScreening = data;
+            localStorage.setItem("screenings", JSON.stringify(currentScreening)); 
         }
         return data;
     }

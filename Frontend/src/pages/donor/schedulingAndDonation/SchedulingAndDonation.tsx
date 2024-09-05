@@ -20,14 +20,12 @@ const SchedulingAndDonation = () => {
   const [schedulingsBloodcenter, setSchedulingsBloodcenter] = useState<
     SchedulingType[]
   >([]);
-  const donationForm = JSON.parse(
-    localStorage.getItem("donationForm")! ?? {}
+  const donationForm = JSON.parse(localStorage.getItem("donationForm")! ?? {}
   ) as DonationForm;
-  const [screenings, setScreenings] = useState<Screening[]>(() => {
-    const storedScreenings = localStorage.getItem("screenings");
-    return storedScreenings
-      ? (JSON.parse(storedScreenings) as Screening[])
-      : [];
+  const [screening, setScreening] = useState<Screening>(() => {
+    const storedScreening = localStorage.getItem("screening");
+    return storedScreening ? (JSON.parse(storedScreening) as Screening)
+      : {} as Screening;
   });
   const [selectedBloodcenter, setSelectedBloodcenter] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -42,7 +40,7 @@ const SchedulingAndDonation = () => {
   const labelStyle = "mb-[0.5%] text-start text-[1.1em]";
   const selectStyle =
     "text-[#333333] p-2 rounded-md bg-[#00000015] mb-[1.5%] text-[1em]" +
-    " text-center focus:outline-none w-[25%]";
+    " text-center focus:outline-none w-[70%]";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,9 +49,9 @@ const SchedulingAndDonation = () => {
         setSchedulingsBloodcenter(resultDateTimes);
         const resultDonations = await auth.findDonations(auth.user!.id);
         setDonations(resultDonations);
-        const resultScreenings = await auth.findScreening(user!.id);
-        localStorage.setItem("screenings", JSON.stringify(resultScreenings));
-        setScreenings(resultScreenings);
+        const resultScreening = await auth.findScreening(user!.id);
+        localStorage.setItem("screening", JSON.stringify(resultScreening));
+        setScreening(resultScreening);
         if (user.scheduling === null) {
           if (scheduling !== null) {
             setScheduling(null);
@@ -196,28 +194,27 @@ const SchedulingAndDonation = () => {
               {scheduling === null ? (
                 <div id="section-scheduling-dontations">
                   <div className="flex flex-col">
-                    {donationForm === null && screenings.length === 0 && (
+                    {donationForm === null && screening === null && (
                       <h2 className="text-[1.2em]">
                         *É necessário preencher o formulário de doação e a
                         triagem para marcar um agendamento*
                       </h2>
                     )}
-                    {donationForm === null && screenings.length !== 0 && (
+                    {donationForm === null && screening !== null && (
                       <h2 className="text-[1.2em]">
                         *É necessário preencher o formulário de doação para
                         marcar um agendamento*
                       </h2>
                     )}
-                    {donationForm !== null && screenings.length === 0 && (
+                    {donationForm !== null && screening === null && (
                       <h2 className="text-[1.2em]">
                         *É necessário preencher a triagem para marcar um
                         agendamento*
                       </h2>
                     )}
                     {donationForm !== null &&
-                      screenings.length !== 0 &&
-                      screenings[0] &&
-                      screenings[0].doctor === null && (
+                      screening !== null &&
+                      screening.doctor === null && (
                         <h2 className="text-[1.2em]">
                           *Sua triagem está em processo de validação. Após a
                           validação informaremos se você está apto para fazer a
@@ -226,15 +223,14 @@ const SchedulingAndDonation = () => {
                       )}
                   </div>
                   {donationForm !== null &&
-                    screenings.length !== 0 &&
-                    screenings[0] &&
-                    screenings[0].doctor !== null && (
-                      <div className="flex flex-col mb-0">
+                    screening !== null &&
+                    screening.doctor !== null && (
+                      <div className="flex flex-col items-center mb-0">
                         <span className= "text-[#035e89] mb-6 text-2xl md:text-3xl">
                           Marque um agendamento e faça sua parte
                         </span>
                         <form
-                          className="flex flex-col items-center justify-center p-[2%] md:mb-[2%]"
+                          className="flex flex-col w-[30%] items-center justify-center py-[4%] md:mb-[2%] rounded-lg shadow-xl"
                           onSubmit={handleSubmit}
                         >
                           <label className={labelStyle} htmlFor="bloodcenter">Hemocentro</label>
@@ -303,7 +299,7 @@ const SchedulingAndDonation = () => {
                               ))}
                           </select>
                           <button 
-                            className="bg-[#b80e14] rounded-md text-white p-[8px] border border-none cursor-pointer mt-[2%] mb-[4%] w-[25%] md:w-[10%] md:mb-0 hover:bg-[#eb1118af]"
+                            className="bg-[#b80e14] rounded-md text-white p-[8px] border border-none cursor-pointer mt-[8%] w-[45%] md:w-[30%] md:mb-0 hover:bg-[#eb1118af]"
                             type="submit"
                           >
                             Agendar

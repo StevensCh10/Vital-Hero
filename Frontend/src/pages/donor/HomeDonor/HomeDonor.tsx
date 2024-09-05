@@ -12,23 +12,25 @@ import { Screening } from "../../../types/Screening";
 const HomeDonor = () => {
   const auth = useContext(AuthContext);
   const user = auth.user as Donor;
+  const navigate = useNavigate();
 
-  const liStyle = "m-0 mx-[7%] opacity-75 text-[1em] md:text-lg "
-  const pStyle = "m-0 mb-[0.25%] mt-[2%] text-xl md:text-lg md:font-semibold md:text-md"
+  const liStyle = "m-0 mx-[7%] opacity-75 text-[1em] md:text-lg ";
+  const pStyle = "m-0 mb-[0.25%] mt-[2%] text-xl md:text-lg md:font-semibold md:text-md";
 
+  const [screening, setScreening] = useState<Screening>();
   const [donationForm, setDonationForm] = useState<DonationForm>();
-  const [screenings, setScreenings] = useState<Screening[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const resultBloodcenters = await auth.findAllBloodCenters();
         const resultDonationForm = await auth.findDonationForm(user!.id);
-        const resultScreenings = await auth.findScreening(user!.id);
+        const resultScreening = await auth.findScreening(user!.id);
         localStorage.setItem('bloodcenters', JSON.stringify(resultBloodcenters));
         localStorage.setItem('donationForm', JSON.stringify(resultDonationForm));
+        localStorage.setItem('screening', JSON.stringify(resultScreening));
+        setScreening(resultScreening);
         setDonationForm(resultDonationForm);
-        localStorage.setItem('screenings', JSON.stringify(resultScreenings));
-        setScreenings(resultScreenings);
         
         if(user!.scheduling !== null){
           const resultScheduling = await auth.findSchedulingById(user?.scheduling!.id);
@@ -42,17 +44,6 @@ const HomeDonor = () => {
     fetchData();
   }, []);
 
-  const navigate = useNavigate();
-  const goDonation = () => {
-     
-      if(donationForm === null){
-        navigate("/donation-form")
-      }else if(screenings.length === 0 || screenings[0] === null){
-        navigate("/screening")
-      }else{
-        navigate("/scheduling-donation")
-      }
-  }
 
     return (
     <>
@@ -126,10 +117,10 @@ const HomeDonor = () => {
             <p className="opacity-95 text-[1.1em]">Junte-se à causa da doação de sangue e seja parte dessa corrente de solidariedade e esperança. Sua doação pode ser a luz no fim do túnel para alguém que precisa desesperadamente de sangue. Lembre-se: uma única doação pode fazer toda a diferença.</p>
           </div>
         </div>
-        <div className="flex flex-col justify-center items-center w-full mb-[3%] bg-[#f8f8f8f8] p-[1.5%] mt-5 md:mt-4 pb-4">
-          {user.scheduling === null ? (
+        <div className="flex flex-col justify-center items-center w-full mb-[3%] p-[1.5%] mt-5 md:mt-4 pb-4">
+          {donationForm === null && (
             <div>
-              <span className="flex justify-center mb-6 text-[#035e89]  text-2xl md:text-4xl">Faça sua doação</span>
+              <span className="flex justify-center mb-6 text-[#035e89] text-2xl md:text-4xl">Faça sua doação</span>
               <div className="w-full px-5">
                 <p className="opacity-95 text-md md:text-lg mb-4"><label className="font-semibold">Sua doação é essencial.</label> Antes de clicar no botão abaixo, reserve um momento, pois é necessário preencher o formulário de doação e a triagem.
                   Isso garante a segurança de todos. Juntos, podemos fazer a diferença. <label className="font-semibold">Faça sua parte agora!</label></p>
@@ -137,12 +128,22 @@ const HomeDonor = () => {
                 <div className="flex justify-center">
                   <button className="text-white cursor-pointer text-center mt-[2%] bg-[#b80e14] rounded-lg p-[10px] border-none 
                                     w-[22%] md:w-[10%] hover:bg-[#eb1118ad] "
-                   onClick={goDonation}>Começar</button>
+                   onClick={(() => navigate("/donation-form"))}>Começar</button>
                 </div>
             </div>  
-          ) : (
-            <label className="text-[1.1em]">Você já fez seu agendamento, pra verificar detalhes <Link className="text-[#b80e14] text-[1.2em]" to={"/scheduling-donation"}>clique aqui</Link></label>
           )}
+          {donationForm !== null && screening === null && (
+            <label className="text-[1.1em]">Você ainda não preencheu sua triagem.
+              <Link className="text-[#b80e14]" to={"/screening"}> CLIQUE AQUI </Link>
+              para preencher.
+            </label>
+          )}
+          {donationForm !== null && screening !== null && (
+            <label className="text-[1.1em]">Você já fez seu agendamento, para verificar detalhes 
+              <Link className="text-[#b80e14]" to={"/scheduling-donation"}> CLIQUE AQUI</Link>
+            </label>
+          )} 
+          
         </div>
       </div>
     </>

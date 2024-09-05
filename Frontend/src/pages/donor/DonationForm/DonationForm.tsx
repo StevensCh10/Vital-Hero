@@ -4,13 +4,14 @@ import { DonationForm as DonationFormType } from "../../../types/DonationForm";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { Donor } from "../../../types/Donor";
 import { useNavigate } from "react-router-dom";
+import { ErrorType } from "../../../types/ErrorType";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const donationFormAux = JSON.parse(
     localStorage.getItem("donationForm")! ?? {}
   ) as DonationFormType;
-  const navigate = useNavigate();
 
   const formRow =
     "flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%]";
@@ -64,10 +65,27 @@ const DonationForm = () => {
     { sigla: "TO", nome: "Tocantins" },
   ];
 
+  const [originalValues, setOriginalValues] = useState({
+    q3, q9, q10, q11,
+  });
+  const [isChanged, setIsChanged] = useState(false);
+
   useEffect(() => {
-    const fetchData = async () => {};
-    fetchData();
-  }, [auth]);
+    setOriginalValues({ q3, q9, q10, q11 });
+  }, []);
+
+  useEffect(() => {
+    if (
+      q3 !== originalValues.q3 ||
+      q9 !== originalValues.q9 ||
+      q10 !== originalValues.q10 ||
+      q11 !== originalValues.q11
+    ) {
+      setIsChanged(true);
+    } else {
+      setIsChanged(false);
+    }
+  }, [q3, q9, q10, q11, originalValues]);
 
   const handleAddDonationForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -87,8 +105,9 @@ const DonationForm = () => {
       q11: q11,
     };
 
-    await auth.addDonationForm(donationForm);
-    navigate("/screening");
+    await auth.addDonationForm(donationForm)
+      .then(() => navigate("/screening"))
+      .catch(e => alert((e as ErrorType).detail));
   };
 
   const handleUpdateDonationForm = async (
@@ -112,8 +131,9 @@ const DonationForm = () => {
       q11: q11,
     };
 
-    await auth.updateDonationForm(donationForm);
-    window.location.reload();
+    await auth.updateDonationForm(donationForm)
+      .then(() => navigate("/screening"))
+      .catch(e => alert((e as ErrorType).detail));
   };
 
   return (
@@ -236,6 +256,7 @@ const DonationForm = () => {
                   required
                   onChange={(e) => setQ5(e.target.value)}
                 >
+                  <option></option>
                   <option value="CPF">CPF</option>
                   <option value="RG">RG</option>
                   <option value="CNH">CNH</option>
@@ -532,12 +553,27 @@ const DonationForm = () => {
                 />
               </div>
             </div>
-            <button
-              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] mb-[4%] w-[25%] md:w-[10%] md:mb-0 hover:bg-[#eb1118af]"
-              type="submit"
-            >
-              Atualizar
-            </button>
+            <div className="flex w-[18%] items-center justify-between mt-[4%]">
+              <button disabled={!isChanged}
+                className={`rounded-md text-white p-[10px] border border-none mt-[3%] 
+                  mb-[4%]  w-[25%] md:w-[40%] md:mb-0 ${
+                    !isChanged
+                      ? "bg-[#b80e1475] pointer-events-none"
+                      : "bg-[#b80e14] hover:bg-[#eb1118af] cursor-pointer"
+                  }`}
+                type="submit"
+              >
+                Atualizar
+              </button>
+              <button
+                className="bg-[#b80e14] hover:bg-[#eb1118af] cursor-pointer rounded-md text-white p-[10px] border border-none mt-[3%] 
+                  mb-[4%] w-[25%] md:w-[42%] md:mb-0"
+                type="submit"
+                onClick={(() => navigate("/screening"))}
+              >
+                Confirmar
+              </button>
+            </div>
           </form>
         </div>
       )}

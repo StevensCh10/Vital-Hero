@@ -116,13 +116,13 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO donor (name, cpf, email, age, gender, marital_status, address, photo, phone, blood_type, password, role)
-SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'M', 'S', 'Rua A, 123', NULL, '81987654321', 'O+', '$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu', 'DONOR'
+SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'Masculino', 'Solteiro', 'Rua A, 123', NULL, '81987654321', 'O+', '$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu', 'DONOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM donor WHERE cpf = '123.456.789-10'
 );
 
 INSERT INTO doctor (name, cpf, crm, email, age, gender, marital_status, address, photo, phone, password, role)
-SELECT 'Robson da Silva', '123.456.789-11', 'CRM123456', 'robson@outlook.com', 28, 'M', 'C', 'Rua A, 123', NULL, '81987654322', '$2b$12$EIkZUEIZq0jLsBJ4XXKoderOiw8Q9WaR7dEvcV55RA5sAxMqg2H6G', 'DOCTOR'
+SELECT 'Robson da Silva', '123.456.789-11', 'CRM123456', 'robson@outlook.com', 28, 'Masculino', 'Casado', 'Rua A, 123', NULL, '81987654322', '$2b$12$EIkZUEIZq0jLsBJ4XXKoderOiw8Q9WaR7dEvcV55RA5sAxMqg2H6G', 'DOCTOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM doctor WHERE cpf = '123.456.789-11'
 );

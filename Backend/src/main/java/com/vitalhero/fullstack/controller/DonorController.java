@@ -117,7 +117,8 @@ public class DonorController {
     @ResponseStatus(HttpStatus.OK)
     public void toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
         schedulingService.find(schedulingID);
-        donorService.toSchedule(donorID, screeningService.allScreeningsByDonor(donorID), schedulingID);
+        var donor = donorService.find(donorID);
+        donorService.toSchedule(donorID, screeningService.screeningByDonor(donor), schedulingID);
     }
 
     @GetMapping("/scheduled/{donorID}")
@@ -143,10 +144,10 @@ public class DonorController {
         return screeningService.updateScreening(attScreening);
     }
 
-    @GetMapping("/screening/all/{donorID}")
-    public List<Screening> allScreenings(@PathVariable Long donorID){
-        donorService.find(donorID);
-        return screeningService.allScreeningsByDonor(donorID);
+    @GetMapping("/screening/{donorID}")
+    public Screening screeningByDonor(@PathVariable Long donorID){
+        var donor = donorService.find(donorID);
+        return screeningService.screeningByDonor(donor);
     }
 
     //DONATIONFORM

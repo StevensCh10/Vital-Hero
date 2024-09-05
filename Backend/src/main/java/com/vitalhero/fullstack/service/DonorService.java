@@ -90,15 +90,15 @@ public class DonorService {
         return DonorDTO.fromEntity(repository.saveAndFlush(currentDonor));
     }
 
-    public void toSchedule(Long id, List<Screening> screenings, Long schedulingID){
+    public void toSchedule(Long id, Screening screening, Long schedulingID){
         var donor = find(id);
-        if(!screenings.isEmpty()){
-            if(screenings.get(0).getDoctor() == null){
+        if(screening == null){
+            throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois ainda não preencheu sua triagem", donor.getName()));
+        }else{
+            if(screening.getDoctor() == null){
                 throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName()));
             }
             repository.updateFkScheduling(schedulingID, id);
-        }else{
-            throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois ainda não preencheu sua triagem", donor.getName()));
         }
     }
 

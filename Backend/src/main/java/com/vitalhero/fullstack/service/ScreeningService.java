@@ -3,7 +3,9 @@ package com.vitalhero.fullstack.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
+import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
+import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.ScreeningRepository;
 import jakarta.transaction.Transactional;
@@ -41,9 +43,12 @@ public class ScreeningService {
         return repository.findAll();
     }
 
-    public List<Screening> allScreeningsByDonor(Long donorID){
-        List<Screening> list = repository.allScreening(donorID);
-        return list;
+    public Screening screeningByDonor(Donor donor){
+        Screening s = repository.findByDonor(donor.getId());
+        if(s == null){
+            throw new EntityNotFound(String.format("Doador não preencheu sua triagem", donor.getId()));
+        }
+        return s;
     }
 
     public void validatedScreening(Long id, Long doctorID){

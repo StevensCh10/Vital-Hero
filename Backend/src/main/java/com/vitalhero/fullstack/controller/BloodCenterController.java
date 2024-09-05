@@ -143,7 +143,7 @@ public class BloodCenterController {
 
     //DONATION
     @PostMapping("/donation")
-    public void donationMade(@Valid @RequestParam List<Long> donorIdsDonated, @Valid @RequestParam List<Long> donorIdsNotDonated){
+    public void donationMade(@RequestParam List<Long> donorIdsDonated, @RequestParam List<Long> donorIdsNotDonated){
 
             for (Long donorId : donorIdsDonated) {
                 Donor donor = donorService.find(donorId);
@@ -156,11 +156,8 @@ public class BloodCenterController {
                 scheduleDonationNotification(addedDonation, donor.getGender());
                 donorService.scheduleMadeOrUnscheduled(donorId);
 
-                List<Screening> screenings = screeningService.allScreeningsByDonor(donorId);
-                for(Screening s: screenings){
-                    s.setDoctor(null);
-                    screeningService.updateScreening(s);
-                }
+                Screening screening = screeningService.screeningByDonor(donor);
+                screeningService.deleteScreening(screening.getId());
             }
             for(Long donorId : donorIdsNotDonated){
                 donorService.scheduleMadeOrUnscheduled(donorId);

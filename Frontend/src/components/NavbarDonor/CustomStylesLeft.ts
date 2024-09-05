@@ -14,8 +14,8 @@ const customStylesLeft: CustomStylesLeft = {
     flexDirection: "column",
     alignItems: "start", // Centraliza os itens horizontalmente
     justifyContent: "center", 
-    width: "240px",
-    height: "340px",
+    width: "200px",
+    height: "240px",
     borderRadius: "2%",
     backgroundColor: "white",
     color: "black",

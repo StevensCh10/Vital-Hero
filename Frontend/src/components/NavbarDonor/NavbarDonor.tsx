@@ -71,14 +71,6 @@ const NavbarDonor = () => {
           ariaHideApp={false}
         >
           <div className={modalItemStyle}>
-            <img className={modalImgStyle} src="/formulario.png"></img>
-            <Link className={linkStyle} to="/donation-form">Formulário de doação</Link>
-          </div>
-          <div className={modalItemStyle}>
-            <img className={modalImgStyle} src="/medico.png"></img>
-            <Link className={linkStyle} to="/screening">Triagem</Link>
-          </div>
-          <div className={modalItemStyle}>
             <img className={modalImgStyle} src="/Logo.png"></img>
             <Link className={linkStyle} to="/">Home</Link>
           </div>
@@ -124,8 +116,8 @@ const NavbarDonor = () => {
             overlay: { ...customStylesRight.overlay },
             content: {
               ...customStylesRight.content,
-              top: modalPosition.top + 20, // Manter top dinâmico
-              left: modalPosition.left, // Manter left dinâmico
+              top: modalPosition.top + 20,
+              left: modalPosition.left,
             },
           }}
           isOpen={showRightOptions}
