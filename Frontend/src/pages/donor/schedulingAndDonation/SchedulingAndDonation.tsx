@@ -8,6 +8,7 @@ import { Donation } from "../../../types/Donation";
 import { Donor } from "../../../types/Donor";
 import { DonationForm } from "../../../types/DonationForm";
 import { Screening } from "../../../types/Screening";
+import { ErrorType } from "../../../types/ErrorType";
 
 const SchedulingAndDonation = () => {
   const auth = useContext(AuthContext);
@@ -59,7 +60,7 @@ const SchedulingAndDonation = () => {
           }
         }
       } catch (error) {
-        console.error("Erro:", error);
+        console.error("Erro: ", (error as ErrorType).detail);
       }
     };
     fetchData();

@@ -115,10 +115,11 @@ public class DonorController {
     //SCHEDULING
     @PutMapping("/toschedule/{donorID}/{schedulingID}")
     @ResponseStatus(HttpStatus.OK)
-    public void toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
-        schedulingService.find(schedulingID);
+    public Scheduling toSchedule(@PathVariable Long donorID, @PathVariable Long schedulingID){
+        var sched = schedulingService.find(schedulingID);
         var donor = donorService.find(donorID);
         donorService.toSchedule(donorID, screeningService.screeningByDonor(donor), schedulingID);
+        return sched;
     }
 
     @GetMapping("/scheduled/{donorID}")

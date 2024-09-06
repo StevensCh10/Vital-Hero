@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         const data = await api.findDonorById(idDonor)
         setUser(data);
         localStorage.setItem('user', JSON.stringify(data))
+        console.log(data);
         return data;
     }
 
@@ -55,9 +56,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     }
 
     const findAllSchedulings = async() => {
-        const data =  await api.findAllSchedulings();
-        console.log(data)
-        return data;
+        return await api.findAllSchedulings();
     }
 
     const findDonationForm = async(idDonor: number) => {
@@ -94,7 +93,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
     const toSchedule = async(idDonor: number, idSched: number) => {
         const data = await api.toSchedule(idDonor, idSched);
         localStorage.setItem("scheduling", JSON.stringify(data));
-        findDonorById(idDonor);
+        await findDonorById(idDonor);
         return data;
     }
 

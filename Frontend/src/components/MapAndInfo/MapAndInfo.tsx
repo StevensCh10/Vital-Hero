@@ -6,6 +6,7 @@ import { BloodCenter } from "../../types/BloodCenter";
 import { Bloodstock } from "../../types/Bloodstock";
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
+import Loading from "../Loading/Loading";
 
 const Map: React.FC = () => {
   const auth = useContext(AuthContext);
@@ -14,6 +15,7 @@ const Map: React.FC = () => {
   const [markers, setMarkers] = useState<JSX.Element[]>([]);
   const [bloodstocks, setBloodstocks] = useState<Bloodstock[]>([]);
   const [selectedCenter, setSelectedCenter] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const pStyle = "flex text-start justify-space-between m-[0] mb-[1.3%]";
   const spanStyle = "text-[17px] text-black";
@@ -38,23 +40,25 @@ const Map: React.FC = () => {
         } else {
           setBloodcenters([]);
         }
+
+        setLoading(false);
       } catch (error) {
         console.error("Erro:", error);
       }
     };
     fetchData();
   }, []);
-
+  
   useEffect(() => {
     const fetchCoordinates = async () => {
       const coordinatesPromises = bloodcenters.map(async (center) => {
         const coordinates = await getCoordinates(center.address);
         return (
           <Marker
-            key={center.id}
-            position={coordinates}
-            eventHandlers={{ click: () => handleMarkerClick(center.id) }}
-            icon={customIcon}
+          key={center.id}
+          position={coordinates}
+          eventHandlers={{ click: () => handleMarkerClick(center.id) }}
+          icon={customIcon}
           >
             <Popup>{center.name}</Popup>
           </Marker>
@@ -218,6 +222,12 @@ const Map: React.FC = () => {
     .replace(/^(\d{2})(\d{4,5})(\d{4})$/, "($1) $2-$3");
     return phone;
   };
+
+  if (loading) {
+    return (
+      <Loading/>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center ">

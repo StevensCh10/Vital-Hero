@@ -126,14 +126,7 @@ export const useApi = () => ({
         .then((response) => response.data);
     },
     validateScreening: async(idScreening: Number, idDoctor: number) => {
-        await api.put(`doctor/validatescreening/${idScreening}/${idDoctor}`,{}, 
-              {
-                headers: {
-                  //Authorization: `Bearer ${authToken}`,
-                  'Content-Type': 'application/json' // Caso seja necessário
-                }
-              }
-            );
+        await api.put(`doctor/validatescreening/${idScreening}/${idDoctor}`,{});
     },
     sendFeedback: async(idDonor: number, feedback: string) => {
         await api.post(`donor/sendfeedback/${idDonor}?feedback=${encodeURIComponent(feedback)}`);

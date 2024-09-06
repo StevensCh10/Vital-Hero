@@ -5,8 +5,9 @@ import { Scheduling as SchedulingType } from "../../types/Scheduling";
 import { Donor } from "../../types/Donor";
 
 const Scheduling = () => {
-    const auth = useContext(AuthContext);
-    const user = auth.user as Donor;
+  const auth = useContext(AuthContext);
+  const user = auth.user as Donor;
+  
   const [bloodcenters] = useState<BloodCenter[]>(
     localStorage.getItem("bloodcenters") !== null
       ? JSON.parse(localStorage.getItem("bloodcenters")!)
@@ -60,7 +61,7 @@ const Scheduling = () => {
 
   const handleClick = async(e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    auth.unSchedule(user!.id); 
+    await auth.unSchedule(user!.id); 
     user!.scheduling = null;
     await auth.findDonorById(user!.id).then(() => {
       localStorage.removeItem('scheduling');
