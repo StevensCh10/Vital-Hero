@@ -9,6 +9,8 @@ import { Donor } from "../../../types/Donor";
 import { DonationForm } from "../../../types/DonationForm";
 import { Screening } from "../../../types/Screening";
 import { ErrorType } from "../../../types/ErrorType";
+import Footer from "../../../components/Footer/Footer";
+import Loading from "../../../components/Loading/Loading";
 
 const SchedulingAndDonation = () => {
   const auth = useContext(AuthContext);
@@ -21,17 +23,19 @@ const SchedulingAndDonation = () => {
   const [schedulingsBloodcenter, setSchedulingsBloodcenter] = useState<
     SchedulingType[]
   >([]);
-  const donationForm = JSON.parse(localStorage.getItem("donationForm")! ?? {}
+  const donationForm = JSON.parse(
+    localStorage.getItem("donationForm")! ?? {}
   ) as DonationForm;
   const [screening, setScreening] = useState<Screening>(() => {
     const storedScreening = localStorage.getItem("screening");
-    return storedScreening ? (JSON.parse(storedScreening) as Screening)
-      : {} as Screening;
+    return storedScreening
+      ? (JSON.parse(storedScreening) as Screening)
+      : ({} as Screening);
   });
   const [selectedBloodcenter, setSelectedBloodcenter] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedHour, setSelectedHour] = useState("");
-  //const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [donations, setDonations] = useState<Donation[]>([]);
   const [scheduling, setScheduling] = useState<SchedulingType | null>(() => {
     const savedScheduling = localStorage.getItem("scheduling");
@@ -62,6 +66,7 @@ const SchedulingAndDonation = () => {
       } catch (error) {
         console.error("Erro: ", (error as ErrorType).detail);
       }
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -103,9 +108,10 @@ const SchedulingAndDonation = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await auth.toSchedule(user!.id, parseInt(selectedHour))
-      .then(() => window.location.reload())  
-      .catch(e => console.error(e));
+    await auth
+      .toSchedule(user!.id, parseInt(selectedHour))
+      .then(() => window.location.reload())
+      .catch((e) => console.error(e));
   };
 
   const uniqueDate = new Set();
@@ -122,6 +128,10 @@ const SchedulingAndDonation = () => {
       uniqueDate.add(dataFormatada);
       return true;
     });
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col items-center min-h-[97vh]">
@@ -155,13 +165,16 @@ const SchedulingAndDonation = () => {
           </button>
         </div>
       </nav>
-      <div className="flex flex-row w-[90%] items-center justify-start min-h-[70vh]">
+      <div className="flex flex-row w-[90%] items-center justify-start min-h-[85vh] xl:min-h-[77.95vh]">
         {activeButtonRight ? (
           <div className="flex text-center items-center justify-center w-full">
             {donations.length !== 0 ? (
               donations.slice(0, 10).map((donation) => (
-                <div key={donation.id} className="mx-[2%] mt-[2%] rounded-md p-[1%] w-[22%] shadow-custom">
-                  <h3 className="m-0 text-[1.1em] mb-[3px]" >
+                <div
+                  key={donation.id}
+                  className="mx-[2%] mt-[2%] rounded-md p-[1%] w-[22%] shadow-custom"
+                >
+                  <h3 className="m-0 text-[1.1em] mb-[3px]">
                     {
                       bloodcenters!.find(
                         (center) =>
@@ -227,14 +240,16 @@ const SchedulingAndDonation = () => {
                     screening !== null &&
                     screening.doctor !== null && (
                       <div className="flex flex-col items-center mb-0">
-                        <span className= "text-[#035e89] mb-6 text-2xl md:text-3xl">
+                        <span className="text-[#035e89] mb-6 text-2xl md:text-3xl">
                           Marque um agendamento e faça sua parte
                         </span>
                         <form
                           className="flex flex-col w-[30%] items-center justify-center py-[4%] md:mb-[2%] rounded-lg shadow-xl"
                           onSubmit={handleSubmit}
                         >
-                          <label className={labelStyle} htmlFor="bloodcenter">Hemocentro</label>
+                          <label className={labelStyle} htmlFor="bloodcenter">
+                            Hemocentro
+                          </label>
                           <select
                             className={selectStyle}
                             id="bloodcenter"
@@ -252,7 +267,9 @@ const SchedulingAndDonation = () => {
                               </option>
                             ))}
                           </select>
-                          <label className={labelStyle} htmlFor="date">Data</label>
+                          <label className={labelStyle} htmlFor="date">
+                            Data
+                          </label>
                           <select
                             className={selectStyle}
                             id="date"
@@ -272,7 +289,9 @@ const SchedulingAndDonation = () => {
                               </option>
                             ))}
                           </select>
-                          <label className={labelStyle} htmlFor="hour">Hora</label>
+                          <label className={labelStyle} htmlFor="hour">
+                            Hora
+                          </label>
                           <select
                             className={selectStyle}
                             id="hour"
@@ -299,7 +318,7 @@ const SchedulingAndDonation = () => {
                                 </option>
                               ))}
                           </select>
-                          <button 
+                          <button
                             className="bg-[#b80e14] rounded-md text-white p-[8px] border border-none cursor-pointer mt-[8%] w-[45%] md:w-[30%] md:mb-0 hover:bg-[#eb1118af]"
                             type="submit"
                           >
@@ -317,6 +336,9 @@ const SchedulingAndDonation = () => {
             </div>
           </div>
         )}
+      </div>
+      <div className="bottom-0">
+        <Footer />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Donor } from "../../../types/Donor";
+import Footer from "../../../components/Footer/Footer";
 
 const ChangePassword = () => {
   const auth = useContext(AuthContext);
@@ -60,7 +61,7 @@ const ChangePassword = () => {
   return (
     <div className="flex flex-col items-center m-0">
       <Navbar />
-      <div className="flex flex-col items-center justify-center min-h-[86vh] w-[86%] text-[0.9em] md:w-full md:text-base">
+      <div className="flex flex-col items-center justify-center min-h-[84.1vh] w-[86%] text-[0.9em] md:w-full md:text-base">
         <span className="text-[#035e89] text-2xl md:text-4xl">
           Alterar Senha
         </span>
@@ -109,6 +110,9 @@ const ChangePassword = () => {
           </button>
           {passwordChanged && <p>Senha alterada com sucesso!</p>}
         </form>
+      </div>
+      <div className="bottom-0">
+        <Footer />
       </div>
     </div>
   );

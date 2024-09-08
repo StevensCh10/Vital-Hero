@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorType } from "../../types/ErrorType";
+import Footer from "../../components/Footer/Footer";
 
 const ForgotPassword = () => {
     const auth = useContext(AuthContext);
@@ -25,7 +26,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[97vh]">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="flex flex-col items-center w-[380px] py-[3%] px-[1.5%]">
         <div className="flex flex-col items-center text-center w-[69%] mb-[5%]">
             <p className="mb-0"><img className="w-[100px]" src="esqueceu-senha.png"></img></p>
@@ -53,6 +54,9 @@ const ForgotPassword = () => {
           <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/register">Criar nova conta</Link>
           <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/login">Voltar ao login</Link>
         </p>
+      </div>
+      <div className="fixed bottom-0">
+        <Footer />
       </div>
     </div>
   );

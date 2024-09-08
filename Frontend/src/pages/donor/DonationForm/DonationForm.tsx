@@ -5,6 +5,7 @@ import { AuthContext } from "../../../contexts/Auth/AuthContext";
 import { Donor } from "../../../types/Donor";
 import { useNavigate } from "react-router-dom";
 import { ErrorType } from "../../../types/ErrorType";
+import Footer from "../../../components/Footer/Footer";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
@@ -378,6 +379,9 @@ const DonationForm = () => {
               Salvar
             </button>
           </form>
+          <div className="bottom-0">
+            <Footer />
+          </div>
         </div>
       ) : (
         <div className="flex flex-col w-full items-center justify-center mt-[3%] min-h-[87vh] lg:min-h-[89.6vh] xl:min-h-[79vh]">
@@ -575,6 +579,9 @@ const DonationForm = () => {
               </button>
             </div>
           </form>
+          <div className="bottom-0">
+            <Footer />
+          </div>
         </div>
       )}
     </div>

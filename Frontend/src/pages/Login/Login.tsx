@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorType } from "../../types/ErrorType";
+import Footer from "../../components/Footer/Footer";
 
 const Login = () => {
   const auth = useContext(AuthContext);
@@ -20,7 +21,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[97vh]">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="flex flex-col items-center w-[340px] bg-white rounded-[20px] pt-[3%] pb-[3%]">
         <div className="w-[100%] flex flex-row justify-center mb-[1%] text-[#b80e14] mb-[8%]">
           <h1 className="flex text-5xl m-0 text-center items-center mr-1">Vital</h1>
@@ -66,6 +67,9 @@ const Login = () => {
         <p className="mt-[3%] font-[13px] w-[80%] text-center opacity-80">
           É da área de saúde e deseja colaborar conosco? <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/register-doctor">Clique aqui</Link>
         </p>
+      </div>
+      <div className="fixed bottom-0">
+        <Footer />
       </div>
     </div>
   );

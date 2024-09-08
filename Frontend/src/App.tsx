@@ -51,7 +51,6 @@ const App = () => {
           <Route path='/forgot-password' element={<RequireAuth><ForgotPassword/></RequireAuth>}/>
           <Route path='/redefine-password' element={<RedefinePassword/>}/>
         </Routes>
-        <Footer />
       </div>
     </div>
   )

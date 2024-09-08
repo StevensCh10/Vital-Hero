@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import { Donor } from "../../../types/Donor";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../../components/Footer/Footer";
 
 const Screening = () => {
   const auth = useContext(AuthContext);
@@ -515,6 +516,9 @@ const Screening = () => {
               Salvar
             </button>
           </form>
+          <div className="bottom-0">
+            <Footer />
+          </div>
         </div>
       </div>
     </div>

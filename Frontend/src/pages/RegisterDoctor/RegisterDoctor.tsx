@@ -2,6 +2,7 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ErrorType } from "../../types/ErrorType";
+import Footer from "../../components/Footer/Footer";
 
 const RegisterDoctor = () => {
   const auth = useContext(AuthContext);
@@ -85,7 +86,7 @@ const RegisterDoctor = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[97vh]">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <img className="mt-[3%] w-[70px] md:w-[100px]" src="Logo.png"></img>
       <span className="text-[#035e89] text-2xl md:text-4xl">Cadastre-se e ajude na causa</span>
       <form className="w-full text-center mt-[8%] md:mt-[3%]" onSubmit={handleRegister} encType="multipart/form-data" style={{ width: "100%" }}>
@@ -254,6 +255,9 @@ const RegisterDoctor = () => {
           Já tem uma conta? <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/login">Conecte-se</Link>
         </p>
       </form>
+      <div className="fixed bottom-0">
+        <Footer />
+      </div>
     </div>
   );
 };

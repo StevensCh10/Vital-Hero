@@ -4,6 +4,7 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { useContext, useEffect, useState } from "react";
 import { Doctor } from "../../types/Doctor";
 import { Donor } from "../../types/Donor";
+import Footer from "../../components/Footer/Footer";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
@@ -75,7 +76,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col items-center m-0">
       {role === "DOCTOR" ? <NavbarDoctor /> : <NavbarDonor />}
-      <div className="flex flex-col items-center justify-center min-h-[86vh] w-[86%] text-[0.9em] md:w-full md:text-base">
+      <div className="flex flex-col items-center justify-center min-h-[84vh] w-[86%] text-[0.9em] md:w-full md:text-base">
         {photoURL === "Logo.png" ? (
           <img
             className="w-[75px] mb-[1%] md:w-[100px]"
@@ -100,7 +101,7 @@ const Profile = () => {
               readOnly
             />
             <input
-              className={`${inputStyle} w-[33%] mr-[2%]`}
+              className="w-[33%] mr-[2%] p-2 rounded-md text-[#333333] bg-[#00000015] mb-[3%] text-center text-[1em] focus:outline-none"
               type="age"
               id="age"
               name="age"
@@ -110,7 +111,7 @@ const Profile = () => {
               required
             />
             <input
-              className={`${inputStyle} w-[55%]`}
+              className="w-[55%] p-2 rounded-md text-[#333333] bg-[#00000015] mb-[3%] text-center text-[1em] focus:outline-none"
               id="number"
               name="number"
               value={formatPhone(phone)}
@@ -163,6 +164,9 @@ const Profile = () => {
             Salvar
           </button>
         </form>
+      </div>
+      <div className="bottom-0">
+        <Footer />
       </div>
     </div>
   );
