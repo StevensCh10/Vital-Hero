@@ -79,7 +79,7 @@ const HomeDonor = () => {
       <span className="text-[#035e89] mb-6 text-2xl md:text-4xl">
         Critérios para doação
       </span>
-      <div className="flex bg-[#f8f8f8] w-full pb-[3%] md:mb-[3%] px-2">
+      <div className="flex w-full pb-[3%] md:mb-[3%] px-2 shadow-custom">
         <div className="ml-[2vw] w-full md:w-[80vw]">
           <ul className="list-disc list-inside">
             <p className={pStyle}>Idade:</p>

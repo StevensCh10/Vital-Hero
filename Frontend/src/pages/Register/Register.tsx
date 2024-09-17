@@ -3,6 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ErrorType } from "../../types/ErrorType";
 import Footer from "../../components/Footer/Footer";
+import {
+  calculateMaxDate,
+  calculateMinDate,
+  handleCpfChange,
+  handlePhoneChange,
+  validateCPF,
+} from "../../utils/functions";
 
 const Register = () => {
   const auth = useContext(AuthContext);
@@ -34,7 +41,7 @@ const Register = () => {
   };
 
   const formRow =
-  "flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%] text-start";
+    "flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%] text-start";
   const labelStyle = "mb-[1%] text-start text-[1.1em]";
   const selectStyle =
     "text-[#333333] w-full p-2 rounded-md bg-[#00000015]" +
@@ -51,54 +58,67 @@ const Register = () => {
     setSelectedFile(file);
   };
 
-  const whatGender = () => {
-    if (gender === "M") {
-      setGender("Masculino");
-    }
-    setGender("Feminino");
-  };
-
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    whatGender();
-
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('cpf', cpf);
-    formData.append('email', email);
-    formData.append('age', calculateAge(dateOfBirth).toString());
-    formData.append('gender', gender);
-    formData.append('maritalStatus', maritalStatus);
-    formData.append('address', `${address},${addressNumber}`);
-    formData.append('phone', phone);
-    formData.append('photo', 'sem');
-    formData.append('password', password);
-    formData.append('bloodType', bloodType);
+    formData.append("name", name);
+    formData.append("cpf", cpf);
+    formData.append("email", email);
+    formData.append("age", calculateAge(dateOfBirth).toString());
+    formData.append("gender", gender);
+    formData.append("maritalStatus", maritalStatus);
+    formData.append("address", `${address},${addressNumber}`);
+    formData.append("phone", phone);
+    formData.append("photo", "sem");
+    formData.append("password", password);
+    formData.append("bloodType", bloodType);
 
-    if(selectedFile){
-      formData.append('file', selectedFile);
-    }else{
-      const emptyBlob = new Blob([], { type: 'application/octet-stream' });
-      const emptyFile = new File([emptyBlob], 'empty-file.txt', { type: 'text/plain' });
-      formData.append('file', emptyFile);
+    if (selectedFile) {
+      formData.append("file", selectedFile);
+    } else {
+      const emptyBlob = new Blob([], { type: "application/octet-stream" });
+      const emptyFile = new File([emptyBlob], "empty-file.txt", {
+        type: "text/plain",
+      });
+      formData.append("file", emptyFile);
     }
 
-    await auth.register(formData)
+    await auth
+      .register(formData)
       .then(() => navigate("/"))
-      .catch(e => {
+      .catch((e) => {
         alert((e as ErrorType).detail);
       });
+  };
+
+  const minDate = calculateMinDate(69);
+  const maxDate = calculateMaxDate(18);
+
+  const actCpf = (cpf: string) => {
+    if (validateCPF(cpf)) {
+      setCpf(cpf);
+      return;
+    }
+    alert("Cpf inálido");
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <img className="mt-[3%] w-[70px] md:w-[100px]" src="Logo.png"></img>
-      <span className="text-[#035e89] text-2xl md:text-4xl">Cadastre-se e salve vidas</span>
-      <form className="w-full text-center mt-[8%] md:mt-[3%]" onSubmit={handleRegister} encType="multipart/form-data">
+      <span className="text-[#035e89] text-2xl md:text-4xl">
+        Cadastre-se e salve vidas
+      </span>
+      <form
+        className="w-full text-center mt-[8%] md:mt-[3%]"
+        onSubmit={handleRegister}
+        encType="multipart/form-data"
+      >
         <div className="flex flex-wrap items-center justify-center">
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="name">Nome completo:</label>
+            <label className={labelStyle} htmlFor="name">
+              Nome completo:
+            </label>
             <input
               className={inputStyle}
               type="text"
@@ -111,7 +131,9 @@ const Register = () => {
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="email">Email:</label>
+            <label className={labelStyle} htmlFor="email">
+              Email:
+            </label>
             <input
               className={inputStyle}
               type="email"
@@ -123,30 +145,43 @@ const Register = () => {
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="dateOfBirth">Data de nascimento:</label>
+            <label className={labelStyle} htmlFor="dateOfBirth">
+              Data de nascimento:
+            </label>
             <input
               className={inputStyle}
               type="date"
               id="dateOfBirth"
               name="dateOfBirth"
               onChange={(e) => setDateOfBirth(e.target.value)}
+              min={minDate}
+              max={maxDate}
               required
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="phone">Telefone:</label>
+            <label className={labelStyle} htmlFor="phone">
+              Telefone:
+            </label>
             <input
               className={inputStyle}
               type="tel"
               id="phone"
               name="phone"
-              placeholder="8199546165"
-              onChange={(e) => setPhone(e.target.value)}
+              placeholder="(81) 9 9954-6165"
+              onChange={(e) => {
+                  var value = handlePhoneChange(e);
+                  setPhone(value as string);
+                }
+              }
+              maxLength={16}
               required
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="maritalStatus">Estado civil:</label>
+            <label className={labelStyle} htmlFor="maritalStatus">
+              Estado civil:
+            </label>
             <select
               className={selectStyle}
               id="maritalStatus"
@@ -154,51 +189,51 @@ const Register = () => {
               onChange={(e) => setMaritalStatus(e.target.value)}
               required
             >
-              <option value="S">Solteiro</option>
-              <option value="C">Casado</option>
+              <option  disabled selected>Selecione seu estado civil</option>
+              <option value="Solteiro">Solteiro</option>
+              <option value="Casado">Casado</option>
               <option value="Outros">Outros</option>
             </select>
           </div>
           <div className={formRow}>
-            <label className={labelStyle}>Sexo:</label>
-            <div className="flex w-[80%]">
-              <input
-                className={inputStyle}
-                type="radio"
-                id="sexoM"
-                name="gender"
-                value="M"
-                onChange={(e) => setGender(e.target.value)}
-                required
-              />
-              <label className={labelStyle} htmlFor="sexoM">M</label>
-              <input
-                className={inputStyle}
-                type="radio"
-                id="sexoF"
-                name="gender"
-                value="F"
-                onChange={(e) => setGender(e.target.value)}
-                required
-              />
-              <label className={labelStyle} htmlFor="sexoF">F</label>
-            </div>
+            <label className={labelStyle} htmlFor="gender">
+              Sexo:
+            </label>
+            <select
+              className={selectStyle}
+              id="gender"
+              name="gender"
+              onChange={(e) => setGender(e.target.value)}
+              required
+            >
+              <option  disabled selected>Selecione seu sexo de nascença</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Feminino">Feminino</option>
+            </select>
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="cpf">CPF:</label>
+            <label className={labelStyle} htmlFor="cpf">
+              CPF:
+            </label>
             <input
               className={inputStyle}
               type="text"
               id="cpf"
               name="cpf"
-              placeholder="11111111111"
-              pattern="\S.*"
-              onChange={(e) => setCpf(e.target.value)}
+              placeholder="123.654.158-73"
+              onChange={(e) => {
+                  var value = handleCpfChange(e);
+                  setCpf(value as string);
+                }
+              }
+              maxLength={14}
               required
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="bloodType">Tipo sanguíneo:</label>
+            <label className={labelStyle} htmlFor="bloodType">
+              Tipo sanguíneo:
+            </label>
             <select
               className={selectStyle}
               id="bloodType"
@@ -206,6 +241,7 @@ const Register = () => {
               onChange={(e) => setBloodType(e.target.value)}
               required
             >
+              <option  disabled selected>Selecione seu tipo sanguíneo</option>
               <option value="A+">A+</option>
               <option value="A-">A-</option>
               <option value="B+">B+</option>
@@ -218,7 +254,9 @@ const Register = () => {
             </select>
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="address">Endereço:</label>
+            <label className={labelStyle} htmlFor="address">
+              Endereço:
+            </label>
             <input
               className={inputStyle}
               type="text"
@@ -231,7 +269,9 @@ const Register = () => {
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="addressNumber">Número:</label>
+            <label className={labelStyle} htmlFor="addressNumber">
+              Número:
+            </label>
             <input
               className={inputStyle}
               type="text"
@@ -240,16 +280,21 @@ const Register = () => {
               placeholder="Número da sua residência"
               pattern="\S.*"
               onChange={(e) => setAddressNumber(e.target.value)}
-              required
             />
           </div>
           <div className={formRow}>
             <label className={labelStyle}>Foto:</label>
             <input
-              className={inputStyle} type="file" accept="image/" onChange={handleFileChange} />
+              className={inputStyle}
+              type="file"
+              accept="image/"
+              onChange={handleFileChange}
+            />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="password">Senha:</label>
+            <label className={labelStyle} htmlFor="password">
+              Senha:
+            </label>
             <input
               className={inputStyle}
               type="password"
@@ -263,10 +308,16 @@ const Register = () => {
           </div>
         </div>
         <button
-          className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-5 mb-5 hover:bg-[#b80e14a4] lg:w-[10%] md:w-[12%]" 
-          type="submit">Cadastrar</button>
+          className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-5 mb-5 hover:bg-[#b80e14a4] lg:w-[10%] md:w-[12%]"
+          type="submit"
+        >
+          Cadastrar
+        </button>
         <p className="mb-5">
-          Já tem uma conta? <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/login">Conecte-se</Link>
+          Já tem uma conta?{" "}
+          <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/login">
+            Conecte-se
+          </Link>
         </p>
       </form>
       <div className="fixed bottom-0">

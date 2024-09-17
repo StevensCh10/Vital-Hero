@@ -37,5 +37,5 @@ public class DonationForm implements Serializable{
     
     @NotBlank
     @Column(updatable = true)
-    private String q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11; /* Definir as perguntas no front e no back serão salvas as respostas*/
+    private String q1, q2, q3, q4, q5, q6, q7, q8, q9, q10; /* Definir as perguntas no front e no back serão salvas as respostas*/
 }

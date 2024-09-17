@@ -15,14 +15,14 @@ const HomeBloodcenter = () => {
 
 
   return (
-    <div className="flex flex-col items-center m-0 min-h-[96vh]">
+    <div className="flex flex-col items-center m-0">
       <NavbarBloodcenter />
-      <div className="flex flex-row w-screen ">
+      <div className="flex flex-row w-screen min-h-[91.7vh]">
 
         <div className="flex flex-col items-center bg-[#156289d9] w-[20%] min-h-[89vh] text-center">
           <img className="my-10 w-[10vw]" src="/equipe-medica.png"></img>
-          <Link className="w-full text-white p-[10px] hover:bg-[#156289b7] hover:text-white" to="/">Agendamento de Doadores</Link>
-          <Link className="w-full text-white p-[10px] hover:bg-[#156289b7] hover:text-white" to="/">Gerenciar Agendamentos</Link>
+          <button className="w-full text-white p-[10px] hover:bg-[#156289b7] hover:text-white">Agendamento de Doadores</button>
+          <button className="w-full text-white p-[10px] hover:bg-[#156289b7] hover:text-white">Gerenciar Agendamentos</button>
         </div>
         <div className="w-[80%]">
           

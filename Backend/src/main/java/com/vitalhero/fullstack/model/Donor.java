@@ -1,17 +1,18 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.vitalhero.fullstack.intrerfaces.User;
 
-import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.DecimalMin;
@@ -66,7 +67,7 @@ public class Donor implements Serializable, User{
     private String email;
 
     @NotNull
-    @DecimalMin("16")
+    @DecimalMin("18")
     @Column(updatable = true)
     private int age;
 

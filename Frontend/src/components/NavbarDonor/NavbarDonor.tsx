@@ -15,7 +15,7 @@ const NavbarDonor = () => {
   const [isModalRightOpen, setIsModalRightOpen] = useState(false);
 
   const btnStyle =
-    "flex rounded-[50%] w-[45px] p-[10px] h-[45px] text-[#035e89] cursor-pointer shadow-custom items-center justify-center hover:bg-[#035e89] hover:text-white";
+    "flex rounded-[50%] w-[45px] p-[10px] h-[45px] text-[#035e89] cursor-pointer shadow-md items-center justify-center hover:bg-[#035e89] hover:text-white";
   const modalItemStyle = "flex items-center justify-start m-[4%] text-[17px] w-[90%]";
   const modalImgStyle = "mr-[10px] w-[30px]";
   const linkStyle = "text-[#092f41] hover:text-[#035e89]"
@@ -72,7 +72,7 @@ const NavbarDonor = () => {
         >
           <div className={modalItemStyle}>
             <img className={modalImgStyle} src="/Logo.png"></img>
-            <Link className={linkStyle} to="/">Home</Link>
+            <Link className={linkStyle} to="/">Início</Link>
           </div>
           <div className={modalItemStyle}>
             <img className={modalImgStyle} src="/hospital.png"></img>

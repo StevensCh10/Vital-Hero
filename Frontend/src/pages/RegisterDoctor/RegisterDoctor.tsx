@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ErrorType } from "../../types/ErrorType";
 import Footer from "../../components/Footer/Footer";
+import { calculateMaxDate, calculateMinDate, handleCpfChange, handlePhoneChange, handleProfessionalIdCardChange } from "../../utils/functions";
 
 const RegisterDoctor = () => {
   const auth = useContext(AuthContext);
@@ -85,6 +86,9 @@ const RegisterDoctor = () => {
     }
   };
 
+  const minDate = calculateMinDate(70);
+  const maxDate = calculateMaxDate(18);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <img className="mt-[3%] w-[70px] md:w-[100px]" src="Logo.png"></img>
@@ -124,6 +128,8 @@ const RegisterDoctor = () => {
               id="dateOfBirth"
               name="dateOfBirth"
               onChange={(e) => setDateOfBirth(e.target.value)}
+              min={minDate}
+              max={maxDate}
               required
             />
           </div>
@@ -134,13 +140,20 @@ const RegisterDoctor = () => {
               type="tel"
               id="phone"
               name="phone"
-              placeholder="8199546165"
-              onChange={(e) => setPhone(e.target.value)}
+              placeholder="(81) 9 9954-6165"
+              onChange={(e) => {
+                  var value = handlePhoneChange(e);
+                  setPhone(value as string);
+                }
+              }
+              maxLength={16}
               required
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="maritalStatus">Estado civil:</label>
+            <label className={labelStyle} htmlFor="maritalStatus">
+              Estado civil:
+            </label>
             <select
               className={selectStyle}
               id="maritalStatus"
@@ -148,35 +161,27 @@ const RegisterDoctor = () => {
               onChange={(e) => setMaritalStatus(e.target.value)}
               required
             >
-              <option value="S">Solteiro</option>
-              <option value="C">Casado</option>
+              <option  disabled selected>Selecione seu estado civil</option>
+              <option value="Solteiro">Solteiro</option>
+              <option value="Casado">Casado</option>
               <option value="Outros">Outros</option>
             </select>
           </div>
           <div className={formRow}>
-            <label className={labelStyle}>Sexo:</label>
-            <div className="flex w-[80%]">
-              <input
-                className={inputStyle}
-                type="radio"
-                id="sexoM"
-                name="gender"
-                value="M"
-                onChange={(e) => setGender(e.target.value)}
-                required
-              />
-              <label className={labelStyle} htmlFor="sexoM">M</label>
-              <input
-                className={inputStyle}
-                type="radio"
-                id="sexoF"
-                name="gender"
-                value="F"
-                onChange={(e) => setGender(e.target.value)}
-                required
-              />
-              <label className={labelStyle} htmlFor="sexoF">F</label>
-            </div>
+            <label className={labelStyle} htmlFor="gender">
+              Sexo:
+            </label>
+            <select
+              className={selectStyle}
+              id="gender"
+              name="gender"
+              onChange={(e) => setGender(e.target.value)}
+              required
+            >
+              <option  disabled selected>Selecione seu sexo</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Feminino">Feminino</option>
+            </select>
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="cpf">CPF:</label>
@@ -185,9 +190,13 @@ const RegisterDoctor = () => {
               type="text"
               id="cpf"
               name="cpf"
-              placeholder="11111111111"
-              pattern="\S.*"
-              onChange={(e) => setCpf(e.target.value)}
+              placeholder="123.654.158-73"
+              onChange={(e) => {
+                  var value = handleCpfChange(e);
+                  setCpf(value as string);
+                }
+              }
+              maxLength={14}
               required
             />
           </div>
@@ -199,7 +208,13 @@ const RegisterDoctor = () => {
               id="professionalIdCard"
               name="professionalIdCard"
               pattern="\S.*"
-              onChange={(e) => setProfessionalIdCard(e.target.value)}
+              placeholder="12345-PE"
+              minLength={7}
+              maxLength={9}
+              onChange={(e) => {
+                  setProfessionalIdCard(e.target.value);
+                }
+              }
               required
             />
           </div>

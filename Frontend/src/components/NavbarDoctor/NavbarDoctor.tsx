@@ -70,7 +70,7 @@ const NavbarDoctor = () => {
             </div>
             <div className={modalItemStyle}>
               <img className={modalImgStyle}  src="/Logo.png"></img>
-              <Link className={linkStyle} to="/">Home</Link>
+              <Link className={linkStyle} to="/">Início</Link>
             </div>
             <div className={modalItemStyle}>
               <div className="flex justify-center items-center w-full h-0">

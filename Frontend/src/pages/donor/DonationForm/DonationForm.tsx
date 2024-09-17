@@ -6,6 +6,7 @@ import { Donor } from "../../../types/Donor";
 import { useNavigate } from "react-router-dom";
 import { ErrorType } from "../../../types/ErrorType";
 import Footer from "../../../components/Footer/Footer";
+import { calculateMaxDate, calculateMinDate } from "../../../utils/functions";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
@@ -29,64 +30,34 @@ const DonationForm = () => {
   const [q4, setQ4] = useState(donationFormAux?.q4);
   const [q5, setQ5] = useState(donationFormAux?.q5);
   const [q6, setQ6] = useState(donationFormAux?.q6);
-  const [q7, setQ7] = useState(donationFormAux?.q7);
+  const [q7, setQ7] = useState<string>(donationFormAux?.q7);
   const [q8, setQ8] = useState(donationFormAux?.q8);
   const [q9, setQ9] = useState(donationFormAux?.q9);
   const [q10, setQ10] = useState(donationFormAux?.q10);
-  const [q11, setQ11] = useState(donationFormAux?.q11);
   const donorid: Donor = { id: auth.user!.id! };
 
-  const estadosBrasileiros = [
-    { sigla: "AC", nome: "Acre" },
-    { sigla: "AL", nome: "Alagoas" },
-    { sigla: "AP", nome: "Amapá" },
-    { sigla: "AM", nome: "Amazonas" },
-    { sigla: "BA", nome: "Bahia" },
-    { sigla: "CE", nome: "Ceará" },
-    { sigla: "DF", nome: "Distrito Federal" },
-    { sigla: "ES", nome: "Espírito Santo" },
-    { sigla: "GO", nome: "Goiás" },
-    { sigla: "MA", nome: "Maranhão" },
-    { sigla: "MT", nome: "Mato Grosso" },
-    { sigla: "MS", nome: "Mato Grosso do Sul" },
-    { sigla: "MG", nome: "Minas Gerais" },
-    { sigla: "PA", nome: "Pará" },
-    { sigla: "PB", nome: "Paraíba" },
-    { sigla: "PR", nome: "Paraná" },
-    { sigla: "PE", nome: "Pernambuco" },
-    { sigla: "PI", nome: "Piauí" },
-    { sigla: "RJ", nome: "Rio de Janeiro" },
-    { sigla: "RN", nome: "Rio Grande do Norte" },
-    { sigla: "RS", nome: "Rio Grande do Sul" },
-    { sigla: "RO", nome: "Rondônia" },
-    { sigla: "RR", nome: "Roraima" },
-    { sigla: "SC", nome: "Santa Catarina" },
-    { sigla: "SP", nome: "São Paulo" },
-    { sigla: "SE", nome: "Sergipe" },
-    { sigla: "TO", nome: "Tocantins" },
-  ];
-
   const [originalValues, setOriginalValues] = useState({
-    q3, q9, q10, q11,
+    q3,
+    q9,
+    q10,
   });
   const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
-    setOriginalValues({ q3, q9, q10, q11 });
+    setOriginalValues({ q3, q9, q10 });
   }, []);
 
   useEffect(() => {
     if (
       q3 !== originalValues.q3 ||
       q9 !== originalValues.q9 ||
-      q10 !== originalValues.q10 ||
-      q11 !== originalValues.q11
+      q10 !== originalValues.q10
     ) {
       setIsChanged(true);
     } else {
       setIsChanged(false);
     }
-  }, [q3, q9, q10, q11, originalValues]);
+  }, [q3, q9, q10, originalValues]);
 
   const handleAddDonationForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -103,12 +74,12 @@ const DonationForm = () => {
       q8: q8,
       q9: q9,
       q10: q10,
-      q11: q11,
     };
 
-    await auth.addDonationForm(donationForm)
+    await auth
+      .addDonationForm(donationForm)
       .then(() => navigate("/screening"))
-      .catch(e => alert((e as ErrorType).detail));
+      .catch((e) => alert((e as ErrorType).detail));
   };
 
   const handleUpdateDonationForm = async (
@@ -129,13 +100,16 @@ const DonationForm = () => {
       q8: q8,
       q9: q9,
       q10: q10,
-      q11: q11,
     };
 
-    await auth.updateDonationForm(donationForm)
+    await auth
+      .updateDonationForm(donationForm)
       .then(() => navigate("/screening"))
-      .catch(e => alert((e as ErrorType).detail));
+      .catch((e) => alert((e as ErrorType).detail));
   };
+
+  const minDate = calculateMinDate(64);
+  const maxDate = calculateMaxDate(5);
 
   return (
     <div className="flex flex-col items-center justify-center w-full text-center">
@@ -247,70 +221,56 @@ const DonationForm = () => {
                 </select>
               </div>
               <div className={formRow}>
-                <label className={labelStyle} htmlFor="document">
-                  Documento:
-                </label>
-                <select
-                  className={selectStyle}
-                  id="document"
-                  name="document"
-                  required
-                  onChange={(e) => setQ5(e.target.value)}
-                >
-                  <option></option>
-                  <option value="CPF">CPF</option>
-                  <option value="RG">RG</option>
-                  <option value="CNH">CNH</option>
-                  <option value="Passaporte">Passaporte</option>
-                  <option value="Outro">Outro</option>
-                </select>
-              </div>
-              <div className={formRow}>
-                <label className={labelStyle} htmlFor="documentNumber">
-                  Número do documento:
+                <label className={labelStyle} htmlFor="rgNumber">
+                  Número do RG:
                 </label>
                 <input
                   className={inputStyle}
                   type="text"
-                  id="documentNumber"
-                  name="documentNumber"
+                  id="rgNumber"
+                  name="rgNumber"
                   pattern="\S.*"
+                  min={7}
+                  max={9}
                   required
-                  onChange={(e) => setQ6(e.target.value)}
+                  onChange={(e) => setQ5(e.target.value)}
                 />
-              </div>
-              <div className={formRow}>
-                <label className={labelStyle} htmlFor="UF">
-                  UF:
-                </label>
-                <select
-                  className={selectStyle}
-                  id="UF"
-                  name="UF"
-                  required
-                  onChange={(e) => setQ7(e.target.value)}
-                >
-                  <option value="">Selecione a UF</option>
-                  {estadosBrasileiros.map((estado) => (
-                    <option key={estado.sigla} value={estado.sigla}>
-                      {estado.sigla}
-                    </option>
-                  ))}
-                </select>
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="issuingBody">
                   Orgão Expedidor:
                 </label>
-                <input
-                  className={inputStyle}
-                  type="text"
+                <select
+                  className={selectStyle}
                   id="issuingBody"
                   name="issuingBody"
-                  placeholder="Ex: SDS"
-                  pattern="\S.*"
+                  onChange={(e) => setQ6(e.target.value)}
                   required
-                  onChange={(e) => setQ8(e.target.value)}
+                >
+                  <option>Selecione o orgão emissor</option>
+                  <option value="SSP">SSP</option>
+                  <option value="DETRAN">DETRAN</option>
+                  <option value="IFP">IFP</option>
+                  <option value="IGP">IGP</option>
+                  <option value="PC">PC</option>
+                  <option value="SDS">SDS</option>
+                  <option value="SEJUSP">SEJUSP</option>
+                  <option value="SESP">SESP</option>
+                </select>
+              </div>
+              <div className={formRow}>
+                <label className={labelStyle} htmlFor="shippingDate">
+                  Data de expedição:
+                </label>
+                <input
+                  className={inputStyle}
+                  type="date"
+                  id="shippingDate"
+                  name="shippingDate"
+                  onChange={(e) => setQ7(e.target.value)}
+                  min={minDate}
+                  max={maxDate}
+                  required
                 />
               </div>
               <div className={formRow}>
@@ -322,7 +282,7 @@ const DonationForm = () => {
                   id="education"
                   name="education"
                   required
-                  onChange={(e) => setQ9(e.target.value)}
+                  onChange={(e) => setQ8(e.target.value)}
                 >
                   <option value="">Selecione a escolaridade</option>
                   <option value="Ensino Médio Completo">
@@ -354,7 +314,7 @@ const DonationForm = () => {
                   name="profession"
                   pattern="\S.*"
                   required
-                  onChange={(e) => setQ10(e.target.value)}
+                  onChange={(e) => setQ9(e.target.value)}
                 />
               </div>
               <div className={formRow}>
@@ -368,7 +328,7 @@ const DonationForm = () => {
                   name="currentJob"
                   pattern="\S.*"
                   required
-                  onChange={(e) => setQ11(e.target.value)}
+                  onChange={(e) => setQ10(e.target.value)}
                 />
               </div>
             </div>
@@ -448,41 +408,15 @@ const DonationForm = () => {
                 />
               </div>
               <div className={formRow}>
-                <label className={labelStyle} htmlFor="document">
-                  Documento:
+                <label className={labelStyle} htmlFor="rgNumber">
+                  Número do RG:
                 </label>
                 <input
                   className={inputStyle}
-                  id="document"
-                  name="document"
                   defaultValue={q5}
-                  required
-                  readOnly
-                />
-              </div>
-              <div className={formRow}>
-                <label className={labelStyle} htmlFor="estadoCivil">
-                  Número do documento:
-                </label>
-                <input
-                  className={inputStyle}
-                  defaultValue={q6}
                   type="text"
-                  id="estadoCivil"
-                  name="estadoCivil"
-                  readOnly
-                />
-              </div>
-              <div className={formRow}>
-                <label className={labelStyle} htmlFor="UF">
-                  UF:
-                </label>
-                <input
-                  className={inputStyle}
-                  defaultValue={q7}
-                  id="UF"
-                  name="UF"
-                  required
+                  id="rgNumber"
+                  name="rgNumber"
                   readOnly
                 />
               </div>
@@ -492,11 +426,23 @@ const DonationForm = () => {
                 </label>
                 <input
                   className={inputStyle}
-                  defaultValue={q8}
+                  defaultValue={q6}
                   type="text"
                   id="issuingBody"
                   name="issuingBody"
-                  placeholder="Ex: SDS"
+                  readOnly
+                />
+              </div>
+              <div className={formRow}>
+                <label className={labelStyle} htmlFor="shippingDate">
+                  Data de expedição:
+                </label>
+                <input
+                  className={inputStyle}
+                  defaultValue={q6}
+                  id="shippingDate"
+                  name="shippingDate"
+                  required
                   readOnly
                 />
               </div>
@@ -507,7 +453,7 @@ const DonationForm = () => {
                 <select
                   className={selectStyle}
                   id="education"
-                  defaultValue={q9}
+                  defaultValue={q8}
                   name="education"
                   required
                 >
@@ -536,7 +482,7 @@ const DonationForm = () => {
                 </label>
                 <input
                   className={inputStyle}
-                  defaultValue={q10}
+                  defaultValue={q9}
                   type="text"
                   id="profession"
                   name="profession"
@@ -549,7 +495,7 @@ const DonationForm = () => {
                 </label>
                 <input
                   className={inputStyle}
-                  defaultValue={q11}
+                  defaultValue={q10}
                   type="text"
                   id="currentJob"
                   name="currentJob"
@@ -558,7 +504,8 @@ const DonationForm = () => {
               </div>
             </div>
             <div className="flex w-[18%] items-center justify-between mt-[4%]">
-              <button disabled={!isChanged}
+              <button
+                disabled={!isChanged}
                 className={`rounded-md text-white p-[10px] border border-none mt-[3%] 
                   mb-[4%]  w-[25%] md:w-[40%] md:mb-0 ${
                     !isChanged
@@ -573,7 +520,7 @@ const DonationForm = () => {
                 className="bg-[#b80e14] hover:bg-[#eb1118af] cursor-pointer rounded-md text-white p-[10px] border border-none mt-[3%] 
                   mb-[4%] w-[25%] md:w-[42%] md:mb-0"
                 type="submit"
-                onClick={(() => navigate("/screening"))}
+                onClick={() => navigate("/screening")}
               >
                 Confirmar
               </button>
