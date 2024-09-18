@@ -8,7 +8,9 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        'custom': '0px 0px 20px 3px rgba(0, 0, 0, 0.1)', // Ajuste esses valores
+        'custom': '0px 0px 50px 0px rgba(0, 0, 0, 0.08)',
+        'custom1': '0px 0px 50px 0px rgba(0, 0, 0, 0.04)',
+        'custom2': '0px 0px 50px 2px rgba(0, 0, 0, 0.04)', // Ajuste esses valores
       },
     },
   },
