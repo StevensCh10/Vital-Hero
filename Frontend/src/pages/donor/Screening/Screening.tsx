@@ -5,6 +5,7 @@ import Navbar from "../../../components/NavbarDonor/NavbarDonor";
 import { Donor } from "../../../types/Donor";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../../components/Footer/Footer";
+import { CiSaveDown1 } from "react-icons/ci";
 
 const Screening = () => {
   const auth = useContext(AuthContext);
@@ -76,51 +77,28 @@ const Screening = () => {
     navigate("/scheduling-donation");
   };
 
-  const formRow ="flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%]";
-  const labelStyle ="mb-[1%] text-start text-[1.1em]";
-  const selectStyle ="text-[#333333] w-full p-2 rounded-md bg-[#00000015]" +
-    " mb-[5%] text-[1em] focus:outline-none";
+  const formRow =
+    "flex justify-center w-[90%]";
+  const labelStyle = "w-[50%] text-end mr-8 text-[1.1em] p-[6px]";
+  const selectStyle =
+    "flex text-[#333333] w-full p-2 rounded-md border border-black-100" +
+    " mb-[4%] text-[1em] focus:outline-none";
 
   return (
     <div className="flex flex-col items-center justify-center w-full text-center">
       <Navbar />
       <div className="flex flex-col w-full items-center justify-center mt-[3%]">
-        {screening !== null ? (
-          <div className="flex items-center justify-center">
-            <div className="flex items-center justify-center w-[40%] m-0 mb-[5%] mt-[2%] md:w-[25%]">
-              <div className="w-[40%]">
-                <img className="w-full" src="triagem-de-saude.png"></img>
-              </div>
-              <div className="w-[60%]">
-                <span className="text-[1em] md:text-[1.2em]">
-                  Informações abaixo da sua última triagem.
-                </span>
-              </div>
-            </div>
+          <div className="flex items-center w-[80%] h-[8vh]"
+          style={{ background: 'linear-gradient(to right, #49052E, #b80e14)' }}>
+            <span className="text-white ml-[4%] text-md md:text-xl">
+              Triagem
+            </span>
           </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            <div className="flex items-center justify-center w-[40%] m-0 mb-[5%] mt-[2%] md:w-[25%]">
-              <div className="w-[40%]">
-                <img className="w-full" src="triagem-de-saude.png"></img>
-              </div>
-              <div className="w-[60%]">
-                <span className="text-[1em] md:text-[1.2em]">
-                  Preencha as informações abaixo.
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
-        <div>
-          <span className="flex justify-center mb-6 text-[#035e89] text-2xl md:text-4xl">
-            Triagem
-          </span>
           <form
-            className="flex flex-col items-center justify-center p-[2%] md:mb-[2%]"
+            className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] md:mb-[5%] shadow-custom4"
             onSubmit={handleAddScreening}
           >
-            <div className="flex flex-wrap items-center justify-center">
+            <div className="flex flex-col items-center justify-center w-full">
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="q1">
                   Foi operado recentemente?
@@ -510,16 +488,15 @@ const Screening = () => {
               </div>
             </div>
             <button
-              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] mb-[4%] w-[25%] md:w-[10%] md:mb-0 hover:bg-[#eb1118af]"
-              type="submit"
+            className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[23%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 md:w-[10%]"
+            type="submit"
             >
-              Salvar
+              <span className="flex items-center justify-center">Salvar<CiSaveDown1 className="ml-2" size={20} /></span>
             </button>
           </form>
           <div className="bottom-0">
             <Footer />
           </div>
-        </div>
       </div>
     </div>
   );

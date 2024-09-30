@@ -3,6 +3,8 @@ package com.vitalhero.fullstack.controller;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.quartz.SchedulerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.vitalhero.fullstack.dto.BloodCenterDTO;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
@@ -22,15 +25,16 @@ import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.model.Screening;
-import com.vitalhero.fullstack.service.SchedulingService;
-import com.vitalhero.fullstack.service.ScreeningService;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import com.vitalhero.fullstack.service.BloodCenterService;
 import com.vitalhero.fullstack.service.BloodStockService;
 import com.vitalhero.fullstack.service.DonationService;
 import com.vitalhero.fullstack.service.DonorService;
 import com.vitalhero.fullstack.service.QuartzDonationService;
+import com.vitalhero.fullstack.service.SchedulingService;
+import com.vitalhero.fullstack.service.ScreeningService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -170,7 +174,7 @@ public class BloodCenterController {
         quartzDonationService.sendEmailDonor(donor);
         try {
             quartzDonationService.scheduleNotification(donation, gender);
-        } catch (Exception e) {
+        } catch (SchedulerException e) {
             e.printStackTrace();
         }
     }

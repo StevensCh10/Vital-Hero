@@ -75,7 +75,7 @@ const Scheduling = () => {
 
   return (
     <div className="flex flex-col items-center justify-center my-[10%] md:my-[5%] w-[80%] md:w-[55%] lg:w-[45%] xl:w-[30%]">
-      <div className="rounded-lg p-[14%] shadow-xl text-center w-full">
+      <div className="rounded-lg p-[14%] shadow-custom1 text-center w-full">
         <h3 className="text-[0.7em] md:text-[0.9em] mb-[4%]">*Sobre sua doação*</h3>
         <h3 className="text-[1.6em] my-[10%] font-semibold text-[#1a3744] md:text-[1.8em]">{bloodcenterInfo?.name}</h3>
         <p className={titleStyle}>Endereço</p>

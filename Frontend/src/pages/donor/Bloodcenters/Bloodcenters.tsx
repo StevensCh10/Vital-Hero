@@ -9,6 +9,10 @@ import { Bloodstock } from "../../../types/Bloodstock";
 import Loading from "../../../components/Loading/Loading";
 import NavbarDonor from "../../../components/NavbarDonor/NavbarDonor";
 import Footer from "../../../components/Footer/Footer";
+import { LiaMapMarkerAltSolid } from "react-icons/lia";
+import { BsTelephone } from "react-icons/bs";
+import { MdOutlineEmail } from "react-icons/md";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const Bloodcenters: React.FC = () => {
   const auth = useContext(AuthContext);
@@ -19,8 +23,8 @@ const Bloodcenters: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   const pStyle = "flex text-start justify-space-between m-[0] mb-[1.3%]";
-  const spanStyle = "text-[17px] text-black";
-  const labelStyle = "w-full text-black opacity-[0.8] text-right";
+  const spanStyle = "flex items-center text-[17px] text-black";
+  const labelStyle = "ml-3 flex items-center w-full text-black opacity-[0.8]";
 
   const customIcon = new L.Icon({
     iconUrl: "pino-de-localizacao.png",
@@ -352,21 +356,7 @@ const Bloodcenters: React.FC = () => {
   return (
     <div className="flex flex-col items-center ">
       <NavbarDonor/>
-      <div className="flex items-center justify-center">
-        <div className="flex items-center justify-center w-[40%] m-0 mb-[5%] mt-[2%] md:w-[25%]">
-          <div className="w-[40%]">
-            <img className="w-full" src="observacao.png"></img>
-          </div>
-          <div className="w-[60%]">
-            <span className="text-[1em] md:text-[1.2em]">
-              Informações dos <b>Hemocentros</b>.
-            </span>
-          </div>
-        </div>
-      </div>
-      <span className="flex justify-center mb-1 mt-2 text-[#035e89] text-2xl md:text-4xl">
-        Hemocentros
-      </span>
+      <span className="text-black opacity-75 mb-[2%] text-2xl md:text-3xl"></span>
       <MapContainer
         className="relative w-[90%] rounded-lg h-[300px] md:w-full md:h-[500px]"
         center={[-8.0476, -34.877]}
@@ -378,61 +368,62 @@ const Bloodcenters: React.FC = () => {
         />
         {markers}
       </MapContainer>
-      <div className="inline-flex flex-wrap justify-center w-full my-[6%] md:my-0 md:mt-[5%]">
+      <div className="inline-flex flex-wrap justify-center w-full my-[10%] md:my-0 md:mt-[5%]">
         {bloodcenters.map((center) => (
           <div
             key={center.id}
             id={center?.id.toString()}
-            className="mx-[4%] mb-[20px] p-[1.5%] h-auto w-full lg:w-[38%]"
+            className="p-[1%] h-auto w-full lg:w-[33.3%] my-9"
           >
-            <h3 className="flex justify-center text-[#b80e14] mb-6 text-2xl md:text-3xl">
-              {center.name}
-            </h3>
             <div className="flex w-full">
-              <div className="bg-[#f8f8f8] w-full p-[4%] rounded-t-lg shadow-custom">
+              <div className="w-full p-[4%] rounded-t-lg shadow-md">
+                <span className="flex text-start m-0 text-sm opacity-50">Hemocentro</span>
+                <h3 className="flex m-0 mb-4 text-2xl md:text-3xl">
+                  {center.name.toUpperCase()}
+                </h3>
                 <p className={pStyle}>
-                  <span className={spanStyle}>Endereço:</span>{" "}
+                  <span className={spanStyle}><LiaMapMarkerAltSolid size={20}/></span>
                   <label className={labelStyle}>{center.address}</label>
                 </p>
                 <p className={pStyle}>
-                  <span className={spanStyle}>Telefone:</span>{" "}
+                  <span className={spanStyle}><BsTelephone /></span>
                   <label className={labelStyle}>
                     {formatPhone(center.phone)}
                   </label>
                 </p>
                 <p className={pStyle}>
-                  <span className={spanStyle}>Email:</span>{" "}
+                  <span className={spanStyle}><MdOutlineEmail /></span>
                   <label className={labelStyle}>{center.email}</label>
                 </p>
                 <p className={pStyle}>
-                  <span className={spanStyle}>Referência:</span>{" "}
+                  <span className={spanStyle}><IoIosInformationCircleOutline /></span>
                   <label className={labelStyle}>{center.referencePoint}</label>
                 </p>
-                <div className="flex items-center justify-center bg-[#f8f8f8] mt-5 w-full">
+                <div className="flex items-center justify-center mt-5 w-full">
                   {!selectedCenter ||
                   selectedCenter !== center.id.toString() ? (
                     <>
                       <label
-                        className="cursor-pointer text-[#035e89]"
+                        className="cursor-pointer font-semibold"
                         onClick={() => toggleSelected(center.id.toString())}
                       >
                         Informações do estoque sanguíneo
                       </label>
                       <IoIosArrowDown
-                        className="ml-[2%]"
+                        className="cursor-pointer ml-[2%]"
                         onClick={() => toggleSelected(center.id.toString())}
                       />
                     </>
                   ) : (
                     <>
                       <label
-                        className="cursor-pointer text-[#035e89]"
+                        className="cursor-pointer font-semibold"
                         onClick={() => toggleSelected(center.id.toString())}
                       >
                         Informações do estoque sanguíneo
                       </label>
                       <IoIosArrowUp
-                        className="ml-[2%]"
+                        className="cursor-pointer ml-[2%]"
                         onClick={() => toggleSelected(center.id.toString())}
                       />
                     </>
@@ -442,11 +433,11 @@ const Bloodcenters: React.FC = () => {
             </div>
 
             {selectedCenter === center.id.toString() && (
-              <div className="relative w-full bg-[#f8f8f8]">
+              <div className="relative w-full">
                 {bloodstocks.find(
                   (stock) => stock.bloodcenter === center.id
                 ) ? (
-                  <div className="absolute flex flex-wrap bg-[#f8f8f8] py-[2%] z-10 rounded-b-lg shadow-custom">
+                  <div className="absolute flex flex-wrap bg-white pb-[3%] z-10 rounded-b-lg shadow-md ">
                     <div className="flex justify-center w-[30%] m-[5px]">
                       <label className="block text-center text-[#b80e14]">
                         A-

@@ -16,6 +16,7 @@ import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
+
 import jakarta.mail.internet.MimeUtility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -72,11 +73,11 @@ public class DonorService {
         Donor findedByEmail = repository.findByEmail(donorAtt.getEmail());
 		Donor findedByPhone = repository.findByPhone(donorAtt.getPhone());
 
-		if(findedByCpf != null && findedByCpf.getId() != donorAtt.getId()){
+		if(findedByCpf != null && !findedByCpf.getId().equals(donorAtt.getId())){
             throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", donorAtt.getCpf()));
-        }else if(findedByEmail != null && findedByEmail.getId() != donorAtt.getId()){
+        }else if(findedByEmail != null && !findedByEmail.getId().equals(donorAtt.getId())){
             throw new EntityAlreadyExists(String.format("Email '%s' indisponível.", donorAtt.getEmail()));
-        }else if(findedByPhone != null && findedByPhone.getId() != donorAtt.getId()){
+        }else if(findedByPhone != null && !findedByPhone.getId().equals(donorAtt.getId())){
             throw new EntityAlreadyExists(String.format("Telefone '%s' indisponível.", donorAtt.getPhone()));
         }
 
@@ -131,7 +132,6 @@ public class DonorService {
         try {
             personal = "=?utf-8?Q?" + MimeUtility.encodeText(fromName) + "?=";
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
         String subject = "Feedback da aplicação";
         String to = "stevenschaves10@gmail.com";

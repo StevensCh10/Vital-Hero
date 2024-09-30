@@ -11,6 +11,12 @@ import { Screening } from "../../../types/Screening";
 import { ErrorType } from "../../../types/ErrorType";
 import Footer from "../../../components/Footer/Footer";
 import Loading from "../../../components/Loading/Loading";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { PiSmileySad } from "react-icons/pi";
+import { FaRegFileArchive } from "react-icons/fa";
+import { FaHeartPulse } from "react-icons/fa6";
+import { PiListMagnifyingGlassLight } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 const SchedulingAndDonation = () => {
   const auth = useContext(AuthContext);
@@ -41,11 +47,12 @@ const SchedulingAndDonation = () => {
     const savedScheduling = localStorage.getItem("scheduling");
     return savedScheduling ? JSON.parse(savedScheduling) : null;
   });
+  const navigate = useNavigate();
 
-  const labelStyle = "mb-[0.5%] text-start text-[1.1em]";
+  const labelStyle = "mb-[0.5%] text-[1.1em]";
   const selectStyle =
-    "text-[#333333] p-2 rounded-md bg-[#00000015] mb-[1.5%] text-[1em]" +
-    " text-center focus:outline-none w-[70%]";
+    "text-[#333333] bg-white p-2 rounded-md border mb-[1.5%] text-[1em]" +
+    " text-center focus:outline-none w-[30%]";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -139,10 +146,10 @@ const SchedulingAndDonation = () => {
       <nav className="flex box-border items-center justify-center mt-[1%] w-full ">
         <div className="flex items-center mx-[2%]">
           <button
-            className={`text-[#035e89] text-center py-1 px-2  cursor-pointer text-[1.1em]
-                hover:text-white hover:rounded-md hover:shadow-custom hover:bg-[#035e89] ${
+            className={`text-black text-center py-1 px-2  cursor-pointer text-[1.1em]
+                hover:text-white hover:rounded-md hover:shadow-custom hover:bg-black ${
                   activeButtonLeft === true
-                    ? "text-white bg-[#035e89] rounded-md shadow-custom"
+                    ? "text-white bg-black rounded-md shadow-custom"
                     : ""
                 }`}
             onClick={handleClickLeft}
@@ -150,13 +157,13 @@ const SchedulingAndDonation = () => {
             Agendamento
           </button>
         </div>
-        <label className={labelStyle}>|</label>
+        <label className="text-start text-[1.1em]">|</label>
         <div className="flex items-center mx-[2%]">
           <button
-            className={`text-[#035e89] text-center py-1 px-2  cursor-pointer text-[1.1em]
-                hover:text-white hover:rounded-md hover:shadow-custom hover:bg-[#035e89] ${
+            className={`text-black text-center py-1 px-2  cursor-pointer text-[1.1em]
+                hover:text-white hover:rounded-md hover:shadow-custom hover:bg-black ${
                   activeButtonRight === true
-                    ? "text-white bg-[#035e89] rounded-md shadow-custom"
+                    ? "text-white bg-black rounded-md shadow-custom"
                     : ""
                 }`}
             onClick={handleClickRight}
@@ -197,9 +204,10 @@ const SchedulingAndDonation = () => {
                 </div>
               ))
             ) : (
-              <h2 className="text-[1.2em]">
-                Você ainda não realizou nenhuma doação!
-              </h2>
+              <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                <PiSmileySad className="mb-[8%] opacity-70" size={85} color="red"/>
+                <span>Você ainda não realizou nenhuma doação</span>
+              </div>
             )}
           </div>
         ) : (
@@ -207,122 +215,164 @@ const SchedulingAndDonation = () => {
             <div className="w-full text-center">
               {scheduling === null ? (
                 <div id="section-scheduling-dontations">
-                  <div className="flex flex-col">
+                  <div className="flex flex-col items-center justify-center">
                     {donationForm === null && screening === null && (
-                      <h2 className="text-[1.2em]">
-                        *É necessário preencher o formulário de doação e a
-                        triagem para marcar um agendamento*
-                      </h2>
+                      <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                        <FaHeartPulse className="mb-[5%] opacity-70" size={85} color="red"/>
+                        <div>
+                          É necessário preencher o <label className="font-semibold">Formulário de doação</label> e a
+                          <label className="font-semibold"> Triagem</label> para marcar um agendamento
+                        </div>
+                        <button
+                          className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[9%] mb-[3%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+                          md:text-base md:w-[15%] lg:w-[30%] hover:bg-[#b80e14]"
+                          onClick={() => navigate("/donation-form")}
+                        >
+                          <span className="flex items-center justify-center">Preencher <FaRegFileArchive className="ml-2" size={20} /></span>
+                        </button>
+                      </div>
                     )}
                     {donationForm === null && screening !== null && (
-                      <h2 className="text-[1.2em]">
-                        *É necessário preencher o formulário de doação para
-                        marcar um agendamento*
-                      </h2>
+                      <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                        <FaHeartPulse className="mb-[5%] opacity-70" size={85} color="red"/>
+                        <div>
+                          É necessário preencher o <label className="font-semibold">Formulário de doação</label>
+                          para marcar um agendamento
+                        </div>
+                        <button
+                          className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[9%] mb-[3%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+                            md:text-base md:w-[15%] lg:w-[30%] hover:bg-[#b80e14]"
+                          onClick={() => navigate("/donation-form")}
+                        >
+                          <span className="flex items-center justify-center">Preencher <FaRegFileArchive className="ml-2" size={20} /></span>
+                        </button>
+                      </div>
                     )}
                     {donationForm !== null && screening === null && (
-                      <h2 className="text-[1.2em]">
-                        *É necessário preencher a triagem para marcar um
-                        agendamento*
-                      </h2>
+                      <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                        <FaHeartPulse className="mb-[5%] opacity-70" size={85} color="red"/>
+                        <div>
+                          É necessário preencher a<label className="font-semibold"> Triagem</label> para marcar um agendamento
+                        </div>
+                        <button
+                          className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[9%] mb-[3%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+                            md:text-base md:w-[15%] lg:w-[30%] hover:bg-[#b80e14]"
+                          onClick={() => navigate("/screening")}
+                        >
+                          <span className="flex items-center justify-center">Preencher <FaRegFileArchive className="ml-2" size={20} /></span>
+                        </button>
+                      </div>
                     )}
                     {donationForm !== null &&
                       screening !== null &&
                       screening.doctor === null && (
-                        <h2 className="text-[1.2em]">
-                          *Sua triagem está em processo de validação. Após a
-                          validação informaremos se você está apto para fazer a
-                          doação*
-                        </h2>
+                        <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                          <PiListMagnifyingGlassLight className="mb-[5%] opacity-70" size={85} color="red"/>
+                          <div>
+                            Sua triagem está em processo de <label className="font-semibold">validação</label>. Após a
+                            validação informaremos se você está apto para fazer a doação
+                          </div>
+                        </div>
                       )}
                   </div>
                   {donationForm !== null &&
                     screening !== null &&
                     screening.doctor !== null && (
                       <div className="flex flex-col items-center mb-0">
-                        <span className="text-[#035e89] mb-6 text-2xl md:text-3xl">
-                          Marque um agendamento e faça sua parte
-                        </span>
+                        <div className="flex items-center w-[80%] h-[8vh]"
+                        style={{ background: 'linear-gradient(to right, #49052E, #b80e14)' }}>
+                          <span className="text-white ml-[4%] text-md md:text-lg">
+                            Marque um agendamento e faça sua parte
+                          </span>
+                        </div>
                         <form
-                          className="flex flex-col w-[30%] items-center justify-center py-[4%] md:mb-[2%] rounded-lg shadow-xl"
+                          className="flex flex-col rounded-md w-[82%] py-[4%] md:mb-[2%] shadow-custom4"
                           onSubmit={handleSubmit}
                         >
-                          <label className={labelStyle} htmlFor="bloodcenter">
-                            Hemocentro
-                          </label>
-                          <select
-                            className={selectStyle}
-                            id="bloodcenter"
-                            name="bloodcenter"
-                            value={selectedBloodcenter}
-                            onChange={handleChangeBloodcenter}
-                          >
-                            <option key="">Escolha um Hemocentro</option>
-                            {bloodcenters.map((bloodcenter) => (
-                              <option
-                                key={bloodcenter.id}
-                                value={bloodcenter.id}
-                              >
-                                {`${bloodcenter.name} - ${bloodcenter.address}`}
-                              </option>
-                            ))}
-                          </select>
-                          <label className={labelStyle} htmlFor="date">
-                            Data
-                          </label>
-                          <select
-                            className={selectStyle}
-                            id="date"
-                            name="date"
-                            value={selectedDate}
-                            onChange={handleChangeDate}
-                          >
-                            <option key="">Escolha uma Data</option>
-                            {auxSchedulings.map((scheduling) => (
-                              <option
-                                key={scheduling.id}
-                                value={dateFormat(
-                                  new Date(scheduling.dateTime)
-                                )}
-                              >
-                                {dateFormat(new Date(scheduling.dateTime))}
-                              </option>
-                            ))}
-                          </select>
-                          <label className={labelStyle} htmlFor="hour">
-                            Hora
-                          </label>
-                          <select
-                            className={selectStyle}
-                            id="hour"
-                            name="hour"
-                            value={selectedHour}
-                            onChange={handleChangeHour}
-                          >
-                            <option value="">Escolha uma Hora</option>
-                            {schedulingsBloodcenter
-                              .filter(
-                                (scheduling) =>
-                                  scheduling.bloodcenter ===
-                                    parseInt(selectedBloodcenter) &&
-                                  dateFormat(new Date(scheduling.dateTime)) ===
-                                    selectedDate
-                              )
-
-                              .map((scheduling) => (
+                          <div>
+                            <label className={`${labelStyle} mr-[4.5%]`} htmlFor="bloodcenter">
+                              Hemocentro:
+                            </label>
+                            <select
+                              className={selectStyle}
+                              id="bloodcenter"
+                              name="bloodcenter"
+                              value={selectedBloodcenter}
+                              onChange={handleChangeBloodcenter}
+                            >
+                              <option key="">Escolha um Hemocentro</option>
+                              {bloodcenters.map((bloodcenter) => (
                                 <option
-                                  key={scheduling.id}
-                                  value={scheduling.id}
+                                  key={bloodcenter.id}
+                                  value={bloodcenter.id}
                                 >
-                                  {hourFormat(new Date(scheduling.dateTime))}
+                                  {`${bloodcenter.name} - ${bloodcenter.address}`}
                                 </option>
                               ))}
-                          </select>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className={`${labelStyle} mr-[11%]`} htmlFor="date">
+                              Data:
+                            </label>
+                            <select
+                              className={selectStyle}
+                              id="date"
+                              name="date"
+                              value={selectedDate}
+                              onChange={handleChangeDate}
+                            >
+                              <option key="">Escolha uma Data</option>
+                              {auxSchedulings.map((scheduling) => (
+                                <option
+                                  key={scheduling.id}
+                                  value={dateFormat(
+                                    new Date(scheduling.dateTime)
+                                  )}
+                                >
+                                  {dateFormat(new Date(scheduling.dateTime))}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+
+                          <div>
+                            <label className={`${labelStyle} mr-[11%]`} htmlFor="hour">
+                              Hora:
+                            </label>
+                            <select
+                              className={selectStyle}
+                              id="hour"
+                              name="hour"
+                              value={selectedHour}
+                              onChange={handleChangeHour}
+                            >
+                              <option value="">Escolha uma Hora</option>
+                              {schedulingsBloodcenter
+                                .filter(
+                                  (scheduling) =>
+                                    scheduling.bloodcenter ===
+                                      parseInt(selectedBloodcenter) &&
+                                    dateFormat(new Date(scheduling.dateTime)) ===
+                                      selectedDate
+                                )
+
+                                .map((scheduling) => (
+                                  <option
+                                    key={scheduling.id}
+                                    value={scheduling.id}
+                                  >
+                                    {hourFormat(new Date(scheduling.dateTime))}
+                                  </option>
+                                ))}
+                            </select>
+                          </div>
                           <button
-                            className="bg-[#b80e14] rounded-md text-white p-[8px] border border-none cursor-pointer mt-[8%] w-[45%] md:w-[30%] md:mb-0 hover:bg-[#eb1118af]"
+                            className="relative flex items-center justify-center ml-[82%] bg-white rounded-md text-black p-[8px] shadow-custom cursor-pointer mt-[2%] w-[45%] md:w-[14%] md:mb-0 hover:bg-black hover:text-white"
                             type="submit"
                           >
-                            Agendar
+                            <span className="flex items-center justify-center">Agendar <IoMdCheckmarkCircleOutline className="ml-2" size={24} /></span>
                           </button>
                         </form>
                       </div>

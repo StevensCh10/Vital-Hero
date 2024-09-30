@@ -11,6 +11,7 @@ import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -56,13 +57,13 @@ public class BloodCenterService {
         BloodCenter findedByAddress = repository.findByAddress(bloodCenterAtt.getAddress());
         BloodCenter findedByPhone = repository.findByPhone(bloodCenterAtt.getPhone());
 		
-		if(findedByName != null && findedByName.getId() != bloodCenterAtt.getId()) {
+		if(findedByName != null && !findedByName.getId().equals(bloodCenterAtt.getId())) {
             throw new EntityAlreadyExists(String.format("Nome '%s' indisponível", bloodCenterAtt.getName()));
-		}else if(findedByInstitutionalEmail != null && findedByInstitutionalEmail.getId() != bloodCenterAtt.getId()){
+		}else if(findedByInstitutionalEmail != null && !findedByInstitutionalEmail.getId().equals(bloodCenterAtt.getId())){
             throw new EntityAlreadyExists(String.format("Email '%s' indisponível.", bloodCenterAtt.getEmail()));
-        }else if(findedByPhone != null && findedByPhone.getId() != bloodCenterAtt.getId()){
+        }else if(findedByPhone != null && !findedByPhone.getId().equals(bloodCenterAtt.getId())){
             throw new EntityAlreadyExists(String.format("Telefone '%s' indisponível.", bloodCenterAtt.getPhone()));
-        }else if(findedByAddress != null && findedByAddress.getId() != bloodCenterAtt.getId()){
+        }else if(findedByAddress != null && !findedByAddress.getId().equals(bloodCenterAtt.getId())){
             throw new EntityAlreadyExists(String.format("Endereço '%s' indisponível.", bloodCenterAtt.getAddress()));
         }
 

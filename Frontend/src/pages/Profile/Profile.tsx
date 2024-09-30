@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { Doctor } from "../../types/Doctor";
 import { Donor } from "../../types/Donor";
 import Footer from "../../components/Footer/Footer";
+import { CiSaveDown1 } from "react-icons/ci";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
@@ -54,7 +55,7 @@ const Profile = () => {
   }, [auth]);
 
   const inputStyle =
-    "w-[90%] p-2 rounded-md text-[#333333] bg-[#00000015] mb-[3%] text-center text-[1em] focus:outline-none";
+    "w-[90%] p-2 rounded-md text-[#333333] border border-black-100 mb-[3%] text-center text-[1em] focus:outline-none";
 
   const handleAtt = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -101,7 +102,7 @@ const Profile = () => {
               readOnly
             />
             <input
-              className="w-[33%] mr-[2%] p-2 rounded-md text-[#333333] bg-[#00000015] mb-[3%] text-center text-[1em] focus:outline-none"
+              className="w-[33%] mr-[2%] p-2 rounded-md text-[#333333] border border-black-100 mb-[3%] text-center text-[1em] focus:outline-none"
               type="age"
               id="age"
               name="age"
@@ -111,7 +112,7 @@ const Profile = () => {
               required
             />
             <input
-              className="w-[55%] p-2 rounded-md text-[#333333] bg-[#00000015] mb-[3%] text-center text-[1em] focus:outline-none"
+              className="w-[55%] p-2 rounded-md text-[#333333] border border-black-100 mb-[3%] text-center text-[1em] focus:outline-none"
               id="number"
               name="number"
               value={formatPhone(phone)}
@@ -158,10 +159,10 @@ const Profile = () => {
             )}
           </div>
           <button
-            className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-3 mb-5 hover:bg-[#b80e14a4] md:w-[15%]"
+            className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[23%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 mb-5 md:w-[22%]"
             type="submit"
           >
-            Salvar
+            <span className="flex items-center justify-center">Salvar<CiSaveDown1 className="ml-2" size={20} /></span>
           </button>
         </form>
       </div>

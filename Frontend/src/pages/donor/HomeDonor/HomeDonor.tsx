@@ -10,6 +10,10 @@ import { DonationForm } from "../../../types/DonationForm";
 import { Screening } from "../../../types/Screening";
 import Loading from "../../../components/Loading/Loading";
 import Footer from "../../../components/Footer/Footer";
+import { GiClick } from "react-icons/gi";
+import { BiDonateHeart } from "react-icons/bi";
+import { LuHeartHandshake } from "react-icons/lu";
+import { FaRegFileArchive } from "react-icons/fa";
 
 const HomeDonor = () => {
   const auth = useContext(AuthContext);
@@ -123,7 +127,7 @@ const HomeDonor = () => {
     <div className="flex flex-col items-center m-0 min-h-[96vh]">
       <NavbarDonor />
 
-      <div className="flex w-[20em] text-center justify-center items-center mb-[6%] mt-[4%]">
+      <div className="flex w-[20em] text-center justify-center items-center mb-[5%] mt-[2%]">
         <div className="w-[30%]">
           <span className="text-[1em] md:text-[1.2em]">
             Faça sua doação e seja um <b className="text-[#b80e14]">HERÓI</b>
@@ -138,7 +142,7 @@ const HomeDonor = () => {
         Critérios para doação
       </span>
       <div className="flex items-center justify-center w-full h-full ">
-        <div className="relative flex w-full max-w-10xl overflow-hidden justify-center items-center h-[45vh]">
+        <div className="relative flex w-full max-w-10xl overflow-hidden justify-center items-center h-[50vh]">
           <div className="flex transition-transform duration-1000 ease-in-out space-x-10">
             {cards.map((card, index) => (
               <div
@@ -160,7 +164,7 @@ const HomeDonor = () => {
                 <div className="flex flex-col items-center w-full h-full">
                   <p className={titleStyle}>{card.title}</p>
                   {card.subtitles.map((subtitle) => (
-                    <div className="flex flex-col w-full ">
+                    <div key={subtitle} className="flex flex-col w-full ">
                       <p className={subtitleStyle}>{subtitle}</p>
                     </div>
                   ))}
@@ -210,8 +214,8 @@ const HomeDonor = () => {
           <div className="flex w-72 h-72 rounded-full shadow-custom bg-white relative">
             <div className="flex flex-col w-full h-full items-center justify-center">
               <img className="w-20" src="/doacao-de-sangue.png"></img>
-              <p className="opacity-70">Esolha o hemocentro, dia, hora e</p>
-              <p className="opacity-70">marque seu agendamento.</p>
+              <p className="opacity-70">Compareça ao hemocentro na</p>
+              <p className="opacity-70">data e hora agendada.</p>
             </div>
           </div>
         </div>
@@ -219,25 +223,25 @@ const HomeDonor = () => {
 
       <div className="flex flex-row m-0 w-full my-[5%]">
         <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
-          <BiDonateBlood size={60} className="mb-[3%] text-[#b80e14bf]" />
+          <BiDonateBlood size={60} className="mb-[3%] text-[#b80e14bf] filter drop-shadow-xl" />
           <label className="w-[90%] text-center opacity-70 lg:text-[1.4em] md:text-[1.1em] text-[0.71em]">
             O seu sangue pode salvar até quatro vidas
           </label>
         </div>
         <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
-          <MdBloodtype size={60} className="mb-[3%] text-[#b80e14bf]" />
+          <MdBloodtype size={60} className="mb-[3%] text-[#b80e14bf] filter drop-shadow-xl" />
           <label className="w-[90%] text-center opacity-70 lg:text-[1.4em] md:text-[1.1em] text-[0.71em]">
             Um ato simples, um impacto imenso.
           </label>
         </div>
         <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
-          <GiLifeTap size={60} className="mb-[3%] text-[#b80e14bf]" />
+          <GiLifeTap size={60} className="mb-[3%] text-[#b80e14bf] filter drop-shadow-xl" />
           <label className="w-[90%] text-center opacity-70 lg:text-[1.4em] md:text-[1.1em] text-[0.71em]">
             Faça a vida fluir nas veias de quem precisa.
           </label>
         </div>
         <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
-          <MdBloodtype size={60} className="mb-[3%] text-[#b80e14bf]" />
+          <LuHeartHandshake size={60} className="mb-[3%] text-[#b80e14bf] filter drop-shadow-xl" />
           <label className="w-[90%] text-center opacity-70 lg:text-[1.4em] md:text-[1.1em] text-[0.71em]">
             Cada doação conta. Faça a sua parte.
           </label>
@@ -246,38 +250,51 @@ const HomeDonor = () => {
 
       <div className="flex flex-col justify-center items-center w-full mb-[3%] p-[1.5%] mt-5 md:mt-4 pb-4">
         {donationForm === null && (
-          <div>
-            <span className="flex justify-center mb-6 text-[#035e89] text-2xl md:text-4xl">
-              Faça sua doação
-            </span>
-            <div className="w-full px-5">
-              <p className="opacity-95 text-md md:text-lg mb-4">
-                <label className="font-semibold">Sua doação é essencial.</label>{" "}
-                Antes de clicar no botão abaixo, reserve um momento, pois é
-                necessário preencher o formulário de doação e a triagem. Isso
-                garante a segurança de todos. Juntos, podemos fazer a diferença.{" "}
-                <label className="font-semibold">Faça sua parte agora!</label>
-              </p>
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex items-center w-[80%] h-[8vh]"
+            style={{ background: 'linear-gradient(to right, #49052E, #b80e14)' }}>
+              <span className="text-white ml-[4%] text-md md:text-xl">
+                Faça sua doação
+              </span>
             </div>
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] md:mb-[2%] shadow-custom4">
+              <div className="md:flex justify-center items-center text-center md:w-[90%]">
+                <p className="opacity-95 text-md md:text-lg mb-4">
+                  <label className="font-semibold text-[1.1em]">Sua doação é essencial.</label>{" "}
+                  Antes de clicar no botão abaixo, reserve um momento, pois é
+                  necessário preencher o formulário de doação e a triagem. Isso
+                  garante a segurança de todos. Juntos, podemos fazer a diferença.{" "}
+                  <label className="font-semibold text-[1.1em]">Faça sua parte agora!</label>
+                </p>
+              </div>
               <button
-                className="text-white cursor-pointer text-center mt-[2%] bg-[#b80e14] rounded-lg p-[10px] border-none 
-                                    w-[22%] md:w-[10%] hover:bg-[#eb1118ad] "
-                onClick={() => navigate("/donation-form")}
+              className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[4%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+                md:text-base md:w-[15%] lg:w-[13%] hover:bg-[#b80e14]"
+              onClick={() => navigate("/donation-form")}
               >
-                Começar
+               <span className="flex items-center justify-center">Começar <BiDonateHeart className="ml-2" size={22} /></span>
               </button>
             </div>
           </div>
         )}
+        {donationForm !== null && screening === null && (
+          <button
+          className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mb-[2%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+            md:text-base md:w-[15%] lg:w-[18%] hover:bg-[#b80e14]"
+          onClick={() => navigate("/screening")}
+          >
+            <span className="flex items-center justify-center">Preencher Triagem<FaRegFileArchive className="ml-2" size={20} /></span>
+          </button>
+        )}
         {donationForm !== null && screening !== null && (
-          <div className="shadow-custom2 p-5 rounded-lg w-[50%]">
-            <label className="text-[1.1em] opacity-70">
+          <div className="flex flex-col items-center justify-center rounded-lg w-[47%]">
+            <label className="text-[1.2em]">
               Você já fez seu agendamento, para verificar detalhes
-              <Link className="text-[#b80e14] border border-[#b80e14] text-center rounded-md ml-2 p-1 hover:bg-[#b80e14] hover:text-white" to={"/scheduling-donation"}>
-                Clique aqui
-              </Link>
             </label>
+            <Link className="flex mt-[5%] text-black font-semibold hover:bg-[#b80e14] hover:text-white text-center rounded-md p-2 shadow-custom" to="/scheduling-donation">
+              Clique aqui
+              <GiClick className="ml-3" size={24}/>
+            </Link>
           </div>
         )}
       </div>

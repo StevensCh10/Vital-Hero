@@ -2,39 +2,25 @@ import Footer from "../Footer/Footer";
 import NavbarDonor from "../NavbarDonor/NavbarDonor";
 
 const Loading = () => {
-  const spinnerStyle = {
-    animation: "spinner 0.6s infinite ease-in-out",
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
-      <NavbarDonor/>
+      <NavbarDonor />
 
       <div className="flex justify-center items-center min-h-[86vh]">
         <style>{`
-              @keyframes spinner {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.5); }
-                100% { transform: scale(1); }
-              }
-            `}</style>
-        <div className="flex space-x-2">
-          <div
-            className="w-4 h-4 bg-red-500 rounded-full"
-            style={spinnerStyle}
-          ></div>
-          <div
-            className="w-4 h-4 bg-red-500 rounded-full"
-            style={spinnerStyle}
-          ></div>
-          <div
-            className="w-4 h-4 bg-red-500 rounded-full"
-            style={spinnerStyle}
-          ></div>
-        </div>
-        <div className="fixed bottom-0">
-          <Footer />
-        </div>
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+        <div
+          className="w-16 h-16 border-4 border-t-transparent border-red-500 rounded-full"
+          style={{ animation: "spin 1s linear infinite" }}
+        ></div>
+      </div>
+
+      <div className="flex items-center bottom-0 justify-center">
+        <Footer />
       </div>
     </div>
   );

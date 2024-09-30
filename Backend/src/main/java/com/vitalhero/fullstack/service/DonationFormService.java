@@ -1,12 +1,14 @@
 package com.vitalhero.fullstack.service;
 
 import org.springframework.stereotype.Service;
+
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.repository.DonationFormRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -41,7 +43,7 @@ public class DonationFormService {
 
     public DonationForm updateDonationForm(DonationForm attDonationForm){
         DonationForm oldDF = find(attDonationForm.getId());
-        if(oldDF.getDonor().getId() != attDonationForm.getDonor().getId()){
+        if(!oldDF.getDonor().getId().equals(attDonationForm.getDonor().getId())){
             throw new CannotBeUpdated("Formulário não pode ser atualizado pois houve mudança no seu proprietário.");
         }
         return repository.saveAndFlush(attDonationForm);

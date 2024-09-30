@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { ErrorType } from "../../../types/ErrorType";
 import Footer from "../../../components/Footer/Footer";
 import { calculateMaxDate, calculateMinDate } from "../../../utils/functions";
+import { CiSaveDown1 } from "react-icons/ci";
+import { GiConfirmed } from "react-icons/gi";
 
 const DonationForm = () => {
   const auth = useContext(AuthContext);
@@ -16,13 +18,13 @@ const DonationForm = () => {
   ) as DonationFormType;
 
   const formRow =
-    "flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%]";
-  const labelStyle = "mb-[1%] text-start text-[1.1em]";
+    "flex justify-center w-[90%]";
+  const labelStyle = "w-[35%] text-end mr-8 text-[1.1em] p-[6px]";
   const selectStyle =
-    "text-[#333333] w-full p-2 rounded-md bg-[#00000015]" +
-    " mb-[5%] text-[1em] focus:outline-none";
+    "flex text-[#333333] w-full p-2 rounded-md border border-black-100" +
+    " mb-[4%] text-[1em] focus:outline-none";
   const inputStyle =
-    "w-full p-2 rounded-md text-[#333333] bg-[#00000015] mb-[5%] text-[1em] focus:outline-none";
+    "w-full p-[6px] rounded-md text-[#333333] border border-black-100 mb-[4%] text-[1em] focus:outline-none";
 
   const [q1, setQ1] = useState(donationFormAux?.q1);
   const [q2, setQ2] = useState(donationFormAux?.q2);
@@ -116,29 +118,20 @@ const DonationForm = () => {
       <Navbar />
       {donationFormAux === null ? (
         <div className="flex flex-col w-full items-center justify-center mt-[3%] min-h-[87vh] lg:min-h-[89.6vh] xl:min-h-[79vh]">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center justify-center w-[40%] m-0 mb-[5%] mt-[2%] md:w-[25%]">
-              <div className="w-[40%]">
-                <img className="w-full" src="formulario-de-registro.png"></img>
-              </div>
-              <div className="w-[60%]">
-                <span className="text-[1em] md:text-[1.2em]">
-                  Preencha as informações abaixo.
-                </span>
-              </div>
-            </div>
+          <div className="flex items-center w-[80%] h-[8vh]"
+          style={{ background: 'linear-gradient(to right, #49052E, #b80e14)' }}>
+            <span className="text-white ml-[4%] text-md md:text-xl">
+              Formulário de doação
+            </span>
           </div>
-          <span className="flex justify-center mb-6 text-[#035e89] text-2xl md:text-4xl">
-            Formulário de Doação
-          </span>
           <form
-            className="flex flex-col items-center justify-center p-[2%] md:mb-[2%]"
+            className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] md:mb-[5%] shadow-custom4"
             onSubmit={handleAddDonationForm}
           >
-            <div className="flex flex-wrap items-center justify-center">
+            <div className="flex flex-col items-center justify-center w-full">
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="fatherName">
-                  Nome do Pai:
+                  Nome do Pai
                 </label>
                 <input
                   className={inputStyle}
@@ -152,7 +145,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="motherName">
-                  Nome da Mãe:
+                  Nome da Mãe
                 </label>
                 <input
                   className={inputStyle}
@@ -166,7 +159,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="emergencyPhone">
-                  Número para contato de emergência:
+                  Contato de emergência
                 </label>
                 <input
                   className={inputStyle}
@@ -181,7 +174,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="naturalness">
-                  Naturalidade:
+                  Naturalidade
                 </label>
                 <select
                   className={selectStyle}
@@ -222,7 +215,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="rgNumber">
-                  Número do RG:
+                  Número do RG
                 </label>
                 <input
                   className={inputStyle}
@@ -238,7 +231,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="issuingBody">
-                  Orgão Expedidor:
+                  Orgão Expedidor
                 </label>
                 <select
                   className={selectStyle}
@@ -260,7 +253,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="shippingDate">
-                  Data de expedição:
+                  Data de expedição
                 </label>
                 <input
                   className={inputStyle}
@@ -275,7 +268,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="education">
-                  Escolaridade:
+                  Escolaridade
                 </label>
                 <select
                   className={selectStyle}
@@ -305,7 +298,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="profession">
-                  Profissão:
+                  Profissão
                 </label>
                 <input
                   className={inputStyle}
@@ -319,7 +312,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="currentJob">
-                  Trabalho atual:
+                  Trabalho atual
                 </label>
                 <input
                   className={inputStyle}
@@ -333,10 +326,10 @@ const DonationForm = () => {
               </div>
             </div>
             <button
-              className="bg-[#b80e14] rounded-md text-white p-[10px] border border-none cursor-pointer mt-[3%] mb-[4%] w-[25%] md:w-[10%] md:mb-0 hover:bg-[#eb1118af]"
-              type="submit"
+            className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[23%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 md:w-[10%]"
+            type="submit"
             >
-              Salvar
+              <span className="flex items-center justify-center">Salvar<CiSaveDown1 className="ml-2" size={20} /></span>
             </button>
           </form>
           <div className="bottom-0">
@@ -355,7 +348,7 @@ const DonationForm = () => {
             <div className="flex flex-wrap items-center justify-center">
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="fatherName">
-                  Nome do Pai:
+                  Nome do Pai
                 </label>
                 <input
                   className={inputStyle}
@@ -368,7 +361,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="motherName">
-                  Nome da Mãe:
+                  Nome da Mãe
                 </label>
                 <input
                   className={inputStyle}
@@ -381,7 +374,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="emergencyPhone">
-                  Número para contato de emergência:
+                  Contato de emergência
                 </label>
                 <input
                   className={inputStyle}
@@ -396,7 +389,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="naturalness">
-                  Naturalidade:
+                  Naturalidade
                 </label>
                 <input
                   className={inputStyle}
@@ -409,7 +402,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="rgNumber">
-                  Número do RG:
+                  Número do RG
                 </label>
                 <input
                   className={inputStyle}
@@ -422,7 +415,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="issuingBody">
-                  Orgão Expedidor:
+                  Orgão Expedidor
                 </label>
                 <input
                   className={inputStyle}
@@ -435,7 +428,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="shippingDate">
-                  Data de expedição:
+                  Data de expedição
                 </label>
                 <input
                   className={inputStyle}
@@ -448,7 +441,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="education">
-                  Escolaridade:
+                  Escolaridade
                 </label>
                 <select
                   className={selectStyle}
@@ -478,7 +471,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="profession">
-                  Profissão:
+                  Profissão
                 </label>
                 <input
                   className={inputStyle}
@@ -491,7 +484,7 @@ const DonationForm = () => {
               </div>
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="currentJob">
-                  Trabalho atual:
+                  Trabalho atual
                 </label>
                 <input
                   className={inputStyle}
@@ -506,23 +499,16 @@ const DonationForm = () => {
             <div className="flex w-[18%] items-center justify-between mt-[4%]">
               <button
                 disabled={!isChanged}
-                className={`rounded-md text-white p-[10px] border border-none mt-[3%] 
-                  mb-[4%]  w-[25%] md:w-[40%] md:mb-0 ${
-                    !isChanged
-                      ? "bg-[#b80e1475] pointer-events-none"
-                      : "bg-[#b80e14] hover:bg-[#eb1118af] cursor-pointer"
-                  }`}
-                type="submit"
+                className="hover:bg-black shadow-custom5 text-black rounded-lg pointer-events-none mt-[4%] text-[1em] w-[20%] p-[6px] md:p-[10px] 
+                  md:text-base md:w-[15%] lg:w-[10%]"
               >
-                Atualizar
+                <span className="flex items-center justify-center opacity-60">Atualizar <CiSaveDown1 className="ml-2" size={20} /></span>
               </button>
               <button
-                className="bg-[#b80e14] hover:bg-[#eb1118af] cursor-pointer rounded-md text-white p-[10px] border border-none mt-[3%] 
-                  mb-[4%] w-[25%] md:w-[42%] md:mb-0"
-                type="submit"
-                onClick={() => navigate("/screening")}
+              className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[23%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 mb-5 md:w-[10%]"
+              type="submit"
               >
-                Confirmar
+                <span className="flex items-center justify-center">Confirmar<GiConfirmed className="ml-2" size={20} /></span>
               </button>
             </div>
           </form>
