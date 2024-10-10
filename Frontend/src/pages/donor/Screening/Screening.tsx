@@ -11,9 +11,6 @@ const Screening = () => {
   const auth = useContext(AuthContext);
   const user = auth.user as Donor;
   const navigate = useNavigate();
-  const screening = JSON.parse(
-    localStorage.getItem("screening")! ?? {}
-  ) as ScreeningType;
 
   const [q1, setQ1] = useState("");
   const [q2, setQ2] = useState("");

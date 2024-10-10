@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { ErrorType } from "../../types/ErrorType";
 import Footer from "../../components/Footer/Footer";
-import { calculateMaxDate, calculateMinDate, handleCpfChange, handlePhoneChange, handleProfessionalIdCardChange } from "../../utils/functions";
+import { calculateMaxDate, calculateMinDate, handleCpfChange, handlePhoneChange} from "../../utils/functions";
 import { CiSaveDown1 } from "react-icons/ci";
 
 const RegisterDoctor = () => {
