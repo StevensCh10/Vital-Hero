@@ -204,7 +204,7 @@ const SchedulingAndDonation = () => {
                 </div>
               ))
             ) : (
-              <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+              <div className="flex flex-col items-center justify-center h-[45vh] xl:w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
                 <PiSmileySad className="mb-[8%] opacity-70" size={85} color="red"/>
                 <span>Você ainda não realizou nenhuma doação</span>
               </div>
@@ -233,7 +233,7 @@ const SchedulingAndDonation = () => {
                       </div>
                     )}
                     {donationForm === null && screening !== null && (
-                      <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                      <div className="flex flex-col items-center justify-center h-[45vh] xl:w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
                         <FaHeartPulse className="mb-[5%] opacity-70" size={85} color="red"/>
                         <div>
                           É necessário preencher o <label className="font-semibold">Formulário de doação</label>
@@ -249,7 +249,7 @@ const SchedulingAndDonation = () => {
                       </div>
                     )}
                     {donationForm !== null && screening === null && (
-                      <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                      <div className="flex flex-col items-center justify-center h-[45vh] xl:w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
                         <FaHeartPulse className="mb-[5%] opacity-70" size={85} color="red"/>
                         <div>
                           É necessário preencher a<label className="font-semibold"> Triagem</label> para marcar um agendamento
@@ -266,7 +266,7 @@ const SchedulingAndDonation = () => {
                     {donationForm !== null &&
                       screening !== null &&
                       screening.doctor === null && (
-                        <div className="flex flex-col items-center justify-center h-[45vh] w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
+                        <div className="flex flex-col items-center justify-center h-[45vh] xl:w-[32vw] text-[1.2em] p-4 rounded-md shadow-custom2">
                           <PiListMagnifyingGlassLight className="mb-[5%] opacity-70" size={85} color="red"/>
                           <div>
                             Sua triagem está em processo de <label className="font-semibold">validação</label>. Após a

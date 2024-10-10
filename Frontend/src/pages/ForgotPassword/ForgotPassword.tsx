@@ -3,6 +3,7 @@ import { AuthContext } from "../../contexts/Auth/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorType } from "../../types/ErrorType";
 import Footer from "../../components/Footer/Footer";
+import { CiLink } from "react-icons/ci";
 
 const ForgotPassword = () => {
     const auth = useContext(AuthContext);
@@ -27,7 +28,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="flex flex-col items-center w-[380px] py-[3%] px-[1.5%]">
+      <div className="flex flex-col items-center w-[90%] xl:w-[32%] py-[1.5%] shadow-custom rounded-lg">
         <div className="flex flex-col items-center text-center w-[69%] mb-[5%]">
             <p className="mb-0"><img className="w-[100px]" src="esqueceu-senha.png"></img></p>
             <p className="mb-[3%] text-[20px]">Problema ao entrar?</p>
@@ -46,13 +47,16 @@ const ForgotPassword = () => {
           />
 
           <button
-            className="bg-[#b80e14] rounded-md text-white p-2 border-none cursor-pointer mt-[10%] mb-[2%] text-[1em] hover:bg-[#b80e14a4]"  
-            type="submit">Enviar link para login</button>
+          className="shadow-custom5 hover:bg-[#b80e14] rounded-lg xm:w-[23%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 mb-6 md:w-[33%]"
+          type="submit"
+          >
+            <span className="flex items-center justify-center">Enviar link <CiLink className="ml-2" size={22}/></span>
+          </button>
         </form>
 
-        <p className="flex flex-row justify-between w-[70%] mt-[5%]">
-          <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/register">Criar nova conta</Link>
-          <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/login">Voltar ao login</Link>
+        <p className="flex flex-row justify-between w-[85%] my-[5%]">
+          <Link className="hover:bg-black hover:text-white p-2 rounded-md" to="/register">Criar nova conta</Link>
+          <Link className="hover:bg-black hover:text-white p-2 rounded-md" to="/login">Voltar ao login</Link>
         </p>
       </div>
       <div className="fixed bottom-0">

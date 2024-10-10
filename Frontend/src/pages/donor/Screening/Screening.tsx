@@ -78,14 +78,14 @@ const Screening = () => {
   };
 
   const formRow =
-    "flex justify-center w-[90%]";
-  const labelStyle = "w-[50%] text-end mr-8 text-[1.1em] p-[6px]";
+    "flex flex-col justify-center items-center w-[90%]";
+  const labelStyle = "w-[100%] text-center mr-8 p-2";
   const selectStyle =
-    "flex text-[#333333] w-full p-2 rounded-md border border-black-100" +
-    " mb-[4%] text-[1em] focus:outline-none";
+    "flex text-[#333333] w-[90%] md:w-full p-2 rounded-md border border-black-100" +
+    " mb-[4%] focus:outline-none";
 
   return (
-    <div className="flex flex-col items-center justify-center w-full text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen text-sm md:text-lg"> 
       <Navbar />
       <div className="flex flex-col w-full items-center justify-center mt-[3%]">
           <div className="flex items-center w-[80%] h-[8vh]"
@@ -95,7 +95,7 @@ const Screening = () => {
             </span>
           </div>
           <form
-            className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] md:mb-[5%] shadow-custom4"
+            className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] mb-[10%] md:mb-[5%] shadow-custom4"
             onSubmit={handleAddScreening}
           >
             <div className="flex flex-col items-center justify-center w-full">

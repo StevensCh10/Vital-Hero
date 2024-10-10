@@ -68,12 +68,10 @@ const Login = () => {
           </p>
 
           <button
-            className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer my-[5%] w-[20%] p-[6px] md:p-[10px] 
-                            md:text-base md:w-[15%] lg:w-[30%] hover:bg-[#b80e14]"
+          className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[23%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 mb-6 md:w-[20%]"
+          type="submit"
           >
-            <span className="flex items-center justify-center">
-              Entrar 
-            </span>
+            <span className="flex items-center justify-center">Entrar</span>
           </button>
         </form>
 

@@ -67,21 +67,20 @@ const HomeDonor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resultBloodcenters = await auth.findAllBloodCenters();
-        const resultDonationForm = await auth.findDonationForm(user!.id);
-        const resultScreening = await auth.findScreening(user!.id);
-        localStorage.setItem(
-          "bloodcenters",
-          JSON.stringify(resultBloodcenters)
-        );
-        localStorage.setItem(
-          "donationForm",
-          JSON.stringify(resultDonationForm)
-        );
-        localStorage.setItem("screening", JSON.stringify(resultScreening));
-        setScreening(resultScreening);
-        setDonationForm(resultDonationForm);
-
+        if (!localStorage.getItem("bloodcenters")) {
+          const resultBloodcenters = await auth.findAllBloodCenters();
+          localStorage.setItem("bloodcenters", JSON.stringify(resultBloodcenters));
+        }
+        if (!localStorage.getItem("donationForm")) {
+          const resultDonationForm = await auth.findDonationForm(user!.id);
+          localStorage.setItem("donationForm", JSON.stringify(resultDonationForm));
+          setDonationForm(resultDonationForm);
+        }
+        if (!localStorage.getItem("screening")) {
+          const resultScreening = await auth.findScreening(user!.id);
+          localStorage.setItem("screening", JSON.stringify(resultScreening));
+          setScreening(resultScreening);
+        }
         if (user!.scheduling !== null) {
           const resultScheduling = await auth.findSchedulingById(
             user?.scheduling!.id
@@ -138,10 +137,10 @@ const HomeDonor = () => {
         </div>
       </div>
 
-      <span className="text-black opacity-75 mb-6 text-2xl md:text-3xl">
+      <span className="text-black opacity-75 mb-6 text-3xl">
         Critérios para doação
       </span>
-      <div className="flex items-center justify-center w-full h-full ">
+      <div className="hidden xl:flex flex-col items-center justify-center w-full h-full ">
         <div className="relative flex w-full max-w-10xl overflow-hidden justify-center items-center h-[50vh]">
           <div className="flex transition-transform duration-1000 ease-in-out space-x-10">
             {cards.map((card, index) => (
@@ -173,13 +172,36 @@ const HomeDonor = () => {
             ))}
           </div>
         </div>
+        {renderIndicators()}
       </div>
-      {renderIndicators()}
+      
+      <div className="flex lg:hidden items-center justify-center w-full h-full mt-5">
+        <div className="flex w-full justify-center items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-[80%] place-items-center mx-auto">
+            {cards.map((card, index) => (
+              <div
+                key={index}
+                onClick={() => handleCardClick(index)}
+                className="w-64 h-64 shadow-custom mb-10"
+              >
+                <div className="flex flex-col items-center w-full h-full">
+                  <p className={titleStyle}>{card.title}</p>
+                  {card.subtitles.map((subtitle) => (
+                    <div key={subtitle} className="flex flex-col w-full ">
+                      <p className={subtitleStyle}>{subtitle}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-      <span className="text-black opacity-75 mb-[4%] text-2xl md:text-3xl mt-[6%]">
+      <span className="text-black opacity-75 mb-[4%] text-3xl mt-[6%]">
         Como doar?
       </span>
-      <div className="flex items-center justify-center w-full h-full relative">
+      <div className="hidden md:flex items-center justify-center w-full h-full relative">
         <div className="w-72 h-72 relative">
           <div className="absolute shadow-md flex items-center justify-center top-14 left-0 rounded-full w-20 h-20 text-4xl border border-2 border-black transform translate-x-[-40%] translate-y-[-40%]">
             1
@@ -193,8 +215,8 @@ const HomeDonor = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between w-[90%] h-full relative">
-        <img className="absolute right-60" src="/heart.png"></img>
+      <div className="hidden md:flex items-center justify-between w-full xl:w-[90%] h-full relative">
+        <img className="absolute md:right-[26%] lg:right-[21%] md:w-[46%] lg:w-[56%] xl:right-60" src="/heart.png"></img>
         <div className="w-72 h-72 relative">
           <div className="absolute shadow-md flex items-center justify-center top-14 left-0 rounded-full w-20 h-20 text-4xl border border-2 border-black transform translate-x-[-40%] translate-y-[-40%]">
             2
@@ -220,6 +242,51 @@ const HomeDonor = () => {
           </div>
         </div>
       </div>
+      {/* TELA XS até MD */}
+      <div className="block xs:flex md:hidden flex flex-col">
+        <div className="flex items-center justify-center w-full h-full relative mb-8">
+          <div className="w-72 h-72 relative">
+            <div className="absolute shadow-md flex items-center justify-center top-14 left-0 rounded-full w-20 h-20 text-4xl border border-2 border-black transform translate-x-[-40%] translate-y-[-40%]">
+              1
+            </div>
+            <div className="flex w-72 h-72 rounded-full shadow-custom bg-white relative">
+              <div className="flex flex-col w-full h-full items-center justify-center">
+                <img className="w-20" src="/formulario-de-registro.png"></img>
+                <p className="opacity-70">Preencha o fomulário de doação</p>
+                <p className="opacity-70">e o formulário de triagem.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-center w-full h-full relative mb-8">
+          <div className="w-72 h-72 relative">
+            <div className="absolute shadow-md flex items-center justify-center top-14 left-0 rounded-full w-20 h-20 text-4xl border border-2 border-black transform translate-x-[-40%] translate-y-[-40%]">
+              2
+            </div>
+            <div className="flex w-72 h-72 rounded-full shadow-custom bg-white relative">
+              <div className="flex flex-col w-full h-full items-center justify-center">
+                <img className="w-20" src="/agenda.png"></img>
+                <p className="opacity-70">Esolha o hemocentro, dia, hora e</p>
+                <p className="opacity-70">marque seu agendamento.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-center w-full h-full relative">
+          <div className="w-72 h-72 relative">
+            <div className="absolute shadow-md flex items-center justify-center top-14 left-0 rounded-full w-20 h-20 text-4xl border border-2 border-black transform translate-x-[-40%] translate-y-[-40%]">
+              3
+            </div>
+            <div className="flex w-72 h-72 rounded-full shadow-custom bg-white relative">
+              <div className="flex flex-col w-full h-full items-center justify-center">
+                <img className="w-20" src="/doacao-de-sangue.png"></img>
+                <p className="opacity-70">Compareça ao hemocentro na</p>
+                <p className="opacity-70">data e hora agendada.</p>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>      
 
       <div className="flex flex-row m-0 w-full my-[5%]">
         <div className="flex flex-col items-center justify-center box-border w-full h-[200px] md:h-[260px]">
@@ -258,8 +325,8 @@ const HomeDonor = () => {
               </span>
             </div>
             <div className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] md:mb-[2%] shadow-custom4">
-              <div className="md:flex justify-center items-center text-center md:w-[90%]">
-                <p className="opacity-95 text-md md:text-lg mb-4">
+              <div className="md:flex justify-center items-center text-center w-[90%]">
+                <p className="opacity-95 text-sm md:text-lg mb-4">
                   <label className="font-semibold text-[1.1em]">Sua doação é essencial.</label>{" "}
                   Antes de clicar no botão abaixo, reserve um momento, pois é
                   necessário preencher o formulário de doação e a triagem. Isso
@@ -268,8 +335,8 @@ const HomeDonor = () => {
                 </p>
               </div>
               <button
-              className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[4%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
-                md:text-base md:w-[15%] lg:w-[13%] hover:bg-[#b80e14]"
+              className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[4%] text-sm w-[31%] p-[6px] md:p-[10px] 
+                md:text-base md:w-[25%] lg:w-[13%] hover:bg-[#b80e14]"
               onClick={() => navigate("/donation-form")}
               >
                <span className="flex items-center justify-center">Começar <BiDonateHeart className="ml-2" size={22} /></span>
@@ -287,11 +354,11 @@ const HomeDonor = () => {
           </button>
         )}
         {donationForm !== null && screening !== null && (
-          <div className="flex flex-col items-center justify-center rounded-lg w-[47%]">
+          <div className="flex flex-col items-center justify-center rounded-lg text-center w-[70%] md:w-full xl:w-[47%]">
             <label className="text-[1.2em]">
               Você já fez seu agendamento, para verificar detalhes
             </label>
-            <Link className="flex mt-[5%] text-black font-semibold hover:bg-[#b80e14] hover:text-white text-center rounded-md p-2 shadow-custom" to="/scheduling-donation">
+            <Link className="flex mt-[5%] text-black font-semibold hover:bg-[#b80e14] hover:text-white text-[1.2em] text-center rounded-md p-2 shadow-custom" to="/scheduling-donation">
               Clique aqui
               <GiClick className="ml-3" size={24}/>
             </Link>
@@ -305,31 +372,31 @@ const HomeDonor = () => {
         </legend>
       </fieldset>
 
-      <div className="hidden md:flex w-full mb-[5%]">
-        <div className="w-[80vw]">
-          <img className="w-[20vw] h-5/6" src="blood_donation.png"></img>
+      <div className="hidden md:flex w-full items-center mb-[5%]">
+        <div className="w-full lg:w-[80vw]">
+          <img className=" lg:w-[20vw] lg:h-5/6 h-[30vh]" src="blood_donation.png"></img>
         </div>
-        <div className="px-5">
-          <p className="opacity-95 text-[1.1em]">
+        <div className="px-5 opacity-95 text-lg">
+          <p>
             A doação de sangue é um gesto essencial que pode salvar vidas. É um
             processo simples e seguro, onde uma única doação pode fazer toda a
             diferença para pacientes em situações críticas, como cirurgias,
             tratamentos de câncer, complicações durante o parto e acidentes
             graves.
           </p>
-          <p className="opacity-95 text-[1.1em]">
+          <p>
             Qualquer pessoa saudável, entre 18 e 69 anos, pode doar sangue após
             passar por uma triagem. A doação é rápida e indolor, e o sangue
             doado é testado, processado e armazenado adequadamente para uso em
             emergências médicas.
           </p>
-          <p className="opacity-95 text-[1.1em]">
+          <p>
             Além de salvar vidas, a doação de sangue traz uma sensação de
             realização e satisfação para os doadores, sabendo que estão ajudando
             a comunidade e fazendo uma diferença positiva na vida de outras
             pessoas.
           </p>
-          <p className="opacity-95 text-[1.1em]">
+          <p>
             Junte-se à causa da doação de sangue e seja parte dessa corrente de
             solidariedade e esperança. Sua doação pode ser a luz no fim do túnel
             para alguém que precisa desesperadamente de sangue. Lembre-se: uma

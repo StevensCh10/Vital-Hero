@@ -16,6 +16,7 @@ const NavbarDonor = () => {
   };
 
   const linkStyle = "p-1 text-[1em] mx-5 text-black hover:text-[#b80e14] filter drop-shadow-sm opacity-90";
+  const linkStyleModal = "flex p-1 text-black hover:text-[#b80e14] filter drop-shadow-sm opacity-90";
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -31,7 +32,7 @@ const NavbarDonor = () => {
       <div className="block lg:hidden">
         <button
           onClick={toggleModal}
-          className="text-orange-400 focus:outline-none"
+          className="text-[#b80e14] p-2 rounded-[50%] shadow-md"
         >
           <svg
             className="w-6 h-6"
@@ -57,6 +58,26 @@ const NavbarDonor = () => {
         <Link className={`${linkStyle} ${isActive('/profile') ? 'border-b-[3px] border-[#b80e14]' : ''}`} to="/profile">Perfil</Link>
         <Link className="p-1 text-[1em] ml-5 text-black hover:text-[#b80e14] filter drop-shadow-sm opacity-90" onClick={handleLogout} to="/">Sair</Link>
       </div>
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-end mr-4 z-50">
+          <div className="absolute top-12 bg-white text-[#0a747c] p-6 rounded-lg shadow-lg w-[50%] md:w-[25%] lg:w-[23%] ">
+            <button
+              onClick={toggleModal}
+              className="float-right text-black font-bold"
+            >
+              &times;
+            </button>
+            <div>
+              <Link className={linkStyleModal} to="/">Início</Link>
+              <Link className={linkStyleModal} to="/bloodcenters">Hemocentros</Link>
+              <Link className={linkStyleModal} to="/scheduling-donation">Agendamento e Doações</Link>
+              <Link className={linkStyleModal} to="/feedback">Feedback</Link>
+              <Link className={linkStyleModal} to="/profile">Perfil</Link>
+              <Link className={linkStyleModal} onClick={handleLogout} to="/">Sair</Link>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

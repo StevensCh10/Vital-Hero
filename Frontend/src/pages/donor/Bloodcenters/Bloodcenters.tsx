@@ -38,8 +38,8 @@ const Bloodcenters: React.FC = () => {
       try {
         const resultBloodstocks = await auth.findAllBloodstocks();
         setBloodstocks(resultBloodstocks);
-        const bloodcentersFromLocalStorage =
-          localStorage.getItem("bloodcenters");
+
+        const bloodcentersFromLocalStorage = localStorage.getItem("bloodcenters");
         if (bloodcentersFromLocalStorage !== null) {
           const bloodcentersObject = JSON.parse(bloodcentersFromLocalStorage);
           setBloodcenters(bloodcentersObject);
@@ -120,67 +120,46 @@ const Bloodcenters: React.FC = () => {
     switch (qttStock) {
       case 0:
         return "/bloodbags/blood-bag-0.png";
-        break;
       case 5:
         return "/bloodbags/blood-bag-5.png";
-        break;
       case 10:
         return "/bloodbags/blood-bag-10.png";
-        break;
       case 15:
         return "/bloodbags/blood-bag-15.png";
-        break;
       case 20:
         return "/bloodbags/blood-bag-20.png";
-        break;
       case 25:
         return "/bloodbags/blood-bag-25.png";
-        break;
       case 30:
         return "/bloodbags/blood-bag-30.png";
-        break;
       case 35:
         return "/bloodbags/blood-bag-35.png";
-        break;
       case 40:
         return "/bloodbags/blood-bag-40.png";
-        break;
       case 45:
         return "/bloodbags/blood-bag-45.png";
-        break;
       case 50:
         return "/bloodbags/blood-bag-50.png";
-        break;
       case 55:
         return "/bloodbags/blood-bag-55.png";
-        break;
       case 60:
         return "/bloodbags/blood-bag-60.png";
-        break;
       case 65:
         return "/bloodbags/blood-bag-65.png";
-        break;
       case 70:
         return "/bloodbags/blood-bag-70.png";
-        break;
       case 75:
         return "/bloodbags/blood-bag-75.png";
-        break;
       case 80:
         return "/bloodbags/blood-bag-80.png";
-        break;
       case 85:
         return "/bloodbags/blood-bag-85.png";
-        break;
       case 90:
         return "/bloodbags/blood-bag-90.png";
-        break;
       case 95:
         return "/bloodbags/blood-bag-95.png";
-        break;
       case 100:
         return "/bloodbags/blood-bag-100.png";
-        break;
       default:
         const intervals = [
           {
@@ -358,7 +337,7 @@ const Bloodcenters: React.FC = () => {
       <NavbarDonor/>
       <span className="text-black opacity-75 mb-[2%] text-2xl md:text-3xl"></span>
       <MapContainer
-        className="relative w-[90%] rounded-lg h-[300px] md:w-full md:h-[500px]"
+        className="relative w-[90%] rounded-lg h-[300px] md:w-full md:h-[500px] z-10"
         center={[-8.0476, -34.877]}
         zoom={12}
       >
@@ -373,10 +352,10 @@ const Bloodcenters: React.FC = () => {
           <div
             key={center.id}
             id={center?.id.toString()}
-            className="p-[1%] h-auto w-full lg:w-[33.3%] my-9"
+            className="p-[1%] h-auto w-full lg:w-[33.3%] my-4 md:my-9"
           >
-            <div className="flex w-full">
-              <div className="w-full p-[4%] rounded-t-lg shadow-md">
+            <div className="flex w-full items-center justify-center">
+              <div className="w-[92%] md:w-full p-[4%] rounded-t-lg shadow-md">
                 <span className="flex text-start m-0 text-sm opacity-50">Hemocentro</span>
                 <h3 className="flex m-0 mb-4 text-2xl md:text-3xl">
                   {center.name.toUpperCase()}
@@ -432,164 +411,166 @@ const Bloodcenters: React.FC = () => {
               </div>
             </div>
 
-            {selectedCenter === center.id.toString() && (
-              <div className="relative w-full">
-                {bloodstocks.find(
-                  (stock) => stock.bloodcenter === center.id
-                ) ? (
-                  <div className="absolute flex flex-wrap bg-white pb-[3%] z-10 rounded-b-lg shadow-md ">
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        A-
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.a_negative
-                            )
-                          )!
-                        }
-                        alt="Tipo A-"
-                      />
+            <div className="flex items-center justify-center">
+              {selectedCenter === center.id.toString() && (
+                <div className="relative  w-[92%] md:w-full">
+                  {bloodstocks.find(
+                    (stock) => stock.bloodcenter === center.id
+                  ) ? (
+                    <div className="absolute flex flex-wrap bg-white pb-[3%] z-10 rounded-b-lg shadow-md ">
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          A-
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.a_negative
+                              )
+                            )!
+                          }
+                          alt="Tipo A-"
+                        />
+                      </div>
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          A+
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.a_positive
+                              )
+                            )!
+                          }
+                          alt="Tipo A+"
+                        />
+                      </div>
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          B-
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.b_negative
+                              )
+                            )!
+                          }
+                          alt="Tipo B-"
+                        />
+                      </div>
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          B+
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.b_positive
+                              )
+                            )!
+                          }
+                          alt="Tipo B+"
+                        />
+                      </div>
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          AB-
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.ab_negative
+                              )
+                            )!
+                          }
+                          alt="Tipo AB-"
+                        />
+                      </div>
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          AB+
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.ab_positive
+                              )
+                            )!
+                          }
+                          alt="Tipo AB+"
+                        />
+                      </div>
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          O-
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.o_negative
+                              )
+                            )!
+                          }
+                          alt="Tipo O-"
+                        />
+                      </div>
+                      <div className="flex justify-center w-[30%] m-[5px]">
+                        <label className="block text-center text-[#b80e14]">
+                          O+
+                        </label>
+                        <img
+                          className="block w-[8vh] h-[8vh] m-0"
+                          src={
+                            UrlGenerator(
+                              parseFloat(
+                                bloodstocks.find(
+                                  (stock) => stock.bloodcenter === center.id
+                                )!.o_positive
+                              )
+                            )!
+                          }
+                          alt="Tipo O+"
+                        />
+                      </div>
                     </div>
+                  ) : (
                     <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        A+
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.a_positive
-                            )
-                          )!
-                        }
-                        alt="Tipo A+"
-                      />
+                      <p>Estoque sanguíneo não disponível no sistema!</p>
                     </div>
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        B-
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.b_negative
-                            )
-                          )!
-                        }
-                        alt="Tipo B-"
-                      />
-                    </div>
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        B+
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.b_positive
-                            )
-                          )!
-                        }
-                        alt="Tipo B+"
-                      />
-                    </div>
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        AB-
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.ab_negative
-                            )
-                          )!
-                        }
-                        alt="Tipo AB-"
-                      />
-                    </div>
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        AB+
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.ab_positive
-                            )
-                          )!
-                        }
-                        alt="Tipo AB+"
-                      />
-                    </div>
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        O-
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.o_negative
-                            )
-                          )!
-                        }
-                        alt="Tipo O-"
-                      />
-                    </div>
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <label className="block text-center text-[#b80e14]">
-                        O+
-                      </label>
-                      <img
-                        className="block w-[8vh] h-[8vh] m-0"
-                        src={
-                          UrlGenerator(
-                            parseFloat(
-                              bloodstocks.find(
-                                (stock) => stock.bloodcenter === center.id
-                              )!.o_positive
-                            )
-                          )!
-                        }
-                        alt="Tipo O+"
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex justify-center w-[30%] m-[5px]">
-                    <p>Estoque sanguíneo não disponível no sistema!</p>
-                  </div>
-                )}
-              </div>
-            )}
+                  )}
+                </div>
+              )}
+            </div>      
           </div>
         ))}
       </div>

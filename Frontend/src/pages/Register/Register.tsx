@@ -10,6 +10,7 @@ import {
   handlePhoneChange,
   validateCPF,
 } from "../../utils/functions";
+import { CiSaveDown1 } from "react-icons/ci";
 
 const Register = () => {
   const auth = useContext(AuthContext);
@@ -41,13 +42,13 @@ const Register = () => {
   };
 
   const formRow =
-    "flex flex-col justify-center mx-[2.5%] w-[80%] md:w-[35%] lg:w-[22.3%] text-start";
-  const labelStyle = "mb-[1%] text-start text-[1.1em]";
+    "flex justify-center w-[90%] text-sm md:text-base";
+  const labelStyle = "w-[25%] text-end mr-8 p-2";
   const selectStyle =
-    "text-[#333333] w-full p-2 rounded-md bg-[#00000015]" +
-    " mb-[5%] text-[1em] focus:outline-none";
+    "flex text-[#333333] w-[60%] md:w-full p-2 rounded-md border border-black-100" +
+    " mb-[4%] focus:outline-none";
   const inputStyle =
-    "w-full p-2 rounded-md text-[#333333] bg-[#00000015] mb-[5%] text-[1em] focus:outline-none";
+    "w-[60%] md:w-full p-2 rounded-md text-[#333333] border border-black-100 mb-[4%] focus:outline-none";
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
@@ -60,6 +61,10 @@ const Register = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if(!actCpf(cpf)){
+      return;
+    }
 
     const formData = new FormData();
     formData.append("name", name);
@@ -98,26 +103,30 @@ const Register = () => {
   const actCpf = (cpf: string) => {
     if (validateCPF(cpf)) {
       setCpf(cpf);
-      return;
+      return true;
     }
     alert("Cpf inálido");
+    return false;
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <img className="mt-[3%] w-[70px] md:w-[100px]" src="Logo.png"></img>
-      <span className="text-[#035e89] text-2xl md:text-4xl">
-        Cadastre-se e salve vidas
-      </span>
+    <div className="flex flex-col items-center justify-center min-h-screen text-sm md:text-lg">
+      <img className="my-[3%] w-[70px] md:w-[80px]" src="Logo.png"></img>
+      <div className="flex items-center w-[80%] h-[8vh]"
+      style={{ background: 'linear-gradient(to right, #49052E, #b80e14)' }}>
+        <span className="text-white ml-[4%] text-md md:text-xl">
+          Cadastro de usuário
+        </span>
+      </div>
       <form
-        className="w-full text-center mt-[8%] md:mt-[3%]"
+        className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] mb-[10%] md:mb-[5%] shadow-custom4"
         onSubmit={handleRegister}
         encType="multipart/form-data"
       >
         <div className="flex flex-wrap items-center justify-center">
           <div className={formRow}>
             <label className={labelStyle} htmlFor="name">
-              Nome completo:
+              Nome completo
             </label>
             <input
               className={inputStyle}
@@ -132,7 +141,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="email">
-              Email:
+              Email
             </label>
             <input
               className={inputStyle}
@@ -146,7 +155,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="dateOfBirth">
-              Data de nascimento:
+              Data de nascimento
             </label>
             <input
               className={inputStyle}
@@ -161,7 +170,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="phone">
-              Telefone:
+              Telefone
             </label>
             <input
               className={inputStyle}
@@ -180,7 +189,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="maritalStatus">
-              Estado civil:
+              Estado civil
             </label>
             <select
               className={selectStyle}
@@ -197,7 +206,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="gender">
-              Sexo:
+              Sexo
             </label>
             <select
               className={selectStyle}
@@ -213,14 +222,14 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="cpf">
-              CPF:
+              CPF
             </label>
             <input
               className={inputStyle}
               type="text"
               id="cpf"
               name="cpf"
-              placeholder="123.654.158-73"
+              placeholder="12365415873"
               onChange={(e) => {
                   var value = handleCpfChange(e);
                   setCpf(value as string);
@@ -232,7 +241,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="bloodType">
-              Tipo sanguíneo:
+              Tipo sanguíneo
             </label>
             <select
               className={selectStyle}
@@ -255,7 +264,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="address">
-              Endereço:
+              Endereço
             </label>
             <input
               className={inputStyle}
@@ -270,7 +279,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="addressNumber">
-              Número:
+              Número
             </label>
             <input
               className={inputStyle}
@@ -283,7 +292,7 @@ const Register = () => {
             />
           </div>
           <div className={formRow}>
-            <label className={labelStyle}>Foto:</label>
+            <label className={labelStyle}>Foto</label>
             <input
               className={inputStyle}
               type="file"
@@ -293,7 +302,7 @@ const Register = () => {
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="password">
-              Senha:
+              Senha
             </label>
             <input
               className={inputStyle}
@@ -308,13 +317,13 @@ const Register = () => {
           </div>
         </div>
         <button
-          className="bg-[#b80e14] rounded-lg w-[23%] text-white p-[8px] border-none cursor-pointer mt-5 mb-5 hover:bg-[#b80e14a4] lg:w-[10%] md:w-[12%]"
-          type="submit"
+        className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[36%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 mb-8 md:w-[12%]"
+        type="submit"
         >
-          Cadastrar
+          <span className="flex items-center justify-center text-sm md:text-lg">Cadastrar<CiSaveDown1 className="ml-2" size={20} /></span>
         </button>
-        <p className="mb-5">
-          Já tem uma conta?{" "}
+        <p>
+          Já tem uma conta? {" "}
           <Link className="text-[#b80e14] hover:text-[#b80e14a4]" to="/login">
             Conecte-se
           </Link>

@@ -19,12 +19,12 @@ const DonationForm = () => {
 
   const formRow =
     "flex justify-center w-[90%]";
-  const labelStyle = "w-[35%] text-end mr-8 text-[1.1em] p-[6px]";
+  const labelStyle = "w-[25%] text-end mr-8 p-2";
   const selectStyle =
-    "flex text-[#333333] w-full p-2 rounded-md border border-black-100" +
-    " mb-[4%] text-[1em] focus:outline-none";
+    "flex text-[#333333] w-[60%] md:w-full p-2 rounded-md border border-black-100" +
+    " mb-[4%] focus:outline-none";
   const inputStyle =
-    "w-full p-[6px] rounded-md text-[#333333] border border-black-100 mb-[4%] text-[1em] focus:outline-none";
+    "w-[60%] md:w-full p-2 rounded-md text-[#333333] border border-black-100 mb-[4%] focus:outline-none";
 
   const [q1, setQ1] = useState(donationFormAux?.q1);
   const [q2, setQ2] = useState(donationFormAux?.q2);
@@ -114,7 +114,7 @@ const DonationForm = () => {
   const maxDate = calculateMaxDate(5);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen text-sm md:text-lg"> 
       <Navbar />
       {donationFormAux === null ? (
         <div className="flex flex-col w-full items-center justify-center mt-[3%] min-h-[87vh] lg:min-h-[89.6vh] xl:min-h-[79vh]">
@@ -125,10 +125,10 @@ const DonationForm = () => {
             </span>
           </div>
           <form
-            className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] md:mb-[5%] shadow-custom4"
+            className="flex flex-col items-center justify-center rounded-md w-[82%] py-[4%] mb-[10%] md:mb-[5%] shadow-custom4"
             onSubmit={handleAddDonationForm}
           >
-            <div className="flex flex-col items-center justify-center w-full">
+            <div className="flex flex-wrap items-center justify-center">
               <div className={formRow}>
                 <label className={labelStyle} htmlFor="fatherName">
                   Nome do Pai

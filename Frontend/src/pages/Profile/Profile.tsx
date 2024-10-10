@@ -6,6 +6,7 @@ import { Doctor } from "../../types/Doctor";
 import { Donor } from "../../types/Donor";
 import Footer from "../../components/Footer/Footer";
 import { CiSaveDown1 } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
@@ -22,6 +23,8 @@ const Profile = () => {
   const [crm, setCrm] = useState("");
   const [bloodType, setBloodType] = useState("");
   const role = user.role;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -157,9 +160,13 @@ const Profile = () => {
                 readOnly
               />
             )}
+            <button className="w-[40%] rounded-md text-center focus:outline-none hover:text-[#b80e14]"
+            onClick={() => navigate("/change-password")}>
+              Alterar senha
+            </button>
           </div>
           <button
-            className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[23%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 mb-5 md:w-[22%]"
+            className="shadow-custom5 hover:bg-[#b80e14] rounded-lg w-[25%] text-black hover:text-white p-[8px] border-none cursor-pointer mt-3 md:mt-8 mb-5 md:w-[22%]"
             type="submit"
           >
             <span className="flex items-center justify-center">Salvar<CiSaveDown1 className="ml-2" size={20} /></span>

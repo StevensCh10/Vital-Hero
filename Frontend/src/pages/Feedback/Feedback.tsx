@@ -58,22 +58,22 @@ const Feedback = () => {
             </p>
           </div>
           <textarea
-            className="flex text-left items-center justify-center lg:mt-[3%] p-[2%] rounded-md resize-none focus:outline-none 
-              text-[1em] w-full h-[85px] md:text-base md:w-[85%] md:h-[150px] border border-black-100"
+            className="flex text-left items-center justify-center mt-[3%] p-[2%] rounded-md resize-none focus:outline-none 
+              text-[1em] h-[135px] md:text-base w-[85%] md:h-[150px] border border-black-100"
             placeholder="Conte sua experiência..."
             onChange={(e) => setFeedback(e.target.value)}
           ></textarea>
           {isEmptyOrWhitespace(feedback) ? (
             <button
               disabled
-              className="hover:bg-black shadow-custom5 text-black rounded-lg pointer-events-none mt-[4%] text-[1em] w-[20%] p-[6px] md:p-[10px] 
+              className="shadow-custom5 text-black rounded-lg pointer-events-none mt-[4%] text-[1em] w-[28%] p-[6px] md:p-[10px] 
               md:text-base md:w-[15%] lg:w-[10%]"
             >
               <span className="flex items-center justify-center opacity-60">Enviar <IoArrowForwardCircleOutline className="ml-3" size={22} /></span>
             </button>
           ) : (
             <button
-              className="hover:bg-black shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[4%] text-[0.7em] w-[20%] p-[6px] md:p-[10px] 
+              className="text-[1em] shadow-custom5 rounded-lg text-black hover:text-white cursor-pointer mt-[4%] text-[0.7em] w-[28%] p-[6px] md:p-[10px] 
               md:text-base md:w-[15%] lg:w-[10%] hover:bg-[#b80e14]"
             >
               <span className="flex items-center justify-center">Enviar <IoArrowForwardCircleOutline className="ml-3" size={22} /></span>
