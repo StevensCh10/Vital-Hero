@@ -1,16 +1,24 @@
 package com.vitalhero.fullstack.service;
 
-import org.quartz.*;
-import org.springframework.stereotype.Service;
-import com.vitalhero.fullstack.model.Donation;
-import com.vitalhero.fullstack.model.DonationNotificationJob;
-import com.vitalhero.fullstack.model.Donor;
-import jakarta.mail.internet.MimeUtility;
-import lombok.RequiredArgsConstructor;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.springframework.stereotype.Service;
+
+import com.vitalhero.fullstack.model.Donation;
+import com.vitalhero.fullstack.model.DonationNotificationJob;
+import com.vitalhero.fullstack.model.Donor;
+
+import jakarta.mail.internet.MimeUtility;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +28,7 @@ public class QuartzDonationService {
     private final EmailService emailService;
 
     public void scheduleNotification(Donation donation, String gender) throws SchedulerException {
-        LocalDateTime notificationDateTime = null;
+        LocalDateTime notificationDateTime;
         if(gender.equalsIgnoreCase("M")){
             notificationDateTime = donation.getScheduling().getDateTime().plusMonths(2);
         }else{
@@ -42,13 +50,14 @@ public class QuartzDonationService {
         scheduler.scheduleJob(jobDetail, trigger);
     }
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void sendEmailDonor(Donor donor){
         String textBegin = "Olá, " + donor.getName() + "!";
 
         String to = donor.getEmail();
         String subject = "O seu apoio é vital!";
 
-        String text = "";
+        String text;
 
         if(donor.getGender().equalsIgnoreCase("M")){
             text = textBegin+"<br><br>Obrigado pela sua última doação de sangue! Seu gesto fez a diferença. Queremos convidá-lo a doar novamente após 60 dias para continuar fazendo parte dessa causa tão importante."+

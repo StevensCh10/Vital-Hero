@@ -1,13 +1,16 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.repository.BloodStockRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -40,7 +43,7 @@ public class BloodStockService {
 	public BloodStock update(BloodStock bloodStockAtt) {
 		BloodStock currentBloodStock = find(bloodStockAtt.getId());
 		
-		if(bloodStockAtt.getBloodcenter().getId() != currentBloodStock.getBloodcenter().getId()) {
+		if(!bloodStockAtt.getBloodcenter().getId().equals(currentBloodStock.getBloodcenter().getId())) {
 			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", bloodStockAtt.getName()));
             throw new CannotBeUpdated("O id do Hemocentro não pode ser atualizado.");
 		}

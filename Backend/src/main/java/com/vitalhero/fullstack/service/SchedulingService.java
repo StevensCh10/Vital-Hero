@@ -1,8 +1,10 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
@@ -45,7 +47,7 @@ public class SchedulingService {
 	public Scheduling update(Scheduling schedulingAtt) {
 		Scheduling currentScheduling = find(schedulingAtt.getId());
 		
-		if(schedulingAtt.getBloodcenter().getId() != currentScheduling.getBloodcenter().getId()) {
+		if(!schedulingAtt.getBloodcenter().getId().equals(currentScheduling.getBloodcenter().getId())) {
             throw new CannotBeUpdated(String.format("Não é possível alterar o id do hemocentro do agendamento."));
 		}
 

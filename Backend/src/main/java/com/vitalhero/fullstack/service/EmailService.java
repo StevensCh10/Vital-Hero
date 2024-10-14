@@ -1,9 +1,11 @@
 package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ public class EmailService {
 
     private final JavaMailSender javaMailSender;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void sendEmail(String to, String subject, String text, String from, String personal) {
         MimeMessage message = javaMailSender.createMimeMessage();
 

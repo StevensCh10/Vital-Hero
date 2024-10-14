@@ -9,6 +9,7 @@ import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -50,15 +51,15 @@ public class DoctorService {
         Doctor findedByEmail = repository.findByEmail(doctorAtt.getEmail());
         Doctor findedByPhone = repository.findByPhone(doctorAtt.getPhone());
 		
-		if(findedByName != null && findedByName.getId() != doctorAtt.getId()) {
+		if(findedByName != null && !findedByName.getId().equals(doctorAtt.getId())) {
             throw new EntityAlreadyExists(String.format("Nome '%s' indisponível.", doctorAtt.getName()));
-		}else if(findedByCpf != null && findedByCpf.getId() != doctorAtt.getId()){
+		}else if(findedByCpf != null && !findedByCpf.getId().equals(doctorAtt.getId())){
             throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", doctorAtt.getCpf()));
-        }else if(findedByEmail != null && findedByEmail.getId() != doctorAtt.getId()){
+        }else if(findedByEmail != null && !findedByEmail.getId().equals(doctorAtt.getId())){
             throw new EntityAlreadyExists(String.format("Email '%s' indisponível.", doctorAtt.getEmail()));
-        }else if(findedByCrm != null && findedByCrm.getId() != doctorAtt.getId()){
+        }else if(findedByCrm != null && !findedByCrm.getId().equals(doctorAtt.getId())){
             throw new EntityAlreadyExists(String.format("Crm '%s' indisponível.", doctorAtt.getCrm()));
-        }else if(findedByPhone != null && findedByPhone.getId() != doctorAtt.getId()){
+        }else if(findedByPhone != null && !findedByPhone.getId().equals(doctorAtt.getId())){
             throw new EntityAlreadyExists(String.format("Telefone '%s' indisponível.", doctorAtt.getPhone()));
         }
 

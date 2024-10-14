@@ -3,6 +3,7 @@ package com.vitalhero.fullstack.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -20,6 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
@@ -98,10 +100,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	@NonNull HttpHeaders headers, @NonNull HttpStatusCode status, @NonNull WebRequest request) {
 		Throwable rootCause = e.getCause();
 		
-		if(rootCause instanceof InvalidFormatException) { //valor de entrada de atributo não correspondido p
-			return handleInvalidFormatException((InvalidFormatException) rootCause, headers, HttpStatus.valueOf(status.value()), request);
-		}else if(rootCause instanceof PropertyBindingException) { //valor da propriedade de algum atributo que não existe
-			return handlePropertyBindingException((PropertyBindingException) rootCause, headers, HttpStatus.valueOf(status.value()), request);
+		if(rootCause instanceof InvalidFormatException invalidFormatException) { //valor de entrada de atributo não correspondido p
+			return handleInvalidFormatException(invalidFormatException, headers, HttpStatus.valueOf(status.value()), request);
+		}else if(rootCause instanceof PropertyBindingException propertyBindingException) { //valor da propriedade de algum atributo que não existe
+			return handlePropertyBindingException(propertyBindingException, headers, HttpStatus.valueOf(status.value()), request);
 		}
 		Problem problem = handleProblem(HttpStatus.valueOf(status.value()), ProblemType.INCOMPREHENSIBLE_MESSAGE,  "The request body is invalid. Check syntax error.");
 		return handleExceptionInternal(e, problem, new HttpHeaders(), status, request);
@@ -138,8 +140,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		if(body == null) {
 			body = new Problem(LocalDateTime.now(), status.value(), null, HttpStatus.valueOf(status.value()).getReasonPhrase(), null, null);			
-		}else if(body instanceof String) {
-			body = new Problem(LocalDateTime.now(), status.value(), null, (String) body, null, null);
+		}else if(body instanceof String bodyString) {
+			body = new Problem(LocalDateTime.now(), status.value(), null, bodyString, null, null);
 		}
 		return super.handleExceptionInternal(ex, body, headers, status, request);
 	}

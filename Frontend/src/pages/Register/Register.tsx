@@ -110,7 +110,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-sm md:text-lg">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <img className="my-[3%] w-[70px] md:w-[80px]" src="Logo.png"></img>
       <div className="flex items-center w-[80%] h-[8vh]"
       style={{ background: 'linear-gradient(to right, #49052E, #b80e14)' }}>

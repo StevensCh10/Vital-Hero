@@ -1,13 +1,16 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.ScreeningRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +32,7 @@ public class ScreeningService {
     @Transactional
     public Screening updateScreening(Screening s){
         Screening oldS = find(s.getId());
-        if(oldS.getDonor().getId() != s.getDonor().getId()){
+        if(!oldS.getDonor().getId().equals(s.getDonor().getId())){
             throw new CannotBeUpdated("Triagem não pode ser atualizada pois houve mudança no seu proprietário.");
         }
         return repository.saveAndFlush(s);

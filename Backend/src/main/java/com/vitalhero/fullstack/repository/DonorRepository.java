@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.vitalhero.fullstack.model.Donor;
 
 public interface DonorRepository extends JpaRepository<Donor, Long>{
@@ -40,9 +41,12 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
     List<Donor> allScheduledDonors();
 
     @Query(
-        value = "SELECT d.* FROM screening s\n" + //
-                    "JOIN donor d ON s.fk_donor = d.id\n" + //
-                    "WHERE s.fk_donor IS NOT NULL;",
+        value = """
+                SELECT d.* FROM screening s
+                JOIN donor d ON s.fk_donor = d.id
+                WHERE s.fk_donor IS NOT NULL;"""
+    //
+    ,
         nativeQuery = true
     )
     List<Donor> allDonorScreenings();

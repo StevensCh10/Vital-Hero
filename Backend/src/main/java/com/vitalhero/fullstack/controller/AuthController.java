@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,7 @@ import com.vitalhero.fullstack.service.AuthService;
 import com.vitalhero.fullstack.service.DoctorService;
 import com.vitalhero.fullstack.service.DonorService;
 import com.vitalhero.fullstack.service.UserService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -34,12 +36,12 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
     private final String pathImgs = "C:/Users/steve/OneDrive/Documentos/TCC_Stevens_2024.1/imgProfile/";
-    private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
     private final UserService userService;
     private final TokenService tokenService;
     private final DonorService donorService;
     private final DoctorService doctorService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
@@ -68,6 +70,7 @@ public class AuthController {
 
     @PostMapping(value = "/donor",consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
+    @SuppressWarnings("CallToPrintStackTrace")
     public ResponseDTO registerDonor(
        @RequestParam String name,
        @RequestParam String cpf,
@@ -80,7 +83,7 @@ public class AuthController {
        @RequestParam String photo,
        @RequestParam String password,
        @RequestParam String bloodType,
-       @RequestParam(value = "file", required = false) MultipartFile file){
+       @RequestParam(required = false) MultipartFile file){
 
             Donor newDonor = new Donor(name, cpf, email, age, gender, maritalStatus, address, photo, phone, passwordEncoder.encode(password), bloodType);
             Donor flushDonor = donorService.register(newDonor);
@@ -104,6 +107,7 @@ public class AuthController {
 
     @PostMapping(value = "/doctor", consumes = { "multipart/form-data" })
     @ResponseStatus(HttpStatus.CREATED)
+    @SuppressWarnings("CallToPrintStackTrace")
     public ResponseDTO registerDoctor(
         @RequestParam String name,
         @RequestParam String cpf,
@@ -116,7 +120,7 @@ public class AuthController {
         @RequestParam String phone,
         @RequestParam String photo,
         @RequestParam String password,
-        @RequestParam(value = "file", required = false) MultipartFile file){
+        @RequestParam(required = false) MultipartFile file){
             Doctor newDoctor = new Doctor(name, cpf, crm, email, age, gender, maritalStatus, address, photo, phone, passwordEncoder.encode(password));
             Doctor flushDoctor = doctorService.register(newDoctor);
             try{

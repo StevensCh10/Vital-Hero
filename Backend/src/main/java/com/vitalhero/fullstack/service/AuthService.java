@@ -17,6 +17,7 @@ import com.vitalhero.fullstack.repository.BloodCenterRepository;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import com.vitalhero.fullstack.security.TokenService;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -68,10 +69,10 @@ public class AuthService {
     private ResponseDTO invalidPassword(String password, User user){
         if(passwordEncoder.matches(password, user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            UserDTO dto = null;
+            UserDTO dto;
 
-            if(user instanceof Donor) dto = DonorDTO.fromEntity((Donor)user);
-            else if(user instanceof Doctor) dto = DoctorDTO.fromEntity((Doctor)user);
+            if(user instanceof Donor donor) dto = DonorDTO.fromEntity(donor);
+            else if(user instanceof Doctor doctor) dto = DoctorDTO.fromEntity(doctor);
             else dto = BloodCenterDTO.fromEntity((BloodCenter)user);
             
             return new ResponseDTO(dto, token);

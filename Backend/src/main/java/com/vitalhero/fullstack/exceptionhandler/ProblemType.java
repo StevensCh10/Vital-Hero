@@ -16,8 +16,8 @@ public enum ProblemType {
 	INVALID_DATA("/invalid-data","Invalid Data");
 	//Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.
 	
-	private String title;
-	private String uri;
+	private final String title;
+	private final String uri;
 	
 	private ProblemType(String path, String title) {
 		this.uri = "http://localhost:8080" + path;

@@ -1,13 +1,17 @@
 package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
+
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.intrerfaces.User;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
+
 import jakarta.mail.internet.InternetHeaders;
 import jakarta.mail.internet.MimeUtility;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +24,14 @@ public class UserService {
     private final DonorRepository donorRepository;
     private final EmailService emailService;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public void findEmailForgotPassword(String email){
-        var user = findUserByEmail(email);
-        Long id;
-        if(user instanceof Donor){
-            id = ((Donor) user).getId();
-        }else{
-            id = ((Doctor) user).getId();
-        }
+        User user = findUserByEmail(email);
+        Long id = null;
+        
+        if(user instanceof Donor donor) id = donor.getId();
+        else if(user instanceof Doctor doctor) id = doctor.getId();
+
         String fromName = "Vital Hero";
         String from = "stevenschaves10@gmail.com";
         String personal = null;
@@ -37,7 +41,9 @@ public class UserService {
             e.printStackTrace();
         }
         String subject = "Recuperação de senha";
-        String to = user.getEmail();
+        String to = Optional.ofNullable(user)
+                    .map(User::getEmail)
+                    .orElseThrow(() -> new NullPointerException("O objeto 'user' é null."));
 
         InternetHeaders headers = new InternetHeaders();
         headers.addHeader("Content-type", "text/html; charset=UTF-8");

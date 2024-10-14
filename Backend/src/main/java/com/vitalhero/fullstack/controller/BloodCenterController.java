@@ -169,6 +169,7 @@ public class BloodCenterController {
     }
 
     //@PostMapping("/schedule-donation-notification/{gender}")
+    @SuppressWarnings("CallToPrintStackTrace")
     private void scheduleDonationNotification(Donation donation, String gender) {
         Donor donor = donorService.find(donation.getDonor().getId());
         quartzDonationService.sendEmailDonor(donor);
