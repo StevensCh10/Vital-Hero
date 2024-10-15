@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.CannotBeScheduling;
+import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
@@ -36,21 +37,6 @@ public class DonorService {
         return DonorDTO.fromEntity(find(id));
     }
 
-    public Donor checkLogin(String email, String password) {
-        Donor donor = repository.checkLogin(email, password);
-        if (donor == null) {
-            handleLoginFailure(email);
-        }
-        return donor;
-    }
-
-    private void handleLoginFailure(String email) {
-        if (repository.findByEmail(email) == null) {
-            throw new EntityNotFoundInTheAppeal(String.format("Email '%s' não está cadastrado.", email));
-        }
-        throw new EntityNotFoundInTheAppeal("Senha incorreta.");
-    }
-
     public Donor register(Donor donor) {
         validateDonor(donor);
         donor.setRole(Roles.DONOR.toString());
@@ -62,23 +48,21 @@ public class DonorService {
             throw new EntityAlreadyExists(String.format("Cpf '%s' já cadastrado.", donor.getCpf()));
         }
         if (repository.findByEmail(donor.getEmail()) != null) {
-            throw new EntityAlreadyExists(String.format("Email '%s' já cadastrado.", donor.getEmail()));
+            throw new EntityAlreadyExists(String.format("Email '%s' já cadastrado", donor.getEmail()));
         }
     }
 
     @Transactional
 	public DonorDTO update(Donor donorAtt) {
 		Donor currentDonor = find(donorAtt.getId());
-        Donor findedByCpf = repository.findByCpf(donorAtt.getCpf());
-        Donor findedByEmail = repository.findByEmail(donorAtt.getEmail());
 		Donor findedByPhone = repository.findByPhone(donorAtt.getPhone());
 
-		if(findedByCpf != null && !findedByCpf.getId().equals(donorAtt.getId())){
-            throw new EntityAlreadyExists(String.format("Cpf '%s' indisponível.", donorAtt.getCpf()));
-        }else if(findedByEmail != null && !findedByEmail.getId().equals(donorAtt.getId())){
-            throw new EntityAlreadyExists(String.format("Email '%s' indisponível.", donorAtt.getEmail()));
+		if(!currentDonor.getCpf().equals(donorAtt.getCpf())){
+            throw new CannotBeUpdated("Cpf não pode ser alterado");
+        }else if(!currentDonor.getEmail().equals(donorAtt.getEmail())){
+            throw new CannotBeUpdated("Email não pode ser alterado");
         }else if(findedByPhone != null && !findedByPhone.getId().equals(donorAtt.getId())){
-            throw new EntityAlreadyExists(String.format("Telefone '%s' indisponível.", donorAtt.getPhone()));
+            throw new CannotBeUpdated(String.format("Telefone '%s' indisponível.", donorAtt.getPhone()));
         }
 
 		BeanUtils.copyProperties(donorAtt, currentDonor, "id");
@@ -113,15 +97,16 @@ public class DonorService {
 
     public List<DonorDTO> allScheduledDonors(){
         return repository.allScheduledDonors()
-                .stream()
-                .map(DonorDTO::fromEntity)
-                .collect(Collectors.toList());
+            .stream()
+            .map(DonorDTO::fromEntity)
+            .collect(Collectors.toList());
     }
 
     public List<DonorDTO> allDonorScreenings(){
         return repository.allDonorScreenings()
-        .stream().map(DonorDTO::fromEntity)
-        .collect(Collectors.toList());
+            .stream()
+            .map(DonorDTO::fromEntity)
+            .collect(Collectors.toList());
     }
 
     public void sendFeedback(Long id, String feedback){
