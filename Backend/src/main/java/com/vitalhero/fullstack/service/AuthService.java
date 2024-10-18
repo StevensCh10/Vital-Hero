@@ -7,7 +7,8 @@ import com.vitalhero.fullstack.dto.BloodCenterDTO;
 import com.vitalhero.fullstack.dto.DoctorDTO;
 import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.dto.ResponseDTO;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
+import com.vitalhero.fullstack.exception.EmailNotFound;
+import com.vitalhero.fullstack.exception.InvalidPassword;
 import com.vitalhero.fullstack.intrerfaces.User;
 import com.vitalhero.fullstack.intrerfaces.UserDTO;
 import com.vitalhero.fullstack.model.BloodCenter;
@@ -46,7 +47,7 @@ public class AuthService {
             return invalidPassword(password, bloodcenter);
         }
 
-        throw new EntityNotFoundInTheAppeal("Email não encontrado");
+        throw new EmailNotFound("Email não encontrado");
     }
 
     public UserDTO findByEmail(String email){
@@ -77,7 +78,7 @@ public class AuthService {
             
             return new ResponseDTO(dto, token);
         }else{
-            throw new EntityNotFoundInTheAppeal("Senha inválida");
+            throw new InvalidPassword("Senha inválida");
         }
     }
 }

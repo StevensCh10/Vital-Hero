@@ -3,7 +3,7 @@ package com.vitalhero.fullstack.service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
+import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +15,11 @@ public class ReviewService {
     private final ReviewRepository repository;
 
     public Review find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Review com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Review com id '%d' não está registrado.", id)));
     }
 
     public Review findByDonor(Long donorID){
-        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Review ainda não foi realizado.")));
+        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFound(String.format("Review ainda não foi realizado.")));
     }
 
     public Review addReview(Review newReview){

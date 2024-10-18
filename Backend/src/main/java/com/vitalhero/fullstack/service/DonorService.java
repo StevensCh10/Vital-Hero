@@ -3,21 +3,18 @@ package com.vitalhero.fullstack.service;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.CannotBeScheduling;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
-
 import jakarta.mail.internet.MimeUtility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +25,10 @@ public class DonorService {
 
     private final DonorRepository repository;
     private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
 
     public Donor find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Doador com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", id)));
     }
 
     public DonorDTO getDonor(Long id){
@@ -54,7 +52,7 @@ public class DonorService {
 
     @Transactional
 	public DonorDTO update(Donor donorAtt) {
-		Donor currentDonor = find(donorAtt.getId());
+		Donor currentDonor = repository.findById(donorAtt.getId()).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", donorAtt.getId())));
 		Donor findedByPhone = repository.findByPhone(donorAtt.getPhone());
 
 		if(!currentDonor.getCpf().equals(donorAtt.getCpf())){
@@ -70,13 +68,13 @@ public class DonorService {
 	}
 
     public DonorDTO updatePassword(Long id, String newPassword){
-        Donor currentDonor = find(id);
-        currentDonor.setPassword(newPassword);
+        Donor currentDonor = repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", id)));
+        currentDonor.setPassword(passwordEncoder.encode(newPassword));
         return DonorDTO.fromEntity(repository.saveAndFlush(currentDonor));
     }
 
     public void toSchedule(Long id, Screening screening, Long schedulingID){
-        var donor = find(id);
+        var donor = repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", id)));
         if(screening == null){
             throw new CannotBeScheduling(String.format("Doador %s não pode marcar um agendamento pois ainda não preencheu sua triagem", donor.getName()));
         }else{

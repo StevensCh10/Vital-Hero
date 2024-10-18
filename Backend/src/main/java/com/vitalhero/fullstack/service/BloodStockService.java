@@ -1,16 +1,13 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
+import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.repository.BloodStockRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +18,7 @@ public class BloodStockService {
     public final BloodStockRepository repository;
 
     public BloodStock find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Estoque sanguíneo com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Estoque sanguíneo com id '%d' não está registrado.", id)));
     }
 
     public BloodStock findByBloodCenter(Long bcID){

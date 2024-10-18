@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
-
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -12,11 +11,9 @@ import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.DonationNotificationJob;
 import com.vitalhero.fullstack.model.Donor;
-
 import jakarta.mail.internet.MimeUtility;
 import lombok.RequiredArgsConstructor;
 

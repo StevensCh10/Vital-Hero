@@ -1,14 +1,11 @@
 package com.vitalhero.fullstack.service;
 
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.repository.DonationFormRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -18,7 +15,7 @@ public class DonationFormService {
     private final DonationFormRepository repository;
 
     public DonationForm find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Formulário de doação com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Formulário de doação com id '%d' não está registrado.", id)));
     }
 
     public DonationForm findByDonor(Long donorID){

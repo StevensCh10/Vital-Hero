@@ -3,7 +3,6 @@ package com.vitalhero.fullstack.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -21,29 +20,18 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
-import com.vitalhero.fullstack.exception.EntityAlreadyExists;
-import com.vitalhero.fullstack.exception.EntityNotFound;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
-import com.vitalhero.fullstack.exception.PropertyNotExist;
+import com.vitalhero.fullstack.exception.*;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
-	
-	private final HttpStatus STTS_NOT_FOUND = HttpStatus.NOT_FOUND;
+
 	private final HttpStatus STTS_BAD_REQUEST = HttpStatus.BAD_REQUEST;
 	private final HttpStatus STTS_CONFLICT = HttpStatus.CONFLICT;
 	
 	@Autowired 
 	private MessageSource messageSource;
-	
-	@ExceptionHandler(EntityNotFoundInTheAppeal.class)
-	public ResponseEntity<?> handleEntityNotFoundInTheAppeal(EntityNotFoundInTheAppeal e, WebRequest request){
-		Problem problem = handleProblem(STTS_NOT_FOUND, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
-		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_NOT_FOUND, request);
-	}
 	
 	@ExceptionHandler(EntityNotFound.class)
 	public ResponseEntity<?> handleEntityNotFound(EntityNotFound e, WebRequest request){
@@ -51,6 +39,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
 	}
 	
+	@ExceptionHandler(EmailNotFound.class)
+	public ResponseEntity<?> handleEmailNotFound(EmailNotFound e, WebRequest request){
+		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
+		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
+	}
+
+	@ExceptionHandler(InvalidPassword.class)
+	public ResponseEntity<?> handleInvalidPassword(InvalidPassword e, WebRequest request){
+		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.RESOURCE_NOT_FOUND, e.getMessage());
+		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
+	}
+
 	@ExceptionHandler(EntityAlreadyExists.class)
 	public ResponseEntity<?> handleEntityAlreadyExists(EntityAlreadyExists e, WebRequest request){
 		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.ENTITY_ALREADY_EXISTS, e.getMessage());

@@ -2,16 +2,13 @@ package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.intrerfaces.User;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
-
 import jakarta.mail.internet.InternetHeaders;
 import jakarta.mail.internet.MimeUtility;
 import lombok.RequiredArgsConstructor;

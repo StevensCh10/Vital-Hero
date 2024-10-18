@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -20,9 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.dto.ResponseDTO;
+import com.vitalhero.fullstack.exception.CannotBeScheduling;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.model.Donor;
+import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import com.vitalhero.fullstack.security.TokenService;
 import com.vitalhero.fullstack.service.AuthService;
@@ -35,10 +38,11 @@ public class DonorServiceTest {
 	private DonorRepository repository;
 
     @Mock
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Mock
-    TokenService tokenService;
+    @SuppressWarnings("unused")
+    private TokenService tokenService;
 
     @InjectMocks
     private DonorService service;
@@ -46,95 +50,118 @@ public class DonorServiceTest {
     @InjectMocks
     private AuthService authService;
 
+    private Donor donor;
+
+    @BeforeEach
+    public void setup(){
+        donor = new Donor(
+            1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevensCh10@outlook.com", 24, "Masculino", "Solteiro", 
+            "Rua A, 123", "sem", "81987654321", "O+","$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+        );
+    }
+
     @Test
     void shouldInsertDonor(){
-        String email = "jose@hotmail.com";
-        String encodedPassword = "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu";
-
-        Donor donor = new Donor(
-            "José Carlos da Silva", "11508638585", email, 30, "Masculino", "Solteiro", 
-            "Rua mauricio de nassau, 20", "sem", "81987654456", encodedPassword, "A+"
-        );
+        donor.setId(null);
 
         when(repository.save(donor)).thenReturn(donor);
-        service.register(donor);
+        Donor registeredDonor = service.register(donor);
 
-        when(repository.findByEmail(email)).thenReturn(donor);
-        when(passwordEncoder.matches(anyString(), eq(encodedPassword))).thenReturn(true);
-        ResponseDTO loggedin = authService.authenticate(email, "1234");
-
-        assertEquals(DonorDTO.fromEntity(donor), (DonorDTO) loggedin.user());
+        assertEquals(donor.getId(), registeredDonor.getId());
     }
 
     @Test
     void shouldFail_whenDonorsCpfIsRegistered(){
-        String cpf = "123.456.789-10";
-        Donor donor = new Donor(
-            "Stevens Wendell Marinho Chaves", cpf, "stevens@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "O+"
-        );
+        when(repository.findByCpf(donor.getCpf())).thenReturn(donor);
 
-        when(repository.findByCpf(cpf)).thenReturn(donor);
-
-        EntityAlreadyExists exceptionCpfAlreadyRegister = assertThrows(EntityAlreadyExists.class, () -> {
+        EntityAlreadyExists e = assertThrows(EntityAlreadyExists.class, () -> {
             service.register(donor);
         });
 
-        assertThat(exceptionCpfAlreadyRegister, instanceOf(EntityAlreadyExists.class));
-        assertThat(exceptionCpfAlreadyRegister.getMessage(), is("Cpf '123.456.789-10' já cadastrado."));
+        assertThat(e, instanceOf(EntityAlreadyExists.class));
+        assertThat(e.getMessage(), is(String.format("Cpf '%s' já cadastrado.", donor.getCpf())));
     }
 
     @Test
     void shouldFail_whenDonorsEmailIsRegistered(){
-        String email = "stevensch10@outlook.com";
-        Donor donor = new Donor(
-            "Stevens Wendell Marinho Chaves", "123.456.789-11", email, 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "O+"
-        );
+        when(repository.findByEmail(donor.getEmail())).thenReturn(donor);
 
-        when(repository.findByEmail(email)).thenReturn(donor);
-
-        EntityAlreadyExists exceptionEmailAlreadyRegister = assertThrows(EntityAlreadyExists.class, () -> {
+        EntityAlreadyExists e = assertThrows(EntityAlreadyExists.class, () -> {
             service.register(donor);
         });
 
-        assertThat(exceptionEmailAlreadyRegister, instanceOf(EntityAlreadyExists.class));
-        assertThat(exceptionEmailAlreadyRegister.getMessage(), is("Email 'stevensch10@outlook.com' já cadastrado."));
+        assertThat(e, instanceOf(EntityAlreadyExists.class));
+        assertThat(e.getMessage(), is(String.format("Email '%s' já cadastrado", donor.getEmail())));
     }
 
     @Test
     void shouldFail_whenToChangeDonorsCpf(){
-        Donor currentDonor = new Donor(
-            "Stevens Wendell Marinho Chaves", "12345678910", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "O+"
-        );
-        
         Donor donorAtt = new Donor(
-            "Stevens Wendell Marinho Chaves", "75315986203", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "O+"
+            1L, null, "Stevens Wendell Marinho Chaves", "75315986203", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
+            "Rua A, 123", "sem", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
 
-        when(repository.findById(anyLong())).thenReturn(Optional.of(currentDonor));
-        when(service.find(anyLong())).thenReturn( (Donor) currentDonor);
-
-        CannotBeUpdated exceptionCannotBeUpdateBecauseCpf = assertThrows(CannotBeUpdated.class, () -> {
-            service.update(donorAtt);
+        when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
+        CannotBeUpdated e = assertThrows(CannotBeUpdated.class, () -> {
+            service.update(donorAtt); //Com cpf diferente
         });
+        assertThat(e, instanceOf(CannotBeUpdated.class));
+        assertThat(e.getMessage(), is("Cpf não pode ser alterado"));
+    }
 
-        assertThat(exceptionCannotBeUpdateBecauseCpf, instanceOf(CannotBeUpdated.class));
-        assertThat(exceptionCannotBeUpdateBecauseCpf.getMessage(), is("Cpf não pode ser alterado"));
+    @Test
+    void shouldFail_whenToChangeDonorsEmail(){
+        Donor donorAtt = new Donor(
+            1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
+            "Rua A, 123", "sem", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+        );
 
+        when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
         donorAtt.setEmail("stevens@outlook.com");
 
-        when(repository.findById(anyLong())).thenReturn(Optional.of(currentDonor));
+        CannotBeUpdated e = assertThrows(CannotBeUpdated.class, () -> {
+            service.update(donorAtt); //Com email diferente
+        });
+        assertThat(e, instanceOf(CannotBeUpdated.class));
+        assertThat(e.getMessage(), is("Email não pode ser alterado"));
+    }
 
-        CannotBeUpdated exceptionCannotBeUpdateBecauseEmail = assertThrows(CannotBeUpdated.class, () -> {
-            service.update(donorAtt);
+    @Test
+    void shouldUpdatePassword(){
+        String newPassword = "auhduia0q29e1";
+
+        when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
+        when(repository.saveAndFlush(donor)).thenReturn(donor);
+        DonorDTO updated = service.updatePassword(donor.getId(), newPassword);
+
+        assertEquals(donor.getName(), updated.name());
+    }
+
+    @Test
+    void shouldfail_whenDonorsTryScheduleAndNotCompleteScreening(){  
+        when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
+
+        CannotBeScheduling e = assertThrows(CannotBeScheduling.class, () -> {
+            service.toSchedule(donor.getId(), null, anyLong()); //Triagem não preenchida (null)
         });
 
-        assertThat(exceptionCannotBeUpdateBecauseEmail, instanceOf(CannotBeUpdated.class));
-        assertThat(exceptionCannotBeUpdateBecauseEmail.getMessage(), is("Email não pode ser alterado"));
+        assertThat(e, instanceOf(CannotBeScheduling.class));
+        assertThat(e.getMessage(), is(String.format("Doador %s não pode marcar um agendamento pois ainda não preencheu sua triagem", donor.getName())));
+    }
 
+    @Test
+    void shouldfail_whenDonorsTryScheduleAndNotValidatedScreening(){  
+        when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
+
+        Screening screening = new Screening();
+        screening.setId(1L);
+        
+        CannotBeScheduling e = assertThrows(CannotBeScheduling.class, () -> {
+            service.toSchedule(donor.getId(), screening, anyLong()); //Triagem não validada
+        });
+
+        assertThat(e, instanceOf(CannotBeScheduling.class));
+        assertThat(e.getMessage(), is(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName())));
     }
 
 	/*

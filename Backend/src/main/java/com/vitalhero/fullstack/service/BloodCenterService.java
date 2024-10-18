@@ -2,16 +2,13 @@ package com.vitalhero.fullstack.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.dto.BloodCenterDTO;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
+import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +19,7 @@ public class BloodCenterService {
     private final BloodCenterRepository repository;
 
     public BloodCenter find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Hemocentro com id %d não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Hemocentro com id %d não está registrado.", id)));
     }
 
     public BloodCenterDTO getBloodCenter(Long id){

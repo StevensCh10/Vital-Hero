@@ -1,16 +1,12 @@
 package com.vitalhero.fullstack.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityNotFound;
-import com.vitalhero.fullstack.exception.EntityNotFoundInTheAppeal;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.ScreeningRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +17,7 @@ public class ScreeningService {
     private final ScreeningRepository repository;
 
     public Screening find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundInTheAppeal(String.format("Triagem com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Triagem com id '%d' não está registrado.", id)));
     }
 
     @Transactional
