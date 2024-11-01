@@ -20,6 +20,9 @@ Para uma análise detalhada do projeto, incluindo objetivos, metodologia e resul
   - Spring Validation
   - Spring Devtools
   - Spring Email
+  - Spring Security
+  - Json Web Token
+  - Utilização de cache
   - PostgreSQL
   - Quartz
   - Commons lang
