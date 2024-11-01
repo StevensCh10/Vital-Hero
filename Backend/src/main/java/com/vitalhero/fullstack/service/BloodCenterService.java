@@ -2,13 +2,19 @@ package com.vitalhero.fullstack.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
 import com.vitalhero.fullstack.dto.BloodCenterDTO;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +24,7 @@ public class BloodCenterService {
     
     private final BloodCenterRepository repository;
 
+    @Cacheable(value="bloodcenter")
     public BloodCenter find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Hemocentro com id %d não está registrado.", id)));
     }
@@ -26,6 +33,7 @@ public class BloodCenterService {
         return BloodCenterDTO.fromEntity(find(id));
     }
 
+    @Cacheable(value="allBloodcenters")
     public List<BloodCenterDTO> findAll(){
         return repository.findAll()
                 .stream()
@@ -33,6 +41,7 @@ public class BloodCenterService {
                 .collect(Collectors.toList());
     }
     
+    @Cacheable(value="bloodcenter")
     public BloodCenterDTO addBloodCenter(BloodCenter newBloodCenter){
         if(repository.findByName(newBloodCenter.getName()) == null){
             if(repository.findByEmail(newBloodCenter.getEmail()) == null){
@@ -47,6 +56,7 @@ public class BloodCenterService {
     }
 
     @Transactional
+    @CachePut(value="bloodcenter", key="#bloodCenterAtt.id")
 	public BloodCenterDTO update(BloodCenter bloodCenterAtt) {
 		BloodCenter currentBloodCenter = find(bloodCenterAtt.getId());
 		BloodCenter findedByName = repository.findByName(bloodCenterAtt.getName());
@@ -68,6 +78,7 @@ public class BloodCenterService {
 		return BloodCenterDTO.fromEntity(repository.saveAndFlush(currentBloodCenter));
 	}
 
+    @CacheEvict(value="bloodcenter", key="#id")
     public void deleteBloodCenter(Long id){
         find(id);
         repository.deleteById(id);

@@ -3,9 +3,14 @@ package com.vitalhero.fullstack.service;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.CannotBeScheduling;
@@ -15,6 +20,7 @@ import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
+
 import jakarta.mail.internet.MimeUtility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,18 +33,20 @@ public class DonorService {
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
+    @Cacheable(value="donor")
     public Donor find(Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", id)));
     }
-
+    
     public DonorDTO getDonor(Long id){
         return DonorDTO.fromEntity(find(id));
     }
 
-    public Donor register(Donor donor) {
-        validateDonor(donor);
-        donor.setRole(Roles.DONOR.toString());
-        return repository.save(donor);
+    @Cacheable(value="donor")
+    public Donor register(Donor newDonor) {
+        validateDonor(newDonor);
+        newDonor.setRole(Roles.DONOR.toString());
+        return repository.save(newDonor);
     }
 
     private void validateDonor(Donor donor) {
@@ -51,6 +59,7 @@ public class DonorService {
     }
 
     @Transactional
+    @CachePut(value="donor", key="#donorAtt.id")
 	public DonorDTO update(Donor donorAtt) {
 		Donor currentDonor = repository.findById(donorAtt.getId()).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", donorAtt.getId())));
 		Donor findedByPhone = repository.findByPhone(donorAtt.getPhone());
@@ -67,12 +76,14 @@ public class DonorService {
 		return DonorDTO.fromEntity(repository.saveAndFlush(currentDonor));
 	}
 
+    @CachePut(value="donor", key="#id")
     public DonorDTO updatePassword(Long id, String newPassword){
         Donor currentDonor = repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", id)));
         currentDonor.setPassword(passwordEncoder.encode(newPassword));
         return DonorDTO.fromEntity(repository.saveAndFlush(currentDonor));
     }
 
+    @CachePut(value="donor", key="#id")
     public void toSchedule(Long id, Screening screening, Long schedulingID){
         var donor = repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Doador com id '%d' não está registrado.", id)));
         if(screening == null){
@@ -85,6 +96,7 @@ public class DonorService {
         }
     }
 
+    @CachePut(value="donor", key="#id")
     public void scheduleMadeOrUnscheduled(Long id){
         Donor donor = find(id);
         if(donor.getScheduling() == null){
@@ -93,6 +105,7 @@ public class DonorService {
         repository.FkSchedulingToNull(id);
     }
 
+    @Cacheable(value="scheduleDonors")
     public List<DonorDTO> allScheduledDonors(){
         return repository.allScheduledDonors()
             .stream()
@@ -100,6 +113,7 @@ public class DonorService {
             .collect(Collectors.toList());
     }
 
+    @Cacheable(value="creeningDonors")
     public List<DonorDTO> allDonorScreenings(){
         return repository.allDonorScreenings()
             .stream()
@@ -122,6 +136,7 @@ public class DonorService {
         emailService.sendEmail(to, subject, text, from, personal);
     }
     
+    @CacheEvict(value="donor", key="#id")
     public void deleteDonor(Long id){
         find(id);
         repository.deleteById(id);

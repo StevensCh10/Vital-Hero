@@ -1,4 +1,4 @@
-package com.vitalhero.vitalhero;
+package com.vitalhero.vitalhero.serviceTest;
 
 import java.util.Optional;
 
@@ -11,8 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
@@ -20,15 +18,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.vitalhero.fullstack.dto.DonorDTO;
-import com.vitalhero.fullstack.dto.ResponseDTO;
 import com.vitalhero.fullstack.exception.CannotBeScheduling;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
-import com.vitalhero.fullstack.security.TokenService;
-import com.vitalhero.fullstack.service.AuthService;
 import com.vitalhero.fullstack.service.DonorService;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,15 +35,8 @@ public class DonorServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @Mock
-    @SuppressWarnings("unused")
-    private TokenService tokenService;
-
     @InjectMocks
     private DonorService service;
-
-    @InjectMocks
-    private AuthService authService;
 
     private Donor donor;
 
@@ -129,8 +117,10 @@ public class DonorServiceTest {
     @Test
     void shouldUpdatePassword(){
         String newPassword = "auhduia0q29e1";
+        String encodedPassword = "$2a$12$6bqJkwGlr8w0LLEdO8o2m.mRpEcbB.LXpdBfUMAXe5bixkKFRTKCa";
 
         when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
+        when(passwordEncoder.encode(newPassword)).thenReturn(encodedPassword);
         when(repository.saveAndFlush(donor)).thenReturn(donor);
         DonorDTO updated = service.updatePassword(donor.getId(), newPassword);
 
@@ -163,16 +153,4 @@ public class DonorServiceTest {
         assertThat(e, instanceOf(CannotBeScheduling.class));
         assertThat(e.getMessage(), is(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName())));
     }
-
-	/*
-    @Test
-    void mustFail_whenDoctorWithoutCpfIsRegistered() {
-        EntityAlreadyExists e = assertThrows(EntityAlreadyExists.class, () -> {
-            Doctor user = new Doctor("Robson da Silva", "123.456.789-11", "CRM123456", "robson@outlook.com", 28, "Masculino", "Casado", "Rua A, 123", null, "81987654322", "$2b$12$EIkZUEIZq0jLsBJ4XXKoderOiw8Q9WaR7dEvcV55RA5sAxMqg2H6G");
-            doctorService.register(user);
-        });
-
-        assertThat(e, instanceOf(EntityAlreadyExists.class));
-    }
-	*/
 }

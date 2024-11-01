@@ -564,8 +564,8 @@ const Bloodcenters: React.FC = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex justify-center w-[30%] m-[5px]">
-                      <p>Estoque sanguíneo não disponível no sistema!</p>
+                    <div className="absolute w-full opacity-[0.8] flex flex-wrap bg-white p-[5%] z-10 rounded-b-lg shadow-md ">
+                      <p className="w-full text-center">Estoque sanguíneo não disponível no sistema!</p>
                     </div>
                   )}
                 </div>

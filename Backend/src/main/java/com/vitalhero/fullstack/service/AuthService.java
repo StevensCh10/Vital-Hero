@@ -1,5 +1,6 @@
 package com.vitalhero.fullstack.service;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
+    @Cacheable(value = "donor")
     public ResponseDTO authenticate(String email, String password) {
         Donor donor = donorRepository.findByEmail(email);
         if (donor != null) {

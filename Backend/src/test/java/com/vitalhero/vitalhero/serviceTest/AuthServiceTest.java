@@ -1,14 +1,15 @@
-package com.vitalhero.vitalhero;
+package com.vitalhero.vitalhero.serviceTest;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.hamcrest.CoreMatchers.is;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.when;
@@ -17,7 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.vitalhero.fullstack.dto.DonorDTO;
 import com.vitalhero.fullstack.dto.ResponseDTO;
-import com.vitalhero.fullstack.exception.EntityNotFound;
+import com.vitalhero.fullstack.exception.EmailNotFound;
+import com.vitalhero.fullstack.exception.InvalidPassword;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.repository.BloodCenterRepository;
 import com.vitalhero.fullstack.repository.DoctorRepository;
@@ -77,24 +79,24 @@ public class AuthServiceTest {
         when(doctorRepository.findByEmail(donor.getEmail())).thenReturn(null);
         when(bloodcenterRepository.findByEmail(donor.getEmail())).thenReturn(null);
 
-        EntityNotFound e = assertThrows(EntityNotFound.class, () -> {
+        EmailNotFound e = assertThrows(EmailNotFound.class, () -> {
             service.authenticate(donor.getEmail(), anyString());
         });
 
-        assertThat(e, instanceOf(EntityNotFound.class));
+        assertThat(e, instanceOf(EmailNotFound.class));
         assertThat(e.getMessage(), is("Email não encontrado"));
     }
 
     @Test
     void shouldFail_whenAuthenticateUsersWithInvalidPassword(){
         when(donorRepository.findByEmail(donor.getEmail())).thenReturn(donor);
-        when(passwordEncoder.matches(anyString(), donor.getPassword())).thenReturn(false); //Sennha inválida
+        when(passwordEncoder.matches(anyString(), eq(donor.getPassword()))).thenReturn(false); //Sennha inválida
 
-        EntityNotFound e = assertThrows(EntityNotFound.class, () -> {
+        InvalidPassword e = assertThrows(InvalidPassword.class, () -> {
             service.authenticate(donor.getEmail(), anyString());
         });
 
-        assertThat(e, instanceOf(EntityNotFound.class));
+        assertThat(e, instanceOf(InvalidPassword.class));
         assertThat(e.getMessage(), is("Senha inválida"));
     }
 }
