@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vitalhero.fullstack.dto.BloodCenterDTO;
+import com.vitalhero.fullstack.dto.ResponseDTO;
 import com.vitalhero.fullstack.model.BloodCenter;
 import com.vitalhero.fullstack.model.BloodStock;
 import com.vitalhero.fullstack.model.Donation;
@@ -53,7 +54,7 @@ public class BloodCenterController {
     //BLOODCENTER
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public BloodCenterDTO addBloodCenter(@Valid @RequestBody BloodCenter newBloodCenter){
+    public ResponseDTO addBloodCenter(@Valid @RequestBody BloodCenter newBloodCenter){
         return bloodCenterService.addBloodCenter(newBloodCenter);
     }
 

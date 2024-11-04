@@ -1,8 +1,5 @@
 package com.vitalhero.fullstack.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -41,23 +38,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DonorController {
     
-    private final String pathImgs = "C:/Users/steve/OneDrive/Documentos/TCC_Stevens_2024.1/imgProfile/";
     private final DonorService donorService;
     private final SchedulingService schedulingService;
     private final ScreeningService screeningService;
     private final DonationFormService donationFormService;
     private final DonationService donationsService;
     private final ReviewService reviewService;
-
-    @SuppressWarnings("null")
-    @GetMapping("/img/{nameImg}")
-    public byte[] getImgProfile(@PathVariable String nameImg) throws IOException{
-        File fileImg = new File(pathImgs + nameImg);
-        if(nameImg != null || nameImg.trim().length() > 0){
-            return Files.readAllBytes(fileImg.toPath());
-        }
-        return null;
-    }
 
     @PutMapping()
     public DonorDTO updateDonor(@Valid @RequestBody Donor donorAtt){

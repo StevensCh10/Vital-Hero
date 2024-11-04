@@ -23,17 +23,21 @@ public class BloodStockService {
     
     public final BloodStockRepository repository;
 
-    @Cacheable(value="bloodcenter")
+    private final String BLOODSTOCK_ALREADY_REGISTERED = "Estoque sanguíneo já cadastrado";
+    private final String BLOODSTOCK_NOT_FOUND = "Estoque sanguíneo não cadastrado";
+    private final String ID_CANNOT_CHANGED = "ID não pode ser alterado";
+
+    @Cacheable(value="bloodstock")
     public BloodStock find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Estoque sanguíneo com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(BLOODSTOCK_NOT_FOUND));
     }
 
-    @Cacheable(value="bloodcenter")
+    @Cacheable(value="bloodstock")
     public BloodStock findByBloodCenter(Long bcID){
         return repository.findByBloodCenter(bcID);
     }
 
-    @Cacheable(value="allBloodcenters")
+    @Cacheable(value="allBloodstocks")
     public List<BloodStock> findAll(){
         return repository.findAll();
     }
@@ -43,7 +47,7 @@ public class BloodStockService {
         if(findByBloodCenter(newBloodStock.getBloodcenter().getId()) == null){
             return repository.save(newBloodStock);
         }
-        throw new EntityAlreadyExists("Não é possível adicionar outro estoque sanguíneo para o mesmo Hemocentro.");
+        throw new EntityAlreadyExists(BLOODSTOCK_ALREADY_REGISTERED);
     }
 
     @Transactional
@@ -51,10 +55,8 @@ public class BloodStockService {
 	public BloodStock update(BloodStock bloodStockAtt) {
 		BloodStock currentBloodStock = find(bloodStockAtt.getId());
 		
-		if(!bloodStockAtt.getBloodcenter().getId().equals(currentBloodStock.getBloodcenter().getId())) {
-			//throw new EntityAlreadyExists(String.format("name '%s' unavailable", bloodStockAtt.getName()));
-            throw new CannotBeUpdated("O id do Hemocentro não pode ser atualizado.");
-		}
+		if(!bloodStockAtt.getBloodcenter().getId().equals(currentBloodStock.getBloodcenter().getId()))
+            throw new CannotBeUpdated(ID_CANNOT_CHANGED);
 
 		BeanUtils.copyProperties(bloodStockAtt, currentBloodStock, "id");
 		return repository.saveAndFlush(currentBloodStock);

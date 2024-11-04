@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import com.vitalhero.fullstack.intrerfaces.User;
 
-import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class BloodCenter implements Serializable, User{
 
     @NotBlank
     @Column(updatable = false, unique = true)
-    private String name, email, address, referencePoint, photo;
+    private String name, email, address, referencePoint;
 
     @NotBlank
     @Column(updatable = true)

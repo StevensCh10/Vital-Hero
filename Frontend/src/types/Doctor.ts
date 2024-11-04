@@ -1,13 +1,14 @@
 export type Doctor = {
-    id: number;
+    id?: number;
     name?: string;
+    cpf?: string;
     crm?: string;
     email?: string;
     age?: number;
     gender?: string;
     maritalStatus?: string;
     address?: string;
-    photo?: string;
     phone?: string;
+    password?: string;
     role?: string;
 }

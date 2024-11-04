@@ -1,9 +1,8 @@
 package com.vitalhero.fullstack.service;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
-import com.vitalhero.fullstack.exception.EntityNotFound;
+import com.vitalhero.fullstack.exception.EmailNotFound;
 import com.vitalhero.fullstack.intrerfaces.User;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Donor;
@@ -21,13 +20,19 @@ public class UserService {
     private final DonorRepository donorRepository;
     private final EmailService emailService;
 
+    private final String EMAIL_NOT_FOUND = "Email não encontrado";
+    private final String UNKNOWN_USER = "Usuário não conhecido";
+
     @SuppressWarnings("CallToPrintStackTrace")
     public void findEmailForgotPassword(String email){
         User user = findUserByEmail(email);
         Long id = null;
         
-        if(user instanceof Donor donor) id = donor.getId();
-        else if(user instanceof Doctor doctor) id = doctor.getId();
+        switch(user){
+            case Donor donor -> id = donor.getId();
+            case Doctor doctor -> id = doctor.getId();
+            default -> throw new IllegalArgumentException(UNKNOWN_USER);
+        }
 
         String fromName = "Vital Hero";
         String from = "stevenschaves10@gmail.com";
@@ -38,9 +43,7 @@ public class UserService {
             e.printStackTrace();
         }
         String subject = "Recuperação de senha";
-        String to = Optional.ofNullable(user)
-                    .map(User::getEmail)
-                    .orElseThrow(() -> new NullPointerException("O objeto 'user' é null."));
+        String to = user.getEmail();
 
         InternetHeaders headers = new InternetHeaders();
         headers.addHeader("Content-type", "text/html; charset=UTF-8");
@@ -53,14 +56,11 @@ public class UserService {
     }
 
     public User findUserByEmail(String email){
-        var findDonor = donorRepository.findByEmail(email);
-        if(findDonor == null){
-            var findDoctor = doctorRepository.findByEmail(email);
-            if(findDoctor == null){
-                throw new EntityNotFound("Email informado não cadastrado.");
-            }
-            return findDoctor;
+        User [] users = {donorRepository.findByEmail(email), doctorRepository.findByEmail(email)};
+        for(User user : users){
+            if(user != null) return user;
         }
-        return findDonor;
+        throw new EmailNotFound(EMAIL_NOT_FOUND);
     }
+    
 }

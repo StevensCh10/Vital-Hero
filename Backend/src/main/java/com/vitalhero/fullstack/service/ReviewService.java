@@ -14,19 +14,23 @@ public class ReviewService {
     
     private final ReviewRepository repository;
 
+    private final String REVIEW_NOT_REGISTERED = "Review não registrado";
+    private final String DONOR_NOT_COMPLETE_REVIEW = "Doador não realizou sua review";
+    private final String DONOR_COMPLETE_REVIEW = "Doador já realizou sua review";
+
     public Review find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Review com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(REVIEW_NOT_REGISTERED));
     }
 
     public Review findByDonor(Long donorID){
-        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFound(String.format("Review ainda não foi realizado.")));
+        return repository.findByDonor(donorID).orElseThrow(() -> new EntityNotFound(DONOR_NOT_COMPLETE_REVIEW));
     }
 
     public Review addReview(Review newReview){
         Review review = repository.getByDonor(newReview.getDonor().getId());
 
         if(review != null){
-            throw new EntityAlreadyExists(String.format("Doador com id '%d' já realizou um review.", newReview.getDonor().getId()));
+            throw new EntityAlreadyExists(DONOR_COMPLETE_REVIEW);
         }
         return repository.save(newReview);
     }

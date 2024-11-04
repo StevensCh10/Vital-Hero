@@ -19,9 +19,12 @@ public class DonationService {
     
     private final DonationRepository repository;
 
+    private final String DONATION_ALREADY_REGISTERED = "Formulário de doação já registrado";
+    private final String DONATION_NOT_REGISTERED = "Formulário de doação não registrado";
+
     @Cacheable(value="donation")
     public Donation find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Doação com id '%d' não está registrada.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(DONATION_NOT_REGISTERED));
     }
     
     @Cacheable(value="donation")
@@ -31,7 +34,7 @@ public class DonationService {
         Donation donation = repository.findByDonorAndScheduling(donorID, schedulingID);
 
         if(donation != null){
-            throw new EntityAlreadyExists("Esta doação já foi registrada.");
+            throw new EntityAlreadyExists(DONATION_ALREADY_REGISTERED);
         }
         return repository.save(newDonation);
     }

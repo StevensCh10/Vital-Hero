@@ -22,9 +22,13 @@ public class ScreeningService {
     
     private final ScreeningRepository repository;
 
+    private final String SCREENING_NOT_REGISTERED = "Triagem não registrado";
+    private final String DONOR_CANNOT_CHANGED = "Doador não pode ser alterado";
+    private final String DONOR_NOT_COMPLETE_SCREENING = "Doador não pode preencheu triagem";
+
     @Cacheable(value="screening")
     public Screening find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Triagem com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(SCREENING_NOT_REGISTERED));
     }
 
     @Transactional
@@ -38,7 +42,7 @@ public class ScreeningService {
     public Screening updateScreening(Screening screeningAtt){
         Screening oldS = find(screeningAtt.getId());
         if(!oldS.getDonor().getId().equals(screeningAtt.getDonor().getId())){
-            throw new CannotBeUpdated("Triagem não pode ser atualizada pois houve mudança no seu proprietário.");
+            throw new CannotBeUpdated(DONOR_CANNOT_CHANGED);
         }
         return repository.saveAndFlush(screeningAtt);
     }
@@ -57,7 +61,7 @@ public class ScreeningService {
     public Screening screeningByDonor(Donor donor){
         Screening s = repository.findByDonor(donor.getId());
         if(s == null){
-            throw new EntityNotFound(String.format("Doador não preencheu sua triagem", donor.getId()));
+            throw new EntityNotFound(DONOR_NOT_COMPLETE_SCREENING);
         }
         return s;
     }

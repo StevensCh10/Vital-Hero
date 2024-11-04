@@ -55,7 +55,7 @@ public class AuthServiceTest {
     public void setup(){
         donor = new Donor(
             1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevensCh10@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+            "Rua A, 123", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
         token = tokenService.generateToken(donor);
     }

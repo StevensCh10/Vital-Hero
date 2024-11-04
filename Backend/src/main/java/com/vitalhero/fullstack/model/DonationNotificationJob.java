@@ -1,15 +1,18 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.UnsupportedEncodingException;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+
 import com.vitalhero.fullstack.service.DonationService;
 import com.vitalhero.fullstack.service.DonorService;
 import com.vitalhero.fullstack.service.EmailService;
+
 import jakarta.mail.internet.MimeUtility;
 
 public class DonationNotificationJob implements Job, ApplicationContextAware {
@@ -17,6 +20,7 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     @Override
+    @SuppressWarnings("CallToPrintStackTrace")
     public void execute(JobExecutionContext context) throws JobExecutionException {
         EmailService emailService = applicationContext.getBean(EmailService.class);
         DonationService donationService = applicationContext.getBean(DonationService.class);
@@ -30,7 +34,7 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
         String to = donor.getEmail();
         String subject = "O seu apoio é vital! Doe sangue novamente e salve mais vidas.";
 
-        String text = "";
+        String text;
 
         if(donor.getGender().equalsIgnoreCase("M")){
             text = textBegin+"<br><br>Esperamos que esteja bem! Queremos informar que o prazo de 60 dias desde sua última doação já passou. Isso significa que você já pode doar sangue novamente e continuar ajudando a salvar vidas."+

@@ -24,9 +24,13 @@ public class SchedulingService {
     
     private final SchedulingRepository repository;
 
+    private final String SCHEDULING_ALREADY_REGISTERED = "Agendamento já registrado";
+    private final String SCHEDULING_NOT_REGISTERED = "Agendamento não registrado";
+    private final String BLOODCENTER_CANNOT_CHANGED = "Hemocentro não pode ser alterado";
+
     @Cacheable(value="scheduling")
     public Scheduling find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Agendamento com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(SCHEDULING_NOT_REGISTERED));
     }
 
     @Cacheable(value="scheduling")
@@ -45,7 +49,7 @@ public class SchedulingService {
             bloodCenterID, newSched.getDateTime());
         
         if(exists != null){
-            throw new EntityAlreadyExists("Agendamento já cadastrado.");
+            throw new EntityAlreadyExists(SCHEDULING_ALREADY_REGISTERED);
         }
         return repository.save(newSched);
     }
@@ -56,7 +60,7 @@ public class SchedulingService {
 		Scheduling currentScheduling = find(schedulingAtt.getId());
 		
 		if(!schedulingAtt.getBloodcenter().getId().equals(currentScheduling.getBloodcenter().getId())) {
-            throw new CannotBeUpdated(String.format("Não é possível alterar o id do hemocentro do agendamento."));
+            throw new CannotBeUpdated(BLOODCENTER_CANNOT_CHANGED);
 		}
 
 		BeanUtils.copyProperties(schedulingAtt, currentScheduling, "id");

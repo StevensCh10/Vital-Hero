@@ -24,13 +24,13 @@ public class EmailService {
             helper.setSubject(subject);
             helper.setText(text, true); // Indica que o texto é HTML
             
-            // Configurar o remetente com o nome personalizado
+            // Configurando o remetente com o nome personalizado
             helper.setFrom(from, personal);
             
             javaMailSender.send(message);
             
         } catch (MessagingException | UnsupportedEncodingException e) {
-            e.printStackTrace(); // ou manipular a exceção de outra forma
+            e.printStackTrace();
         }
     }
 }

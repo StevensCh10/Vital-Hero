@@ -1,8 +1,11 @@
 package com.vitalhero.fullstack.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import com.vitalhero.fullstack.model.Doctor;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long>{
@@ -12,9 +15,11 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long>{
         nativeQuery = true
     )
     Doctor checkLogin(@Param("email") String email, @Param("password") String password);
+    
     Doctor findByName(String name);
     Doctor findByCpf(String cpf);
     Doctor findByEmail(String email);
     Doctor findByCrm(String crm);
     Doctor findByPhone(String phone);
+    Optional<Doctor> findByCpfOrEmailOrCrmOrPhone(String cpf, String email, String crm, String phone);
 }

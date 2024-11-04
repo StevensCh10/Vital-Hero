@@ -1,6 +1,7 @@
 package com.vitalhero.fullstack.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,6 +26,14 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
         nativeQuery = true
     )
     void updateFkScheduling(@Param("schedulingID")Long schedulingID, @Param("donorID") Long donorID);
+
+    @Transactional
+    @Modifying
+    @Query(
+        value = "UPDATE donor SET password = :newPassword WHERE id = :id" + "",
+        nativeQuery = true
+    )
+    void updatePassword(@Param("id") Long id, @Param("newPassword") String newPassword);
     
     @Transactional
     @Modifying
@@ -55,4 +64,5 @@ public interface DonorRepository extends JpaRepository<Donor, Long>{
     Donor findByName(String name);
     Donor findByCpf(String cpf);
     Donor findByPhone(String phone);
+    Optional<Donor> findByCpfOrEmailOrPhone(String cpf, String email, String phone);
 }

@@ -39,17 +39,7 @@ const Profile = () => {
         setPhone(user!.phone!);
         setEmail(user!.email!);
         setAddress(user!.address!);
-
-        if (user!.photo !== "sem" && user!.photo !== null) {
-          const response = await fetch(
-            `https://vital-hero.onrender.com/donor/img/${user!.photo}`
-          );
-          const blob = await response.blob();
-          const imageUrl = URL.createObjectURL(blob);
-          setPhotoURL(imageUrl);
-        } else {
-          setPhotoURL("Logo.png");
-        }
+        setPhotoURL("Logo.png");
       } catch (error) {
         console.error("Erro:", error);
       }

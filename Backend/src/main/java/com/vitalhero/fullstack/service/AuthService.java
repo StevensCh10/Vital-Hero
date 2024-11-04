@@ -1,6 +1,5 @@
 package com.vitalhero.fullstack.service;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,55 +31,54 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
-    @Cacheable(value = "donor")
+    private final String INVALID_PASSWORD = "Senha inválida";
+    private final String EMAIL_NOT_FOUND = "Email não encontrado";
+    private final String UNKNOWN_USER = "Usuário não conhecido";
+
     public ResponseDTO authenticate(String email, String password) {
-        Donor donor = donorRepository.findByEmail(email);
-        if (donor != null) {
-            return invalidPassword(password, donor);
+        User[] users = {donorRepository.findByEmail(email), doctorRepository.findByEmail(email), bloodcenterRepository.findByEmail(email)};
+        for (User user : users) {
+            if (user != null) {
+                return invalidPassword(password, user);
+            }
         }
-
-        Doctor doctor = doctorRepository.findByEmail(email);
-        if (doctor != null) {
-            return invalidPassword(password, doctor);
-        }
-
-        BloodCenter bloodcenter = bloodcenterRepository.findByEmail(email);
-        if (bloodcenter != null) {
-            return invalidPassword(password, bloodcenter);
-        }
-
-        throw new EmailNotFound("Email não encontrado");
+        throw new EmailNotFound(EMAIL_NOT_FOUND);
     }
 
-    public UserDTO findByEmail(String email){
-        Donor donor = donorRepository.findByEmail(email);
-        if(donor != null){
-            return DonorDTO.fromEntity(donor);
+    public UserDTO findUserByEmail(String email){
+        User [] users = {donorRepository.findByEmail(email), doctorRepository.findByEmail(email), bloodcenterRepository.findByEmail(email)};
+        for(User user : users){
+            if(user != null) return createDTO(user);
         }
-        Doctor doctor = doctorRepository.findByEmail(email);
-        if(doctor != null){
-            return DoctorDTO.fromEntity(doctor);
-        }
-        BloodCenter bloodcenter = bloodcenterRepository.findByEmail(email);
-        if(bloodcenter != null){
-            return BloodCenterDTO.fromEntity(bloodcenter);
-        }
-
         return null;
     }
 
     private ResponseDTO invalidPassword(String password, User user){
         if(passwordEncoder.matches(password, user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            UserDTO dto;
-
-            if(user instanceof Donor donor) dto = DonorDTO.fromEntity(donor);
-            else if(user instanceof Doctor doctor) dto = DoctorDTO.fromEntity(doctor);
-            else dto = BloodCenterDTO.fromEntity((BloodCenter)user);
-            
+            UserDTO dto = createDTO(user);
             return new ResponseDTO(dto, token);
         }else{
-            throw new InvalidPassword("Senha inválida");
+            throw new InvalidPassword(INVALID_PASSWORD);
+        }
+    }
+
+    private UserDTO createDTO(User user) {
+        return switch (user) {
+            case Donor donor -> DonorDTO.fromEntity(donor);
+            case Doctor doctor -> DoctorDTO.fromEntity(doctor);
+            case BloodCenter bloodCenter -> BloodCenterDTO.fromEntity(bloodCenter);
+            default -> throw new IllegalArgumentException(UNKNOWN_USER);
+        };
+    }
+
+    public ResponseDTO validateToken(String token){
+        String email = tokenService.validateToken(token);
+        if (email != null) {
+            UserDTO user = findUserByEmail(email);
+            return new ResponseDTO(user, token);
+        } else {
+            return null;
         }
     }
 }

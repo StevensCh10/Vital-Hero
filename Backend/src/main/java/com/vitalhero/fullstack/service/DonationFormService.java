@@ -20,9 +20,14 @@ public class DonationFormService {
     
     private final DonationFormRepository repository;
 
+    private final String DONATION_FORM_NOT_REGISTERED = "Formulário de doação não registrado";
+    private final String DONOR_NOT_COMPLETE_DONATION_FORM = "Doador não preencheu o formulário de doação";
+    private final String DONOR_COMPLETE_DONATION_FORM = "Doador já preencheu o formulário de doação";
+    private final String DONOR_CANNOT_CHANGED = "Doador não pode ser alterado";
+
     @Cacheable(value="donationForm")
     public DonationForm find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(String.format("Formulário de doação com id '%d' não está registrado.", id)));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFound(DONATION_FORM_NOT_REGISTERED));
     }
 
     @Cacheable(value="donationForm")
@@ -33,7 +38,7 @@ public class DonationFormService {
     public DonationForm verfifyDonationFormByDonor(Long donorID){
         DonationForm found = findByDonor(donorID);
         if(found == null){
-            throw new EntityNotFound(String.format("Doador não preencheu seu formulário de doação", donorID));
+            throw new EntityNotFound(DONOR_NOT_COMPLETE_DONATION_FORM);
         }
         return found;
     }
@@ -44,7 +49,7 @@ public class DonationFormService {
             return repository.save(newDonationForm);
         }
 
-        throw new EntityAlreadyExists("O doador só precisa preencher um formulário de doação uma vez.");
+        throw new EntityAlreadyExists(DONOR_COMPLETE_DONATION_FORM);
     }
 
     @Transactional
@@ -52,7 +57,7 @@ public class DonationFormService {
     public DonationForm updateDonationForm(DonationForm donationFormAtt){
         DonationForm oldDF = find(donationFormAtt.getId());
         if(!oldDF.getDonor().getId().equals(donationFormAtt.getDonor().getId())){
-            throw new CannotBeUpdated("Formulário não pode ser atualizado pois houve mudança no seu proprietário.");
+            throw new CannotBeUpdated(DONOR_CANNOT_CHANGED);
         }
         return repository.saveAndFlush(donationFormAtt);
     }

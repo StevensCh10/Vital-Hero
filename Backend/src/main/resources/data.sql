@@ -1,18 +1,18 @@
 -- Inserir dados na tabela blood_center apenas se não existirem
-INSERT INTO blood_center (name, email, address, reference_point, photo, password, phone, role)
-SELECT 'Hemope', 'hemope.oficial@gmail.com', 'Rua Joaquim Nabuco, 171', 'Por trás do hospital da Restauração', NULL, '$2b$12$b5.CGtarBVZ196zWpD5Cf.mroQiYXfhBBkx9UfKww0URaMYqx96Iq', '8131824600', 'BLOODCENTER'
+INSERT INTO blood_center (name, email, address, reference_point, password, phone, role)
+SELECT 'Hemope', 'hemope.oficial@gmail.com', 'Rua Joaquim Nabuco, 171', 'Por trás do hospital da Restauração', '$2b$12$b5.CGtarBVZ196zWpD5Cf.mroQiYXfhBBkx9UfKww0URaMYqx96Iq', '8131824600', 'BLOODCENTER'
 WHERE NOT EXISTS (
     SELECT 1 FROM blood_center WHERE name = 'Hemope'
 );
 
-INSERT INTO blood_center (name, email, address, reference_point, photo, password, phone, role)
-SELECT 'Hemato', 'hemato.oficial@gmail.com', 'Rua Dom Bosco, 723', 'Em "frente" a Praça Chora Menino', NULL, '$2b$12$PYci.BYRx0022pDrTZVss./OyMtmTYUVaQyvvgvR7/NET2UVigCny', '8151139033', 'BLOODCENTER'
+INSERT INTO blood_center (name, email, address, reference_point, password, phone, role)
+SELECT 'Hemato', 'hemato.oficial@gmail.com', 'Rua Dom Bosco, 723', 'Em "frente" a Praça Chora Menino', '$2b$12$PYci.BYRx0022pDrTZVss./OyMtmTYUVaQyvvgvR7/NET2UVigCny', '8151139033', 'BLOODCENTER'
 WHERE NOT EXISTS (
     SELECT 1 FROM blood_center WHERE name = 'Hemato'
 );
 
-INSERT INTO blood_center (name, email, address, reference_point, photo, password, phone, role)
-SELECT 'Ihene', 'ihene.oficial@gmail.com', 'Rua Tabira, 54', 'Por trás da Global Outsourcing', NULL, '$2b$12$tvL282avWUXwT5gatlPjv.ImYT.Wcxh.sS55b3k1LnVQp.Mf/IWnW', '8121383500', 'BLOODCENTER'
+INSERT INTO blood_center (name, email, address, reference_point, password, phone, role)
+SELECT 'Ihene', 'ihene.oficial@gmail.com', 'Rua Tabira, 54', 'Por trás da Global Outsourcing', '$2b$12$tvL282avWUXwT5gatlPjv.ImYT.Wcxh.sS55b3k1LnVQp.Mf/IWnW', '8121383500', 'BLOODCENTER'
 WHERE NOT EXISTS (
     SELECT 1 FROM blood_center WHERE name = 'Ihene'
 );
@@ -115,14 +115,14 @@ WHERE NOT EXISTS (
     SELECT 1 FROM scheduling WHERE fk_bloodcenter = 3 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
-INSERT INTO donor (name, cpf, email, age, gender, marital_status, address, photo, phone, blood_type, password, role)
-SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'Masculino', 'Solteiro', 'Rua A, 123', NULL, '81987654321', 'O+', '$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu', 'DONOR'
+INSERT INTO donor (name, cpf, email, age, gender, marital_status, address, phone, blood_type, password, role)
+SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'Masculino', 'Solteiro', 'Rua A, 123', '81987654321', 'O+', '$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu', 'DONOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM donor WHERE cpf = '123.456.789-10'
 );
 
-INSERT INTO doctor (name, cpf, crm, email, age, gender, marital_status, address, photo, phone, password, role)
-SELECT 'Robson da Silva', '123.456.789-11', 'CRM123456', 'robson@outlook.com', 28, 'Masculino', 'Casado', 'Rua A, 123', NULL, '81987654322', '$2b$12$EIkZUEIZq0jLsBJ4XXKoderOiw8Q9WaR7dEvcV55RA5sAxMqg2H6G', 'DOCTOR'
+INSERT INTO doctor (name, cpf, crm, email, age, gender, marital_status, address, phone, password, role)
+SELECT 'Robson da Silva', '123.456.789-11', 'CRM123456', 'robson@outlook.com', 28, 'Masculino', 'Casado', 'Rua A, 123', '81987654322', '$2b$12$EIkZUEIZq0jLsBJ4XXKoderOiw8Q9WaR7dEvcV55RA5sAxMqg2H6G', 'DOCTOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM doctor WHERE cpf = '123.456.789-11'
 );

@@ -11,6 +11,7 @@ import {
   validateCPF,
 } from "../../utils/functions";
 import { CiSaveDown1 } from "react-icons/ci";
+import { Donor } from "../../types/Donor";
 
 const Register = () => {
   const auth = useContext(AuthContext);
@@ -26,7 +27,6 @@ const Register = () => {
   const [address, setAddress] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const calculateAge = (dateOfBirth: string): number => {
     const today = new Date();
@@ -50,15 +50,6 @@ const Register = () => {
   const inputStyle =
     "w-[60%] md:w-full p-2 rounded-md text-[#333333] border border-black-100 mb-[4%] focus:outline-none";
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (!file) {
-      setSelectedFile(null);
-      return;
-    }
-    setSelectedFile(file);
-  };
-
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -66,31 +57,21 @@ const Register = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("cpf", cpf);
-    formData.append("email", email);
-    formData.append("age", calculateAge(dateOfBirth).toString());
-    formData.append("gender", gender);
-    formData.append("maritalStatus", maritalStatus);
-    formData.append("address", `${address},${addressNumber}`);
-    formData.append("phone", phone);
-    formData.append("photo", "sem");
-    formData.append("password", password);
-    formData.append("bloodType", bloodType);
-
-    if (selectedFile) {
-      formData.append("file", selectedFile);
-    } else {
-      const emptyBlob = new Blob([], { type: "application/octet-stream" });
-      const emptyFile = new File([emptyBlob], "empty-file.txt", {
-        type: "text/plain",
-      });
-      formData.append("file", emptyFile);
+    const newDonor: Donor = {
+      name: name,
+      cpf: cpf,
+      email: email,
+      age: calculateAge(dateOfBirth.toString()),
+      gender: gender,
+      maritalStatus: maritalStatus,
+      address: `${address},${addressNumber}`,
+      phone: phone,
+      password: password,
+      bloodType: bloodType
     }
 
     await auth
-      .register(formData)
+      .register(newDonor)
       .then(() => navigate("/"))
       .catch((e) => {
         alert((e as ErrorType).detail);
@@ -199,8 +180,8 @@ const Register = () => {
               required
             >
               <option  disabled selected>Selecione seu estado civil</option>
-              <option value="Solteiro">Solteiro</option>
-              <option value="Casado">Casado</option>
+              <option value="Solteiro">Solteiro(a)</option>
+              <option value="Casado">Casado(a)</option>
               <option value="Outros">Outros</option>
             </select>
           </div>
@@ -289,15 +270,6 @@ const Register = () => {
               placeholder="Número da sua residência"
               pattern="\S.*"
               onChange={(e) => setAddressNumber(e.target.value)}
-            />
-          </div>
-          <div className={formRow}>
-            <label className={labelStyle}>Foto</label>
-            <input
-              className={inputStyle}
-              type="file"
-              accept="image/"
-              onChange={handleFileChange}
             />
           </div>
           <div className={formRow}>

@@ -4,7 +4,6 @@ export type BloodCenter = {
     email: string;
     address: string;
     referencePoint: string;
-    photo: string;
     phone: string;
     role?: string;
 }

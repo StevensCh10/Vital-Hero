@@ -18,12 +18,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.vitalhero.fullstack.dto.DonorDTO;
+import com.vitalhero.fullstack.dto.ResponseDTO;
 import com.vitalhero.fullstack.exception.CannotBeScheduling;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Screening;
 import com.vitalhero.fullstack.repository.DonorRepository;
+import com.vitalhero.fullstack.security.TokenService;
 import com.vitalhero.fullstack.service.DonorService;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,6 +37,9 @@ public class DonorServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Mock
+    private TokenService tokenService;
+
     @InjectMocks
     private DonorService service;
 
@@ -44,7 +49,7 @@ public class DonorServiceTest {
     public void setup(){
         donor = new Donor(
             1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevensCh10@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "O+","$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+            "Rua A, 123", "81987654321", "O+","$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
     }
 
@@ -53,9 +58,9 @@ public class DonorServiceTest {
         donor.setId(null);
 
         when(repository.save(donor)).thenReturn(donor);
-        Donor registeredDonor = service.register(donor);
+        ResponseDTO response = service.register(donor);
 
-        assertEquals(donor.getId(), registeredDonor.getId());
+        assertEquals(donor.getName(), ((DonorDTO) response.getUser()).name());
     }
 
     @Test
@@ -67,7 +72,7 @@ public class DonorServiceTest {
         });
 
         assertThat(e, instanceOf(EntityAlreadyExists.class));
-        assertThat(e.getMessage(), is(String.format("Cpf '%s' já cadastrado.", donor.getCpf())));
+        assertThat(e.getMessage(), is("Cpf '%s' já cadastrado.".formatted(donor.getCpf())));
     }
 
     @Test
@@ -79,14 +84,14 @@ public class DonorServiceTest {
         });
 
         assertThat(e, instanceOf(EntityAlreadyExists.class));
-        assertThat(e.getMessage(), is(String.format("Email '%s' já cadastrado", donor.getEmail())));
+        assertThat(e.getMessage(), is("Email '%s' já cadastrado".formatted(donor.getEmail())));
     }
 
     @Test
     void shouldFail_whenToChangeDonorsCpf(){
         Donor donorAtt = new Donor(
             1L, null, "Stevens Wendell Marinho Chaves", "75315986203", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+            "Rua A, 123", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
 
         when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
@@ -101,7 +106,7 @@ public class DonorServiceTest {
     void shouldFail_whenToChangeDonorsEmail(){
         Donor donorAtt = new Donor(
             1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "sem", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+            "Rua A, 123", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
 
         when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
@@ -136,7 +141,7 @@ public class DonorServiceTest {
         });
 
         assertThat(e, instanceOf(CannotBeScheduling.class));
-        assertThat(e.getMessage(), is(String.format("Doador %s não pode marcar um agendamento pois ainda não preencheu sua triagem", donor.getName())));
+        assertThat(e.getMessage(), is("Doador %s não pode marcar um agendamento pois ainda não preencheu sua triagem".formatted(donor.getName())));
     }
 
     @Test
@@ -151,6 +156,6 @@ public class DonorServiceTest {
         });
 
         assertThat(e, instanceOf(CannotBeScheduling.class));
-        assertThat(e.getMessage(), is(String.format("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada", donor.getName())));
+        assertThat(e.getMessage(), is("Doador %s não pode marcar um agendamento pois a sua triagem ainda não foi validada".formatted(donor.getName())));
     }
 }

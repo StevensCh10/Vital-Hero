@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return await api.findAllBloodstocks();
     }
 
-    const register = async(donor: FormData) => {
+    const register = async(donor: Donor) => {
         const data = await api.register(donor);
         if(data.user && data.token){
             setUser(data.user);
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }: {children: JSX.Element}) => {
         return data;
     }
 
-    const registerDoctor = async(doctor: FormData) => {
+    const registerDoctor = async(doctor: Doctor) => {
         const data = await api.registerDoctor(doctor);
         if(data.user && data.token){
             setUser(data.user);

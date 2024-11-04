@@ -1,8 +1,11 @@
 package com.vitalhero.fullstack.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 import com.vitalhero.fullstack.model.BloodCenter;
 
 public interface BloodCenterRepository extends JpaRepository<BloodCenter, Long>{
@@ -16,4 +19,5 @@ public interface BloodCenterRepository extends JpaRepository<BloodCenter, Long>{
     BloodCenter findByEmail(String email);
     BloodCenter findByAddress(String address);
     BloodCenter findByPhone(String phone);
+    Optional<BloodCenter> findByNameOrEmailOrAddressOrPhone(String name, String email, String address, String phone);
 }

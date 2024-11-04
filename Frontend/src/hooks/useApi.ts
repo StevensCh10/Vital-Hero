@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Donor } from '../types/Donor';
 import { Screening } from '../types/Screening';
 import { DonationForm } from '../types/DonationForm';
+import { Doctor } from '../types/Doctor';
 
 const api = axios.create({
     baseURL: 'https://vital-hero.onrender.com/'
@@ -19,7 +20,7 @@ api.interceptors.request.use((config) => {
 
 export const useApi = () => ({
     validateToken: async (token: string) => {
-        const response = await api.post('auth/validate', { token });
+        const response = await api.post('auth/validate-token', { token });
         return response.data;
     },
     signin: async (email: string, password: string) => {
@@ -90,13 +91,13 @@ export const useApi = () => ({
         .then((response) => response.data)
         .catch((e) => {throw e.response.data});
     },
-    register: async (formData: FormData) => {
-        return await api.post('auth/donor', formData)
+    register: async (donor: Donor) => {
+        return await api.post('auth/donor', donor)
         .then((response) => response.data)
         .catch((e) => {throw e.response.data});
     },
-    registerDoctor: async (formData: FormData) => {
-        return await api.post('auth/doctor', formData)
+    registerDoctor: async (doctor: Doctor) => {
+        return await api.post('auth/doctor', doctor)
         .then((response) => response.data);
     },
     addScreening: async(screening: Screening) => {

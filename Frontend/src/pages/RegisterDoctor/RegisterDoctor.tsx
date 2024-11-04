@@ -5,6 +5,7 @@ import { ErrorType } from "../../types/ErrorType";
 import Footer from "../../components/Footer/Footer";
 import { calculateMaxDate, calculateMinDate, handleCpfChange, handlePhoneChange} from "../../utils/functions";
 import { CiSaveDown1 } from "react-icons/ci";
+import { Doctor } from "../../types/Doctor";
 
 const RegisterDoctor = () => {
   const auth = useContext(AuthContext);
@@ -20,7 +21,6 @@ const RegisterDoctor = () => {
   const [address, setAddress] = useState("");
   const [addressNumber, setAddressNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const calculateAge = (dateOfBirth: string): number => {
     const today = new Date();
@@ -44,41 +44,24 @@ const RegisterDoctor = () => {
   const inputStyle =
     "w-[60%] md:w-full p-2 rounded-md text-[#333333] border border-black-100 mb-[4%] focus:outline-none";
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-    if (!file) {
-      setSelectedFile(null);
-      return;
-    }
-    setSelectedFile(file);
-  };
-
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('cpf', cpf);
-    formData.append('crm', professionalIdCard);
-    formData.append('email', email);
-    formData.append('age', calculateAge(dateOfBirth).toString());
-    formData.append('gender', gender);
-    formData.append('maritalStatus', maritalStatus);
-    formData.append('address', `${address},${addressNumber}`);
-    formData.append('phone', phone);
-    formData.append('photo', 'sem');
-    formData.append('password', password);
-
-    if(selectedFile){
-      formData.append('file', selectedFile);
-    }else{
-      const emptyBlob = new Blob([], { type: 'application/octet-stream' });
-      const emptyFile = new File([emptyBlob], 'empty-file.txt', { type: 'text/plain' });
-      formData.append('file', emptyFile);
+    const newDoctor: Doctor = {
+      name: name,
+      cpf: cpf,
+      crm: professionalIdCard,
+      email: email,
+      age: calculateAge(dateOfBirth.toString()),
+      gender: gender,
+      maritalStatus: maritalStatus,
+      address: `${address},${addressNumber}`,
+      phone: phone,
+      password: password,
     }
 
     try {
-      const response = await auth.registerDoctor(formData);
+      const response = await auth.registerDoctor(newDoctor);
       if(response.id !== undefined){
           navigate("/");
       }
@@ -251,11 +234,6 @@ const RegisterDoctor = () => {
               onChange={(e) => setAddressNumber(e.target.value)}
               required
             />
-          </div>
-          <div className={formRow}>
-            <label className={labelStyle}>Foto:</label>
-            <input
-              className={inputStyle} type="file" accept="image/" onChange={handleFileChange} />
           </div>
           <div className={formRow}>
             <label className={labelStyle} htmlFor="password">Senha:</label>

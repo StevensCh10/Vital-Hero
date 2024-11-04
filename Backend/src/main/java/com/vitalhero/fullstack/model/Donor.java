@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 public class Donor implements Serializable, User{
 
     public Donor(String name, String cpf, String email, int age, String gender,
-                 String maritalStatus, String address, String photo, String phone,
+                 String maritalStatus, String address, String phone,
                  String password, String bloodType) {
         this.name = name;
         this.cpf = cpf;
@@ -39,7 +39,6 @@ public class Donor implements Serializable, User{
         this.gender = gender;
         this.maritalStatus = maritalStatus;
         this.address = address;
-        this.photo = photo;
         this.phone = phone;
         this.password = password;
         this.bloodType = bloodType;
@@ -72,13 +71,11 @@ public class Donor implements Serializable, User{
     private int age;
 
     @NotBlank
-    private String gender, maritalStatus, address, photo, phone, bloodType; /* Fazer um enum para cada opção */
-
+    private String gender, maritalStatus, address, phone, bloodType;
 
     @NotBlank
     @Column(updatable = true)
     private String password;
 
     private String role;
-
 }

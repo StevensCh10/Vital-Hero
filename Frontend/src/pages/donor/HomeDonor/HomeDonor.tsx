@@ -72,12 +72,12 @@ const HomeDonor = () => {
           localStorage.setItem("bloodcenters", JSON.stringify(resultBloodcenters));
         }
         if (!localStorage.getItem("donationForm")) {
-          const resultDonationForm = await auth.findDonationForm(user!.id);
+          const resultDonationForm = await auth.findDonationForm(user.id!);
           localStorage.setItem("donationForm", JSON.stringify(resultDonationForm));
           setDonationForm(resultDonationForm);
         }
         if (!localStorage.getItem("screening")) {
-          const resultScreening = await auth.findScreening(user!.id);
+          const resultScreening = await auth.findScreening(user.id!);
           localStorage.setItem("screening", JSON.stringify(resultScreening));
           setScreening(resultScreening);
         }
@@ -140,7 +140,7 @@ const HomeDonor = () => {
       <span className="text-black opacity-75 mb-6 text-3xl">
         Critérios para doação
       </span>
-      <div className="hidden xl:flex flex-col items-center justify-center w-full h-full ">
+      <div className="hidden lg:flex flex-col items-center justify-center w-full h-full ">
         <div className="relative flex w-full max-w-10xl overflow-hidden justify-center items-center h-[50vh]">
           <div className="flex transition-transform duration-1000 ease-in-out space-x-10">
             {cards.map((card, index) => (
