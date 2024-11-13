@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vitalhero.fullstack.dto.DonorDTO;
+import com.vitalhero.fullstack.model.Address;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.model.DonationForm;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Review;
 import com.vitalhero.fullstack.model.Scheduling;
 import com.vitalhero.fullstack.model.Screening;
+import com.vitalhero.fullstack.service.AddressService;
 import com.vitalhero.fullstack.service.DonationFormService;
 import com.vitalhero.fullstack.service.DonationService;
 import com.vitalhero.fullstack.service.DonorService;
@@ -40,6 +42,7 @@ public class DonorController {
     
     private final DonorService donorService;
     private final SchedulingService schedulingService;
+    private final AddressService addressService;
     private final ScreeningService screeningService;
     private final DonationFormService donationFormService;
     private final DonationService donationsService;
@@ -121,6 +124,12 @@ public class DonorController {
     @ResponseStatus(HttpStatus.OK)
     public void unschdule(@PathVariable Long donorID){
         donorService.scheduleMadeOrUnscheduled(donorID);
+    }
+
+    //ADDRESS
+    @GetMapping("/address/{addressID}")
+    public Address getAddress(@PathVariable Long addressID){
+        return addressService.find(addressID);
     }
 
     //SCREENING

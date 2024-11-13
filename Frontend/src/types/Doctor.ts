@@ -1,3 +1,5 @@
+import { Address } from "./Address";
+
 export type Doctor = {
     id?: number;
     name?: string;
@@ -7,7 +9,7 @@ export type Doctor = {
     age?: number;
     gender?: string;
     maritalStatus?: string;
-    address?: string;
+    address?: Address;
     phone?: string;
     password?: string;
     role?: string;

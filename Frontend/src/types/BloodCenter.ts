@@ -1,9 +1,10 @@
+import { Address } from "./Address";
+
 export type BloodCenter = {
     id: number,
     name: string;
     email: string;
-    address: string;
-    referencePoint: string;
+    address: Address;
     phone: string;
     role?: string;
 }

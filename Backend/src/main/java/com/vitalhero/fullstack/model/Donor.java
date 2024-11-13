@@ -20,17 +20,19 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
 @Entity
 public class Donor implements Serializable, User{
 
     public Donor(String name, String cpf, String email, int age, String gender,
-                 String maritalStatus, String address, String phone,
+                 String maritalStatus, Address address, String phone,
                  String password, String bloodType) {
         this.name = name;
         this.cpf = cpf;
@@ -56,6 +58,13 @@ public class Donor implements Serializable, User{
     @JoinColumn(name = "fk_scheduling")
     private Scheduling scheduling;
 
+    @JsonIgnoreProperties(value = {"street", "additionalInfo", "neighborhood", "city", "stateCode", "state", "region"}, allowGetters = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @ManyToOne
+    @JoinColumn(name = "fk_address")
+    private Address address;
+
     @NotBlank
     @Column(updatable = false, unique = true)
     private String name, cpf;
@@ -71,7 +80,7 @@ public class Donor implements Serializable, User{
     private int age;
 
     @NotBlank
-    private String gender, maritalStatus, address, phone, bloodType;
+    private String gender, maritalStatus, phone, bloodType;
 
     @NotBlank
     @Column(updatable = true)

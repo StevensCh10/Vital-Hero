@@ -3,6 +3,7 @@ package com.vitalhero.fullstack.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -20,9 +21,14 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
-import com.vitalhero.fullstack.exception.*;
+import com.vitalhero.fullstack.exception.EmailNotFound;
+import com.vitalhero.fullstack.exception.EntityAlreadyExists;
+import com.vitalhero.fullstack.exception.EntityNotFound;
+import com.vitalhero.fullstack.exception.InvalidPassword;
+import com.vitalhero.fullstack.exception.PropertyNotExist;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
@@ -59,7 +65,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<?> handleDataIntegrityViolantionException(DataIntegrityViolationException e, WebRequest request){
-		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.ENTITY_IN_USE, "Essa entidade está relacionada com outras entidades e não pode ser removida");
+		Problem problem = handleProblem(STTS_BAD_REQUEST, ProblemType.ENTITY_IN_USE, "Erro SQL");
 		return handleExceptionInternal(e, problem, new HttpHeaders(), STTS_BAD_REQUEST, request);
 	}
 	

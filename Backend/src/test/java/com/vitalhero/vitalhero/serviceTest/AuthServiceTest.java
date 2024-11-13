@@ -53,10 +53,21 @@ public class AuthServiceTest {
 
     @BeforeEach
     public void setup(){
-        donor = new Donor(
-            1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevensCh10@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
-        );
+        donor = Donor.builder()
+            .id(1L)
+            .scheduling(null)
+            .name("Stevens Wendell Marinho Chaves")
+            .cpf("12345678910")
+            .email("stevensCh10@outlook.com")
+            .age(24)
+            .gender("Masculino")
+            .maritalStatus("Solteiro")
+            .address(null)
+            .phone("81987654321")
+            .password("$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu")
+            .bloodType("O+")
+            .role("DONOR")
+            .build();
         token = tokenService.generateToken(donor);
     }
 

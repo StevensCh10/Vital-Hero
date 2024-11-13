@@ -1,21 +1,24 @@
 package com.vitalhero.fullstack.dto;
 
 import com.vitalhero.fullstack.intrerfaces.UserDTO;
+import com.vitalhero.fullstack.model.Address;
 import com.vitalhero.fullstack.model.Doctor;
+import lombok.Builder;
 
-public record DoctorDTO(Long id, String name, String crm, String email, int age, String gender, String maritalStatus, String address, String phone, String role) implements UserDTO{
+@Builder
+public record DoctorDTO(Long id, String name, String crm, String email, int age, String gender, String maritalStatus, Address address, String phone, String role) implements UserDTO{
     public static DoctorDTO fromEntity(Doctor doctor){
-        return new DoctorDTO(
-            doctor.getId(),
-            doctor.getName(),
-            doctor.getCrm(),
-            doctor.getEmail(),
-            doctor.getAge(),
-            doctor.getGender(),
-            doctor.getMaritalStatus(),
-            doctor.getAddress(),
-            doctor.getPhone(),
-            doctor.getRole()
-        );
+        return DoctorDTO.builder()
+            .id(doctor.getId())
+            .name(doctor.getName())
+            .crm(doctor.getCrm())
+            .email(doctor.getEmail())
+            .age(doctor.getAge())
+            .gender(doctor.getGender())
+            .maritalStatus(doctor.getMaritalStatus() )
+            .address(doctor.getAddress())
+            .phone(doctor.getPhone())
+            .role(doctor.getRole())
+            .build();   
     }
 }

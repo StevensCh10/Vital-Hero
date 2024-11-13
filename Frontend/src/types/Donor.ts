@@ -1,3 +1,4 @@
+import { Address } from "./Address";
 import { Scheduling } from "./Scheduling";
 
 export type Donor = {
@@ -9,7 +10,7 @@ export type Donor = {
     age?: number;
     gender?: string;
     maritalStatus?: string;
-    address?: string;
+    address?: Address;
     phone?: string;
     password?: string;
     bloodType?: string;

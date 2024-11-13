@@ -48,8 +48,8 @@ public class DonorServiceTest {
     @BeforeEach
     public void setup(){
         donor = new Donor(
-            1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevensCh10@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "81987654321", "O+","$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+            1L, null, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevensCh10@outlook.com", 24, "Masculino", "Solteiro", 
+            "81987654321", "O+","$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
     }
 
@@ -90,8 +90,8 @@ public class DonorServiceTest {
     @Test
     void shouldFail_whenToChangeDonorsCpf(){
         Donor donorAtt = new Donor(
-            1L, null, "Stevens Wendell Marinho Chaves", "75315986203", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+            1L, null, null, "Stevens Wendell Marinho Chaves", "75315986203", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
+            "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
 
         when(repository.findById(anyLong())).thenReturn(Optional.of(donor));
@@ -105,8 +105,8 @@ public class DonorServiceTest {
     @Test
     void shouldFail_whenToChangeDonorsEmail(){
         Donor donorAtt = new Donor(
-            1L, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
-            "Rua A, 123", "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
+            1L, null, null, "Stevens Wendell Marinho Chaves", "12345678910", "stevens@outlook.com", 24, "Masculino", "Solteiro", 
+            "81987654321", "O+", "$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu", "DONOR"
         );
 
         when(repository.findById(anyLong())).thenReturn(Optional.of(donor));

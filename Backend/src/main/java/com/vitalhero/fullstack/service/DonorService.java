@@ -36,6 +36,7 @@ public class DonorService {
     private final EmailService emailService;
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
+    private final AddressService addressService;
 
     private final String DONOR_NOT_REGISTERED = "Doador não registrado";
     private final String CPF_ALREADY_REGISTERED = "CPF já registrado";
@@ -60,6 +61,11 @@ public class DonorService {
     @Cacheable(value="donor")
     public ResponseDTO register(Donor newDonor) {
         validateDonorInsert(newDonor);
+        
+        var address = addressService.getAddress(newDonor.getAddress().getCep());
+        address = addressService.create(address);
+
+        newDonor.setAddress(address);
         newDonor.setRole(Roles.DONOR.toString());
         newDonor.setPassword(passwordEncoder.encode(newDonor.getPassword()));
         String token = this.tokenService.generateToken(newDonor);

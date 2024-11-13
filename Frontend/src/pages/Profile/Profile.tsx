@@ -18,7 +18,6 @@ const Profile = () => {
   const [age, setAge] = useState(0);
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
   const [photoURL, setPhotoURL] = useState("");
   const [crm, setCrm] = useState("");
   const [bloodType, setBloodType] = useState("");
@@ -38,7 +37,6 @@ const Profile = () => {
         setName(user!.name!);
         setPhone(user!.phone!);
         setEmail(user!.email!);
-        setAddress(user!.address!);
         setPhotoURL("Logo.png");
       } catch (error) {
         console.error("Erro:", error);
@@ -54,7 +52,6 @@ const Profile = () => {
     e.preventDefault();
 
     user!.phone = phone;
-    user!.address = address;
 
     await auth.updateDonor(user! as Donor);
     window.location.reload();
@@ -129,15 +126,6 @@ const Profile = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               readOnly
-              required
-            />
-            <input
-              className={inputStyle}
-              type="address"
-              id="address"
-              name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
               required
             />
             {role === "DOCTOR" && (

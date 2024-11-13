@@ -26,6 +26,7 @@ public class DoctorService {
     private final DoctorRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+    private final AddressService addressService;
 
     private final String DOCTOR_NOT_REGISTERED = "Médico não registrado";
     private final String CPF_ALREADY_REGISTERED = "CPF já cadastrado";
@@ -48,6 +49,11 @@ public class DoctorService {
     @Transactional
 	public ResponseDTO register(Doctor newDoctor) {
 		validateDoctorInsert(newDoctor);
+
+        var address = addressService.getAddress(newDoctor.getAddress().getCep());
+        address = addressService.create(address);
+
+        newDoctor.setAddress(address);
         newDoctor.setRole(Roles.DOCTOR.toString());
         newDoctor.setPassword(passwordEncoder.encode(newDoctor.getPassword()));
         String token = tokenService.generateToken(newDoctor);

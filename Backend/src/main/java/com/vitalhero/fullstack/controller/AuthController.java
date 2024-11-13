@@ -54,12 +54,12 @@ public class AuthController {
     @PostMapping(value = "/donor")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO registerDonor(@Valid @RequestBody Donor donor){
-            return donorService.register(donor);
+        return donorService.register(donor);
     }
 
     @PostMapping(value = "/doctor")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseDTO registerDoctor(@Valid @RequestBody Doctor doctor){
-            return doctorService.register(doctor);
+        return doctorService.register(doctor);
     }
 }

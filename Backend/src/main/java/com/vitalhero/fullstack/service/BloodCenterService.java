@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.vitalhero.fullstack.dto.BloodCenterDTO;
 import com.vitalhero.fullstack.dto.ResponseDTO;
+import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
@@ -30,6 +31,7 @@ public class BloodCenterService {
     private final BloodCenterRepository repository;
     private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
+    private final AddressService addressService;
 
     private final String BLOODCENTER_NOT_REGISTERED = "Hemocentro não registrado";
     private final String BLOODCENTER_ALREADY_REGISTERED = "Hemocentro já cadastrado";
@@ -53,6 +55,12 @@ public class BloodCenterService {
     @Cacheable(value="bloodcenter")
     public ResponseDTO addBloodCenter(BloodCenter newBloodcenter){
         validateBloodcenterInsert(newBloodcenter);
+
+        var address = addressService.getAddress(newBloodcenter.getAddress().getCep());
+        address = addressService.create(address);
+
+        newBloodcenter.setAddress(address);
+        newBloodcenter.setRole(Roles.DOCTOR.toString());
         newBloodcenter.setPassword(passwordEncoder.encode(newBloodcenter.getPassword()));
         String token = tokenService.generateToken(newBloodcenter);
         return new ResponseDTO(BloodCenterDTO.fromEntity(newBloodcenter), token);

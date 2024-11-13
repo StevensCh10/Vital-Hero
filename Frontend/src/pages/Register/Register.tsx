@@ -24,8 +24,7 @@ const Register = () => {
   const [gender, setGender] = useState("");
   const [cpf, setCpf] = useState("");
   const [bloodType, setBloodType] = useState("A+");
-  const [address, setAddress] = useState("");
-  const [addressNumber, setAddressNumber] = useState("");
+  const [cep, setCep] = useState("");
   const [password, setPassword] = useState("");
 
   const calculateAge = (dateOfBirth: string): number => {
@@ -64,7 +63,9 @@ const Register = () => {
       age: calculateAge(dateOfBirth.toString()),
       gender: gender,
       maritalStatus: maritalStatus,
-      address: `${address},${addressNumber}`,
+      address: {
+        cep: cep
+      },
       phone: phone,
       password: password,
       bloodType: bloodType
@@ -244,32 +245,19 @@ const Register = () => {
             </select>
           </div>
           <div className={formRow}>
-            <label className={labelStyle} htmlFor="address">
-              Endereço
+            <label className={labelStyle} htmlFor="cep">
+              CEP
             </label>
             <input
               className={inputStyle}
               type="text"
-              id="address"
-              name="address"
-              placeholder="Nome da rua"
+              id="cep"
+              name="cep"
+              placeholder="(Apenas números)"
               pattern="\S.*"
-              onChange={(e) => setAddress(e.target.value)}
+              maxLength={8}
+              onChange={(e) => setCep(e.target.value)}
               required
-            />
-          </div>
-          <div className={formRow}>
-            <label className={labelStyle} htmlFor="addressNumber">
-              Número
-            </label>
-            <input
-              className={inputStyle}
-              type="text"
-              id="addressNumber"
-              name="addressNumber"
-              placeholder="Número da sua residência"
-              pattern="\S.*"
-              onChange={(e) => setAddressNumber(e.target.value)}
             />
           </div>
           <div className={formRow}>

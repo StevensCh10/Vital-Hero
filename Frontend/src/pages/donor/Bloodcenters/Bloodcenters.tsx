@@ -58,7 +58,7 @@ const Bloodcenters: React.FC = () => {
   useEffect(() => {
     const fetchCoordinates = async () => {
       const coordinatesPromises = bloodcenters.map(async (center) => {
-        const coordinates = await getCoordinates(center.address);
+        const coordinates = await getCoordinates(center.address.street);
         return (
           <Marker
             key={center.id}
@@ -362,7 +362,7 @@ const Bloodcenters: React.FC = () => {
                 </h3>
                 <p className={pStyle}>
                   <span className={spanStyle}><LiaMapMarkerAltSolid size={20}/></span>
-                  <label className={labelStyle}>{center.address}</label>
+                  <label className={labelStyle}>{center.address.street}</label>
                 </p>
                 <p className={pStyle}>
                   <span className={spanStyle}><BsTelephone /></span>
@@ -376,7 +376,7 @@ const Bloodcenters: React.FC = () => {
                 </p>
                 <p className={pStyle}>
                   <span className={spanStyle}><IoIosInformationCircleOutline /></span>
-                  <label className={labelStyle}>{center.referencePoint}</label>
+                  <label className={labelStyle}>{center.address.additionalInfo}</label>
                 </p>
                 <div className="flex items-center justify-center mt-5 w-full">
                   {!selectedCenter ||
