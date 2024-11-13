@@ -41,7 +41,7 @@ public class DonorService {
     private final String DONOR_NOT_REGISTERED = "Doador não registrado";
     private final String CPF_ALREADY_REGISTERED = "CPF já registrado";
     private final String CPF_CANNOT_CHANGED = "CPF não pode ser alterado";
-    private final String EMAIL_ALREADY_REGISTERED = "CPF já registrado";
+    private final String EMAIL_ALREADY_REGISTERED = "Email já registrado";
     private final String EMAIL_CANNOT_CHANGED = "Email não pode ser alterado";
     private final String PHONE_NUMBER_ALREADY_REGISTERED = "Número de telefone já registrado";
     private final String PHONE_NUMBER_UNAVAILABLE = "Número de telefone indisponível";
