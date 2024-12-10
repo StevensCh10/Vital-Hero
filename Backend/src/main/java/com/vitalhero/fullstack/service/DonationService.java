@@ -6,47 +6,62 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.vitalhero.fullstack.enums.ErrorMessage;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.model.Donation;
 import com.vitalhero.fullstack.repository.DonationRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DonationService {
     
     private final DonationRepository repository;
 
-    private final String DONATION_ALREADY_REGISTERED = "Formulário de doação já registrado";
-    private final String DONATION_NOT_REGISTERED = "Formulário de doação não registrado";
-
     @Cacheable(value="donation")
-    public Donation find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(DONATION_NOT_REGISTERED));
+    public Donation findDonationById(Long id){
+        log.info("[findDonationById]: Iniciando busca por doacao");
+        var foundDonation = repository.findById(id).orElseThrow(() -> {
+            log.warn("[findDonationById]: Falha na busca. Doacao com ID: {} não encontrado no sistema", id);
+            return new EntityNotFound(ErrorMessage.DONATION_NOT_REGISTERED.toString());
+        });
+        log.info("[findDonationById]: Busca finalizada com sucesso");
+        return foundDonation;
     }
     
     @Cacheable(value="donation")
     public Donation addDonation(Donation newDonation){
+        log.info("[addDonation]: Iniciando cadastro da doacao");
         Long donorID = newDonation.getDonor().getId();
         Long schedulingID = newDonation.getScheduling().getId();
         Donation donation = repository.findByDonorAndScheduling(donorID, schedulingID);
 
         if(donation != null){
-            throw new EntityAlreadyExists(DONATION_ALREADY_REGISTERED);
+            log.warn("[addDonation]: Falha no cadastro. "+ErrorMessage.DONATION_ALREADY_REGISTERED);
+            throw new EntityAlreadyExists(ErrorMessage.DONATION_ALREADY_REGISTERED.toString());
         }
-        return repository.save(newDonation);
+        var addedDonation = repository.save(newDonation);
+        log.info("[addDonation]: Cadastro concluído com sucesso");
+        return addedDonation;
     }
     
     @Cacheable(value="allDonations")
     public List<Donation> allDonationsByDonor(Long donorID){
-        return repository.allDonationsByDonor(donorID);
+        log.info("[allDonationsByDonor]: Iniciando busca por todas as doacoes do doador");
+        var donationsByDonor = repository.allDonationsByDonor(donorID);
+        log.info("[allDonationsByDonor]: Busca finalizada com sucesso");
+        return donationsByDonor;
     }
 
     @CacheEvict(value="donation", key="#id")
     public void deleteDonation(Long id){
-        find(id);
+        log.info("[deleteDonation]: Iniciando remocao da doacao");
+        findDonationById(id);
         repository.deleteById(id);
+        log.info("[deleteDonation]: Remoção concluída com sucesso");
     }
 }

@@ -87,8 +87,8 @@ public class DonorServiceTest {
 
         when(repository.save(donor)).thenReturn(donor);
         when(addressService.getAddress(donor.getAddress().getCep())).thenReturn(address);
-        when(addressService.create(address)).thenReturn(address);
-        ResponseDTO response = service.register(donor);
+        when(addressService.addAddress(address)).thenReturn(address);
+        ResponseDTO response = service.addDonor(donor);
 
         assertEquals(donor.getName(), ((DonorDTO) response.getUser()).name());
     }
@@ -99,7 +99,7 @@ public class DonorServiceTest {
          .thenReturn(Optional.of(donor));
         
         EntityAlreadyExists e = assertThrows(EntityAlreadyExists.class, () -> {
-            service.register(donor);
+            service.addDonor(donor);
         });
 
         assertThat(e, instanceOf(EntityAlreadyExists.class));
@@ -114,7 +114,7 @@ public class DonorServiceTest {
         when(repository.findByCpfOrEmailOrPhone(donorWithEmailRegistered.getCpf(), donorWithEmailRegistered.getEmail(), donorWithEmailRegistered.getPhone())).thenReturn(Optional.of(donor));
 
         EntityAlreadyExists e = assertThrows(EntityAlreadyExists.class, () -> {
-            service.register(donorWithEmailRegistered);
+            service.addDonor(donorWithEmailRegistered);
         });
 
         assertThat(e, instanceOf(EntityAlreadyExists.class));
@@ -130,7 +130,7 @@ public class DonorServiceTest {
         when(repository.findByCpfOrEmailOrPhone(donorAtt.getCpf(), donorAtt.getEmail(), donorAtt.getPhone())).thenReturn(Optional.of(donor));
 
         CannotBeUpdated e = assertThrows(CannotBeUpdated.class, () -> {
-            service.update(donorAtt); //Com cpf diferente
+            service.updateDonor(donorAtt); //Com cpf diferente
         });
         assertThat(e, instanceOf(CannotBeUpdated.class));
         assertThat(e.getMessage(), is("CPF não pode ser alterado"));
@@ -145,7 +145,7 @@ public class DonorServiceTest {
         when(repository.findByCpfOrEmailOrPhone(donorAtt.getCpf(), donorAtt.getEmail(), donorAtt.getPhone())).thenReturn(Optional.of(donor));
 
         CannotBeUpdated e = assertThrows(CannotBeUpdated.class, () -> {
-            service.update(donorAtt); //Com email diferente
+            service.updateDonor(donorAtt); //Com email diferente
         });
         assertThat(e, instanceOf(CannotBeUpdated.class));
         assertThat(e.getMessage(), is("Email não pode ser alterado"));

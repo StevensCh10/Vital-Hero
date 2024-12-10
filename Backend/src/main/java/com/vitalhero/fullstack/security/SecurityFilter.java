@@ -12,10 +12,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.vitalhero.fullstack.exception.EntityNotFound;
 import com.vitalhero.fullstack.intrerfaces.User;
-import com.vitalhero.fullstack.model.BloodCenter;
+import com.vitalhero.fullstack.model.Bloodcenter;
 import com.vitalhero.fullstack.model.Doctor;
 import com.vitalhero.fullstack.model.Donor;
-import com.vitalhero.fullstack.repository.BloodCenterRepository;
+import com.vitalhero.fullstack.repository.BloodcenterRepository;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
 
@@ -37,7 +37,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     DoctorRepository doctorRepository;
     
     @Autowired
-    BloodCenterRepository bloodcenterRepository;
+    BloodcenterRepository bloodcenterRepository;
 
     @SuppressWarnings("null")
     @Override
@@ -71,7 +71,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             return doctor;
         }
     
-        BloodCenter bloodCenter = bloodcenterRepository.findByEmail(login);
+        Bloodcenter bloodCenter = bloodcenterRepository.findByEmail(login);
         if (bloodCenter != null) {
             return bloodCenter;
         }

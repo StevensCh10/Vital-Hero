@@ -4,7 +4,6 @@ import com.vitalhero.fullstack.intrerfaces.UserDTO;
 import com.vitalhero.fullstack.model.Address;
 import com.vitalhero.fullstack.model.Donor;
 import com.vitalhero.fullstack.model.Scheduling;
-
 import lombok.Builder;
 
 @Builder
@@ -19,6 +18,7 @@ public record DonorDTO(Long id, Scheduling scheduling, String name, String email
             .maritalStatus(donor.getMaritalStatus() )
             .address(donor.getAddress())
             .phone(donor.getPhone())
+            .bloodType(donor.getBloodType())
             .role(donor.getRole())
             .build();
     }

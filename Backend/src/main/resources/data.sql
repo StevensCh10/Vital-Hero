@@ -4,22 +4,22 @@ WHERE NOT EXISTS (
     SELECT 1 FROM address WHERE cep = '50010000'
 );
 
-INSERT INTO blood_center (name, email, fk_address, password, phone, role)
+INSERT INTO bloodcenter (name, email, fk_address, password, phone, role)
 SELECT 'Hemope', 'hemope.oficial@gmail.com', 1, '$2b$12$b5.CGtarBVZ196zWpD5Cf.mroQiYXfhBBkx9UfKww0URaMYqx96Iq', '8131824600', 'BLOODCENTER'
 WHERE NOT EXISTS (
-    SELECT 1 FROM blood_center WHERE name = 'Hemope'
+    SELECT 1 FROM bloodcenter WHERE name = 'Hemope'
 );
 
-INSERT INTO blood_center (name, email, fk_address, password, phone, role)
+INSERT INTO bloodcenter (name, email, fk_address, password, phone, role)
 SELECT 'Hemato', 'hemato.oficial@gmail.com', 1, '$2b$12$PYci.BYRx0022pDrTZVss./OyMtmTYUVaQyvvgvR7/NET2UVigCny', '8151139033', 'BLOODCENTER'
 WHERE NOT EXISTS (
-    SELECT 1 FROM blood_center WHERE name = 'Hemato'
+    SELECT 1 FROM bloodcenter WHERE name = 'Hemato'
 );
 
-INSERT INTO blood_center (name, email, fk_address, password, phone, role)
+INSERT INTO bloodcenter (name, email, fk_address, password, phone, role)
 SELECT 'Ihene', 'ihene.oficial@gmail.com', 1, '$2b$12$tvL282avWUXwT5gatlPjv.ImYT.Wcxh.sS55b3k1LnVQp.Mf/IWnW', '8121383500', 'BLOODCENTER'
 WHERE NOT EXISTS (
-    SELECT 1 FROM blood_center WHERE name = 'Ihene'
+    SELECT 1 FROM bloodcenter WHERE name = 'Ihene'
 );
 
 -- Inserir dados na tabela blood_stock apenas se não existirem
@@ -120,8 +120,8 @@ WHERE NOT EXISTS (
     SELECT 1 FROM scheduling WHERE fk_bloodcenter = 3 AND date_time = '2024-11-29 17:42:00.000000'
 );
 
-INSERT INTO donor (name, cpf, email, age, gender, marital_status, fk_address, phone, blood_type, password, role)
-SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'Masculino', 'Solteiro', 1, '81987654321', 'O+', '$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu', 'DONOR'
+INSERT INTO donor (name, cpf, email, age, gender, marital_status, fk_scheduling, fk_address, phone, blood_type, password, role)
+SELECT 'Stevens Wendell Marinho Chaves', '123.456.789-10', 'stevensch10@outlook.com', 24, 'Masculino', 'Solteiro', null, 1, '81987654321', 'O+', '$2a$12$.yZc8eZXaF/WYwvTEwHbOeJpkAJRxUycsL5El10VJ76LISDKAqriu', 'DONOR'
 WHERE NOT EXISTS (
     SELECT 1 FROM donor WHERE cpf = '123.456.789-10'
 );

@@ -26,8 +26,8 @@ public class DonationNotificationJob implements Job, ApplicationContextAware {
         DonationService donationService = applicationContext.getBean(DonationService.class);
         DonorService donorService = applicationContext.getBean(DonorService.class);
         Long donationId = context.getMergedJobDataMap().getLong("donationId");
-        Donation donation = donationService.find(donationId);
-        Donor donor = donorService.find(donation.getDonor().getId());
+        Donation donation = donationService.findDonationById(donationId);
+        Donor donor = donorService.findDonorById(donation.getDonor().getId());
 
         String textBegin = "Olá, " + donor.getName() + "!";
 

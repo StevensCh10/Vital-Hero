@@ -1,13 +1,11 @@
 package com.vitalhero.fullstack.model;
 
 import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.vitalhero.fullstack.intrerfaces.User;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity
-public class BloodCenter implements Serializable, User{
+public class Bloodcenter implements Serializable, User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

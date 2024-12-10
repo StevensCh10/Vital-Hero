@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.vitalhero.fullstack.dto.DoctorDTO;
 import com.vitalhero.fullstack.dto.ResponseDTO;
+import com.vitalhero.fullstack.enums.ErrorMessage;
 import com.vitalhero.fullstack.enums.Roles;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
@@ -18,9 +19,11 @@ import com.vitalhero.fullstack.security.TokenService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DoctorService {
     
     private final DoctorRepository repository;
@@ -28,74 +31,107 @@ public class DoctorService {
     private final TokenService tokenService;
     private final AddressService addressService;
 
-    private final String DOCTOR_NOT_REGISTERED = "Médico não registrado";
-    private final String CPF_ALREADY_REGISTERED = "CPF já cadastrado";
-    private final String EMAIL_ALREADY_REGISTERED = "CPF já cadastrado";
-    private final String CPF_CANNOT_CHANGED = "CPF não pode ser alterado";
-    private final String CRM_ALREADY_REGISTERED = "CRM já cadastrado";
-    private final String CRM_CANNOT_CHANGED = "CRM não pode ser alterado";
-    private final String EMAIL_CANNOT_CHANGED = "Email não pode ser alterado";
-    private final String PHONE_NUMBER_ALREADY_REGISTERED = "Número de telefone já cadastrado";
-    private final String PHONE_NUMBER_UNAVAILABLE = "Número de telefone indisponível";
-
-    public Doctor find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(DOCTOR_NOT_REGISTERED));
+    public Doctor findDoctorById(Long id){
+        log.info("[findDoctorById]: Iniciando busca por medico", id);
+        var foundDoctor = repository.findById(id).orElseThrow(() -> {
+            log.warn("[findDoctorById]: Falha na busca. Médico com id '{} não cadastrado no sistema", id);
+            return new EntityNotFound(ErrorMessage.DOCTOR_NOT_REGISTERED.toString());
+        });
+        log.info("[findDoctorById]: Busca finalizada com sucesso", id);
+        return foundDoctor;
     }
 
-    public DoctorDTO getDoctor(Long id){
-        return DoctorDTO.fromEntity(find(id));
+    public DoctorDTO getDoctorDTOById(Long id){
+        return DoctorDTO.fromEntity(findDoctorById(id));
     }
 
     @Transactional
-	public ResponseDTO register(Doctor newDoctor) {
+	public ResponseDTO addDoctor(Doctor newDoctor) {
+        log.info("[addDoctor]: Iniciando cadastro do medico");
 		validateDoctorInsert(newDoctor);
 
         var address = addressService.getAddress(newDoctor.getAddress().getCep());
-        address = addressService.create(address);
+        address = addressService.addAddress(address);
 
         newDoctor.setAddress(address);
         newDoctor.setRole(Roles.DOCTOR.toString());
         newDoctor.setPassword(passwordEncoder.encode(newDoctor.getPassword()));
         String token = tokenService.generateToken(newDoctor);
-        return new ResponseDTO(DoctorDTO.fromEntity(repository.save(newDoctor)), token);
+        var addedDoctor = new ResponseDTO(DoctorDTO.fromEntity(repository.save(newDoctor)), token);
+        log.info("[addDoctor]: Cadastro finalizado com sucesso");
+        return addedDoctor;
 	}
 
     private void validateDoctorInsert(Doctor doctor) {
+        log.info("[validateDoctorInsert]: Iniciando validacao do cadastro do medico");
+        String doctorName = doctor.getName();
         Optional<Doctor> existingDoctor = repository.findByCpfOrEmailOrCrmOrPhone(doctor.getCpf(), doctor.getEmail(), doctor.getCrm(), doctor.getPhone());
         
         if(existingDoctor.isPresent()){
             Doctor foundDoctor = existingDoctor.get();
-            if(foundDoctor.getCpf().equals(doctor.getCpf())) throw new EntityAlreadyExists(CPF_ALREADY_REGISTERED);
-            if(foundDoctor.getEmail().equals(doctor.getEmail())) throw new EntityAlreadyExists(EMAIL_ALREADY_REGISTERED);
-            if(foundDoctor.getCrm().equals(doctor.getCrm())) throw new EntityAlreadyExists(CRM_ALREADY_REGISTERED);
-            if(foundDoctor.getPhone().equals(doctor.getPhone())) throw new EntityAlreadyExists(PHONE_NUMBER_ALREADY_REGISTERED);
+            if(foundDoctor.getCpf().equals(doctor.getCpf())){
+                log.warn("[validateDoctorInsert]: Falha na validação. "+ErrorMessage.CPF_ALREADY_REGISTERED, doctorName);
+                throw new EntityAlreadyExists(ErrorMessage.CPF_ALREADY_REGISTERED.toString());
+            }
+            else if(foundDoctor.getEmail().equals(doctor.getEmail())){
+                log.warn("[validateDoctorInsert]: Falha na validação. "+ErrorMessage.EMAIL_ALREADY_REGISTERED, doctorName);
+                throw new EntityAlreadyExists(ErrorMessage.EMAIL_ALREADY_REGISTERED.toString());
+            }
+            else if(foundDoctor.getCrm().equals(doctor.getCrm())){
+                log.warn("[validateDoctorInsert]: Falha na validação. "+ErrorMessage.CRM_ALREADY_REGISTERED, doctorName);
+                throw new EntityAlreadyExists(ErrorMessage.CRM_ALREADY_REGISTERED.toString());
+            }
+            else if(foundDoctor.getPhone().equals(doctor.getPhone())){
+                log.warn("[validateDoctorInsert]: Falha na validação. "+ErrorMessage.PHONE_NUMBER_ALREADY_REGISTERED, doctorName);
+                throw new EntityAlreadyExists(ErrorMessage.PHONE_NUMBER_ALREADY_REGISTERED.toString());
+            }
         }
+        log.info("[validateDoctorInsert]: Validação concluída com sucesso");
     }
 
     @Transactional
-	public DoctorDTO update(Doctor doctorAtt) {
-		Doctor currentDoctor = find(doctorAtt.getId());
+	public DoctorDTO updateDoctor(Doctor doctorAtt) {
+        log.info("[updateDoctor]: Iniciando atualização do medico");
+		Doctor currentDoctor = findDoctorById(doctorAtt.getId());
         validateDoctorUpdate(doctorAtt);
 
 		BeanUtils.copyProperties(doctorAtt, currentDoctor, "id");
-		return DoctorDTO.fromEntity(repository.saveAndFlush(currentDoctor));
+		var updatedDoctor = DoctorDTO.fromEntity(repository.saveAndFlush(currentDoctor));
+        log.info("[updateDoctor]: Atualização concluída com sucesso");
+        return updatedDoctor;
 	}
 
     private void validateDoctorUpdate(Doctor doctor){
+        String doctorName = doctor.getName();
+        log.info("[validateDoctorUpdate]: Iniciando validacao da atualizacao do medico");
         Optional<Doctor> existingDoctor = repository.findByCpfOrEmailOrCrmOrPhone(doctor.getCpf(), doctor.getEmail(), doctor.getCrm(), doctor.getPhone());
         
 		if(existingDoctor.isPresent()){
             Doctor foundDoctor = existingDoctor.get();
-            if(!foundDoctor.getCpf().equals(doctor.getCpf())) throw new CannotBeUpdated(CPF_CANNOT_CHANGED);
-            if(!foundDoctor.getEmail().equals(doctor.getEmail())) throw new CannotBeUpdated(EMAIL_CANNOT_CHANGED);
-            if(!foundDoctor.getCrm().equals(doctor.getCrm())) throw new CannotBeUpdated(CRM_CANNOT_CHANGED);
-            if(foundDoctor.getPhone().equals(doctor.getPhone()) && !foundDoctor.getPhone().equals(doctor.getPhone())) 
-                throw new CannotBeUpdated(PHONE_NUMBER_UNAVAILABLE);
+            if(!foundDoctor.getCpf().equals(doctor.getCpf())){
+                log.warn("[validateDoctorUpdate]: Falha na validação. "+ErrorMessage.CPF_CANNOT_CHANGED, doctorName);
+                throw new CannotBeUpdated(ErrorMessage.CPF_CANNOT_CHANGED.toString());
+            }
+            else if(!foundDoctor.getEmail().equals(doctor.getEmail())){
+                log.warn("[validateDoctorUpdate]: Falha na validação. "+ErrorMessage.EMAIL_CANNOT_CHANGED, doctorName);
+                throw new CannotBeUpdated(ErrorMessage.EMAIL_CANNOT_CHANGED.toString());
+            }
+            else if(!foundDoctor.getCrm().equals(doctor.getCrm())){
+                log.warn("[validateDoctorUpdate]: Falha na validação. "+ErrorMessage.CRM_CANNOT_CHANGED, doctorName);
+                throw new CannotBeUpdated(ErrorMessage.CRM_CANNOT_CHANGED.toString());
+            }
+            else if(foundDoctor.getPhone().equals(doctor.getPhone()) && !foundDoctor.getPhone().equals(doctor.getPhone())){
+                log.warn("[validateDoctorUpdate]: Falha na validação. "+ErrorMessage.PHONE_NUMBER_UNAVAILABLE, doctorName);
+                throw new CannotBeUpdated(ErrorMessage.PHONE_NUMBER_UNAVAILABLE.toString());
+            }
         }
+        log.info("[validateDoctorUpdate]: Validação concluída com sucesso");
     }
 
     public void deleteDoctor(Long id){
-        find(id);
+        log.info("[deleteDoctor]: Iniciando remoção do medico", id);
+        findDoctorById(id);
         repository.deleteById(id);
+        log.info("[deleteDoctor]: Remoção concluída com sucesso", id);
     }
 }

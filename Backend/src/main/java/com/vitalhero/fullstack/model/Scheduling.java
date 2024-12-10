@@ -39,7 +39,7 @@ public class Scheduling implements Serializable{
     @JoinColumn(name = "fk_bloodcenter")
     @ManyToOne
     //@Valid
-    private BloodCenter bloodcenter;
+    private Bloodcenter bloodcenter;
 
     @NotNull
     private LocalDateTime dateTime;

@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.vitalhero.fullstack.enums.ErrorMessage;
 import com.vitalhero.fullstack.exception.CannotBeUpdated;
 import com.vitalhero.fullstack.exception.EntityAlreadyExists;
 import com.vitalhero.fullstack.exception.EntityNotFound;
@@ -16,55 +17,75 @@ import com.vitalhero.fullstack.repository.BloodStockRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BloodStockService {
     
     public final BloodStockRepository repository;
 
-    private final String BLOODSTOCK_ALREADY_REGISTERED = "Estoque sanguíneo já cadastrado";
-    private final String BLOODSTOCK_NOT_FOUND = "Estoque sanguíneo não cadastrado";
-    private final String ID_CANNOT_CHANGED = "ID não pode ser alterado";
-
     @Cacheable(value="bloodstock")
-    public BloodStock find(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFound(BLOODSTOCK_NOT_FOUND));
+    public BloodStock findBloodStockById(Long id){
+        log.info("[findBloodStockById]: Iniciando busca por estoque sanguineo");
+        var foundBloodStock = repository.findById(id).orElseThrow(() -> {
+            log.warn("[findBloodStockById]: Falha na busca. Estoque sanguineo com id: {} não encontrado no sistema", id);
+            return new EntityNotFound(ErrorMessage.BLOODSTOCK_NOT_FOUND.toString());
+        });
+        log.info("[findBloodStockById]: Busca concluída com sucesso");
+        return foundBloodStock;
     }
 
     @Cacheable(value="bloodstock")
-    public BloodStock findByBloodCenter(Long bcID){
-        return repository.findByBloodCenter(bcID);
+    public BloodStock findBloodStockByBloodcenter(Long bcID){
+        log.info("[findBloodStockByBloodcenter]: Iniciando busca por estoque sanguineo pelo hemocentro");
+        var foundBloodStock = repository.findBloodStockByBloodcenter(bcID);
+        log.info("[findBloodStockByBloodcenter]: Busca por estoque sanguineo pelo hemocentro com id: {} finalizada", bcID);
+        return foundBloodStock;
     }
 
     @Cacheable(value="allBloodstocks")
-    public List<BloodStock> findAll(){
-        return repository.findAll();
+    public List<BloodStock> findAllBloodStocks(){
+        log.info("[findAllBloodStocks]: Iniciando busca por todos os estoque sanguineos");
+        var bloodStocks = repository.findAll();
+        log.info("[findAllBloodStocks]: Busca por todos os estoques sanguíneos finalizada");
+        return bloodStocks;
     }
 
     @Cacheable(value="bloodstock")
     public BloodStock addBloodStock(BloodStock newBloodStock){
-        if(findByBloodCenter(newBloodStock.getBloodcenter().getId()) == null){
+        log.info("[addBloodStock]: Iniciando cadastro do estoque sanguineo");
+        if(findBloodStockByBloodcenter(newBloodStock.getBloodcenter().getId()) == null){
+            log.info("[addBloodStock]: Cadastro concluído com sucesso");
             return repository.save(newBloodStock);
         }
-        throw new EntityAlreadyExists(BLOODSTOCK_ALREADY_REGISTERED);
+        log.warn("[addBloodStock]: Falha no cadastro. Estoque sanguíneo do hemocentro com id '{}' já cadastrado", newBloodStock.getBloodcenter().getId());
+        throw new EntityAlreadyExists(ErrorMessage.BLOODSTOCK_ALREADY_REGISTERED.toString());
     }
 
     @Transactional
     @CachePut(value="bloodstock", key="#bloodStockAtt.id")
-	public BloodStock update(BloodStock bloodStockAtt) {
-		BloodStock currentBloodStock = find(bloodStockAtt.getId());
+	public BloodStock updateBloodStock(BloodStock bloodStockAtt) {
+        log.info("[updateBloodStock]: Iniciando atualizacao do estoque sanguineo");
+		BloodStock currentBloodStock = findBloodStockById(bloodStockAtt.getId());
 		
-		if(!bloodStockAtt.getBloodcenter().getId().equals(currentBloodStock.getBloodcenter().getId()))
-            throw new CannotBeUpdated(ID_CANNOT_CHANGED);
+		if(!bloodStockAtt.getBloodcenter().getId().equals(currentBloodStock.getBloodcenter().getId())){
+            log.warn("[updateBloodStock]: Falha na atualizaçãp. Não é possível alterar o id: {} do estoque sanguineo", bloodStockAtt.getId());
+            throw new CannotBeUpdated(ErrorMessage.ID_CANNOT_CHANGED.toString());
+        }
 
 		BeanUtils.copyProperties(bloodStockAtt, currentBloodStock, "id");
-		return repository.saveAndFlush(currentBloodStock);
+		var updatedBloodStock = repository.saveAndFlush(currentBloodStock);
+        log.info("[updateBloodStock]: Atualização concluída com sucesso");
+        return updatedBloodStock;
 	}
 
     @CacheEvict(value="bloodstock", key="#id")
     public void deleteBloodStock(Long id){
-        find(id);
+        log.info("[deleteBloodStock]: Iniciando remoção do estoque sanguíneo");
+        findBloodStockById(id);
         repository.deleteById(id);
+        log.info("[deleteBloodStock]: Remoção concluída com sucesso");
     }
 }

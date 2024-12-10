@@ -21,7 +21,7 @@ import com.vitalhero.fullstack.dto.ResponseDTO;
 import com.vitalhero.fullstack.exception.EmailNotFound;
 import com.vitalhero.fullstack.exception.InvalidPassword;
 import com.vitalhero.fullstack.model.Donor;
-import com.vitalhero.fullstack.repository.BloodCenterRepository;
+import com.vitalhero.fullstack.repository.BloodcenterRepository;
 import com.vitalhero.fullstack.repository.DoctorRepository;
 import com.vitalhero.fullstack.repository.DonorRepository;
 import com.vitalhero.fullstack.security.TokenService;
@@ -37,7 +37,7 @@ public class AuthServiceTest {
     private DoctorRepository doctorRepository;
     
     @Mock
-    private BloodCenterRepository bloodcenterRepository;
+    private BloodcenterRepository bloodcenterRepository;
     
     @Mock
     private PasswordEncoder passwordEncoder;

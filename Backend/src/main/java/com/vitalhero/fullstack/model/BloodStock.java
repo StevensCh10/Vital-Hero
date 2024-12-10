@@ -38,7 +38,7 @@ public class BloodStock implements Serializable{
     @JoinColumn(name = "fk_bloodcenter")
     @OneToOne
     //@Valid
-    private BloodCenter bloodcenter;
+    private Bloodcenter bloodcenter;
 
     @NotNull
     @Column(updatable = true)
